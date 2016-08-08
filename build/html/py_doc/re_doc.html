@@ -1,0 +1,934 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>3. Python正则表达式 &mdash; Blogs 0.1 documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+    <link rel="top" title="Blogs 0.1 documentation" href="../index.html"/>
+        <link rel="up" title="Python笔记" href="index.html"/>
+        <link rel="prev" title="2. PySNMP获取设备信息" href="pysnmp_doc_example.html"/> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> Blogs
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.1
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Python笔记</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="pysnmp_doc.html">1. PySNMP教程</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pysnmp_doc_example.html">2. PySNMP获取设备信息</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">3. Python正则表达式</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id1">摘要</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id2">简介</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id3">简单模式</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#id4">匹配字符</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id5">重复匹配</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#id6">使用正则</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#id7">编译正则表达式</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id8">麻烦的反斜杠<code class="docutils literal"><span class="pre">\</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id9">执行匹配</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id10">模块级函数</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id11">编译标志</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#id12">更复杂的模式</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#id13">更多的元字符</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id14">分组</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id15">非捕获分组和命名分组</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id16">前向断言</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#id17">修改字符串</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#id18">切割字符串</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id19">查找和替换</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#id20">常见问题</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#id21">使用字符串方法</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#match-search">match()和search()对比</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id22">贪婪和非贪婪匹配</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#re-verbose">使用<code class="docutils literal"><span class="pre">re.VERBOSE</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../index.html">Blogs</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+ 
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../index.html">Docs</a> &raquo;</li>
+      
+          <li><a href="index.html">Python笔记</a> &raquo;</li>
+      
+    <li>3. Python正则表达式</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="../_sources/py_doc/re_doc.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="python">
+<h1>3. Python正则表达式<a class="headerlink" href="#python" title="Permalink to this headline">¶</a></h1>
+<p>标签： Python 正则表达式 翻译</p>
+<hr class="docutils" />
+<p>[TOC]</p>
+<hr class="docutils" />
+<blockquote>
+<div>autor: Author: A.M. Kuchling <a class="reference external" href="mailto:amk&#37;&#52;&#48;amk&#46;ca">amk<span>&#64;</span>amk<span>&#46;</span>ca</a>
+<a class="reference external" href="https://docs.python.org/2/howto/regex">https://docs.python.org/2/howto/regex</a>.html#</div></blockquote>
+<div class="section" id="id1">
+<h2>摘要<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
+<blockquote>
+<div>这份教程是Python中使用<code class="docutils literal"><span class="pre">re</span></code>模块操作正则表达式的入门教程，相对于库参考手册，它提供了一份更优雅的介绍。</div></blockquote>
+</div>
+<div class="section" id="id2">
+<h2>简介<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
+<p><code class="docutils literal"><span class="pre">re</span></code>模块在1.5版本加入Python，并提供Perl风格的正则模式。之前的Python版本提供了<code class="docutils literal"><span class="pre">regex</span></code>模块，它提供Emacs风格的正则模式，<code class="docutils literal"><span class="pre">regex</span></code>模块在Python2.5被完全移除。</p>
+<p>正则表达式是嵌入Python的微小的、高度专门化的语言，可以通过<code class="docutils literal"><span class="pre">re</span></code>模块访问。用这门微小语言，你可以为你想要匹配的字符串指定一个规则；这可能包括英文句子，电子邮件地址，Tex命令或其他任何你喜欢的。然后你可以问：这个字符串匹配该模式吗？或，这个字符串是否存在一个匹配模式？使用re你还可以修改、切割字符串。</p>
+<p>正则模式编译成字节码，然后被用C语言编写的正则引擎执行。对于高级用法(advanced
+use)，我们需要关注引擎如何执行一个给定的RE，并以合适的方式编写RE使得字节码可以更快执行。该文档不会包含正则表达式优化，因为你需要你对匹配引擎内部有一个清晰的理解。</p>
+<p>正则模式语言相对简单，并很严格，所以并不是所有的字符串处理任务都可以用正则表达式完成。有些任务也可以用RE完成，但是表达式会很复杂。这种情况下，你最好编写Python代码完成；虽然Python代码比精心构造的RE慢，但却更好理解。</p>
+</div>
+<div class="section" id="id3">
+<h2>简单模式<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h2>
+<p>我们从最简单的模式开始学习。由于RE被用来操作字符串，所有我们从最常见任务开始：字符匹配。</p>
+<p>关于正则表达式所隐匿的计算机科学知识(确定和非确定有限自动机)，你可以参考任一本有关编译器构造的书。</p>
+<div class="section" id="id4">
+<h3>匹配字符<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h3>
+<p>大部分字符都只会匹配它本身。例如：正则模式<code class="docutils literal"><span class="pre">test</span></code>会准确匹配字符串<em>test</em>。(当然，你可以使用大小写不敏感模式，让该模式匹配<em>Test</em>或<em>TEST</em>，后面会详细介绍。)</p>
+<p>该规则存在例外；有些字符是特殊元字符，它不会匹配它自身。这些元字符通常表示一些不寻常的匹配操作，或者通过重复、修改匹配意义来影响正则模式的其他部门。该文档的大部分都是有关不同元字符的讨论。</p>
+<p>这里有元字符的完整列表，接下来会详细讨论他们的含义。</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span>. ^ $ * + ? { } [ ] \ | ( )
+</pre></div>
+</div>
+<p>我们讨论的第一组元字符是<code class="docutils literal"><span class="pre">[</span></code>和<code class="docutils literal"><span class="pre">]</span></code>。他们用来指定字符类，表示你想要匹配的字符集合。字符集可以单独列出，也可以通过两个字符外加一个<code class="docutils literal"><span class="pre">-</span></code>分隔符表明一个范围。例如，<code class="docutils literal"><span class="pre">[abc]</span></code>会匹配字符a，b，c中的任一个；它和<code class="docutils literal"><span class="pre">[a-c]</span></code>相同，或者是用范围表示字符集。如果你只想匹配小写字符，你的正则模式可以是<code class="docutils literal"><span class="pre">[a-z]</span></code></p>
+<p>元字符在字符类中没有特殊含义。比如，<code class="docutils literal"><span class="pre">[akm$]</span></code>只能匹配a, k, m,
+通常是元字符，但是在字符类中，它就没有特殊含义了。</p>
+<p>你还可以通过集合的补集来匹配字符类中没有列出的字符。可以通过在字符类前加上<code class="docutils literal"><span class="pre">^</span></code>；<code class="docutils literal"><span class="pre">^</span></code>在字符类之外只会匹配<code class="docutils literal"><span class="pre">^</span></code>自身。如：<code class="docutils literal"><span class="pre">[^5]</span></code>可以匹配除5之外的任何字符(需要消耗一个字符，不能匹配空)。</p>
+<p>可能最重要的元字符就是反斜杠<code class="docutils literal"><span class="pre">\</span></code>了。在Python字符串字面量中，<code class="docutils literal"><span class="pre">\</span></code>之后可以跟不同的字符，表示特殊的序列。你也可以对元字符进行转义，这样在模式中也可以匹配他们。比如，你想匹配<code class="docutils literal"><span class="pre">]</span></code>或<code class="docutils literal"><span class="pre">\</span></code>，那你可以在他们之前加上<code class="docutils literal"><span class="pre">\</span></code>：<code class="docutils literal"><span class="pre">\]</span></code>和<code class="docutils literal"><span class="pre">\\</span></code>。</p>
+<p>一些以<code class="docutils literal"><span class="pre">\</span></code>开头的特殊序列代表我们经常使用的字符集，如数字集合，字母集合，或除空白之外的其他字符。下面我会讨论这些可用的特殊序列子集。他们等价的字符类是字节串模式的。他们的完整列表和Unicode模式的扩展定义，请参考<a class="reference external" href="https://docs.python.org/2/library/re.html#re-syntax">正则模式语法</a></p>
+<ul class="simple">
+<li><code class="docutils literal"><span class="pre">\d</span></code>：匹配任意十进制数字，和字符类<code class="docutils literal"><span class="pre">[0-9]</span></code>等价；</li>
+<li><code class="docutils literal"><span class="pre">\D</span></code>：匹配任意非十进制数字，和字符类<code class="docutils literal"><span class="pre">[^0-9]</span></code>等价；</li>
+<li><code class="docutils literal"><span class="pre">\s</span></code>：匹配任意空白字符，和字符类<code class="docutils literal"><span class="pre">[</span> <span class="pre">\t\n\r\f\v]</span></code>等价；</li>
+<li><code class="docutils literal"><span class="pre">\S</span></code>：匹配任意非空白字符，和字符类<code class="docutils literal"><span class="pre">[^</span> <span class="pre">\t\n\r\f\v]</span></code>等价；</li>
+<li><code class="docutils literal"><span class="pre">\w</span></code>：匹配任意单词字符，和字符类<code class="docutils literal"><span class="pre">[a-zA-Z0-9_]</span></code>等价(译注：包含下划线)；</li>
+<li><code class="docutils literal"><span class="pre">\W</span></code>：匹配任意非单词字符，和字符类<code class="docutils literal"><span class="pre">[^a-zA-Z0-9_]</span></code>等价；</li>
+</ul>
+<p>这些序列可以包含在字符类中。比如：模式<code class="docutils literal"><span class="pre">[\s,.]</span></code>就是一个一个字符类，它可以匹配任意空白字符，或者&#8217;,&#8217;和&#8217;.&#8217;。</p>
+<p>这节最后提到的元字符是<code class="docutils literal"><span class="pre">.</span></code>。它可以匹配除了换行符之外的任意字符，另外还有一个可选模式re.DOTALL，它甚至也可以匹配空行。通常假如你想匹配任意字符时，就用<code class="docutils literal"><span class="pre">.</span></code>。</p>
+</div>
+<div class="section" id="id5">
+<h3>重复匹配<a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h3>
+<p>可以匹配不同的字符集时正则的第一大任务。当然，如果RE仅有这点能力，它也确实没有什么高级之处。另一个能力是指定正则模式的某部分的重复匹配次数。</p>
+<p>我们先来看<code class="docutils literal"><span class="pre">*</span></code>。它不匹配字符&#8217;*&#8217;，它指定它之前的字符可以匹配0次或多次，而不是只能一次。</p>
+<p>例如，<code class="docutils literal"><span class="pre">ca*t</span></code>可以匹配&#8217;ct&#8217;，&#8217;cat&#8217;，&#8217;caaat&#8217;等等。在正则引擎内部有一个限制，由于C语言的int类型，所以最多可以匹配一个字符20亿次。你几乎不可能有足够的内存构造这么大的字符串，所以你很少会碰到这个限制。</p>
+<p>重复匹配默认是贪婪的，匹配引擎会匹配尽可能多的字符。如果模式的后部分不匹配，匹配引擎会回退，尝试少一些的匹配次数。</p>
+<p>通过详细匹配步骤解释该问题。让我们考虑模式<code class="docutils literal"><span class="pre">a[bcd]*b</span></code>，它会匹配a，0个或多个字符类[bcd]中的字符，最后以b结尾。现在想象用这个模式匹配字符串&#8217;abcbd&#8217;。</p>
+<ol class="arabic simple">
+<li>匹配a;</li>
+<li>引擎匹配[bcd]*，匹配尽可能多的字符，然后到达字符串末尾；</li>
+<li>尝试匹配b，但是现在已经到达字符串末尾，所有失败；</li>
+<li>回退一个位置，[bcd]*少匹配一个字符；</li>
+<li>尝试匹配b，但是最后一个字符是d，匹配失败；</li>
+<li>再次回退，[bcd]*只匹配bc；</li>
+<li>再次尝试，当前位置是b，匹配成功。</li>
+</ol>
+<p>至此已经到达模式末尾，它已经成功匹配了abcb。这证明，匹配引擎会匹配尽可能多的字符，如果找不到匹配，那么他会回退，并尝试匹配模式的剩余部分。它会回退直到它匹配[bcd]*0次，如果还失败，那引擎可以断定字符串和模式不匹配。</p>
+<p>另一个有关重复的元字符是<code class="docutils literal"><span class="pre">+</span></code>，注意它和<code class="docutils literal"><span class="pre">*</span></code>的不同，+至少需要匹配一次；</p>
+<p>还有一些重复量词<code class="docutils literal"><span class="pre">?</span></code>，它匹配0次或1次，我们可以认为他是标记某些字符是可选的。</p>
+<p>最复杂的重复量词是<code class="docutils literal"><span class="pre">{m,n}</span></code>，其中m和n是十进制整数。该量词表示最少重复m次，最多n次。你还可以忽略m或者n；忽略m表示最少匹配0次，忽略n代表无穷大，实际上，上限是之前提到的20亿。</p>
+<p>精简主义者可能发现其他的三种量词可以用这种记法表示：{0，}和*等价，{1,}和+等价，{0,1}和？等价。但是你最好使用*，+和？，因为他们更简洁易读。</p>
+</div>
+</div>
+<div class="section" id="id6">
+<h2>使用正则<a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h2>
+<p>我们已经学了一点正则模式了，那么在Python中如何使用他们呢？<code class="docutils literal"><span class="pre">re</span></code>模块提供一个正则引擎接口，允许你编译<code class="docutils literal"><span class="pre">re</span></code>对象，然后执行匹配操作。</p>
+<div class="section" id="id7">
+<h3>编译正则表达式<a class="headerlink" href="#id7" title="Permalink to this headline">¶</a></h3>
+<p>正则表达式编译成模式对象，它拥有不同的方法，用来执行模式搜索和替换操作。</p>
+<div class="code python highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">re</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">p</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="s1">&#39;ab*&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">p</span>
+<span class="go">&lt;_sre.SRE_Pattern object at 0x...&gt;</span>
+</pre></div>
+</div>
+<p><code class="docutils literal"><span class="pre">re.compile</span></code>参数还有一个可选的flag参数，从而支持特殊的语法特性。比如：</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">p</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="s1">&#39;ab*&#39;</span><span class="p">,</span> <span class="n">re</span><span class="o">.</span><span class="n">IGNORECASE</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>正则模式以字符串形式传递给<code class="docutils literal"><span class="pre">re.compile</span></code>。之所以这样做，因为正则表达式不是Python语音核心的一部分，也没有什么特殊的语法表示他们。(并不是所有的应用程序都需要正则表达式，所以也没有必要包含他们，使得Python语言规范更臃肿)。相反，<code class="docutils literal"><span class="pre">re</span></code>模块只是一个简单的C扩展模块，和socket，zlib模块一样。</p>
+<p>正则模式放进字符串使得使得Python核心比较简单，但是它也有一个很头疼的问题，这就是下一节的主题。</p>
+</div>
+<div class="section" id="id8">
+<h3>麻烦的反斜杠<code class="docutils literal"><span class="pre">\</span></code><a class="headerlink" href="#id8" title="Permalink to this headline">¶</a></h3>
+<p>这前面的描述中，我们知道正则表达式使用<code class="docutils literal"><span class="pre">\</span></code>来表示特殊的字符序列(如<code class="docutils literal"><span class="pre">\d</span></code>)和进行元字符转义(如<code class="docutils literal"><span class="pre">\[</span></code>)。这和Python字符串字面量的某些字符用法冲突。</p>
+<p>比如你想写一个正则模式匹配字符串&#8221;\section&#8221;(不包括引号)，这在LaTeX文件中很常见。从想要匹配的字符串开始，你需要在每一个反斜杠和元字符前插入反斜杠进行转义，所以正则模式是<code class="docutils literal"><span class="pre">\\section</span></code>，这也是需要传递给re.compile()的字符串。但是，为了用字符串字面量表示这个模式，每一个反斜杠需要再一次转义。</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="41%" />
+<col width="59%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">字符串</th>
+<th class="head">阶段</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>\section</td>
+<td>需要匹配的字符串</td>
+</tr>
+<tr class="row-odd"><td>\\section</td>
+<td>为re.compile()对反斜杠转义</td>
+</tr>
+<tr class="row-even"><td>&#8220;\\\\section&#8221;</td>
+<td>为字符串字面量对反斜杠转义</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<div>注：在md源文件中，需要对，所有一个想要显示一个反斜杠就要在md源文件中输入两个反斜杠。</div></blockquote>
+<p>简而言之，为了匹配一个反斜杠&#8217;&#8216;，正则模式字符串需要写成&#8221;\\\\&#8221;(四个反斜杠)，因为正则表达式是&#8217;\\&#8217;，然后每一个包含在字符串字面量中的反斜杠需要表示为&#8217;\\&#8217;。这种大量的重复反斜杠，使得模式字符串很难理解。</p>
+<blockquote>
+<div>译注：据此，在Python中分析一个正则模式字符串时，先看模式字符串字面量，然后看传递给re.compile的模式，再在正则引擎中分析最终的匹配模式。</div></blockquote>
+<p>解决方法是使用Python的原始字符串标记法，在r前缀开头的字符串字面量中，反斜杠不进行任何特殊处理。所以<code class="docutils literal"><span class="pre">r&quot;\n&quot;</span></code>是一个包含两个字符&#8217;&#8216;，&#8217;n&#8217;的字符串，而&#8221;&#8220;是包含一个换行符的字符串。正则表达式通常在Python代码中写成原始字符串形式。</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="54%" />
+<col width="46%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">正则模式</th>
+<th class="head">原始字符串</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>&#8220;ab*&#8221;</td>
+<td>r&#8221;ab*&#8221;</td>
+</tr>
+<tr class="row-odd"><td>&#8220;\\\\section&#8221;</td>
+<td>r&#8221;\\section&#8221;</td>
+</tr>
+<tr class="row-even"><td>&#8220;\\w+\\s+\1&#8221;</td>
+<td>r&#8221;\w+\s+&#8221;</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="id9">
+<h3>执行匹配<a class="headerlink" href="#id9" title="Permalink to this headline">¶</a></h3>
+<p>假如你有一个编译过的正则表达式对象，你会怎么做？模式对象具有很多的属性和方法，这里只会列出最重要的。完整的参考手册请看re库手册。</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="22%" />
+<col width="78%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">方法/属性</th>
+<th class="head">目的</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>match()</td>
+<td>模式是否匹配字符串开头</td>
+</tr>
+<tr class="row-odd"><td>search()</td>
+<td>扫描字符串，检查和模式相匹配的位置</td>
+</tr>
+<tr class="row-even"><td>findall()</td>
+<td>查找所有和模式相匹配的子串，并以列表形式返回</td>
+</tr>
+<tr class="row-odd"><td>finditer()</td>
+<td>查找所有和模式相匹配的子串，并以迭代器方式返回</td>
+</tr>
+</tbody>
+</table>
+<p>如果不匹配，search()和match()返回None。如果匹配，则会返回一个match对象，该对象包含匹配信息：起始和终止信息，匹配的子串等。</p>
+<p>你可以在交互环境学习re模块，如果你可以访问Thinter，那么你可以看看<a class="reference external" href="https://hg.python.org/cpython/file/2.7/Tools/scripts/redemo.py">redemo.py</a>，这是一个Python示范工程，允许你输入一个模式和字符串，然后输出匹配结果，它在调试复杂的正则表达式时很有用。<a class="reference external" href="http://kodos.sourceforge.net/">Kodos</a>也是开发和测试正则模式的有力交互工具。</p>
+<p>我们的教程使用标准Python解释器测试我们的例子：</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">Python</span> <span class="mf">2.2</span><span class="o">.</span><span class="mi">2</span> <span class="p">(</span><span class="c1">#1, Feb 10 2003, 12:57:01)</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="kn">import</span> <span class="nn">re</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">p</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="s1">&#39;[a-z]+&#39;</span><span class="p">)</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">p</span>  <span class="c1">#doctest: +ELLIPSIS</span>
+<span class="o">&lt;</span><span class="n">_sre</span><span class="o">.</span><span class="n">SRE_Pattern</span> <span class="nb">object</span> <span class="n">at</span> <span class="mi">0</span><span class="n">x</span><span class="o">...&gt;</span>
+</pre></div>
+</div>
+<p>现在你可以使用不同的字符串测试模式<code class="docutils literal"><span class="pre">[a-z]+</span></code>，该模式不匹配空串，并返回None。</p>
+<p>现在我们用&#8221;tempo&#8221;进行测试，这时，match()会返回一个match对象。</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">m</span> <span class="o">=</span> <span class="n">p</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="s1">&#39;tempo&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">m</span>
+<span class="go">&lt;_sre.SRE_Match object at 0x...&gt;</span>
+</pre></div>
+</div>
+<p>match对象具有很多方法和属性，最重要的包括如下： | 方法/属性 | 目的 |
+| :&#8212;&#8212;&#8211;: | :&#8212;-: | |group()|返回和模式相匹配的字符串|
+|start()|匹配的起始位置| |end()|匹配的截止位置|
+|span()|返回匹配的位置元组：(start, end)|</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">m</span><span class="o">.</span><span class="n">group</span><span class="p">()</span>
+<span class="go">&#39;tempo&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">m</span><span class="o">.</span><span class="n">start</span><span class="p">(),</span> <span class="n">m</span><span class="o">.</span><span class="n">end</span><span class="p">()</span>
+<span class="go">(0, 5)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">m</span><span class="o">.</span><span class="n">span</span><span class="p">()</span>
+<span class="go">(0, 5)</span>
+</pre></div>
+</div>
+<p>group()返回和模式相匹配的子串，由于match()只检查字符串开始位置，因此start()函数总是返回0。而search()函数会扫描整个字符串，所以匹配开始位置可能不是0.</p>
+<div class="code python highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span> <span class="n">p</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="s1">&#39;::: message&#39;</span><span class="p">)</span>
+<span class="go">None</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">m</span> <span class="o">=</span> <span class="n">p</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="s1">&#39;::: message&#39;</span><span class="p">);</span> <span class="nb">print</span> <span class="n">m</span>
+<span class="go">&lt;_sre.SRE_Match object at 0x...&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">m</span><span class="o">.</span><span class="n">group</span><span class="p">()</span>
+<span class="go">&#39;message&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">m</span><span class="o">.</span><span class="n">span</span><span class="p">()</span>
+<span class="go">(4, 11)</span>
+</pre></div>
+</div>
+<p>而在实用程序中，经常是在一个变量中保存match对象，然后检查它是否为空。如：</p>
+<div class="code python highlight-default"><div class="highlight"><pre><span></span><span class="n">p</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span> <span class="o">...</span> <span class="p">)</span>
+<span class="n">m</span> <span class="o">=</span> <span class="n">p</span><span class="o">.</span><span class="n">match</span><span class="p">(</span> <span class="s1">&#39;string goes here&#39;</span> <span class="p">)</span>
+<span class="k">if</span> <span class="n">m</span><span class="p">:</span>
+    <span class="nb">print</span> <span class="s1">&#39;Match found: &#39;</span><span class="p">,</span> <span class="n">m</span><span class="o">.</span><span class="n">group</span><span class="p">()</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="nb">print</span> <span class="s1">&#39;No match&#39;</span>
+</pre></div>
+</div>
+<p>还有另外两个方法返回模式的所有匹配，findall()方法返回匹配字符串的列表。</p>
+<div class="code python highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">p</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="s1">&#39;\d+&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">p</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="s1">&#39;12 drummers drumming, 11 pipers piping, 10 lords a-leaping&#39;</span><span class="p">)</span>
+<span class="go">[&#39;12&#39;, &#39;11&#39;, &#39;10&#39;]</span>
+</pre></div>
+</div>
+<p>findall()方法在返回之前需要生成一个完整的列表。而finditer()方法返回匹配对象的迭代器。</p>
+<div class="code python highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">iterator</span> <span class="o">=</span> <span class="n">p</span><span class="o">.</span><span class="n">finditer</span><span class="p">(</span><span class="s1">&#39;12 drummers drumming, 11 ... 10 ...&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">iterator</span>
+<span class="go">&lt;callable-iterator object at 0x...&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">match</span> <span class="ow">in</span> <span class="n">iterator</span><span class="p">:</span>
+<span class="gp">... </span>    <span class="nb">print</span> <span class="n">match</span><span class="o">.</span><span class="n">span</span><span class="p">()</span>
+<span class="gp">...</span>
+<span class="go">(0, 2)</span>
+<span class="go">(22, 24)</span>
+<span class="go">(29, 31)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="id10">
+<h3>模块级函数<a class="headerlink" href="#id10" title="Permalink to this headline">¶</a></h3>
+<p>你没有必要创建一个模式对象，然后调用它的方法。re模块也定义了一些顶级函数如match(),
+search(), findall(),
+sub()等。这些方法以模式字符串作为第一个参数，其他的对应参数保持不变，并依然返回None和match对象。</p>
+<div class="code python highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span> <span class="n">re</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="s1">r&#39;From\s+&#39;</span><span class="p">,</span> <span class="s1">&#39;Fromage amk&#39;</span><span class="p">)</span>
+<span class="go">None</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">re</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="s1">r&#39;From\s+&#39;</span><span class="p">,</span> <span class="s1">&#39;From amk Thu May 14 19:12:10 1998&#39;</span><span class="p">)</span>
+<span class="go">&lt;_sre.SRE_Match object at 0x...&gt;</span>
+</pre></div>
+</div>
+<p>在这种情况下，这些方法也创建一个模式对象，然后调用合适的方法，他们也会在缓存里保存编译过的模式对象，
+所以使用相同的正则模式会更快。</p>
+<p>一般来说，更推荐使用编译过的模式对象然后调用它的方法，而不是模块级函数。</p>
+<div class="code python highlight-default"><div class="highlight"><pre><span></span><span class="n">ref</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span> <span class="o">...</span> <span class="p">)</span>
+<span class="n">entityref</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span> <span class="o">...</span> <span class="p">)</span>
+<span class="n">charref</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span> <span class="o">...</span> <span class="p">)</span>
+<span class="n">starttagopen</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span> <span class="o">...</span> <span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="id11">
+<h3>编译标志<a class="headerlink" href="#id11" title="Permalink to this headline">¶</a></h3>
+<p>编译标志允许你修改正则表达式的某些工作方式，re模块为编译标志提供两个名字，如re.IGNORECASE和re.I。可以使用位或运算指定多个编译标志，如<code class="docutils literal"><span class="pre">re.I</span> <span class="pre">|</span> <span class="pre">re.M</span></code>表示同时设定I和M标志。</p>
+<p>可用标志列表：</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="28%" />
+<col width="72%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">标志</th>
+<th class="head">含义</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>DOTALL, S</td>
+<td>使<code class="docutils literal"><span class="pre">.</span></code>可以匹配换行符</td>
+</tr>
+<tr class="row-odd"><td>IGNORECASE, I</td>
+<td>忽略大小写</td>
+</tr>
+<tr class="row-even"><td>LOCALE, L</td>
+<td>本地化标志</td>
+</tr>
+<tr class="row-odd"><td>MULTILINE, M</td>
+<td>多行匹配，影响<code class="docutils literal"><span class="pre">^</span></code>和<code class="docutils literal"><span class="pre">$</span></code>的含义</td>
+</tr>
+<tr class="row-even"><td>VERBOSE, X</td>
+<td>宽松排列，使得正则模式更易读</td>
+</tr>
+<tr class="row-odd"><td>UNICODE, U</td>
+<td>使得一些一些转义如，，</td>
+</tr>
+</tbody>
+</table>
+<dl class="docutils">
+<dt>I，IGNORECASE</dt>
+<dd>忽略大小写，并且不考虑本地化。除非设置了LOCALE标志；</dd>
+<dt>L，LOCALE</dt>
+<dd>使得，，，；</dd>
+</dl>
+<p>Locales是一个C库特性，主要用来帮助处理程序中不同语言的差异，如果你在处理法文文本，你想用+来匹配单词，但是；它不匹配&#8217;é&#8217;或&#8217;ç&#8217;。如果你的系统经过合适的配置并且选择了法文本地化，那么C函数会告诉程序&#8217;é&#8217;应该被当成一个字母。在编译模式对象时使用LOCALE对象会使编译对象对；这会更慢，但是却可以让+匹配法文单词。</p>
+<dl class="docutils">
+<dt>M，MULTILINE</dt>
+<dd>通常，<code class="docutils literal"><span class="pre">^</span></code>只会匹配字符串开头，<code class="docutils literal"><span class="pre">$</span></code>只会匹配字符串结尾和或者字符串结尾处的换行符。如果设立了这个标志，<code class="docutils literal"><span class="pre">^</span></code>会匹配字符串开头和每行字符串开头(每个换行符之后)，<code class="docutils literal"><span class="pre">$</span></code>会匹配字符串结尾和每一行结尾(每个换行符之前)。</dd>
+<dt>S，DOTALL</dt>
+<dd>使得<code class="docutils literal"><span class="pre">.</span></code>可以匹配换行符；</dd>
+<dt>U，UNICODE</dt>
+<dd>使得, , , , , , 和 ；</dd>
+<dt>X，VERBOSE</dt>
+<dd>该标志允许你格式化正则表达式，使得它更易读；当指定了该标志，正则模式中的字符串会被忽略，除非他们放在字符集或者没有被转义的反斜杠之后。该标志允许你以更易读的方式组织正则模式，也允许你在正则模式里插进注释，注释会被引擎忽略；注释以<code class="docutils literal"><span class="pre">#</span></code>标记，不能放在字符集中，也不能跟在反斜杠之后；下面有一个例子，是不是很易读。</dd>
+</dl>
+<div class="code python highlight-default"><div class="highlight"><pre><span></span><span class="n">charref</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="s2">r&quot;&quot;&quot;</span>
+<span class="s2"> &amp;[#]                # Start of a numeric entity reference</span>
+<span class="s2"> (</span>
+<span class="s2">     0[0-7]+         # Octal form</span>
+<span class="s2">   | [0-9]+          # Decimal form</span>
+<span class="s2">   | x[0-9a-fA-F]+   # Hexadecimal form</span>
+<span class="s2"> )</span>
+<span class="s2"> ;                   # Trailing semicolon</span>
+<span class="s2">&quot;&quot;&quot;</span><span class="p">,</span> <span class="n">re</span><span class="o">.</span><span class="n">VERBOSE</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>如果不使用宽松排列，模式是这样的：</p>
+<div class="code python highlight-default"><div class="highlight"><pre><span></span><span class="n">charref</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="s2">&quot;&amp;#(0[0-7]+&quot;</span>
+                     <span class="s2">&quot;|[0-9]+&quot;</span>
+                     <span class="s2">&quot;|x[0-9a-fA-F]+);&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>在这个例子里，使用Python字符串字面量自动串接来分割模式字符串，但是这相对于使用re.VERBOSE更难读。</p>
+</div>
+</div>
+<div class="section" id="id12">
+<h2>更复杂的模式<a class="headerlink" href="#id12" title="Permalink to this headline">¶</a></h2>
+<p>这一节，我们会介绍更多的元字符，以及使用分组捕获之前匹配的文本。</p>
+<div class="section" id="id13">
+<h3>更多的元字符<a class="headerlink" href="#id13" title="Permalink to this headline">¶</a></h3>
+<p>有些元字符称为零宽断言，他们不会使引擎向后处理字符串，他们不会消耗字符，只会指示成功或者失败。例如：，当前位置是单词边界；这个位置不会被。这意味着零宽断言不能重复，因为如果在一个给定位置匹配一次，那么也可以匹配无数次。</p>
+<dl class="docutils">
+<dt><code class="docutils literal"><span class="pre">\</span></code></dt>
+<dd>选择结构，或者可以认为是or操作符。它具有非常低的优先级，使得你处理多个字符串时可以合理工作，如crow|servo可以匹配crow或者servo，而不是cro，w或者s，然后ervo。为了匹配<code class="docutils literal"><span class="pre">|</span></code>，使用<code class="docutils literal"><span class="pre">\\|</span></code>，或者放进字符集里如<code class="docutils literal"><span class="pre">[|]</span></code></dd>
+<dt><code class="docutils literal"><span class="pre">^</span></code></dt>
+<dd>匹配字符串开头，除非设置了MULTILINE标志。在MULTILINE标志里，它也可以匹配换行符之后的位置；</dd>
+<dt><code class="docutils literal"><span class="pre">$</span></code></dt>
+<dd>匹配字符串结尾，也可以匹配每一个换行符之前的位置。使用<code class="docutils literal"><span class="pre">\$</span></code>或者放进字符集里如<code class="docutils literal"><span class="pre">[|]</span></code>匹配它自身。</dd>
+</dl>
+<div class="code python highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span> <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="s1">&#39;}$&#39;</span><span class="p">,</span> <span class="s1">&#39;</span><span class="si">{block}</span><span class="s1">&#39;</span><span class="p">)</span>
+<span class="go">&lt;_sre.SRE_Match object at 0x...&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span> <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="s1">&#39;}$&#39;</span><span class="p">,</span> <span class="s1">&#39;</span><span class="si">{block}</span><span class="s1"> &#39;</span><span class="p">)</span>
+<span class="go">None</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span> <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="s1">&#39;}$&#39;</span><span class="p">,</span> <span class="s1">&#39;</span><span class="si">{block}</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+<span class="go">&lt;_sre.SRE_Match object at 0x...&gt;</span>
+</pre></div>
+</div>
+<dl class="docutils">
+<dt><code class="docutils literal"><span class="pre">\A</span></code></dt>
+<dd>只匹配字符串开头。在非MULTILINE模式中，<code class="docutils literal"><span class="pre">\A</span></code>和<code class="docutils literal"><span class="pre">^</span></code>是等价的。在MULTILINE模式中，<code class="docutils literal"><span class="pre">\A</span></code>还是只匹配字符串开头，开始<code class="docutils literal"><span class="pre">^</span></code>可以匹配任意换行符之前的位置。</dd>
+<dt><code class="docutils literal"><span class="pre">\Z</span></code></dt>
+<dd>和<code class="docutils literal"><span class="pre">\A</span></code>类似，只匹配字符串结尾。</dd>
+<dt><code class="docutils literal"><span class="pre">\b</span></code></dt>
+<dd>单词边界，这是一个零宽断言，只匹配单词的开始或者结尾处。单词b被定义为字母和数字序列，所以单词结尾由空白字符或者非字母数字字符标记。比如：</dd>
+</dl>
+<div class="code python highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">p</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="s1">r&#39;\bclass\b&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span> <span class="n">p</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="s1">&#39;no class at all&#39;</span><span class="p">)</span>
+<span class="go">&lt;_sre.SRE_Match object at 0x...&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span> <span class="n">p</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="s1">&#39;the declassified algorithm&#39;</span><span class="p">)</span>
+<span class="go">None</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span> <span class="n">p</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="s1">&#39;one subclass is&#39;</span><span class="p">)</span>
+<span class="go">None</span>
+</pre></div>
+</div>
+<p>使用<code class="docutils literal"><span class="pre">\b</span></code>有两点微妙之处需要特别注意。它和Python的字符串字面量发生了冲突，在字符串字面量中，，ascii值为8。如果你不使用原始字符串，Python会把它转换为回退字符，那么你的正则模式不会按你期望的进行匹配。比如上面的例子，我们忽略r试一试：</p>
+<div class="code python highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">p</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\b</span><span class="s1">class</span><span class="se">\b</span><span class="s1">&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span> <span class="n">p</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="s1">&#39;no class at all&#39;</span><span class="p">)</span>
+<span class="go">None</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span> <span class="n">p</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\b</span><span class="s1">&#39;</span> <span class="o">+</span> <span class="s1">&#39;class&#39;</span> <span class="o">+</span> <span class="s1">&#39;</span><span class="se">\b</span><span class="s1">&#39;</span><span class="p">)</span>
+<span class="go">&lt;_sre.SRE_Match object at 0x...&gt;</span>
+</pre></div>
+</div>
+<p>第二，在字符类中，该断言不会使用，，这和Python字符串字面量兼容。</p>
+<dl class="docutils">
+<dt><code class="docutils literal"><span class="pre">\B</span></code></dt>
+<dd>零宽断言，和。匹配非单词边界位置。</dd>
+</dl>
+</div>
+<div class="section" id="id14">
+<h3>分组<a class="headerlink" href="#id14" title="Permalink to this headline">¶</a></h3>
+<p>通常需要使用正则表达式捕获更多的信息。通常，我们把正则表达式进行分组来匹配不同部分，这样来字符串进行分析。如，RFC-822
+header line被分成名字和值，他们之间用<code class="docutils literal"><span class="pre">:</span></code>分开，像这样：</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">From</span><span class="p">:</span> <span class="n">author</span><span class="nd">@example</span><span class="o">.</span><span class="n">com</span>
+<span class="n">User</span><span class="o">-</span><span class="n">Agent</span><span class="p">:</span> <span class="n">Thunderbird</span> <span class="mf">1.5</span><span class="o">.</span><span class="mf">0.9</span> <span class="p">(</span><span class="n">X11</span><span class="o">/</span><span class="mi">20061227</span><span class="p">)</span>
+<span class="n">MIME</span><span class="o">-</span><span class="n">Version</span><span class="p">:</span> <span class="mf">1.0</span>
+<span class="n">To</span><span class="p">:</span> <span class="n">editor</span><span class="nd">@example</span><span class="o">.</span><span class="n">com</span>
+</pre></div>
+</div>
+<p>我们可以编写一个模式来处理，匹配一个完整header
+line时，一个分组处理名字，另外一个分组处理值。</p>
+<p>分组由元字符<code class="docutils literal"><span class="pre">(</span></code>，<code class="docutils literal"><span class="pre">)</span></code>标记，和数学表达式括号类似，他们把括号内的表达式分组，你可以使用重复量词重复分组内容，比如<code class="docutils literal"><span class="pre">*</span></code>，<code class="docutils literal"><span class="pre">+</span></code>,
+<code class="docutils literal"><span class="pre">?</span></code>, <code class="docutils literal"><span class="pre">{m,n}</span></code>。如，<code class="docutils literal"><span class="pre">(ab)*</span></code>可以匹配0次或多次ab。</p>
+<div class="code python highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">p</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="s1">&#39;(ab)*&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span> <span class="n">p</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="s1">&#39;ababababab&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">span</span><span class="p">()</span>
+<span class="go">(0, 10)</span>
+</pre></div>
+</div>
+<p>用括号标记的分组同时会捕获他们匹配的文本的start和end索引；我们可以通过给group()，start()，end()和span()传递参数检索到他们。分组编号从0开始，0分组总是存在，它代表整个正则表达式，所以match对象方法总是以0分组作为他们的默认参数。后面我们会介绍非捕获分组。</p>
+<div class="code python highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">p</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="s1">&#39;(a)b&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">m</span> <span class="o">=</span> <span class="n">p</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="s1">&#39;ab&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">m</span><span class="o">.</span><span class="n">group</span><span class="p">()</span>
+<span class="go">&#39;ab&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">m</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+<span class="go">&#39;ab&#39;</span>
+</pre></div>
+</div>
+<p>子分组从左向右编号，依次加1。分组可以嵌套，想要确定分组编号，只需要计算开括号字符<code class="docutils literal"><span class="pre">(</span></code>既可。</p>
+<div class="code python highlight-default"><div class="highlight"><pre><span></span><span class="go">&gt;&gt;&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">p</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="s1">&#39;(a(b)c)d&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">m</span> <span class="o">=</span> <span class="n">p</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="s1">&#39;abcd&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">m</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+<span class="go">&#39;abcd&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">m</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="go">&#39;abc&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">m</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+<span class="go">&#39;b&#39;</span>
+</pre></div>
+</div>
+<p>group()函数可以一次传递多个分组编号，此时，它会一个元组：</p>
+<div class="code python highlight-default"><div class="highlight"><pre><span></span><span class="go">&gt;&gt;&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">m</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span>
+<span class="go">(&#39;b&#39;, &#39;abc&#39;, &#39;b&#39;)</span>
+</pre></div>
+</div>
+<p>groups()函数返回从分组1开始的所有分组对应的字符串元组。</p>
+<div class="code python highlight-default"><div class="highlight"><pre><span></span><span class="go">&gt;&gt;&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">m</span><span class="o">.</span><span class="n">groups</span><span class="p">()</span>
+<span class="go">(&#39;abc&#39;, &#39;b&#39;)</span>
+</pre></div>
+</div>
+<p>正则模式中的反向引用允许你指定之前捕获分组的内容在当前位置同样被搜索到。例如，<code class="docutils literal"><span class="pre">\1</span></code>表示分组1的内容也存在于当前位置才算成功，否则失败。记住：Python字符串字面量也使用反斜杠加数字来允许包含任意的字符。所以正则模式中包含反向引用时请使用原始字符串。</p>
+<p>例如，下面的模式用来检查字符串中两个相同单词。</p>
+<div class="code python highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">p</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="s1">r&#39;(\b\w+)\s+\1&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">p</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="s1">&#39;Paris in the the spring&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">group</span><span class="p">()</span>
+<span class="go">&#39;the the&#39;</span>
+</pre></div>
+</div>
+<p>后面你会发现，反向引用在正则替换中非常有用。</p>
+</div>
+<div class="section" id="id15">
+<h3>非捕获分组和命名分组<a class="headerlink" href="#id15" title="Permalink to this headline">¶</a></h3>
+<p>精巧的正则表达式可能谁使用很多分组，即用分组捕获关心的子串，也用来分组正则模式自身。在复杂的模式中，跟踪分组号往往很困难，我们使用两特性来帮助处理该问题。</p>
+<p>Perl 5为标准正则表达式增加了很多额外的特性，Python
+re模块支持其中的大部分。想要在保持和标准正则表达式没有明显不同的情况下，选择新的单击元字符和以反斜杠开始的特殊序列很困难。例如，如果你使用<code class="docutils literal"><span class="pre">&amp;</span></code>作为新的元字符，老的表达式认为它是个普通字符，因此没有通过<code class="docutils literal"><span class="pre">\&amp;</span></code>和[&amp;]进行转义。</p>
+<p>perl开发者的解决方案是：使用<code class="docutils literal"><span class="pre">(?...)</span></code>作为扩展语法。<code class="docutils literal"><span class="pre">?</span></code>立即跟在括号后面是一个语法错误，因为<code class="docutils literal"><span class="pre">?</span></code>它没有重复任何东西，所以这不会引入兼容性问题。跟在？之后的字符表示扩展方式，所以<code class="docutils literal"><span class="pre">(?=foo)</span></code>和<code class="docutils literal"><span class="pre">(?:foo)</span></code>是不同的。(前者是前向断言，后者是非捕获分组)</p>
+<p>Python又对perl扩展语法进行了扩展。如果？之后是P，表示这是Python特定扩展，当前存在两种这类扩展：<code class="docutils literal"><span class="pre">(?P&lt;name&gt;...)</span></code>定义了命名分组，<code class="docutils literal"><span class="pre">(?P=name)</span></code>定义了命名分组的反向引用。如果将来perl
+5的将来版本使用不同的语法增加了类似的特性，re模块也会改变来支持新语法，同时为了保持兼容也会保留Python特定语法。</p>
+<p>我们已经看到了一般的扩展语法，现在可以返回到使用该特性简化复杂正则模式中的分组了。由于分组从左到右编号，在复杂正则表达式中很难正确跟踪编号。更改这样复杂的正则表达式更犯人，只要插入了一个括号，在此之后所有的括号编号全部改变。</p>
+<p>有时你想使用分组收集正则表达式的一部分，但是你不想取回分组中的内容，你可以使用非捕获分组<code class="docutils literal"><span class="pre">(?:...)</span></code>，
+...可以用任意其他的正则表达式代替。</p>
+<div class="code python highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">m</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="s2">&quot;([abc])+&quot;</span><span class="p">,</span> <span class="s2">&quot;abc&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">m</span><span class="o">.</span><span class="n">groups</span><span class="p">()</span>
+<span class="go">(&#39;c&#39;,)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">m</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="s2">&quot;(?:[abc])+&quot;</span><span class="p">,</span> <span class="s2">&quot;abc&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">m</span><span class="o">.</span><span class="n">groups</span><span class="p">()</span>
+<span class="go">()</span>
+
+<span class="go">译注：这里有一个疑问，为什么m.groups()返回的是(&#39;c&#39;, )，而不是(&#39;a&#39;, )</span>
+</pre></div>
+</div>
+<p>除了不能取回分组匹配的内容外，非捕获分组和捕获分组的行为完全相同，你可以在里面放所有的东西，可以使用重复量词，你可以使用分组进行嵌套(捕获和非捕获)。<code class="docutils literal"><span class="pre">(?:...)</span></code>在修改一个已经存在的模式时很有用，因为你可以在不修改其他分组编号情况下插入新的分组。需要指出的是，在搜索时捕获和非捕获分组的性能并没有差异，不存在一个比另外一个更快。</p>
+<p>更有意义的一个特性是命名分组：分组可以使用名字引用。</p>
+<p>命名分组语法是特定Python扩展：<code class="docutils literal"><span class="pre">(?P&lt;name&gt;...)</span></code>。命名分组和捕获分组行为完全相同，同时给分组加了一个额外的名字。match对象对捕获分组的所有操作同样对命名分组有用，既可以使用编号也可以使用名字引用分组。命名分组也有编号，所以你可以用两种方式抽取数据：</p>
+<div class="code python highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">p</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="s1">r&#39;(?P&lt;word&gt;\b\w+\b)&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">m</span> <span class="o">=</span> <span class="n">p</span><span class="o">.</span><span class="n">search</span><span class="p">(</span> <span class="s1">&#39;(((( Lots of punctuation )))&#39;</span> <span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">m</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="s1">&#39;word&#39;</span><span class="p">)</span>
+<span class="go">&#39;Lots&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">m</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="go">&#39;Lots&#39;</span>
+</pre></div>
+</div>
+<p>命名分组很方便，因为你可以很容易记住名字，而不是记住分组编号。这里有一个<code class="docutils literal"><span class="pre">imaplib</span></code>模块的例子：</p>
+<div class="code python highlight-default"><div class="highlight"><pre><span></span><span class="n">InternalDate</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="s1">r&#39;INTERNALDATE &quot;&#39;</span>
+        <span class="s1">r&#39;(?P&lt;day&gt;[ 123][0-9])-(?P&lt;mon&gt;[A-Z][a-z][a-z])-&#39;</span>
+        <span class="s1">r&#39;(?P&lt;year&gt;[0-9][0-9][0-9][0-9])&#39;</span>
+        <span class="s1">r&#39; (?P&lt;hour&gt;[0-9][0-9]):(?P&lt;min&gt;[0-9][0-9]):(?P&lt;sec&gt;[0-9][0-9])&#39;</span>
+        <span class="s1">r&#39; (?P&lt;zonen&gt;[-+])(?P&lt;zoneh&gt;[0-9][0-9])(?P&lt;zonem&gt;[0-9][0-9])&#39;</span>
+        <span class="s1">r&#39;&quot;&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>相对于使用第9分组，显然使用m.group(&#8216;zonem&#8217;)抽取数据更方便。</p>
+<p>反向引用语法引用分组编号，如<code class="docutils literal"><span class="pre">(...)\1</span></code>。这里有一个变种：使用组名而不是编号引用分组。这又是另外一个Python扩展：<code class="docutils literal"><span class="pre">(?P=name)</span></code>表示命名分组内容在当前位置需要再次匹配。查找重复单词的正则模式<code class="docutils literal"><span class="pre">(\b\w+)\s+\1</span></code>也可以写成<code class="docutils literal"><span class="pre">(?P&lt;word&gt;\b\w+)\s+(?P=word)</span></code>:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="go">&gt;&gt;&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">p</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="s1">r&#39;(?P&lt;word&gt;\b\w+)\s+(?P=word)&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">p</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="s1">&#39;Paris in the the spring&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">group</span><span class="p">()</span>
+<span class="go">&#39;the the&#39;</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="id16">
+<h3>前向断言<a class="headerlink" href="#id16" title="Permalink to this headline">¶</a></h3>
+<p>另外一种零宽断言是前向断言，同时存在正向和负向前向断言两种形式。</p>
+<dl class="docutils">
+<dt><code class="docutils literal"><span class="pre">(?=...)</span></code></dt>
+<dd>肯定前向断言。如果由
+...表示的正则表达式成功匹配当前位置，则成功，否则失败。但是，一旦包含的表达式已经被尝试，匹配引擎不会再次向前处理；从断言开始的位置开始向右尝试剩下的模式。</dd>
+<dt><code class="docutils literal"><span class="pre">(?!...)</span></code></dt>
+<dd>否定前向断言。和正向断言相反，如果包含的表达式不匹配字符串当前位置，则匹配成功。</dd>
+</dl>
+<p>让我们用一个例子来说明前向断言的用处。比如，你想匹配包含扩展名的所有文件，模式相当简单：</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span>.*[.].*$
+</pre></div>
+</div>
+<p>现在考虑对问题做微小的修改，如果你想匹配扩展名不是<strong>bat</strong>的文件，你会怎么解决？下面是一些错误的方法。</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span>.*[.][^b].*$
+</pre></div>
+</div>
+<p>该模式要求文件扩展名不以b开头，但是这是错误的。因为它也不匹配其他的文件扩展名如：foo.bar</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span>.*[.]([^b]..|.[^a].|..[^t])$
+</pre></div>
+</div>
+<p>这种模式更混乱：它要求文件扩展名第一个字母不是b，第二个不是a，第三个不是t。该模式匹配foo.bar，也不匹配auto.bat。但是该模式要求文件扩展名是三个字母，所以不会匹配两个字母的扩展名如mail.cf。然后对模式进行如下修改：</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span>.*[.]([^b].?.?|.[^a]?.?|..?[^t]?)$
+</pre></div>
+</div>
+<p>在该模式中，第二个和第三个字母是可选的，所以可以匹配少于三个字母的文件扩展名如mail.cf。</p>
+<p>模式现在已经很复杂了，很难读也难以理解。更糟糕的是，如果问题发生改变，不匹配bat和exe结尾的文件扩展名，模式会变得更加复杂。</p>
+<p>否定前向断言解决了所有这些困惑：</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span>.*[.](?!bat$)[^.]*$
+</pre></div>
+</div>
+<p>该否定前向断言意思是：如果表达式bat不匹配该位置，那么尝试匹配剩余的模式；如果bat是必须的，因为这样可以确保匹配类似sample.batch。[^.]*确保在文件名中有很多点号时也可以正确工作。</p>
+<p>现在排除其他的文件扩展名也变得简单：使它变成断言的选择结构即可。例如，下面的模式排除bat和exe结尾的扩展名：</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span>.*[.](?!bat$|exe$)[^.]*$
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="id17">
+<h2>修改字符串<a class="headerlink" href="#id17" title="Permalink to this headline">¶</a></h2>
+<p>目前为止，我们都是对固定字符串执行简单的匹配操作。实际上，RE也可以用来修改字符串，使用以下的模式方法：</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="17%" />
+<col width="83%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">方法</th>
+<th class="head">目标</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>split()</td>
+<td>切割字符串，返回list；只要匹配RE就切割。</td>
+</tr>
+<tr class="row-odd"><td>sub()</td>
+<td>查找所有和RE匹配的子串，然后用一个不同的子串代替。</td>
+</tr>
+<tr class="row-even"><td>subn()</td>
+<td>和sub()一样，但是返回新的字符串和替换的次数。</td>
+</tr>
+</tbody>
+</table>
+<div class="section" id="id18">
+<h3>切割字符串<a class="headerlink" href="#id18" title="Permalink to this headline">¶</a></h3>
+<p>只要和RE匹配，模式的split()方法就可以切割字符串，返回一个list。和字符串的split()方法类似，但是分隔符可以更通用；字符串的split()方法只支持空白符或者固定的字符串。如你所愿，也存在一个模块级别re.split()函数。</p>
+<dl class="docutils">
+<dt>split(string[, maxsplit=0])</dt>
+<dd>通过正则匹配切割字符串。如果模式中包含捕获分组括号，那么捕获分组的内容也会成为返回列表的一部分。如果maxsplit参数不为0，那么最多执行maxsplit次切割，并且字符串的剩余部分作为列表的最后一个元素。</dd>
+</dl>
+<div class="code python highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">p</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="s1">r&#39;\W+&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">p</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;This is a test, short and sweet, of split().&#39;</span><span class="p">)</span>
+<span class="go">[&#39;This&#39;, &#39;is&#39;, &#39;a&#39;, &#39;test&#39;, &#39;short&#39;, &#39;and&#39;, &#39;sweet&#39;, &#39;of&#39;, &#39;split&#39;, &#39;&#39;]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">p</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;This is a test, short and sweet, of split().&#39;</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+<span class="go">[&#39;This&#39;, &#39;is&#39;, &#39;a&#39;, &#39;test, short and sweet, of split().&#39;]</span>
+</pre></div>
+</div>
+<p>有时你对分隔符文本不感兴趣，但是又得知道分隔符内容是什么。如果在RE中使用捕获分组括号，那么他们的值也会成为list的一部分。试比较：</p>
+<div class="code python highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">p</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="s1">r&#39;\W+&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">p2</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="s1">r&#39;(\W+)&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">p</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;This... is a test.&#39;</span><span class="p">)</span>
+<span class="go">[&#39;This&#39;, &#39;is&#39;, &#39;a&#39;, &#39;test&#39;, &#39;&#39;]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">p2</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;This... is a test.&#39;</span><span class="p">)</span>
+<span class="go">[&#39;This&#39;, &#39;... &#39;, &#39;is&#39;, &#39; &#39;, &#39;a&#39;, &#39; &#39;, &#39;test&#39;, &#39;.&#39;, &#39;&#39;]</span>
+</pre></div>
+</div>
+<p>模块级re.split()函数使用模式作为第一个参数，其他的都一样：</p>
+<div class="code python highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">re</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;[\W]+&#39;</span><span class="p">,</span> <span class="s1">&#39;Words, words, words.&#39;</span><span class="p">)</span>
+<span class="go">[&#39;Words&#39;, &#39;words&#39;, &#39;words&#39;, &#39;&#39;]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">re</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;([\W]+)&#39;</span><span class="p">,</span> <span class="s1">&#39;Words, words, words.&#39;</span><span class="p">)</span>
+<span class="go">[&#39;Words&#39;, &#39;, &#39;, &#39;words&#39;, &#39;, &#39;, &#39;words&#39;, &#39;.&#39;, &#39;&#39;]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">re</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;[\W]+&#39;</span><span class="p">,</span> <span class="s1">&#39;Words, words, words.&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="go">[&#39;Words&#39;, &#39;words, words.&#39;]</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="id19">
+<h3>查找和替换<a class="headerlink" href="#id19" title="Permalink to this headline">¶</a></h3>
+<p>另一个常用操作是查找模式匹配，然后进行替换。sub()函数带有一个replacement参数，它可以是一个字符串，也可以是函数，然后进行处理。</p>
+<dl class="docutils">
+<dt>.sub(replacement, string[, count=0])</dt>
+<dd>在<em>string</em>参数中，对最左边的非重叠的模式匹配部分替换成<em>replacement</em>，并返回新字符串。如果找不到匹配的模式，返回的字符串不便。可选的count参数代表替换的次数，默认为0，代表替换所有的匹配。</dd>
+</dl>
+<div class="code python highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">p</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="s1">&#39;(blue|white|red)&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">p</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="s1">&#39;colour&#39;</span><span class="p">,</span> <span class="s1">&#39;blue socks and red shoes&#39;</span><span class="p">)</span>
+<span class="go">&#39;colour socks and colour shoes&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">p</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="s1">&#39;colour&#39;</span><span class="p">,</span> <span class="s1">&#39;blue socks and red shoes&#39;</span><span class="p">,</span> <span class="n">count</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="go">&#39;colour socks and red shoes&#39;</span>
+</pre></div>
+</div>
+<p>subn()功能相同，但是它返回一个包含替换字符串和替换次数的二元组：</p>
+<div class="code python highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">p</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="s1">&#39;(blue|white|red)&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">p</span><span class="o">.</span><span class="n">subn</span><span class="p">(</span><span class="s1">&#39;colour&#39;</span><span class="p">,</span> <span class="s1">&#39;blue socks and red shoes&#39;</span><span class="p">)</span>
+<span class="go">(&#39;colour socks and colour shoes&#39;, 2)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">p</span><span class="o">.</span><span class="n">subn</span><span class="p">(</span><span class="s1">&#39;colour&#39;</span><span class="p">,</span> <span class="s1">&#39;no colours at all&#39;</span><span class="p">)</span>
+<span class="go">(&#39;no colours at all&#39;, 0)</span>
+</pre></div>
+</div>
+<p>空匹配只有在不和前一个匹配相邻时才执行替换：</p>
+<div class="code python highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">p</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="s1">&#39;x*&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">p</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="s1">&#39;-&#39;</span><span class="p">,</span> <span class="s1">&#39;abxd&#39;</span><span class="p">)</span>
+<span class="go">&#39;-a-b-d-&#39;</span>
+</pre></div>
+</div>
+<p>如果<em>replacement</em>参数是字符串，会执行字符转义。比如&#8217;&#8216;会转化为换行符，未知的转义会直接保留。而反向引用，如&#8217;&#8216;，会被模式中匹配的相应分组进行替换，这样允许你把原始字符串的部分包含在返回的新串中：</p>
+<p>例如，下面的模式把后面跟随{}的section，并把section替换成subsection：</p>
+<div class="code python highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">p</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="s1">&#39;section{ ( [^}]* ) }&#39;</span><span class="p">,</span> <span class="n">re</span><span class="o">.</span><span class="n">VERBOSE</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">p</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="s1">r&#39;subsection{\1}&#39;</span><span class="p">,</span><span class="s1">&#39;section</span><span class="si">{First}</span><span class="s1"> section</span><span class="si">{second}</span><span class="s1">&#39;</span><span class="p">)</span>
+<span class="go">&#39;subsection{First} subsection{second}&#39;</span>
+</pre></div>
+</div>
+<p>还可以引用命名元组(之前的<code class="docutils literal"><span class="pre">(?P&lt;name&gt;...)</span></code>语法定义)。<code class="docutils literal"><span class="pre">\g&lt;name&gt;</span></code>会引用组名name匹配的子串，而<code class="docutils literal"><span class="pre">\g&lt;number&gt;</span></code>引用相应的组。因此，<code class="docutils literal"><span class="pre">\g&lt;2&gt;</span></code>和<code class="docutils literal"><span class="pre">\2</span></code>等价，但是在形如<code class="docutils literal"><span class="pre">\g&lt;2&gt;0</span></code>的替换子串中，它不会产生歧义(而<code class="docutils literal"><span class="pre">\20</span></code>会被解释为引用第20分组，而不是第2分组和字符0)。例如，下面的替换都是等价的：</p>
+<div class="code python highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">p</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="s1">&#39;section{ (?P&lt;name&gt; [^}]* ) }&#39;</span><span class="p">,</span> <span class="n">re</span><span class="o">.</span><span class="n">VERBOSE</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">p</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="s1">r&#39;subsection{\1}&#39;</span><span class="p">,</span><span class="s1">&#39;section</span><span class="si">{First}</span><span class="s1">&#39;</span><span class="p">)</span>
+<span class="go">&#39;subsection{First}&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">p</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="s1">r&#39;subsection{\g&lt;1&gt;}&#39;</span><span class="p">,</span><span class="s1">&#39;section</span><span class="si">{First}</span><span class="s1">&#39;</span><span class="p">)</span>
+<span class="go">&#39;subsection{First}&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">p</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="s1">r&#39;subsection{\g&lt;name&gt;}&#39;</span><span class="p">,</span><span class="s1">&#39;section</span><span class="si">{First}</span><span class="s1">&#39;</span><span class="p">)</span>
+<span class="go">&#39;subsection{First}&#39;</span>
+</pre></div>
+</div>
+<p><em>replacement</em>参数也可以是函数，如果是函数，那么对于模式的每一次不重叠匹配，都会调用该函数一次。在每一次调用中，函数接收match对象，并执行操作。</p>
+<p>例如下面的例子，replacement函数把十进制数转化为16进制：</p>
+<div class="code python highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">def</span> <span class="nf">hexrepl</span><span class="p">(</span><span class="n">match</span><span class="p">):</span>
+<span class="gp">... </span>    <span class="s2">&quot;Return the hex string for a decimal number&quot;</span>
+<span class="gp">... </span>    <span class="n">value</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">match</span><span class="o">.</span><span class="n">group</span><span class="p">())</span>
+<span class="gp">... </span>    <span class="k">return</span> <span class="nb">hex</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+<span class="gp">...</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">p</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="s1">r&#39;\d+&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">p</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="n">hexrepl</span><span class="p">,</span> <span class="s1">&#39;Call 65490 for printing, 49152 for user code.&#39;</span><span class="p">)</span>
+<span class="go">&#39;Call 0xffd2 for printing, 0xc000 for user code.&#39;</span>
+</pre></div>
+</div>
+<p>如果你使用模块级re.sub()函数，那么模式作为第一个参数，模式可能通过对象或者字符串的形式提供。如果你需要指定RE标志，你可以使用模式对象作为第一个第一个参数，也可以在模式字符串中使用嵌入标志，如：<code class="docutils literal"><span class="pre">sub(&quot;(?i)b+&quot;,</span> <span class="pre">&quot;x&quot;,</span> <span class="pre">&quot;bbbb</span> <span class="pre">BBBB&quot;)</span></code>返回&#8217;x
+x&#8217;。</p>
+</div>
+</div>
+<div class="section" id="id20">
+<h2>常见问题<a class="headerlink" href="#id20" title="Permalink to this headline">¶</a></h2>
+<p>正则表达式是很强大的工具，不过由于它不太直观，下面讨论RE中的一些常见问题。</p>
+<div class="section" id="id21">
+<h3>使用字符串方法<a class="headerlink" href="#id21" title="Permalink to this headline">¶</a></h3>
+<p>首先，在你使用RE之前，优先考虑使用字符串方法是否可以解决。对于一些固定的字符串，并不需要使用RE特性的操作，使用字符串方法可以更快。</p>
+</div>
+<div class="section" id="match-search">
+<h3>match()和search()对比<a class="headerlink" href="#match-search" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li>match()方法从字符串开头进行匹配；</li>
+<li>search()扫描字符串，返回第一次匹配；</li>
+</ul>
+</div>
+<div class="section" id="id22">
+<h3>贪婪和非贪婪匹配<a class="headerlink" href="#id22" title="Permalink to this headline">¶</a></h3>
+<p>贪婪匹配尝试匹配尽可能多的字符，而非贪婪匹配尝试匹配尽可能少的字符。非贪婪匹配对于类似html标记的工作有用。但是需要指出的是，使用RE解析xml和html非常繁琐，你最好使用专用的解析模块。</p>
+</div>
+<div class="section" id="re-verbose">
+<h3>使用<code class="docutils literal"><span class="pre">re.VERBOSE</span></code><a class="headerlink" href="#re-verbose" title="Permalink to this headline">¶</a></h3>
+<p>你已经注意到，RE记法非常紧凑，但是非常难读。re的复杂性来源于反斜杠，括号，和元字符。对于这种RE，建议指定re.VERBOSE标志，这样你可以以更清晰的方式组织正则模式。首先，模式中空白符会被忽略(字符类中的空白符除外，不能忽略)，然后你还可以给模式添加注释；</p>
+<div class="code python highlight-default"><div class="highlight"><pre><span></span><span class="n">pat</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="s2">r&quot;&quot;&quot;</span>
+<span class="s2"> \s*                 # Skip leading whitespace</span>
+<span class="s2"> (?P&lt;header&gt;[^:]+)   # Header name</span>
+<span class="s2"> \s* :               # Whitespace, and a colon</span>
+<span class="s2"> (?P&lt;value&gt;.*?)      # The header&#39;s value -- *? used to</span>
+<span class="s2">                     # lose the following trailing whitespace</span>
+<span class="s2"> \s*$                # Trailing whitespace to end-of-line</span>
+<span class="s2">&quot;&quot;&quot;</span><span class="p">,</span> <span class="n">re</span><span class="o">.</span><span class="n">VERBOSE</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>显然，它比<code class="docutils literal"><span class="pre">pat</span> <span class="pre">=</span> <span class="pre">re.compile(r&quot;\s*(?P&lt;header&gt;[^:]+)\s*:(?P&lt;value&gt;.*?)\s*$&quot;)</span></code>更易读。</p>
+</div>
+</div>
+</div>
+
+
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+      
+        <a href="pysnmp_doc_example.html" class="btn btn-neutral" title="2. PySNMP获取设备信息" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2016, chenshiqiang.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'0.1',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

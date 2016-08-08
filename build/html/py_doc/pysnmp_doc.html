@@ -1,0 +1,973 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>1. PySNMP教程 &mdash; Blogs 0.1 documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+    <link rel="top" title="Blogs 0.1 documentation" href="../index.html"/>
+        <link rel="up" title="Python笔记" href="index.html"/>
+        <link rel="next" title="2. PySNMP获取设备信息" href="pysnmp_doc_example.html"/>
+        <link rel="prev" title="Python笔记" href="index.html"/> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> Blogs
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.1
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Python笔记</a><ul class="current">
+<li class="toctree-l2 current"><a class="current reference internal" href="#">1. PySNMP教程</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id1">快速入门</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#snmp">获取SNMP变量</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#snmp-trap">发送<strong>SNMP TRAP</strong></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#id2">参考手册</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#id3">SNMP历史</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id6">SNMP设计</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id13">PySNMP架构</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id14">常用操作</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="pysnmp_doc_example.html">2. PySNMP获取设备信息</a></li>
+<li class="toctree-l2"><a class="reference internal" href="re_doc.html">3. Python正则表达式</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../index.html">Blogs</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+ 
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../index.html">Docs</a> &raquo;</li>
+      
+          <li><a href="index.html">Python笔记</a> &raquo;</li>
+      
+    <li>1. PySNMP教程</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="../_sources/py_doc/pysnmp_doc.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="pysnmp">
+<h1>1. PySNMP教程<a class="headerlink" href="#pysnmp" title="Permalink to this headline">¶</a></h1>
+<p>Tags： Python</p>
+<hr class="docutils" />
+<p>[TOC]</p>
+<hr class="docutils" />
+<blockquote>
+<div>地址：<a class="reference external" href="http://pysnmp.sourceforge.net/contents.html">PySNMP</a>
+<code class="docutils literal"><span class="pre">注</span></code>：涉及到SNMP的专有名词一律不予以翻译, 并用粗体表示。</div></blockquote>
+<div class="section" id="id1">
+<h2>快速入门<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
+<p>只要你在你的计算机上下载并安装了PySNMP库，你就可以解决非常基本的SNMP问题,
+如通过Python命令行获取某个远程<strong>SNMP
+Agent</strong>的数据(你至少需要4.3.0以上版本，才可以执行后面的示例代码)。</p>
+<div class="section" id="snmp">
+<h3>获取SNMP变量<a class="headerlink" href="#snmp" title="Permalink to this headline">¶</a></h3>
+<p>复制和粘贴下列代码到Python命令提示符上，代码将会执行<strong>SNMP
+GET</strong>操作获取<code class="docutils literal"><span class="pre">sysDescr.0</span></code>对象，这是一个公开可用的<strong>SNMP
+Command Responder</strong>,
+更多对象请参考<a class="reference external" href="http://snmpsim.sourceforge.net/public-snmp-simulator.html">demo.snmplabs.com</a></p>
+<div class="code python highlight-default"><div class="highlight"><pre><span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">SNMPv1</span>
+<span class="sd">++++++</span>
+
+<span class="sd">Send SNMP GET request using the following options:</span>
+
+<span class="sd">  * with SNMPv1, community &#39;public&#39;</span>
+<span class="sd">  * over IPv4/UDP</span>
+<span class="sd">  * to an Agent at demo.snmplabs.com:161</span>
+<span class="sd">  * for two instances of SNMPv2-MIB::sysDescr.0 MIB object,</span>
+
+<span class="sd">Functionally similar to:</span>
+
+<span class="sd">| $ snmpget -v1 -c public demo.snmplabs.com SNMPv2-MIB::sysDescr.0</span>
+
+<span class="sd">&quot;&quot;&quot;</span><span class="c1">#</span>
+<span class="kn">from</span> <span class="nn">pysnmp.hlapi</span> <span class="k">import</span> <span class="o">*</span>
+
+<span class="n">errorIndication</span><span class="p">,</span> <span class="n">errorStatus</span><span class="p">,</span> <span class="n">errorIndex</span><span class="p">,</span> <span class="n">varBinds</span> <span class="o">=</span> <span class="nb">next</span><span class="p">(</span>
+    <span class="n">getCmd</span><span class="p">(</span><span class="n">SnmpEngine</span><span class="p">(),</span>
+           <span class="n">CommunityData</span><span class="p">(</span><span class="s1">&#39;public&#39;</span><span class="p">,</span> <span class="n">mpModel</span><span class="o">=</span><span class="mi">0</span><span class="p">),</span>
+           <span class="n">UdpTransportTarget</span><span class="p">((</span><span class="s1">&#39;demo.snmplabs.com&#39;</span><span class="p">,</span> <span class="mi">161</span><span class="p">)),</span>
+           <span class="n">ContextData</span><span class="p">(),</span>
+           <span class="n">ObjectType</span><span class="p">(</span><span class="n">ObjectIdentity</span><span class="p">(</span><span class="s1">&#39;SNMPv2-MIB&#39;</span><span class="p">,</span> <span class="s1">&#39;sysDescr&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">)))</span>
+<span class="p">)</span>
+
+<span class="k">if</span> <span class="n">errorIndication</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">errorIndication</span><span class="p">)</span>
+<span class="k">elif</span> <span class="n">errorStatus</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">%s</span><span class="s1"> at </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">errorStatus</span><span class="o">.</span><span class="n">prettyPrint</span><span class="p">(),</span>
+                        <span class="n">errorIndex</span> <span class="ow">and</span> <span class="n">varBinds</span><span class="p">[</span><span class="nb">int</span><span class="p">(</span><span class="n">errorIndex</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="ow">or</span> <span class="s1">&#39;?&#39;</span><span class="p">))</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="k">for</span> <span class="n">varBind</span> <span class="ow">in</span> <span class="n">varBinds</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39; = &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="n">x</span><span class="o">.</span><span class="n">prettyPrint</span><span class="p">()</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">varBind</span><span class="p">]))</span>
+</pre></div>
+</div>
+<p>如果一切执行正常，那么将会在你的终端打印：</p>
+<div class="code python highlight-default"><div class="highlight"><pre><span></span><span class="o">...</span>
+<span class="n">SNMPv2</span><span class="o">-</span><span class="n">MIB</span><span class="p">::</span><span class="n">sysDescr</span><span class="o">.</span><span class="s2">&quot;0&quot;</span> <span class="o">=</span> <span class="n">SunOS</span> <span class="n">zeus</span><span class="o">.</span><span class="n">snmplabs</span><span class="o">.</span><span class="n">com</span> <span class="mf">4.1</span><span class="o">.</span><span class="mi">3</span><span class="n">_U1</span> <span class="mi">1</span> <span class="n">sun4m</span>
+<span class="o">&gt;&gt;&gt;</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="snmp-trap">
+<h3>发送<strong>SNMP TRAP</strong><a class="headerlink" href="#snmp-trap" title="Permalink to this headline">¶</a></h3>
+<p>想给<a class="reference external" href="http://snmpsim.sourceforge.net/public-snmp-simulator.html">demo.snmplabs.com</a>中列出的宿主<strong>Notification
+Receiver</strong>发送<strong>TRAP</strong>消息，复制以下代码到你的交互式Python会话中。</p>
+<div class="code python highlight-default"><div class="highlight"><pre><span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">SNMPv1 TRAP with defaults</span>
+<span class="sd">+++++++++++++++++++++++++</span>
+
+<span class="sd">Send SNMPv1 TRAP through unified SNMPv3 message processing framework</span>
+<span class="sd">using the following options:</span>
+
+<span class="sd">* SNMPv1</span>
+<span class="sd">* with community name &#39;public&#39;</span>
+<span class="sd">* over IPv4/UDP</span>
+<span class="sd">* send TRAP notification</span>
+<span class="sd">* with Generic Trap #1 (warmStart) and Specific Trap 0</span>
+<span class="sd">* with default Uptime</span>
+<span class="sd">* with default Agent Address</span>
+<span class="sd">* with Enterprise OID 1.3.6.1.4.1.20408.4.1.1.2</span>
+<span class="sd">* include managed object information &#39;1.3.6.1.2.1.1.1.0&#39; = &#39;my system&#39;</span>
+
+<span class="sd">Functionally similar to:</span>
+
+<span class="sd">| $ snmptrap -v1 -c public demo.snmplabs.com 1.3.6.1.4.1.20408.4.1.1.2 0.0.0.0 1 0 0 1.3.6.1.2.1.1.1.0 s &quot;my system&quot;</span>
+
+<span class="sd">&quot;&quot;&quot;</span><span class="c1">#</span>
+<span class="kn">from</span> <span class="nn">pysnmp.hlapi</span> <span class="k">import</span> <span class="o">*</span>
+
+<span class="n">errorIndication</span><span class="p">,</span> <span class="n">errorStatus</span><span class="p">,</span> <span class="n">errorIndex</span><span class="p">,</span> <span class="n">varBinds</span> <span class="o">=</span> <span class="nb">next</span><span class="p">(</span>
+    <span class="n">sendNotification</span><span class="p">(</span>
+        <span class="n">SnmpEngine</span><span class="p">(),</span>
+        <span class="n">CommunityData</span><span class="p">(</span><span class="s1">&#39;public&#39;</span><span class="p">,</span> <span class="n">mpModel</span><span class="o">=</span><span class="mi">0</span><span class="p">),</span>
+        <span class="n">UdpTransportTarget</span><span class="p">((</span><span class="s1">&#39;demo.snmplabs.com&#39;</span><span class="p">,</span> <span class="mi">162</span><span class="p">)),</span>
+        <span class="n">ContextData</span><span class="p">(),</span>
+        <span class="s1">&#39;trap&#39;</span><span class="p">,</span>
+        <span class="n">NotificationType</span><span class="p">(</span>
+            <span class="n">ObjectIdentity</span><span class="p">(</span><span class="s1">&#39;1.3.6.1.6.3.1.1.5.2&#39;</span><span class="p">)</span>
+        <span class="p">)</span><span class="o">.</span><span class="n">addVarBinds</span><span class="p">(</span>
+            <span class="p">(</span><span class="s1">&#39;1.3.6.1.6.3.1.1.4.3.0&#39;</span><span class="p">,</span> <span class="s1">&#39;1.3.6.1.4.1.20408.4.1.1.2&#39;</span><span class="p">),</span>
+            <span class="p">(</span><span class="s1">&#39;1.3.6.1.2.1.1.1.0&#39;</span><span class="p">,</span> <span class="n">OctetString</span><span class="p">(</span><span class="s1">&#39;my system&#39;</span><span class="p">))</span>
+        <span class="p">)</span>
+    <span class="p">)</span>
+<span class="p">)</span>
+
+<span class="k">if</span> <span class="n">errorIndication</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">errorIndication</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>许多<strong>ASN.1
+MIB</strong>文件可以通过<a class="reference external" href="http://mibs.snmplabs.com/asn1/">mibs.snmplabs.com</a>进行下载，也可以配置PySNMP自动下载他们。</p>
+</div>
+</div>
+<div class="section" id="id2">
+<h2>参考手册<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id3">
+<h3>SNMP历史<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h3>
+<p>在联网早期，计算机网络被当做是一项研究艺术而不是可被每个人使用的关键基础设施，网络管理更不被所知。当谁遇到了网络问题，他可能允许ping命令来定位问题源头，然后更改系统设置、重启软硬件，或叫同事在机房检查终端。</p>
+<p>上世纪80年代，<code class="docutils literal"><span class="pre">crash</span></code>
+是一个很有意思的讨论，在网络管理工具之前，从<a class="reference external" href="https://tools.ietf.org/html/rfc789.html">RFC
+789</a>中也可以看到为了恢复和理解死机所付出的努力。工程师们事后研究等令人吃惊的事情可以从字里行间看到。由于互联网和内网从很小的网络长大成全球性的基础设施，网络也变得越来越重要，需要更系统的管理大量的软硬件设备。</p>
+<p>因此当网络管理需求变得很清晰时，一个大学网络研究小组很快就开发并部署了SNMP。</p>
+<p><strong>SNMP</strong>版本时间表：</p>
+<blockquote>
+<div><ul class="simple">
+<li>研究项目，SGMP</li>
+<li>SNMPv1,1988年，初始版本</li>
+<li>SNMPv2,1993年，完善</li>
+<li>SNMPv3,1999年，完全重新设计，保持先后兼容，并完全符合因特网标准</li>
+</ul>
+</div></blockquote>
+<p>SNMP最初被认为是一个临时的解决方案，因为当时ISO正在开发一个听起来更具理论性的系统。由于对这个新网络管理系统的期待，SNMP开发者使得它很模块化。即使这种过渡从没有发生，SNMP的模块化特性使得它发展了三个主要版本，并并广泛使用和接受。</p>
+<p>IETF
+<a class="reference external" href="https://tools.ietf.org/html/rfc3411.html">RFC3411</a>定义了SNMPv3，而<a class="reference external" href="https://tools.ietf.org/html/rfc3418.html">RFC3418</a>定义了SNMP的当前标准。IETF已经制定SNMPv3具备完全的因特网标准(RFC的最成熟等级)。实际上，SNMP实现通常支持多个版本，典型的包括：SNMPv1，SNMPv2，SNMPv3。</p>
+<div class="section" id="id4">
+<h4><em>SNMP是否还有用？</em><a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h4>
+<p>联想到SNMP已经这么古老，你可能会有疑问为什么他还在使用，是否具有更现代的代替方案。很显然，SNMP仍是性能和故障管理的主要方式。SNMP被所有的网络设备和网络管理应用广泛支持。</p>
+<p>SNMP如此顽强的一个主要原因是：由于SNMP的广泛部署，用其他系统代替需要巨大的努力；另外一个原因是因为当前在性能和错误管理上SNMP没有什么显著的缺陷。</p>
+<p>另外，SNMP是免费的，没有被特定厂商控制，不要版权和许可费用，因此任何人都可以使用它，或者在它之上构建自己的SNMP产品。</p>
+<p>尽管技术公司和标准制定机构付出很大努力，但是并没有什么新的网络监控标准产生。当前最杰出的代替品可能是<a class="reference external" href="https://tools.ietf.org/html/rfc6241.html">NETCONF</a>，然而他的重要目标是配置管理任务而不是错误和性能监控。此外，相对于SNMP，NETCONF更是资源密集型。</p>
+<p>显然对每个人来说，提出自己的专用管理系统也是可能的。例如，在HTTPS/json之上这很容易做。但是，这只会对你的应用起作用，并且SSL引擎也会消耗更多的资源。</p>
+</div>
+<div class="section" id="id5">
+<h4><em>当前和今后的用途</em><a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h4>
+<p>由于SNMP的广泛部署，在当前现代互联网上有多少支持SNMP的设备在运行时不可能的。因此人们可能只有要求SNMP监视整个互联网。</p>
+<p>你可能发现SNMP对你的网络监控和管理很有用。例如你可以很容易的安装一个开源网络监控应用来监察、收集和绘图表示你家庭网络的WIFI路由器的带宽使用量(这可以帮你发现瓶颈)。</p>
+<p>在未来几年，一个重大的变革可能会发生。这就是物联网。所有这些小功率设备都需要被监控和管理，这可能给SNMP技术带来新的生机。差不多三十年前，SNMP是为严重资源受限计算机而设计的。之后计算机变得越来越强大，资源也更多。现在我们重新回到构建大量的低功率设备为物联网，而原始SNMP的轻量级特性可以再一次为我们服务。</p>
+</div>
+</div>
+<div class="section" id="id6">
+<h3>SNMP设计<a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h3>
+<p>与他的名字所暗示的意思相反，SNMP可不仅仅是一个传输管理数据的协议。随着时间推移，它变得远比它最初设计者计划设计的复杂。</p>
+<div class="section" id="id7">
+<h4><em>术语标准和实体</em><a class="headerlink" href="#id7" title="Permalink to this headline">¶</a></h4>
+<p>在网络管理领域，各种组件和网络架构都有着它的特定专有术语，所以我们在这里引用这些术语。在这些术语中，最奇怪的是词汇&#8221;管理&#8221;(management)一词的过度使用，它几乎无处不在。</p>
+<p>一个网络管理架构主要有三个组件：管理实体、被管理实体，和网络管理协议。</p>
+<div class="figure" id="id25">
+<img alt="此处输入图片的描述" src="http://pysnmp.sourceforge.net/_images/nms-components.svg" /><p class="caption"><span class="caption-text">此处输入图片的描述</span></p>
+</div>
+<ul class="simple">
+<li>管理实体是一个运行在集中式网络管理工作站的应用程序。它就是一个控制、处理、分析、显示网络管理信息的实体。正是在这里，动作开始控制网络行为；也正是在这里，网络管理人员和网络设备进行交互。</li>
+<li>被管理实体通常是驻留在被管理网络上硬件或软件应用，它枚举和形式化它的一些属性和状态，健康运行的重要，从而使它们提供给管理实体。例如，一个管理实体可以是一台主机，路由器，交换机，打印机，或任何其他设备。</li>
+<li>网络管理系统的第三部分是网络管理协议。协议同时运行在管理和被管理实体上，运行管理实体查询被管理实体的状态，并通过代理执行随后的动作。</li>
+</ul>
+</div>
+<div class="section" id="id8">
+<h4><em>结构和组件</em><a class="headerlink" href="#id8" title="Permalink to this headline">¶</a></h4>
+<p>SNMP由四个部分组成：</p>
+<ul class="simple">
+<li>被称为MIB对象的网络管理对象的定义。管理信息通常被描述为被管理对象的集合，他们聚合一起形成虚拟的信息存储库，通常被称为管理信息库(Management
+Information Base,
+MIB)。一个MIB对象可能是一个计数器，一个描述信息(比如软件版本号)；状态信息(比如设备是否健康)或者是协议特定信息(比如到某个目的地的路由)。MIB对象因此定义了被管理节点所维护的管理信息。相关的MIB对象被收集起来放进一个所谓的MIB模块。</li>
+<li>数据定义语言，称为SMI(Structure of Management
+Information，管理信息结构)，它提出了基本数据类型，并允许创建他们的子类型和更复杂的数据结构。MIB对象由这数据定义语言表示。</li>
+<li>在管理对象和被管理对象之间传输信息的协议(SNMP)。SNMP的设计围绕C/S模型，有趣的是，管理实体和被管理实体都包含客户端和服务端组件。</li>
+<li>可扩展的安全框架和系统管理能力。</li>
+</ul>
+<p>后面的特征在SNMPv3之前的版本中完全不存在。</p>
+</div>
+<div class="section" id="id9">
+<h4><em>数据类型</em><a class="headerlink" href="#id9" title="Permalink to this headline">¶</a></h4>
+<p>SMI提出了11种基础数据类型，用来描述被管理实体对象状态，他们要么是纯<code class="docutils literal"><span class="pre">ASN.1</span></code>类型，要么是他们的特例。</p>
+<ul class="simple">
+<li>纯<code class="docutils literal"><span class="pre">ASN.1</span></code>类型：<ul>
+<li>整形</li>
+<li>八位字节串</li>
+<li>对象标识符</li>
+</ul>
+</li>
+</ul>
+<p><code class="docutils literal"><span class="pre">ASN.1</span></code>是一个很古老和一系列很复杂的标准，用可迁移的方式(in a
+portable way)来处理数据结构化和序列化的问题。</p>
+<ul class="simple">
+<li>基本<code class="docutils literal"><span class="pre">ASN.1</span></code>类型的SNMP特定子类型有：<ul>
+<li>Integer32/Unsigned32 - 32-bit integer</li>
+<li>Counter32/Counter64 - ever increasing number</li>
+<li>Gauge32 - positive, non-wrapping 31-bit integer</li>
+<li>TimeTicks - time since some event</li>
+<li>IPaddress - IPv4 address</li>
+<li>Opaque - uninterpreted ASN.1 string</li>
+</ul>
+</li>
+</ul>
+<p>对于标量类型(scalar
+types)，SNMP定义了一种方式：把他们收集在一个有序数组中。从这些数组可以建立一个二维表。</p>
+<p>PySNMP依赖于<a class="reference external" href="http://pyasn1.sf.net/">PyASN1</a>包来塑模所有的SNMP类型，通过PyASN1，<code class="docutils literal"><span class="pre">ASN.1</span></code>类型实例可以表述为看起来像一个字符串或者整数的python对象。</p>
+<p>我们可以相互转换PyASN1对象和Python类型，PyASN1对象可以进行基本的算术运算(数字)或字符串操作(串接等)。所有的SNMP基本类型和相对应的Python对象一样，都是不可变的。</p>
+<div class="code python highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pyasn1.type.univ</span> <span class="k">import</span> <span class="o">*</span>
+<span class="go">&gt;&gt;&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">Integer</span><span class="p">(</span><span class="mi">21</span><span class="p">)</span> <span class="o">*</span> <span class="mi">2</span>
+<span class="go">Integer(42)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">Integer</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="o">+</span> <span class="n">Integer</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="go">Integer(0)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">int</span><span class="p">(</span><span class="n">Integer</span><span class="p">(</span><span class="mi">42</span><span class="p">))</span>
+<span class="go">42</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">OctetString</span><span class="p">(</span><span class="s1">&#39;Hello&#39;</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39;, &#39;</span> <span class="o">+</span> <span class="n">OctetString</span><span class="p">(</span><span class="n">hexValue</span><span class="o">=</span><span class="s1">&#39;5079534e4d5021&#39;</span><span class="p">)</span>
+<span class="go">OctetString(&#39;Hello, PySNMP!&#39;)</span>
+<span class="go">&gt;&gt;&gt;</span>
+</pre></div>
+</div>
+<p>通过PySNMP传输和接收数据时，PySNMP库用户可能会遇到PyASN1类和对象。</p>
+<p>我们会深入讨论的一个数据类型是<code class="docutils literal"><span class="pre">OBJECT</span> <span class="pre">IDENTIFIER</span></code>，它被用来命名一个对象。在该系统中，对象用层次式方式标识。</p>
+<div class="section" id="oid">
+<h5><em>对象标识符(OID)</em><a class="headerlink" href="#oid" title="Permalink to this headline">¶</a></h5>
+<p>在计算对象标识符时广泛使用OID，它可以由三部分描述，每一个节点都被赋予不同的组织、域、概念或对象类型、具体对象实例。从人的角度来说，OID是一串数字，被点号隔开，用来编码节点。
+<img alt="OID picture" src="http://pysnmp.sourceforge.net/_images/oid-tree.svg" />
+如图，该树的每一个分支都有一个数字和名称，而从树根到某个点的完整路径形成该点的名字，这个完整路径就是OID，靠近树根的节点通常具有极其普通的性质。</p>
+<p>顶级MIB对象ID属于不同的标准化组织，厂商定义了私有分支包括自家产品的被管理对象。</p>
+<p>是层次结构顶端是ISO和ITU-T，主要是这两个标准化组织做了ASN.1相关的工作，也是他们联合努力的一个分支。</p>
+<p>在PyASN1模块中，OID像不可变数字序列，就像Python元组一样，PyASN1
+OID对象可以被串接和切割，Subscription
+操作(?这里不懂怎么翻译)返回一个数字的sub-OID。</p>
+<div class="code python highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pyasn1.type.univ</span> <span class="k">import</span> <span class="o">*</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">internetId</span> <span class="o">=</span> <span class="n">ObjectIdentifier</span><span class="p">((</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">internetId</span>
+<span class="go">ObjectIdentifier(&#39;1.3.6.1&#39;)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">internetId</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
+<span class="go">6</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="p">[</span> <span class="n">x</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">internetId</span> <span class="p">]</span>
+<span class="go">[1, 3, 6, 1]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">internetId</span> <span class="o">+</span> <span class="p">(</span><span class="mi">2</span><span class="p">,)</span>
+<span class="go">ObjectIdentifier(&#39;1.3.6.1.2&#39;)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">internetId</span><span class="p">[</span><span class="mi">1</span><span class="p">:</span><span class="mi">3</span><span class="p">]</span>
+<span class="go">ObjectIdentifier(&#39;3.6&#39;)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">internetId</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="o">=</span> <span class="mi">2</span>
+<span class="gp">...</span>
+<span class="go">TypeError: object does not support item assignment</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="id10">
+<h4><em>对象集合</em><a class="headerlink" href="#id10" title="Permalink to this headline">¶</a></h4>
+<p>MIB可以理解为一系列相关被管理对象的形式化描述，这些被管理对象的整体值反应了子系统中被管理实体的当前状态。这些值可以通过给代理(代理运行在被管理节点上)发送SNMP消息被管理实体查询，修改或者上传。</p>
+<p>例如，在打印机上，典型的监控对象通常是不同打印机墨盒状态、和已经打印的文件数量；在交换机上，关注的对象可能是流入流出流量、丢包率、广播处理的数据包数。</p>
+<p>每一个被管理设备维持一个数据库，它的值是MIB中定义的每一项条目。<strong>所以，可用数据并不取决于数据库，而是取决于实现。认识到这一点很重要：MIB文件不包含数据，他们在功能上和数据库模式(database
+schemas)而不是数据存储相似。</strong></p>
+<p>为了合适的组织MIB模块和对象，所有产品(来自于每个厂商)的可管理特性排列在MIB树结构中。每一个MIB模块和对象都有一个OID唯一标识。</p>
+<p>SNMP管理实体和被管理实体都可以消费MIB信息。</p>
+<ul class="simple">
+<li>管理实体<ul>
+<li>通过MIB对象名查询OID</li>
+<li>转换值为合适的MIB对象类型</li>
+<li>阅读其他人留下的注释</li>
+</ul>
+</li>
+<li>被管理实体<ul>
+<li>在代码中实现MIB对象</li>
+</ul>
+</li>
+</ul>
+<p>从人的视角来看，MIB是一个文本文件，使用ASN.1语言的子集编写。我们维护了一个超过9000个模块的MIB集合，你可以在你的项目中使用它。</p>
+<p>PySNMP转换ASN.1
+MIB文件为Python模块，然后SNMP引擎在运行时按需加载模块。PySNMP
+MIB模块是通用的：同一个模块可以同时被管理实体和被管理实体使用。</p>
+<p>MIB转换会由PySNMP自动执行，但是技术上，他是有PySNMP的姊妹工程PySMI处理的。当然，你也可以使用PySMI的mibdump.py工具手动完成这种转换。</p>
+</div>
+<div class="section" id="id11">
+<h4><em>协议操作</em><a class="headerlink" href="#id11" title="Permalink to this headline">¶</a></h4>
+<p>SNMP围绕C/S模型设计，管理和被管理实体都包含客户端和服务端组件。客户端和服务端通过名字-值形式交换数据，值是强类型化的。</p>
+<p>协议实体中间是SNMP殷勤，它用来协调所有的SNMP组件工作。 <img alt="snmp-engine.svg" src="http://pysnmp.sourceforge.net/_images/snmp-engine.svg" />
+协议操作定义了两种形式：</p>
+<ul class="simple">
+<li>Request-response消息</li>
+<li>Unsolicited messages(主动提供的消息)</li>
+</ul>
+<p>协议包含SNMP消息。除头部信息使用协议操作外，管理信息通过所谓的协议数据单元进行传输(Protocol
+Data Units,
+PDU)。SNMP定义了其中PDU类型，可以由管理实体和被管理实体(分别是管理者和代理)执行概念上不同的操作。</p>
+<ul class="simple">
+<li>Manager-to-agent<ul>
+<li>GetRequest, SetRequest, GetNextRequest, GetBulkRequest,
+InformRequest</li>
+</ul>
+</li>
+<li>Manager-to-manager<ul>
+<li>InformRequest, Response</li>
+</ul>
+</li>
+<li>Agent-to-manager<ul>
+<li>SNMPv2-Trap, Response</li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="section" id="id12">
+<h4><em>核心应用</em><a class="headerlink" href="#id12" title="Permalink to this headline">¶</a></h4>
+<p><a class="reference external" href="https://tools.ietf.org/html/rfc3413.html">RFC
+3414</a>标准标识了一系列标准SNMP应用，他们和管理实体或者被管理实体相关联。
+<img alt="snmp-apps.svg" src="http://pysnmp.sourceforge.net/_images/snmp-apps.svg" />
+PySNMP依据RFC和抽象服务接口实现了所有这些应用(通过原生SNMP
+API)。这种方法的背后(backside)，是对大多数SNMP任务来说，它的做法很详细、啰嗦。为了使得SNMP易用，PySNMP提出了高级SNMP
+API.</p>
+</div>
+</div>
+<div class="section" id="id13">
+<h3>PySNMP架构<a class="headerlink" href="#id13" title="Permalink to this headline">¶</a></h3>
+<p>我们可以从SNMP协议的进化来看PySNMP的内部结构。SNMP发展了很多年，从一个相对简单的协议到提起和结构化数据，再到一个可扩展的、模块化的、强加密和支持开箱即用的框架。</p>
+<p>In the order from most ancient SNMP services to the most current ones,
+what follows are different layers of PySNMP APIs:
+从最古老的SNMP服务到最新版本，下面列出了不同层次的PySNMP API：</p>
+<ul class="simple">
+<li>最底层和最基本的SNMPv1/v2c。它们支持程序员构建解析SNMP消息，处理协议级别错误，传输错误等。虽然被认为处理起来很复杂，这些API通常有最好的性能，内存弹性，除非需要支持MIB访问和SNMPv3.</li>
+<li>SNMPv3标准在SNMP引擎和它的组件中配备了抽象服务接口。PySNMP实现采纳了这些抽象API并进行了扩展，所有他可以直接使用。额外的好处是，在这个层级进行PySNMP编程时API语义可以参考SNMP
+RFC。用户可以使用这些API实现自己的SNMP应用。</li>
+<li>SNMPv3 <a class="reference external" href="https://tools.ietf.org/html/rfc3413.html">(RFC
+3413)</a>引入了核心SNMP应用的概念。PySNMP都实现了他们(在pysnmp.entity.rfc3413)，所以用户可以在这些核心SNMP应用之上构建自己的应用。</li>
+<li>最后，为了SNMP对高频率任务易于使用，PySNMP配有一个高层次的核心SNMP应用和SNMP引擎服务(PySNMP
+comes with a high-level API to core SNMP applications and some of
+SNMP engine services.)。这下API在pysnmp.hlapi目录下，可以随时被使用。</li>
+</ul>
+<p>此外还可以从代码角度看PySNMP内部：它包括少量大的、自包含并且良好定义的接口。下面的图片解释了PySNMP的功能结构：
+<img alt="pysnmp-design.svg" src="http://pysnmp.sourceforge.net/_images/pysnmp-design.svg" /> PySNMP内部组件：</p>
+<ul class="simple">
+<li>SNMP引擎是核心，是保护伞，它控制SNMP系统其它组件。典型的用户应用包含一个SNMP引擎类实例，该引擎类被各种SNMP应用共享。其它的组件用来构建不同的配置，运行时内部信息处理，SNMP引擎对象配置为可用状态很耗时。</li>
+<li>传输子系统用来传输或接收SNMP消息。I/O子系统由一个抽象的分发器(Dispatcher)和一个(或多个)抽象Transport类。具体Dispatcher事项是特定的I/O方法，比如BSD套接字。具体的Transport类是特定的传输域。SNMP通常使用UDP传输(但是其他的传输协议也是可能的)。Transport
+Dispatcher接口通常被Message And PDU
+Dispatcher使用。不过，如果使用SNMPv1/v2c原生API(最底层的API)，这些接口会被直接调用。</li>
+<li>Message and PDU
+Dispatcher是SNMP消息处理活动的地方，它的主要任务包括：把SNMP应用从不同子系统收集的PDU向下传输给Transport
+Dispatcher，并把来自于网络的SNMP消息向上传输到SNMP应用(Its main
+responsibilities include dispatching PDUs from SNMP Applications
+through various subsystems all the way down to Transport Dispatcher,
+and passing SNMP messages coming from network up to SNMP
+Applications)。它维持和管理控制器间的逻辑连接，管理控制器在被管理对象上执行操作。这是为了LCD访问。</li>
+<li>消息处理模块为当前和未来可能版本的SNMP协议处理消息层级的协议操作。最重要的是，这些模块包括消息解析、构建和安全调用服务(当需求的时候)。</li>
+<li>消息安全模块处理消息认证和加密。在编写这一文档时，基于用户的(主要是v3)和社区(主要是v1/2c)的模块在PySNMP中已经实现。所有这些安全模块共享相同的API(这些API被消息处理子系统使用)。</li>
+<li>访问控制系统使用LCD(Local Configuration
+Datastore)来认证对被管理对象的远程访问。当使用代理身份运行时，它就会被使用。</li>
+<li>一系列MIB模块和对象集合，被SNMP引擎用来维持配置和数据操作统计。他们整体被称作LCD。</li>
+</ul>
+<p>在大部分情况下，用户都只期望使用高层API。可是，实现SNMP
+Agent，Proxy和manager的一些不常见特性时，都需要使用标准应用API。这时，理解SNMP操作和SNMP引擎组件是有益处的。</p>
+</div>
+<div class="section" id="id14">
+<h3>常用操作<a class="headerlink" href="#id14" title="Permalink to this headline">¶</a></h3>
+<p>在这份教程中，我们会循序渐进，运行一系列SNMP请求命令和通知。我们会用高级PySNMP同步API，这使用起来最简单。</p>
+<div class="section" id="id15">
+<h4><em>创建SNMP引擎</em><a class="headerlink" href="#id15" title="Permalink to this headline">¶</a></h4>
+<p>SNMP引擎是核心，保护伞。所有的PySNMP操作都涉及到<code class="docutils literal"><span class="pre">SnmpEngine</span></code>对象实例。PySNMP
+APP可以运行多个独立SNMP引擎，每个都被它自己的SnmpEngine对象操纵。</p>
+<div class="code python highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pysnmp.hlapi</span> <span class="k">import</span> <span class="o">*</span>
+<span class="go">&gt;&gt;&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">SnmpEngine</span><span class="p">()</span>
+<span class="go">SnmpEngine(snmpEngineID=SnmpEngineID())</span>
+</pre></div>
+</div>
+<p>SNMP引擎有一个独立的标识符，它可以被自动赋值，也可以管理方式赋值。这个标识符在SNMP协议操作中会被使用。</p>
+</div>
+<div class="section" id="id16">
+<h4><em>执行SNMP查询</em><a class="headerlink" href="#id16" title="Permalink to this headline">¶</a></h4>
+<p>我们将会发送SNMP
+GET命令从SNMP代理中读取MIB对象。为此我们将会调用同步高级API
+getCmd()函数。也可以使用类似的方式调用相应的函数来执行SNMP命令。</p>
+<div class="code python highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pysnmp.hlapi</span> <span class="k">import</span> <span class="o">*</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="p">[</span> <span class="n">x</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">dir</span><span class="p">()</span> <span class="k">if</span> <span class="s1">&#39;Cmd&#39;</span> <span class="ow">in</span> <span class="n">x</span><span class="p">]</span>
+<span class="go">[&#39;bulkCmd&#39;, &#39;getCmd&#39;, &#39;nextCmd&#39;, &#39;setCmd&#39;]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">getCmd</span>
+<span class="go">&lt;function getCmd at 0x222b330&gt;</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="id17">
+<h4><em>选择SNMP协议和证书</em><a class="headerlink" href="#id17" title="Permalink to this headline">¶</a></h4>
+<p>我们有三个SNMP协议版本可供选择。想使用SNMPv1/v2c，我们可以传递合适的<code class="docutils literal"><span class="pre">CommunityData</span></code>类初始化实例；想使用v3可以传递<code class="docutils literal"><span class="pre">UsmUserData</span></code>类实例。</p>
+<p>SNMP社区名字，在你选择v1/v2c时，就通过<code class="docutils literal"><span class="pre">CommunityData</span></code>对象传给SNMP
+LCD。</p>
+<div class="code python highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">CommunityData</span><span class="p">(</span><span class="s1">&#39;public&#39;</span><span class="p">,</span> <span class="n">mpModel</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>  <span class="c1"># SNMPv1</span>
+<span class="go">CommunityData(communityIndex=&#39;s-855862937891009719&#39;, communityName=&lt;COMMUNITY&gt;, mpModel=0, contextEngineId=None, contextName=&#39;&#39;, tag=&#39;&#39;, securityName=&#39;s-855862937891009719&#39;)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">CommunityData</span><span class="p">(</span><span class="s1">&#39;public&#39;</span><span class="p">,</span> <span class="n">mpModel</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>  <span class="c1"># SNMPv2c</span>
+<span class="go">CommunityData(communityIndex=&#39;s-2208453704422760742&#39;, communityName=&lt;COMMUNITY&gt;, mpModel=1, contextEngineId=None, contextName=&#39;&#39;, tag=&#39;&#39;, securityName=&#39;s-2208453704422760742&#39;)</span>
+</pre></div>
+</div>
+<p>使用<code class="docutils literal"><span class="pre">UsmUserData</span></code>对象进行LCD配置暗示使用SNMPv3。除了需要设置USM用户名字，UsmUserData对象也可以携带加密秘钥和加密协议协议给SNMP引擎LCD。</p>
+<div class="code python highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">UsmUserData</span><span class="p">(</span><span class="s1">&#39;testuser&#39;</span><span class="p">,</span> <span class="n">authKey</span><span class="o">=</span><span class="s1">&#39;myauthkey&#39;</span><span class="p">)</span>
+<span class="go">UsmUserData(userName=&#39;testuser&#39;, authKey=&lt;AUTHKEY&gt;, privKey=&lt;PRIVKEY&gt;, authProtocol=(1, 3, 6, 1, 6, 3, 10, 1, 1, 2), privProtocol=(1, 3, 6, 1, 6, 3, 10, 1, 2, 1), securityEngineId=&#39;&lt;DEFAULT&gt;&#39;, securityName=&#39;testuser&#39;)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">UsmUserData</span><span class="p">(</span><span class="s1">&#39;testuser&#39;</span><span class="p">,</span> <span class="n">authKey</span><span class="o">=</span><span class="s1">&#39;myauthkey&#39;</span><span class="p">,</span> <span class="n">privKey</span><span class="o">=</span><span class="s1">&#39;myenckey&#39;</span><span class="p">)</span>
+<span class="go">UsmUserData(userName=&#39;testuser&#39;, authKey=&lt;AUTHKEY&gt;, privKey=&lt;PRIVKEY&gt;, authProtocol=(1, 3, 6, 1, 6, 3, 10, 1, 1, 2), privProtocol=(1, 3, 6, 1, 6, 3, 10, 1, 2, 2), securityEngineId=&#39;&lt;DEFAULT&gt;&#39;, securityName=&#39;testuser&#39;)</span>
+</pre></div>
+</div>
+<p>PySNMP支持md5和sha消息认证算法，des，aes128/192/356和3des加密算法。</p>
+<p>为了简便，我们将使用SNMPv2。虽然不完全安全，但它仍然是使用最广泛的SNMP版本。</p>
+</div>
+<div class="section" id="id18">
+<h4><em>设置传输和目标</em><a class="headerlink" href="#id18" title="Permalink to this headline">¶</a></h4>
+<p>PySNMP支持UDP-over-IPv4和UDP-over-IPv6网络传输。
+在这个例子里，我们将会查询demo.snmplabs.com网站上可通过IPv4访问的public
+SNMP
+simulator。传输配置以相应的合适的<code class="docutils literal"><span class="pre">UdpTransportTarget</span></code>和<code class="docutils literal"><span class="pre">Udp6TransportTarget</span></code>对象传递给SNMP
+LCD。</p>
+</div>
+<div class="section" id="id19">
+<h4><em>处理SNMP上下文</em><a class="headerlink" href="#id19" title="Permalink to this headline">¶</a></h4>
+<p>SNMP上下文是SNMPv3消息头的一个参数，它用来处理特定的MIB集合(这些MIB让被管理实体的SNMP引擎使用)。SNMP引擎可以服务很多同一的MIB对象(这些对象代表完全不同的被管理的软硬件实体)。这就是需要snmp上下文的原因。</p>
+<p>可以使用一个合适的初始<code class="docutils literal"><span class="pre">ContextData</span></code>对象来表明snmp上下文位于高层API。在这个例子里，我们使用的是<code class="docutils literal"><span class="pre">empty</span></code>上下文(默认)。</p>
+<div class="code python highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">g</span> <span class="o">=</span> <span class="n">getCmd</span><span class="p">(</span><span class="n">SnmpEngine</span><span class="p">(),</span>
+<span class="gp">... </span>           <span class="n">CommunityData</span><span class="p">(</span><span class="s1">&#39;public&#39;</span><span class="p">),</span>
+<span class="gp">... </span>           <span class="n">UdpTransportTarget</span><span class="p">((</span><span class="s1">&#39;demo.snmplabs.com&#39;</span><span class="p">,</span> <span class="mi">161</span><span class="p">)),</span>
+<span class="gp">... </span>           <span class="n">ContextData</span><span class="p">(),</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="mib">
+<h4><em>指定MIB对象</em><a class="headerlink" href="#mib" title="Permalink to this headline">¶</a></h4>
+<p>最后，我们需要指定我们想要读取的MIB对象。在协议层，MIB对象由OID标识，但是人们想要用名字处理他们：</p>
+<div class="code powershell highlight-default"><div class="highlight"><pre><span></span>$ snmpget -v2c -c public demo.snmplabs.com SNMPv2-MIB::sysDescr.0
+SNMPv2-MIB::sysDescr.0 = STRING: SunOS zeus.snmplabs.com
+$
+$ snmpget -v2c -c public demo.snmplabs.com 1.3.6.1.2.1.1.1.0
+SNMPv2-MIB::sysDescr.0 = STRING: SunOS zeus.snmplabs.com
+</pre></div>
+</div>
+<p>对象名字和OID都来自于MIB。名字和OID的关联由称作<code class="docutils literal"><span class="pre">OBJECT-TYPE</span></code>的高级SMI结构完成。这里有MIB对象定义的例子：sysUpTime，它的OID是...mgmt.mib-2.system.3，它的值类型是<code class="docutils literal"><span class="pre">TimeTicks</span></code>。</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">sysUpTime</span> <span class="n">OBJECT</span><span class="o">-</span><span class="n">TYPE</span>
+    <span class="n">SYNTAX</span>      <span class="n">TimeTicks</span>
+    <span class="n">MAX</span><span class="o">-</span><span class="n">ACCESS</span>  <span class="n">read</span><span class="o">-</span><span class="n">only</span>
+    <span class="n">STATUS</span>      <span class="n">current</span>
+    <span class="n">DESCRIPTION</span>
+            <span class="s2">&quot;The time (in hundredths of a second) since</span>
+            <span class="n">the</span> <span class="n">network</span> <span class="n">management</span> <span class="n">portion</span> <span class="n">of</span> <span class="n">the</span> <span class="n">system</span>
+            <span class="n">was</span> <span class="n">last</span> <span class="n">re</span><span class="o">-</span><span class="n">initialized</span><span class="o">.</span><span class="s2">&quot;</span>
+    <span class="p">::</span><span class="o">=</span> <span class="p">{</span> <span class="n">system</span> <span class="mi">3</span> <span class="p">}</span>
+</pre></div>
+</div>
+<p>在PySnmp中，我们使用<code class="docutils literal"><span class="pre">ObjectIdentity</span></code>类来负责MIB对象标识。ObjectIdentity代表从人的视角来处理MIB对象的方式。它需要转换MIB到一个完全可解析的状态。ObjectIdentity可以由MIB对象名字初始化，之后它的行为就类似OID了。</p>
+<div class="code python highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pysnmp.hlapi</span> <span class="k">import</span> <span class="o">*</span>
+<span class="go">&gt;&gt;&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">x</span> <span class="o">=</span> <span class="n">ObjectIdentity</span><span class="p">(</span><span class="s1">&#39;SNMPv2-MIB&#39;</span><span class="p">,</span> <span class="s1">&#39;system&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># ... calling MIB lookup ...</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">tuple</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+<span class="go">(1, 3, 6, 1, 2, 1, 1, 1)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">x</span> <span class="o">=</span> <span class="n">ObjectIdentity</span><span class="p">(</span><span class="s1">&#39;iso.org.dod.internet.mgmt.mib-2.system.sysDescr&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># ... calling MIB lookup ...</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">str</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+<span class="go">&#39;1.3.6.1.2.1.1.1&#39;</span>
+</pre></div>
+</div>
+<p>MIB解析意思是MIB对象名到OID转型服务，反过来亦然。</p>
+<p>PySNMP中，<code class="docutils literal"><span class="pre">ObjectType</span></code>类实例代表<code class="docutils literal"><span class="pre">OBJECT-TYPE</span></code>
+SMI结构。ObjectType是一个容器对象，它引用ObjectIdentity和SNMP类型实例。作为一个Python对象，它更像是一个(OID,
+value)元组。</p>
+<div class="code python highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pysnmp.hlapi</span> <span class="k">import</span> <span class="o">*</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">x</span> <span class="o">=</span> <span class="n">ObjectType</span><span class="p">(</span><span class="n">ObjectIdentity</span><span class="p">(</span><span class="s1">&#39;SNMPv2-MIB&#39;</span><span class="p">,</span> <span class="s1">&#39;sysDescr&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="s1">&#39;Linux i386 box&#39;</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># ... calling MIB lookup ...</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">prettyPrint</span><span class="p">()</span>
+<span class="go">&#39;SNMPv2-MIB::sysDescr.0&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">prettyPrint</span><span class="p">()</span>
+<span class="go">&#39;Linux i386 box&#39;</span>
+</pre></div>
+</div>
+<p>尾随表示MIB对象实例。MIB中描述的对象仅仅是声明，它从来不包含任何数据。Data
+is stored in MIB object instances that are addressed by appending For
+scalar MIB objects index is ‘0’ by
+convention(这句不知该任何翻译)。<code class="docutils literal"><span class="pre">ObjectIdentity</span></code>类使用索引进行初始化。</p>
+<div class="code python highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">x</span> <span class="o">=</span> <span class="n">ObjectIdentity</span><span class="p">(</span><span class="s1">&#39;SNMPv2-MIB&#39;</span><span class="p">,</span> <span class="s1">&#39;system&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># ... calling MIB lookup ...</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">tuple</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+<span class="go">(1, 3, 6, 1, 2, 1, 1, 1, 0)</span>
+</pre></div>
+</div>
+<p>我们将读取sysDescr标量MIB对象实例，他在<a class="reference external" href="http://mibs.snmplabs.com/asn1/SNMPv2-MIB">SNMPv2-MIB</a>模块中定义。</p>
+<div class="code python highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pysnmp.hlapi</span> <span class="k">import</span> <span class="o">*</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">g</span> <span class="o">=</span> <span class="n">getCmd</span><span class="p">(</span><span class="n">SnmpEngine</span><span class="p">(),</span>
+<span class="gp">... </span>           <span class="n">CommunityData</span><span class="p">(</span><span class="s1">&#39;public&#39;</span><span class="p">),</span>
+<span class="gp">... </span>           <span class="n">UdpTransportTarget</span><span class="p">((</span><span class="s1">&#39;demo.snmplabs.com&#39;</span><span class="p">,</span> <span class="mi">161</span><span class="p">)),</span>
+<span class="gp">... </span>           <span class="n">ContextData</span><span class="p">(),</span>
+<span class="gp">... </span>           <span class="n">ObjectType</span><span class="p">(</span><span class="n">ObjectIdentity</span><span class="p">(</span><span class="s1">&#39;SNMPv2-MIB&#39;</span><span class="p">,</span> <span class="s1">&#39;sysDescr&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">)))</span>
+</pre></div>
+</div>
+<p>默认的，PySNMP将会在你的文件系统中搜索你参考的ASN.1
+MIB文件。也可以配置成从远程主机自动下载他们，<a class="reference external" href="http://pysnmp.sourceforge.net/examples/hlapi/asyncore/sync/manager/cmdgen/mib-tweaks.html">比如这个例子</a>。我们维护了一系列ASN.1模块集合，你可以在你的项目中使用他们。</p>
+</div>
+<div class="section" id="id20">
+<h4><em>读取标量值</em><a class="headerlink" href="#id20" title="Permalink to this headline">¶</a></h4>
+<p>我们终于可以发送SNMP查询，并期待接收一些有意义的应答了。</p>
+<p>同步API的一个显著特征是它围绕Python生成器构造的。每次函数调用结束后，都会返回一个生成器对象。迭代生成器对象就会执行真实的SNMP通信。在每一次迭代中构建并发送SNMP消息，等待应答，接收并解析。</p>
+<div class="code python highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pysnmp.hlapi</span> <span class="k">import</span> <span class="o">*</span>
+<span class="go">&gt;&gt;&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">g</span> <span class="o">=</span> <span class="n">getCmd</span><span class="p">(</span><span class="n">SnmpEngine</span><span class="p">(),</span>
+<span class="gp">... </span>           <span class="n">CommunityData</span><span class="p">(</span><span class="s1">&#39;public&#39;</span><span class="p">),</span>
+<span class="gp">... </span>           <span class="n">UdpTransportTarget</span><span class="p">((</span><span class="s1">&#39;demo.snmplabs.com&#39;</span><span class="p">,</span> <span class="mi">161</span><span class="p">)),</span>
+<span class="gp">... </span>           <span class="n">ContextData</span><span class="p">(),</span>
+<span class="gp">... </span>           <span class="n">ObjectType</span><span class="p">(</span><span class="n">ObjectIdentity</span><span class="p">(</span><span class="s1">&#39;SNMPv2-MIB&#39;</span><span class="p">,</span> <span class="s1">&#39;sysUpTime&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">)))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">next</span><span class="p">(</span><span class="n">g</span><span class="p">)</span>
+<span class="go">(None, 0, 0, [ObjectType(ObjectIdentity(&#39;1.3.6.1.2.1.1.3.0&#39;), TimeTicks(44430646))])</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="id21">
+<h4><em>SNMP表</em><a class="headerlink" href="#id21" title="Permalink to this headline">¶</a></h4>
+<blockquote>
+<div>译注：SNMP
+tables是一个术语概念，实际上前面提到都是SNMP简单对象，SNMP还可以操作复合对象。它可以类比于C语言中的结构体。更多细节，请参考Stevens的《TCP/IP详解》</div></blockquote>
+<p>SNMP定义了表的概念。表用于当一个MIB对象拥有多个属性实例时。例如：网络接口属性放在了SNMP表中。每一个属性实例由MIB对象+后缀进行处理。</p>
+<p>MIB详细描述了表，他们的索引由<code class="docutils literal"><span class="pre">INDEX</span></code>子句声明。表索引可能是非0整数，字符串，或SNMP基础类型。</p>
+<p>在协议层，所有的索引以OID形式呈现。为了方便人们使用索引，SNMP管理应用依赖<code class="docutils literal"><span class="pre">DISPLAY-HINT</span></code>子句在OID和SNMP特定类型间自动转换索引，更友好的呈现给用户。</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">ifEntry</span> <span class="n">OBJECT</span><span class="o">-</span><span class="n">TYPE</span>
+    <span class="n">SYNTAX</span>      <span class="n">IfEntry</span>
+    <span class="n">INDEX</span>   <span class="p">{</span> <span class="n">ifIndex</span> <span class="p">}</span>
+<span class="p">::</span><span class="o">=</span> <span class="p">{</span> <span class="n">ifTable</span> <span class="mi">1</span> <span class="p">}</span>
+
+<span class="n">ifIndex</span> <span class="n">OBJECT</span><span class="o">-</span><span class="n">TYPE</span>
+    <span class="n">SYNTAX</span>      <span class="n">InterfaceIndex</span>
+<span class="p">::</span><span class="o">=</span> <span class="p">{</span> <span class="n">ifEntry</span> <span class="mi">1</span> <span class="p">}</span>
+
+<span class="n">ifDescr</span> <span class="n">OBJECT</span><span class="o">-</span><span class="n">TYPE</span>
+    <span class="n">SYNTAX</span>      <span class="n">DisplayString</span> <span class="p">(</span><span class="n">SIZE</span> <span class="p">(</span><span class="mf">0.</span><span class="o">.</span><span class="mi">255</span><span class="p">))</span>
+<span class="p">::</span><span class="o">=</span> <span class="p">{</span> <span class="n">ifEntry</span> <span class="mi">2</span> <span class="p">}</span>
+
+<span class="n">InterfaceIndex</span> <span class="p">::</span><span class="o">=</span> <span class="n">TEXTUAL</span><span class="o">-</span><span class="n">CONVENTION</span>
+    <span class="n">DISPLAY</span><span class="o">-</span><span class="n">HINT</span> <span class="s2">&quot;d&quot;</span>
+    <span class="n">SYNTAX</span>       <span class="n">Integer32</span> <span class="p">(</span><span class="mf">1.</span><span class="o">.</span><span class="mi">2147483647</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>在PySNMP中用法是：</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">x</span> <span class="o">=</span> <span class="n">ObjectIdentity</span><span class="p">(</span><span class="s1">&#39;IF-MIB&#39;</span><span class="p">,</span> <span class="s1">&#39;ifDescr&#39;</span><span class="p">,</span> <span class="mi">123</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># ... calling MIB lookup ...</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">str</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+<span class="go">&#39;1.3.6.1.2.1.2.2.1.2.123&#39;</span>
+</pre></div>
+</div>
+<p>有些SNMP表可以由很多索引进行检索，每一个索引都会成为OID的一部分，并最终包含在MIB对象OID里。</p>
+<p>从语义上来看，每个索引代表MIB对象的一个重要和不同的属性。</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">tcpConnectionEntry</span> <span class="n">OBJECT</span><span class="o">-</span><span class="n">TYPE</span>
+    <span class="n">SYNTAX</span>  <span class="n">TcpConnectionEntry</span>
+    <span class="n">INDEX</span>   <span class="p">{</span> <span class="n">tcpConnectionLocalAddressType</span><span class="p">,</span>
+              <span class="n">tcpConnectionLocalAddress</span><span class="p">,</span>
+              <span class="n">tcpConnectionLocalPort</span><span class="p">,</span>
+              <span class="n">tcpConnectionRemAddressType</span><span class="p">,</span>
+              <span class="n">tcpConnectionRemAddress</span><span class="p">,</span>
+              <span class="n">tcpConnectionRemPort</span> <span class="p">}</span>
+<span class="p">::</span><span class="o">=</span> <span class="p">{</span> <span class="n">tcpConnectionTable</span> <span class="mi">1</span> <span class="p">}</span>
+
+<span class="n">tcpConnectionLocalPort</span> <span class="n">OBJECT</span><span class="o">-</span><span class="n">TYPE</span>
+    <span class="n">SYNTAX</span>     <span class="n">InetPortNumber</span>
+<span class="p">::</span><span class="o">=</span> <span class="p">{</span> <span class="n">tcpConnectionEntry</span> <span class="mi">3</span> <span class="p">}</span>
+</pre></div>
+</div>
+<p>在PySNMP中，<code class="docutils literal"><span class="pre">ObjectIdentity</span></code>类可以携带任意个索引参数，这些索引参数以对用户方式呈现，并转化为完整的OID：</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">x</span> <span class="o">=</span> <span class="n">ObjectIdentity</span><span class="p">(</span><span class="s1">&#39;TCP-MIB&#39;</span><span class="p">,</span> <span class="s1">&#39;tcpConnectionState&#39;</span><span class="p">,</span>
+<span class="gp">... </span>                   <span class="s1">&#39;ipv4&#39;</span><span class="p">,</span> <span class="s1">&#39;195.218.254.105&#39;</span><span class="p">,</span> <span class="mi">41511</span><span class="p">,</span>
+<span class="gp">... </span>                   <span class="s1">&#39;ipv4&#39;</span><span class="p">,</span> <span class="s1">&#39;194.67.1.250&#39;</span><span class="p">,</span> <span class="mi">993</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># ... calling MIB lookup ...</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">str</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+<span class="go">&#39;1.3.6.1.2.1.6.19.1.7.1.4.195.218.254.105.41511.1.4.194.67.1.250.993&#39;</span>
+</pre></div>
+</div>
+<p>让我们为一个TCP连接读取<code class="docutils literal"><span class="pre">TCP-MIB::tcpConnectionState</span></code>对象。</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pysnmp.hlapi</span> <span class="k">import</span> <span class="o">*</span>
+<span class="go">&gt;&gt;&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">g</span> <span class="o">=</span> <span class="n">getCmd</span><span class="p">(</span><span class="n">SnmpEngine</span><span class="p">(),</span>
+<span class="gp">... </span>           <span class="n">CommunityData</span><span class="p">(</span><span class="s1">&#39;public&#39;</span><span class="p">),</span>
+<span class="gp">... </span>           <span class="n">UdpTransportTarget</span><span class="p">((</span><span class="s1">&#39;demo.snmplabs.com&#39;</span><span class="p">,</span> <span class="mi">161</span><span class="p">)),</span>
+<span class="gp">... </span>           <span class="n">ContextData</span><span class="p">(),</span>
+<span class="gp">... </span>           <span class="n">ObjectType</span><span class="p">(</span><span class="n">ObjectIdentity</span><span class="p">(</span><span class="s1">&#39;TCP-MIB&#39;</span><span class="p">,</span> <span class="s1">&#39;tcpConnectionState&#39;</span><span class="p">,</span>
+<span class="gp">... </span>                                     <span class="s1">&#39;ipv4&#39;</span><span class="p">,</span> <span class="s1">&#39;195.218.254.105&#39;</span><span class="p">,</span> <span class="mi">41511</span><span class="p">,</span>
+<span class="gp">... </span>                                     <span class="s1">&#39;ipv4&#39;</span><span class="p">,</span> <span class="s1">&#39;194.67.1.250&#39;</span><span class="p">,</span> <span class="mi">993</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">next</span><span class="p">(</span><span class="n">g</span><span class="p">)</span>
+<span class="go">(None, 0, 0, [ObjectType(ObjectIdentity(ObjectName(&#39;1.3.6.1.2.1.6.19.1.7.1.4.195.218.254.105.41511.1.4.194.67.1.250.993&#39;)), Integer(5))])</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="id22">
+<h4><em>SNMP命令操作</em><a class="headerlink" href="#id22" title="Permalink to this headline">¶</a></h4>
+<blockquote>
+<div>译注：SNMP的next命令，可以获取MIB树的下一个属性，这样运行我们通过迭代的方式获取所有MIB属性。详情请参考《TCP/IP详解》</div></blockquote>
+<p>SNMP允许你获取一个给定MIB对象的下一个。这样你可以读取你事先并不知道的MIB对象。MIB对象是依据他们的OID进行字典排序的，<code class="docutils literal"><span class="pre">nextCmd</span></code>函数实现了这个特性。</p>
+<blockquote>
+<div>译注：对于SNMP简单MIB对象，是依据OID进行排序；对于SNMP表，是依据<code class="docutils literal"><span class="pre">先列后行</span></code>方式排列的。</div></blockquote>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pysnmp.hlapi</span> <span class="k">import</span> <span class="o">*</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">g</span> <span class="o">=</span> <span class="n">nextCmd</span><span class="p">(</span><span class="n">SnmpEngine</span><span class="p">(),</span>
+<span class="gp">... </span>            <span class="n">CommunityData</span><span class="p">(</span><span class="s1">&#39;public&#39;</span><span class="p">),</span>
+<span class="gp">... </span>            <span class="n">UdpTransportTarget</span><span class="p">((</span><span class="s1">&#39;demo.snmplabs.com&#39;</span><span class="p">,</span> <span class="mi">161</span><span class="p">)),</span>
+<span class="gp">... </span>            <span class="n">ContextData</span><span class="p">(),</span>
+<span class="gp">... </span>            <span class="n">ObjectType</span><span class="p">(</span><span class="n">ObjectIdentity</span><span class="p">(</span><span class="s1">&#39;SNMPv2-MIB&#39;</span><span class="p">,</span> <span class="s1">&#39;sysDescr&#39;</span><span class="p">)))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">next</span><span class="p">(</span><span class="n">g</span><span class="p">)</span>
+<span class="go">(None, 0, 0, [ObjectType(ObjectIdentity(&#39;1.3.6.1.2.1.1.1.0&#39;), DisplayString(&#39;SunOS zeus.snmplabs.com&#39;))])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">next</span><span class="p">(</span><span class="n">g</span><span class="p">)</span>
+<span class="go">(None, 0, 0, [ObjectType(ObjectIdentity(&#39;1.3.6.1.2.1.1.2.0&#39;), ObjectIdentity(ObjectIdentifier(&#39;1.3.6.1.4.1.8072.3.2.10&#39;)))])</span>
+</pre></div>
+</div>
+<p>迭代生成器对象会遍历SNMP代理的MIB对象。</p>
+<p>SNMPv2c对<code class="docutils literal"><span class="pre">GETNEXT</span></code>命令进行了重大优化——它的修订版本称作<code class="docutils literal"><span class="pre">GETBULK</span></code>，并能立刻对一系列next
+MIB对象进行收集和响应。额外的非中继和最大可重复参数可以用来影响MIB对象分批处理(Additional
+non-repeaters and max-repetitions parameters can be used to influence
+MIB objects batching.)。</p>
+<p>PySNMP在协议层隐藏了<code class="docutils literal"><span class="pre">GETBULK</span></code>优化，bulkCmd()函数暴露了同样的生成器API，使getNext()使用更方便。</p>
+<div class="code python highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pysnmp.hlapi</span> <span class="k">import</span> <span class="o">*</span>
+<span class="go">&gt;&gt;&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">N</span><span class="p">,</span> <span class="n">R</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">25</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">g</span> <span class="o">=</span> <span class="n">bulkCmd</span><span class="p">(</span><span class="n">SnmpEngine</span><span class="p">(),</span>
+<span class="gp">... </span>            <span class="n">CommunityData</span><span class="p">(</span><span class="s1">&#39;public&#39;</span><span class="p">),</span>
+<span class="gp">... </span>            <span class="n">UdpTransportTarget</span><span class="p">((</span><span class="s1">&#39;demo.snmplabs.com&#39;</span><span class="p">,</span> <span class="mi">161</span><span class="p">)),</span>
+<span class="gp">... </span>            <span class="n">ContextData</span><span class="p">(),</span>
+<span class="gp">... </span>            <span class="n">N</span><span class="p">,</span> <span class="n">R</span><span class="p">,</span>
+<span class="gp">... </span>            <span class="n">ObjectType</span><span class="p">(</span><span class="n">ObjectIdentity</span><span class="p">(</span><span class="s1">&#39;1.3.6&#39;</span><span class="p">)))</span>
+<span class="go">&gt;&gt;&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">next</span><span class="p">(</span><span class="n">g</span><span class="p">)</span>
+<span class="go">(None, 0, 0, [ObjectType(ObjectIdentity(&#39;1.3.6.1.2.1.1.1.0&#39;), DisplayString(&#39;SunOS zeus.snmplabs.com&#39;))])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">next</span><span class="p">(</span><span class="n">g</span><span class="p">)</span>
+<span class="go">(None, 0, 0, [ObjectType(ObjectIdentity(&#39;1.3.6.1.2.1.1.2.0&#39;), ObjectIdentifier(&#39;1.3.6.1.4.1.20408&#39;))])</span>
+</pre></div>
+</div>
+<p>Python生成器不仅可以产生数据，也可以给运行中的生成器对象发送数据。这个特性被高级API用来为一系列MIB对象重复相同的SNMP操作。</p>
+<div class="code python highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pysnmp.hlapi</span> <span class="k">import</span> <span class="o">*</span>
+<span class="go">&gt;&gt;&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">g</span> <span class="o">=</span> <span class="n">nextCmd</span><span class="p">(</span><span class="n">SnmpEngine</span><span class="p">(),</span>
+<span class="gp">... </span>            <span class="n">CommunityData</span><span class="p">(</span><span class="s1">&#39;public&#39;</span><span class="p">),</span>
+<span class="gp">... </span>            <span class="n">UdpTransportTarget</span><span class="p">((</span><span class="s1">&#39;demo.snmplabs.com&#39;</span><span class="p">,</span> <span class="mi">161</span><span class="p">)),</span>
+<span class="gp">... </span>            <span class="n">ContextData</span><span class="p">(),</span>
+<span class="gp">... </span>            <span class="n">ObjectType</span><span class="p">(</span><span class="n">ObjectIdentity</span><span class="p">(</span><span class="s1">&#39;IF-MIB&#39;</span><span class="p">,</span> <span class="s1">&#39;ifTable&#39;</span><span class="p">)))</span>
+<span class="go">&gt;&gt;&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">g</span><span class="o">.</span><span class="n">send</span><span class="p">([</span><span class="n">ObjectType</span><span class="p">(</span><span class="n">ObjectIdentity</span><span class="p">(</span><span class="s1">&#39;IF-MIB&#39;</span><span class="p">,</span> <span class="s1">&#39;ifInOctets&#39;</span><span class="p">))])</span>
+<span class="go">(None, 0, 0, [(ObjectType(ObjectIdentity(&#39;1.3.6.1.2.1.2.2.1.10.1&#39;), Counter32(284817787))])</span>
+</pre></div>
+</div>
+<p>你可以通过把他们放在一个PDU中来操作很多不相干的MIB对象。应答PDU也会携带一系列MIB对象，他们的值和请求消息的排列顺序相同。</p>
+<div class="code Python highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pysnmp.hlapi</span> <span class="k">import</span> <span class="o">*</span>
+<span class="go">&gt;&gt;&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">g</span> <span class="o">=</span> <span class="n">getCmd</span><span class="p">(</span><span class="n">SnmpEngine</span><span class="p">(),</span>
+<span class="gp">... </span>           <span class="n">CommunityData</span><span class="p">(</span><span class="s1">&#39;public&#39;</span><span class="p">),</span>
+<span class="gp">... </span>           <span class="n">UdpTransportTarget</span><span class="p">((</span><span class="s1">&#39;demo.snmplabs.com&#39;</span><span class="p">,</span> <span class="mi">161</span><span class="p">)),</span>
+<span class="gp">... </span>           <span class="n">ContextData</span><span class="p">(),</span>
+<span class="gp">... </span>           <span class="n">ObjectType</span><span class="p">(</span><span class="n">ObjectIdentity</span><span class="p">(</span><span class="s1">&#39;SNMPv2-MIB&#39;</span><span class="p">,</span> <span class="s1">&#39;sysDescr&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">)),</span>
+<span class="gp">... </span>           <span class="n">ObjectType</span><span class="p">(</span><span class="n">ObjectIdentity</span><span class="p">(</span><span class="s1">&#39;SNMPv2-MIB&#39;</span><span class="p">,</span> <span class="s1">&#39;sysUpTime&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span>
+<span class="gp">... </span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">next</span><span class="p">(</span><span class="n">g</span><span class="p">)</span>
+<span class="go">(None, 0, 0, [ObjectType(ObjectIdentity(&#39;1.3.6.1.2.1.1.1.0&#39;), DisplayString(&#39;SunOS zeus.snmplabs.com&#39;)), ObjectType(ObjectIdentity(&#39;1.3.6.1.2.1.1.3.0&#39;), TimeTicks(44430646))])</span>
+</pre></div>
+</div>
+<p>部分SNMP配置管理依赖于<code class="docutils literal"><span class="pre">SNMP</span> <span class="pre">SET</span></code>命令。虽然在被管理实体端，它的实现被证明很苛刻(由于锁和事务行为)。所以厂商趋向于移除它，致使被管理实体是只读的。</p>
+<p>PySNMP通过<code class="docutils literal"><span class="pre">setCmd()</span></code>函数支持统一的set操作。</p>
+<div class="code Python highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pysnmp.hlapi</span> <span class="k">import</span> <span class="o">*</span>
+<span class="go">&gt;&gt;&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">g</span> <span class="o">=</span> <span class="n">setCmd</span><span class="p">(</span><span class="n">SnmpEngine</span><span class="p">(),</span>
+<span class="gp">... </span>           <span class="n">CommunityData</span><span class="p">(</span><span class="s1">&#39;public&#39;</span><span class="p">),</span>
+<span class="gp">... </span>           <span class="n">UdpTransportTarget</span><span class="p">((</span><span class="s1">&#39;demo.snmplabs.com&#39;</span><span class="p">,</span> <span class="mi">161</span><span class="p">)),</span>
+<span class="gp">... </span>           <span class="n">ContextData</span><span class="p">(),</span>
+<span class="gp">... </span>           <span class="n">ObjectType</span><span class="p">(</span><span class="n">ObjectIdentity</span><span class="p">(</span><span class="s1">&#39;SNMPv2-MIB&#39;</span><span class="p">,</span> <span class="s1">&#39;sysDescr&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="s1">&#39;Linux i386&#39;</span><span class="p">)</span>
+<span class="gp">... </span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">next</span><span class="p">(</span><span class="n">g</span><span class="p">)</span>
+<span class="go">(None, 0, 0, [ObjectType(ObjectIdentity(&#39;1.3.6.1.2.1.1.1.0&#39;), DisplayString(&#39;Linux i386&#39;))])</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="id23">
+<h4><em>发送SNMP通知</em><a class="headerlink" href="#id23" title="Permalink to this headline">¶</a></h4>
+<p>被管理实体可以发送未经请求的消息给管理实体。这杯称为通知，通知可以减少轮训(轮询在大规模网络中可能会成为一个问题。)</p>
+<p>SNMP通知是被枚举的(SNMP notifications are
+enumerated)，并且每一个都有确切的语义。这是通过一个特殊的，高级的SMI结构<code class="docutils literal"><span class="pre">NOTIFICATION-TYPE</span></code>完成的。和<code class="docutils literal"><span class="pre">OBJECT-TYPE</span></code>定义一个MIB对象类似，<code class="docutils literal"><span class="pre">NOTIFICATION-TYPE</span></code>也有一个唯一的OID，但是它的SNMP值引用的是其他MIB对象序列。这些MIB对象在通知被发送时用<code class="docutils literal"><span class="pre">OBJECTS</span></code>子句指定，他们的当前值被包含在通知消息中。</p>
+<div class="code Python highlight-default"><div class="highlight"><pre><span></span><span class="n">linkUp</span> <span class="n">NOTIFICATION</span><span class="o">-</span><span class="n">TYPE</span>
+    <span class="n">OBJECTS</span> <span class="p">{</span> <span class="n">ifIndex</span><span class="p">,</span> <span class="n">ifAdminStatus</span><span class="p">,</span> <span class="n">ifOperStatus</span> <span class="p">}</span>
+    <span class="n">STATUS</span>  <span class="n">current</span>
+    <span class="n">DESCRIPTION</span>
+        <span class="s2">&quot;...&quot;</span>
+<span class="p">::</span><span class="o">=</span> <span class="p">{</span> <span class="n">snmpTraps</span> <span class="mi">4</span> <span class="p">}</span>
+</pre></div>
+</div>
+<p>为了在PySNMP中塑模<code class="docutils literal"><span class="pre">NOTIFICATION-TYPE</span></code>结构，我们用<code class="docutils literal"><span class="pre">NotificationType</span></code>类，这是一个包装对象。它被<code class="docutils literal"><span class="pre">ObjectIdentity</span></code>类标识，并引用一系列<code class="docutils literal"><span class="pre">ObjectType</span></code>类实例。</p>
+<p>从行为角度看，<code class="docutils literal"><span class="pre">NotificationType</span></code>看起来像<code class="docutils literal"><span class="pre">ObjectType</span></code>类对象序列。</p>
+<div class="code Python highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pysnmp.hlapi</span> <span class="k">import</span> <span class="o">*</span>
+<span class="go">&gt;&gt;&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">x</span> <span class="o">=</span> <span class="n">NotificationType</span><span class="p">(</span><span class="n">ObjectIdentity</span><span class="p">(</span><span class="s1">&#39;IF-MIB&#39;</span><span class="p">,</span> <span class="s1">&#39;linkUp&#39;</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># ... calling MIB lookup ...</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="o">&gt;&gt;&gt;</span> <span class="p">[</span> <span class="nb">str</span><span class="p">(</span><span class="n">y</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">n</span> <span class="p">]</span>
+<span class="go">[&#39;SNMPv2-MIB::snmpTrapOID.0 = 1.3.6.1.6.3.1.1.5.3&#39;, &#39;IF-MIB::ifIndex = &#39;, &#39;IF-MIB::ifAdminStatus = &#39;, &#39;IF-MIB::ifOperStatus = &#39;]</span>
+</pre></div>
+</div>
+<p>用PySNMP发送SNMP通知和发送SNMP命令并没有太大不同。不同点在于如何构建PDU
+var-binds(The difference is in how PDU var-binds are
+built)。在SNMP中存在两种不同的通知：<code class="docutils literal"><span class="pre">trap</span></code>和<code class="docutils literal"><span class="pre">inform</span></code>。</p>
+<p>对于<code class="docutils literal"><span class="pre">trap</span></code>，agent-to-manager通信是单向的，不会发送响应和确认。</p>
+<div class="code Python highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pysnmp.hlapi</span> <span class="k">import</span> <span class="o">*</span>
+<span class="go">&gt;&gt;&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">g</span> <span class="o">=</span> <span class="n">sendNotification</span><span class="p">(</span><span class="n">SnmpEngine</span><span class="p">(),</span>
+<span class="gp">... </span>                     <span class="n">CommunityData</span><span class="p">(</span><span class="s1">&#39;public&#39;</span><span class="p">),</span>
+<span class="gp">... </span>                     <span class="n">UdpTransportTarget</span><span class="p">((</span><span class="s1">&#39;demo.snmplabs.com&#39;</span><span class="p">,</span> <span class="mi">162</span><span class="p">)),</span>
+<span class="gp">... </span>                     <span class="n">ContextData</span><span class="p">(),</span>
+<span class="gp">... </span>                     <span class="s1">&#39;trap&#39;</span><span class="p">,</span>
+<span class="gp">... </span>                     <span class="n">NotificationType</span><span class="p">(</span><span class="n">ObjectIdentity</span><span class="p">(</span><span class="s1">&#39;IF-MIB&#39;</span><span class="p">,</span> <span class="s1">&#39;linkUp&#39;</span><span class="p">),</span> <span class="n">instanceIndex</span><span class="o">=</span><span class="p">(</span><span class="mi">123</span><span class="p">,))</span>
+<span class="gp">... </span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">next</span><span class="p">(</span><span class="n">g</span><span class="p">)</span>
+<span class="go">(None, 0, 0, [])</span>
+</pre></div>
+</div>
+<p><code class="docutils literal"><span class="pre">inform</span></code>更像是一个命令，不同点在于PDU格式。<code class="docutils literal"><span class="pre">inform</span></code>用于manager-to-manager通信，也用于agent-to-manager通信。</p>
+<div class="code Python highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pysnmp.hlapi</span> <span class="k">import</span> <span class="o">*</span>
+<span class="go">&gt;&gt;&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">g</span> <span class="o">=</span> <span class="n">sendNotification</span><span class="p">(</span><span class="n">SnmpEngine</span><span class="p">(),</span>
+<span class="gp">... </span>                     <span class="n">CommunityData</span><span class="p">(</span><span class="s1">&#39;public&#39;</span><span class="p">),</span>
+<span class="gp">... </span>                     <span class="n">UdpTransportTarget</span><span class="p">((</span><span class="s1">&#39;demo.snmplabs.com&#39;</span><span class="p">,</span> <span class="mi">162</span><span class="p">)),</span>
+<span class="gp">... </span>                     <span class="n">ContextData</span><span class="p">(),</span>
+<span class="gp">... </span>                     <span class="s1">&#39;inform&#39;</span><span class="p">,</span>
+<span class="gp">... </span>                     <span class="n">NotificationType</span><span class="p">(</span><span class="n">ObjectIdentity</span><span class="p">(</span><span class="s1">&#39;IF-MIB&#39;</span><span class="p">,</span> <span class="s1">&#39;linkUp&#39;</span><span class="p">),</span> <span class="n">instanceIndex</span><span class="o">=</span><span class="p">(</span><span class="mi">123</span><span class="p">,))</span>
+<span class="gp">... </span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">next</span><span class="p">(</span><span class="n">g</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>在后面的例子你会看到从IF-MIB::linkUp通知中自动扩展的MIB对象(ifIndex,
+ifAdminStatus,
+ifOperStatus)。为了通过索引处理SNMP表对象特定的行，可以用<code class="docutils literal"><span class="pre">instanceIndex</span></code>参数给<code class="docutils literal"><span class="pre">NotificationType</span></code>传递MIB对象的索引部分。</p>
+<p>如你所见，扩展MIB对象的实际值为null。这是因为在我们的例子脚本没有访问这些MIB对象。我们可以提供这些缺失的信息：给<code class="docutils literal"><span class="pre">NotificationType</span></code>传递一个字典对象(该字典对象是MIB对象OID和当前值的映射)。</p>
+<div class="code Python highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pysnmp.hlapi</span> <span class="k">import</span> <span class="o">*</span>
+<span class="go">&gt;&gt;&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">mib</span> <span class="o">=</span> <span class="p">{</span><span class="n">ObjectIdentifier</span><span class="p">(</span><span class="s1">&#39;1.3.6.1.2.1.2.2.1.1.123&#39;</span><span class="p">):</span> <span class="mi">123</span><span class="p">,</span>
+<span class="gp">... </span>       <span class="n">ObjectIdentifier</span><span class="p">(</span><span class="s1">&#39;1.3.6.1.2.1.2.2.1.7.123&#39;</span><span class="p">):</span> <span class="s1">&#39;testing&#39;</span><span class="p">,</span>
+<span class="gp">... </span>       <span class="n">ObjectIdentifier</span><span class="p">(</span><span class="s1">&#39;1.3.6.1.2.1.2.2.1.8.123&#39;</span><span class="p">):</span> <span class="s1">&#39;up&#39;</span><span class="p">}</span>
+<span class="go">&gt;&gt;&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">g</span> <span class="o">=</span> <span class="n">sendNotification</span><span class="p">(</span><span class="n">SnmpEngine</span><span class="p">(),</span>
+<span class="gp">... </span>                     <span class="n">CommunityData</span><span class="p">(</span><span class="s1">&#39;public&#39;</span><span class="p">),</span>
+<span class="gp">... </span>                     <span class="n">UdpTransportTarget</span><span class="p">((</span><span class="s1">&#39;demo.snmplabs.com&#39;</span><span class="p">,</span> <span class="mi">162</span><span class="p">)),</span>
+<span class="gp">... </span>                     <span class="n">ContextData</span><span class="p">(),</span>
+<span class="gp">... </span>                     <span class="s1">&#39;inform&#39;</span><span class="p">,</span>
+<span class="gp">... </span>                     <span class="n">NotificationType</span><span class="p">(</span><span class="n">ObjectIdentity</span><span class="p">(</span><span class="s1">&#39;IF-MIB&#39;</span><span class="p">,</span> <span class="s1">&#39;linkUp&#39;</span><span class="p">),</span> <span class="n">instanceIndex</span><span class="o">=</span><span class="p">(</span><span class="mi">123</span><span class="p">,),</span> <span class="n">objects</span><span class="o">=</span><span class="n">mib</span><span class="p">)</span>
+<span class="gp">... </span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">next</span><span class="p">(</span><span class="n">g</span><span class="p">)</span>
+<span class="go">(None, 0, 0, [ObjectType(ObjectIdentity(&#39;1.3.6.1.2.1.1.3.0&#39;), TimeTicks(0)), ObjectType(ObjectIdentity(&#39;1.3.6.1.6.3.1.1.4.1.0&#39;), ObjectIdentity(&#39;1.3.6.1.6.3.1.1.5.4&#39;)), ObjectType(ObjectName(&#39;1.3.6.1.2.1.2.2.1.1.123&#39;), InterfaceIndex(123)), ObjectType(ObjectIdentity(&#39;1.3.6.1.2.1.2.2.1.7.123&#39;), Integer(3)), ObjectType(ObjectIdentity(&#39;1.3.6.1.2.1.2.2.1.8.123&#39;), Integer(1))])</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="id24">
+<h4><em>大容量消息</em><a class="headerlink" href="#id24" title="Permalink to this headline">¶</a></h4>
+<p>当提到管理大规模网络时，顺序读取MIB对其会有时延。在某些方面，这些时延是不可忍受的。一种广为人知的方法是并行化查询——你可以在用多线程、多进程方式执行这些操作，或者围绕异步I/O模型构建你的应用程序。</p>
+<p>和其他方式相比，异步模型最轻量级、最具扩展性。它的思想很简单：<strong>永远不要等待I/O——只要可能就去做其他的事情</strong>。这种方式的缺点是执行流不再是线性的，这将导致程序源码难以阅读分析。</p>
+<p>PySNMP高级API采用三种异步I/O框架——asyncore，twisted和asyncio。异步API的更多信息，请参考PySNMP库参考手册和<a class="reference external" href="http://pysnmp.sourceforge.net/examples/contents.html">相关示例</a></p>
+</div>
+</div>
+</div>
+</div>
+
+
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="pysnmp_doc_example.html" class="btn btn-neutral float-right" title="2. PySNMP获取设备信息" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="index.html" class="btn btn-neutral" title="Python笔记" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2016, chenshiqiang.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'0.1',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

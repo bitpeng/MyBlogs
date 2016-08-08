@@ -1,0 +1,454 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>2. PySNMP获取设备信息 &mdash; Blogs 0.1 documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+    <link rel="top" title="Blogs 0.1 documentation" href="../index.html"/>
+        <link rel="up" title="Python笔记" href="index.html"/>
+        <link rel="next" title="3. Python正则表达式" href="re_doc.html"/>
+        <link rel="prev" title="1. PySNMP教程" href="pysnmp_doc.html"/> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> Blogs
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.1
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Python笔记</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="pysnmp_doc.html">1. PySNMP教程</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">2. PySNMP获取设备信息</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#cpu">cpu信息</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id1">内存信息</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#disk">disk信息</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id2">流量信息</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id3">总结</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="re_doc.html">3. Python正则表达式</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../index.html">Blogs</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+ 
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../index.html">Docs</a> &raquo;</li>
+      
+          <li><a href="index.html">Python笔记</a> &raquo;</li>
+      
+    <li>2. PySNMP获取设备信息</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="../_sources/py_doc/pysnmp_doc_example.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="pysnmp">
+<h1>2. PySNMP获取设备信息<a class="headerlink" href="#pysnmp" title="Permalink to this headline">¶</a></h1>
+<p>tags： Python</p>
+<hr class="docutils" />
+<p>[TOC]</p>
+<hr class="docutils" />
+<blockquote>
+<div>该文档，将以简单的例子，示范使用PySNMP库获取设备信息的思路和方法。有关snmp协议和PySNMP库的更多信息，可以参考之前的文档《PySNMP教程》。</div></blockquote>
+<p>可以获取的mib信息，都在网站<a class="reference external" href="http://mibs.snmplabs.com/asn1/">mibs.snmplabs.com</a>可以找到，比如，我们需要查询cpu的某些信息。</p>
+<div class="code powershell highlight-default"><div class="highlight"><pre><span></span><span class="n">root</span><span class="nd">@ubuntu</span><span class="p">:</span><span class="o">/</span><span class="n">smbshare</span><span class="c1"># snmpwalk -v 2c -c public 10.11.113.150 ssCpuIdle</span>
+<span class="n">UCD</span><span class="o">-</span><span class="n">SNMP</span><span class="o">-</span><span class="n">MIB</span><span class="p">::</span><span class="n">ssCpuIdle</span><span class="o">.</span><span class="mi">0</span> <span class="o">=</span> <span class="n">INTEGER</span><span class="p">:</span> <span class="mi">93</span>
+</pre></div>
+</div>
+<p>然后打开UCD-SNMP-MIB目录，可以找到cpu相关的mib对象。</p>
+<div class="figure" id="id4">
+<img alt="ucd" src="http://images2015.cnblogs.com/blog/801114/201605/801114-20160531110607696-1312294612.png" />
+<p class="caption"><span class="caption-text">ucd</span></p>
+</div>
+<div class="figure" id="id5">
+<img alt="sscpu" src="http://images2015.cnblogs.com/blog/801114/201605/801114-20160531110745414-934932437.png" />
+<p class="caption"><span class="caption-text">sscpu</span></p>
+</div>
+<p>在description里有关于对象信息的详细解释。</p>
+<div class="section" id="cpu">
+<h2>cpu信息<a class="headerlink" href="#cpu" title="Permalink to this headline">¶</a></h2>
+<p>根据<a class="reference external" href="http://mibs.snmplabs.com/asn1/UCD-SNMP-MIB">UCD-SNMP-MIB文件</a>，可以获取的cpu参数共有33条，这里我们主要关注的是cpu的使用率，<code class="docutils literal"><span class="pre">ssCpuIdle</span></code>获取的是cpu的空闲率，所以100
+- ssCpuIdle 既可以求得cpu的使用率。</p>
+<div class="code Python highlight-default"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">getCpuUsage</span><span class="p">(</span><span class="n">targetHost</span><span class="p">,</span> <span class="n">targetPort</span><span class="p">,</span> <span class="n">cmd</span><span class="p">,</span> <span class="n">community</span><span class="p">):</span>
+    <span class="n">errIndication</span><span class="p">,</span> <span class="n">errStatus</span><span class="p">,</span> <span class="n">errIndex</span><span class="p">,</span> <span class="n">varBindTable</span> <span class="o">=</span> <span class="n">cmd</span><span class="o">.</span><span class="n">nextCmd</span><span class="p">(</span>
+        <span class="n">cmdgen</span><span class="o">.</span><span class="n">CommunityData</span><span class="p">(</span><span class="n">community</span><span class="p">,</span> <span class="n">mpModel</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span>     <span class="c1"># mpModel=1,表示使用v2协议</span>
+        <span class="n">cmdgen</span><span class="o">.</span><span class="n">UdpTransportTarget</span><span class="p">((</span><span class="n">targetHost</span><span class="p">,</span><span class="n">targetPort</span><span class="p">)),</span> <span class="c1"># 设备ip及端口</span>
+        <span class="n">cmdgen</span><span class="o">.</span><span class="n">MibVariable</span><span class="p">(</span><span class="s1">&#39;UCD-SNMP-MIB&#39;</span><span class="p">,</span><span class="s1">&#39;ssCpuIdle&#39;</span><span class="p">),</span>  <span class="c1"># 需要访问信息的MIB库及子节点，也可以用形如&#39;1.3.6.1.4&#39;(OID标识符)的方式来定义</span>
+        <span class="c1">#lookupValues=True</span>
+    <span class="p">)</span>
+    <span class="k">if</span> <span class="n">errIndication</span><span class="p">:</span>
+        <span class="nb">print</span> <span class="n">errIndication</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">errStatus</span><span class="p">:</span>
+            <span class="nb">print</span> <span class="s1">&#39;</span><span class="si">%s</span><span class="s1"> at </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span>
+                <span class="n">errStatus</span><span class="o">.</span><span class="n">prettyPrint</span><span class="p">(),</span>
+                <span class="n">errIndex</span> <span class="ow">and</span> <span class="n">varBindTable</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="nb">int</span><span class="p">(</span><span class="n">errIndex</span><span class="p">)</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="ow">or</span> <span class="s1">&#39;?&#39;</span>
+                <span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="mf">100.0</span> <span class="o">-</span> <span class="nb">float</span><span class="p">(</span><span class="n">varBindTable</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">prettyPrint</span><span class="p">())</span>
+</pre></div>
+</div>
+<p>这是运行结果：</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span>[[ObjectType(ObjectIdentity(ObjectName(&#39;1.3.6.1.4.1.2021.11.11.0&#39;)), Integer32(92))]]
+CPU使用率：8.0
+</pre></div>
+</div>
+</div>
+<div class="section" id="id1">
+<h2>内存信息<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
+<p>可以获取的完整内存对象信息也在<code class="docutils literal"><span class="pre">http://mibs.snmplabs.com/asn1/UCD-SNMP-MIB</span></code>上，包括memTotalFree，memShared，memBuffer等。</p>
+<div class="code python highlight-default"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">getMemUsage</span><span class="p">(</span><span class="n">targetHost</span><span class="p">,</span> <span class="n">targetPort</span><span class="p">,</span> <span class="n">cmd</span><span class="p">,</span> <span class="n">community</span><span class="p">):</span>
+    <span class="n">errIndication</span><span class="p">,</span> <span class="n">errStatus</span><span class="p">,</span> <span class="n">errIndex</span><span class="p">,</span> <span class="n">varBindTable</span> <span class="o">=</span> <span class="n">cmd</span><span class="o">.</span><span class="n">nextCmd</span><span class="p">(</span>
+        <span class="n">cmdgen</span><span class="o">.</span><span class="n">CommunityData</span><span class="p">(</span><span class="n">community</span><span class="p">,</span> <span class="n">mpModel</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span>
+        <span class="n">cmdgen</span><span class="o">.</span><span class="n">UdpTransportTarget</span><span class="p">((</span><span class="n">targetHost</span><span class="p">,</span><span class="n">targetPort</span><span class="p">)),</span>
+        <span class="n">cmdgen</span><span class="o">.</span><span class="n">MibVariable</span><span class="p">(</span><span class="s1">&#39;UCD-SNMP-MIB&#39;</span><span class="p">,</span><span class="s1">&#39;memTotalReal&#39;</span><span class="p">),</span> <span class="c1">#&#39;1.3.6.1.4.1.2021.4.5&#39;,</span>
+        <span class="n">cmdgen</span><span class="o">.</span><span class="n">MibVariable</span><span class="p">(</span><span class="s1">&#39;UCD-SNMP-MIB&#39;</span><span class="p">,</span><span class="s1">&#39;memAvailReal&#39;</span><span class="p">),</span> <span class="c1">#&#39;1.3.6.1.4.1.2021.4.6&#39;,</span>
+        <span class="n">cmdgen</span><span class="o">.</span><span class="n">MibVariable</span><span class="p">(</span><span class="s1">&#39;UCD-SNMP-MIB&#39;</span><span class="p">,</span><span class="s1">&#39;memBuffer&#39;</span><span class="p">),</span> <span class="c1">#&#39;1.3.6.1.4.1.2021.4.14&#39;,</span>
+        <span class="n">cmdgen</span><span class="o">.</span><span class="n">MibVariable</span><span class="p">(</span><span class="s1">&#39;UCD-SNMP-MIB&#39;</span><span class="p">,</span><span class="s1">&#39;memCached&#39;</span><span class="p">),</span> <span class="c1"># &#39;1.3.6.1.4.1.2021.4.15&#39;,</span>
+        <span class="c1">#cmdgen.MibVariable(&#39;UCD-SNMP-MIB&#39;, &#39;memTotalSwap&#39;),</span>
+        <span class="c1">#lookupValues=True</span>
+        <span class="c1">#lookupNames=True</span>
+    <span class="p">)</span>
+    <span class="c1">#print varBindTable</span>
+    <span class="k">if</span> <span class="n">errIndication</span><span class="p">:</span>
+        <span class="nb">print</span> <span class="n">errIndication</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">errStatus</span><span class="p">:</span>
+            <span class="nb">print</span> <span class="s1">&#39;</span><span class="si">%s</span><span class="s1"> at </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span>
+                <span class="n">errStatus</span><span class="o">.</span><span class="n">prettyPrint</span><span class="p">(),</span>
+                <span class="n">errIndex</span> <span class="ow">and</span> <span class="n">varBindTable</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="nb">int</span><span class="p">(</span><span class="n">errIndex</span><span class="p">)</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="ow">or</span> <span class="s1">&#39;?&#39;</span>
+                <span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">mysum</span> <span class="o">=</span> <span class="mf">0.0</span>
+            <span class="n">totalAvailReal</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">varBindTable</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">prettyPrint</span><span class="p">())</span>
+            <span class="k">for</span> <span class="n">var</span> <span class="ow">in</span> <span class="n">varBindTable</span><span class="p">:</span>
+                <span class="k">for</span> <span class="n">name</span> <span class="p">,</span> <span class="n">val</span> <span class="ow">in</span> <span class="n">var</span><span class="p">:</span>
+                    <span class="n">mysum</span> <span class="o">+=</span> <span class="nb">float</span><span class="p">(</span><span class="n">val</span><span class="o">.</span><span class="n">prettyPrint</span><span class="p">())</span>
+            <span class="k">return</span> <span class="n">totalAvailReal</span><span class="p">,</span> <span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">totalAvailReal</span> <span class="o">-</span> <span class="n">mysum</span><span class="p">)</span> <span class="o">/</span> <span class="n">totalAvailReal</span> <span class="o">*</span> <span class="mf">100.0</span>
+</pre></div>
+</div>
+<p>其中，比较重要的内存信息有：内存总量，缓冲区大小，cache区大小，swap区大小等。据此，可以计算出内存的使用率。</p>
+</div>
+<div class="section" id="disk">
+<h2>disk信息<a class="headerlink" href="#disk" title="Permalink to this headline">¶</a></h2>
+<p>disk的相关信息也定义在mib文件UCD-SNMP-MIB中，根据该文件，可以获取以下disk信息：</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">DskEntry</span> <span class="p">::</span><span class="o">=</span> <span class="n">SEQUENCE</span> <span class="p">{</span>
+    <span class="n">dskIndex</span>        <span class="n">Integer32</span><span class="p">,</span>
+    <span class="n">dskPath</span>     <span class="n">DisplayString</span><span class="p">,</span>
+    <span class="n">dskDevice</span>       <span class="n">DisplayString</span><span class="p">,</span>
+    <span class="n">dskMinimum</span>      <span class="n">Integer32</span><span class="p">,</span>
+    <span class="n">dskMinPercent</span>   <span class="n">Integer32</span><span class="p">,</span>
+    <span class="n">dskTotal</span>        <span class="n">Integer32</span><span class="p">,</span>
+    <span class="n">dskAvail</span>        <span class="n">Integer32</span><span class="p">,</span>
+    <span class="n">dskUsed</span>     <span class="n">Integer32</span><span class="p">,</span>
+    <span class="n">dskPercent</span>      <span class="n">Integer32</span><span class="p">,</span>
+    <span class="n">dskPercentNode</span>  <span class="n">Integer32</span><span class="p">,</span>
+    <span class="n">dskErrorFlag</span>    <span class="n">UCDErrorFlag</span><span class="p">,</span>
+    <span class="n">dskErrorMsg</span>     <span class="n">DisplayString</span><span class="p">,</span>
+    <span class="n">dskTotalLow</span>     <span class="n">Unsigned32</span><span class="p">,</span>
+    <span class="n">dskTotalHigh</span>    <span class="n">Unsigned32</span><span class="p">,</span>
+    <span class="n">dskAvailLow</span>     <span class="n">Unsigned32</span><span class="p">,</span>
+    <span class="n">dskAvailHigh</span>    <span class="n">Unsigned32</span><span class="p">,</span>
+    <span class="n">dskUsedLow</span>      <span class="n">Unsigned32</span><span class="p">,</span>
+    <span class="n">dskUsedHigh</span>     <span class="n">Unsigned32</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>根据oid
+name，可以很容易看出其意思，下面的代码可以用来获取disk的使用信息：</p>
+<div class="code python highlight-default"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">getDiskUsage</span><span class="p">(</span><span class="n">targetHost</span><span class="p">,</span> <span class="n">targetPort</span><span class="p">,</span> <span class="n">cmd</span><span class="p">,</span> <span class="n">community</span><span class="p">):</span>
+    <span class="n">errIndication</span><span class="p">,</span> <span class="n">errStatus</span><span class="p">,</span> <span class="n">errIndex</span><span class="p">,</span> <span class="n">varBindTable</span> <span class="o">=</span> <span class="n">cmd</span><span class="o">.</span><span class="n">nextCmd</span><span class="p">(</span>
+        <span class="n">cmdgen</span><span class="o">.</span><span class="n">CommunityData</span><span class="p">(</span><span class="n">community</span><span class="p">,</span> <span class="n">mpModel</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span>
+        <span class="n">cmdgen</span><span class="o">.</span><span class="n">UdpTransportTarget</span><span class="p">((</span><span class="n">targetHost</span><span class="p">,</span><span class="n">targetPort</span><span class="p">)),</span>
+        <span class="n">cmdgen</span><span class="o">.</span><span class="n">MibVariable</span><span class="p">(</span><span class="s1">&#39;UCD-SNMP-MIB&#39;</span><span class="p">,</span> <span class="s1">&#39;dskPath&#39;</span><span class="p">),</span> <span class="c1"># &#39;1.3.6.1.4.1.2021.9.1.2&#39;</span>
+        <span class="n">cmdgen</span><span class="o">.</span><span class="n">MibVariable</span><span class="p">(</span><span class="s1">&#39;UCD-SNMP-MIB&#39;</span><span class="p">,</span> <span class="s1">&#39;dskTotal&#39;</span><span class="p">),</span> <span class="c1"># &#39;1.3.6.1.4.1.2021.9.1.6&#39;</span>
+        <span class="n">cmdgen</span><span class="o">.</span><span class="n">MibVariable</span><span class="p">(</span><span class="s1">&#39;UCD-SNMP-MIB&#39;</span><span class="p">,</span> <span class="s1">&#39;dskPercent&#39;</span><span class="p">),</span> <span class="c1">#&#39;1.3.6.1.4.1.2021.9.1.9&#39;</span>
+        <span class="n">cmdgen</span><span class="o">.</span><span class="n">MibVariable</span><span class="p">(</span><span class="s1">&#39;UCD-SNMP-MIB&#39;</span><span class="p">,</span> <span class="s1">&#39;dskDevice&#39;</span><span class="p">),</span> <span class="c1">#&#39;1.3.6.1.4.1.2021.9.1.3&#39;</span>
+        <span class="c1">#lookupValues=True,</span>
+        <span class="c1">#lookupNames=True</span>
+    <span class="p">)</span>
+    <span class="k">if</span> <span class="n">errIndication</span><span class="p">:</span>
+        <span class="nb">print</span> <span class="n">errIndication</span>
+
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">errStatus</span><span class="p">:</span>
+            <span class="nb">print</span> <span class="s1">&#39;</span><span class="si">%s</span><span class="s1"> at </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">errStatus</span><span class="o">.</span><span class="n">prettyPrint</span><span class="p">(),</span> <span class="n">errIndex</span> \
+            <span class="ow">and</span> <span class="n">varBindTable</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="nb">int</span><span class="p">(</span><span class="n">errIndex</span><span class="p">)</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="ow">or</span> <span class="s1">&#39;?&#39;</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">result</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="k">for</span> <span class="n">var</span> <span class="ow">in</span> <span class="n">varBindTable</span><span class="p">:</span>
+                <span class="n">tempResult</span> <span class="o">=</span> <span class="p">{}</span>
+                <span class="k">for</span> <span class="n">name</span> <span class="p">,</span> <span class="n">val</span> <span class="ow">in</span> <span class="n">var</span><span class="p">:</span>
+                    <span class="n">tempResult</span><span class="p">[</span><span class="n">name</span><span class="o">.</span><span class="n">getLabel</span><span class="p">()[</span><span class="nb">len</span><span class="p">(</span><span class="n">name</span><span class="o">.</span><span class="n">getLabel</span><span class="p">())</span><span class="o">-</span><span class="mi">1</span><span class="p">]]</span> <span class="o">=</span> <span class="n">val</span><span class="o">.</span><span class="n">prettyPrint</span><span class="p">()</span>
+                <span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">tempResult</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">result</span>
+</pre></div>
+</div>
+<p>测试时，我们获取到waf设备10.11.113.150的disk信息为空，其他设备可以正常获取。</p>
+</div>
+<div class="section" id="id2">
+<h2>流量信息<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
+<p>也网卡或者流量相关的对象定义定义在<a class="reference external" href="http://mibs.snmplabs.com/asn1/IF-MIB">IF-MIB</a>中，可以获取的具体信息包括：</p>
+<div class="code python highlight-default"><div class="highlight"><pre><span></span><span class="n">IfEntry</span> <span class="p">::</span><span class="o">=</span>
+   <span class="n">SEQUENCE</span> <span class="p">{</span>
+       <span class="n">ifIndex</span>                 <span class="n">InterfaceIndex</span><span class="p">,</span>
+       <span class="n">ifDescr</span>                 <span class="n">DisplayString</span><span class="p">,</span>
+       <span class="n">ifType</span>                  <span class="n">IANAifType</span><span class="p">,</span>
+       <span class="n">ifMtu</span>                   <span class="n">Integer32</span><span class="p">,</span>
+       <span class="n">ifSpeed</span>                 <span class="n">Gauge32</span><span class="p">,</span>
+       <span class="n">ifPhysAddress</span>           <span class="n">PhysAddress</span><span class="p">,</span>
+       <span class="n">ifAdminStatus</span>           <span class="n">INTEGER</span><span class="p">,</span>
+       <span class="n">ifOperStatus</span>            <span class="n">INTEGER</span><span class="p">,</span>
+       <span class="n">ifLastChange</span>            <span class="n">TimeTicks</span><span class="p">,</span>
+       <span class="n">ifInOctets</span>              <span class="n">Counter32</span><span class="p">,</span>
+       <span class="n">ifInUcastPkts</span>           <span class="n">Counter32</span><span class="p">,</span>
+       <span class="n">ifInNUcastPkts</span>          <span class="n">Counter32</span><span class="p">,</span>  <span class="o">--</span> <span class="n">deprecated</span>
+       <span class="n">ifInDiscards</span>            <span class="n">Counter32</span><span class="p">,</span>
+       <span class="n">ifInErrors</span>              <span class="n">Counter32</span><span class="p">,</span>
+       <span class="n">ifInUnknownProtos</span>       <span class="n">Counter32</span><span class="p">,</span>
+       <span class="n">ifOutOctets</span>             <span class="n">Counter32</span><span class="p">,</span>
+       <span class="n">ifOutUcastPkts</span>          <span class="n">Counter32</span><span class="p">,</span>
+       <span class="n">ifOutNUcastPkts</span>         <span class="n">Counter32</span><span class="p">,</span>  <span class="o">--</span> <span class="n">deprecated</span>
+       <span class="n">ifOutDiscards</span>           <span class="n">Counter32</span><span class="p">,</span>
+       <span class="n">ifOutErrors</span>             <span class="n">Counter32</span><span class="p">,</span>
+       <span class="n">ifOutQLen</span>               <span class="n">Gauge32</span><span class="p">,</span>    <span class="o">--</span> <span class="n">deprecated</span>
+       <span class="n">ifSpecific</span>              <span class="n">OBJECT</span> <span class="n">IDENTIFIER</span> <span class="o">--</span> <span class="n">deprecated</span>   <span class="p">}</span>
+</pre></div>
+</div>
+<p>以下是获取网卡流量相关信息的示例代码：</p>
+<div class="code python highlight-default"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">getIfaceTraffic</span><span class="p">(</span><span class="n">targetHost</span><span class="p">,</span> <span class="n">targetPort</span><span class="p">,</span> <span class="n">cmd</span><span class="p">,</span> <span class="n">community</span><span class="p">,</span> <span class="n">period</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">getNowTraffic</span><span class="p">():</span>
+        <span class="n">errIndication</span><span class="p">,</span> <span class="n">errStatus</span><span class="p">,</span> <span class="n">errIndex</span><span class="p">,</span> <span class="n">varBindTable</span> <span class="o">=</span> <span class="n">cmd</span><span class="o">.</span><span class="n">nextCmd</span><span class="p">(</span>
+            <span class="n">cmdgen</span><span class="o">.</span><span class="n">CommunityData</span><span class="p">(</span><span class="n">community</span><span class="p">,</span> <span class="n">mpModel</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span>
+            <span class="n">cmdgen</span><span class="o">.</span><span class="n">UdpTransportTarget</span><span class="p">((</span><span class="n">targetHost</span><span class="p">,</span><span class="n">targetPort</span><span class="p">)),</span>
+            <span class="n">cmdgen</span><span class="o">.</span><span class="n">MibVariable</span><span class="p">(</span><span class="s1">&#39;IF-MIB&#39;</span><span class="p">,</span> <span class="s1">&#39;ifDescr&#39;</span><span class="p">),</span> <span class="c1"># &#39;1.3.6.1.2.1.2.2.1.2&#39;</span>
+            <span class="n">cmdgen</span><span class="o">.</span><span class="n">MibVariable</span><span class="p">(</span><span class="s1">&#39;IF-MIB&#39;</span><span class="p">,</span> <span class="s1">&#39;ifInOctets&#39;</span><span class="p">),</span> <span class="c1"># &#39;1.3.6.1.2.1.2.2.1.10&#39;</span>
+            <span class="n">cmdgen</span><span class="o">.</span><span class="n">MibVariable</span><span class="p">(</span><span class="s1">&#39;IF-MIB&#39;</span><span class="p">,</span> <span class="s1">&#39;ifOutOctets&#39;</span><span class="p">),</span> <span class="c1">#&#39;1.3.6.1.2.1.2.2.1.16&#39;</span>
+            <span class="c1">#lookupValues=True,</span>
+            <span class="c1">#lookupNames=True</span>
+        <span class="p">)</span>
+        <span class="k">if</span> <span class="n">errIndication</span><span class="p">:</span>
+            <span class="nb">print</span> <span class="n">errIndication</span>
+
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">errStatus</span><span class="p">:</span>
+                <span class="nb">print</span> <span class="s1">&#39;</span><span class="si">%s</span><span class="s1"> at </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">errStatus</span><span class="o">.</span><span class="n">prettyPrint</span><span class="p">(),</span> <span class="n">errIndex</span> \
+                <span class="ow">and</span> <span class="n">varBindTable</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="nb">int</span><span class="p">(</span><span class="n">errIndex</span><span class="p">)</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="ow">or</span> <span class="s1">&#39;?&#39;</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">result</span> <span class="o">=</span> <span class="p">[]</span>
+                <span class="c1">#print varBindTable</span>
+                <span class="k">for</span> <span class="n">var</span> <span class="ow">in</span> <span class="n">varBindTable</span><span class="p">:</span>
+                    <span class="n">tempResult</span> <span class="o">=</span> <span class="p">{}</span>
+                    <span class="k">for</span> <span class="n">name</span> <span class="p">,</span> <span class="n">val</span> <span class="ow">in</span> <span class="n">var</span><span class="p">:</span>
+                        <span class="n">tempResult</span><span class="p">[</span><span class="n">name</span><span class="o">.</span><span class="n">getLabel</span><span class="p">()[</span><span class="nb">len</span><span class="p">(</span><span class="n">name</span><span class="o">.</span><span class="n">getLabel</span><span class="p">())</span><span class="o">-</span><span class="mi">1</span><span class="p">]]</span> <span class="o">=</span> <span class="n">val</span><span class="o">.</span><span class="n">prettyPrint</span><span class="p">()</span>
+                    <span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">tempResult</span><span class="p">)</span>
+                <span class="k">return</span> <span class="n">result</span>
+
+    <span class="n">preTraffic</span> <span class="o">=</span> <span class="n">getNowTraffic</span><span class="p">()</span>
+    <span class="c1">#print preTraffic</span>
+    <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="n">period</span><span class="p">)</span>
+    <span class="n">afterTraffic</span> <span class="o">=</span> <span class="n">getNowTraffic</span><span class="p">()</span>
+    <span class="c1">#print afterTraffic</span>
+
+    <span class="n">traffic</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">if</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">preTraffic</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">len</span><span class="p">(</span><span class="n">afterTraffic</span><span class="p">)):</span>
+        <span class="k">return</span> <span class="kc">None</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">ifaceNum</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">preTraffic</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">ifaceNum</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">preTraffic</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="s1">&#39;ifDescr&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="n">afterTraffic</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="s1">&#39;ifDescr&#39;</span><span class="p">]:</span>
+            <span class="n">m</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">preTraffic</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="s1">&#39;ifInOctets&#39;</span><span class="p">])</span>
+            <span class="n">mm</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">afterTraffic</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="s1">&#39;ifInOctets&#39;</span><span class="p">])</span>
+            <span class="n">n</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">preTraffic</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="s1">&#39;ifOutOctets&#39;</span><span class="p">])</span>
+            <span class="n">nn</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">afterTraffic</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="s1">&#39;ifOutOctets&#39;</span><span class="p">])</span>
+            <span class="n">ifaceName</span> <span class="o">=</span> <span class="n">preTraffic</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="s1">&#39;ifDescr&#39;</span><span class="p">]</span>
+            <span class="n">traffic</span><span class="o">.</span><span class="n">append</span><span class="p">({</span>
+                <span class="s1">&#39;ifaceName&#39;</span><span class="p">:</span><span class="n">ifaceName</span><span class="p">,</span>
+                <span class="s1">&#39;inTraffic(Mbps)&#39;</span><span class="p">:(</span><span class="n">mm</span><span class="o">-</span><span class="n">m</span><span class="p">)</span><span class="o">/</span><span class="n">period</span><span class="o">/</span><span class="mi">1048576</span><span class="o">*</span><span class="mi">8</span><span class="p">,</span>
+                <span class="s1">&#39;outTraffic(Mbps)&#39;</span><span class="p">:(</span><span class="n">nn</span><span class="o">-</span><span class="n">n</span><span class="p">)</span><span class="o">/</span><span class="n">period</span><span class="o">/</span><span class="mi">1048576</span><span class="o">*</span><span class="mi">8</span>
+            <span class="p">})</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">None</span>
+    <span class="k">return</span> <span class="n">traffic</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="id3">
+<h2>总结<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h2>
+<p><code class="docutils literal"><span class="pre">asn.1</span></code>一共包括9000多个mib信息模块集合，另外我们也可以在目标机器上执行命令：</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">snmpwalk</span> <span class="o">-</span><span class="n">v</span> <span class="mi">2</span><span class="n">c</span> <span class="o">-</span><span class="n">c</span> <span class="n">public</span> <span class="n">localhost</span>
+</pre></div>
+</div>
+<p>来获取机器所能通过snmp获取的信息列表。在我的机器上运行该命令，共有近4000条mib信息。所以，我们需要从中进行甄别，获取我们所关注的所需要的信息。</p>
+</div>
+</div>
+
+
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="re_doc.html" class="btn btn-neutral float-right" title="3. Python正则表达式" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="pysnmp_doc.html" class="btn btn-neutral" title="1. PySNMP教程" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2016, chenshiqiang.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'0.1',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>
