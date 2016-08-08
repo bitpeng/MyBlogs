@@ -3,20 +3,19 @@
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-Welcome to Blogs's documentation!
-=================================
 
-Contents:
+.. note::
+
+    这里是 陈世强 的技术博客，欢迎交流与指教。
+    邮箱：bitpeng@yeah.net
+
+目录:
+^^^^^
 
 .. toctree::
-   :maxdepth: 2
-
-
-
-Indices and tables
-==================
-
-* :ref:`genindex`
-* :ref:`modindex`
-* :ref:`search`
-
+    :maxdepth: 2
+    :glob:
+    
+    beginning/index
+    base/index
+    py_doc/index
