@@ -13,3 +13,4 @@ Python笔记
     pysnmp_doc_example
     re_doc
     wsgi
+    re_analysis

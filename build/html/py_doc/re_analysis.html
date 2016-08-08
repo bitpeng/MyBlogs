@@ -1,0 +1,303 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>6. Python正则表达式分析利器 &mdash; Blogs 0.1 documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+    <link rel="top" title="Blogs 0.1 documentation" href="../index.html"/>
+        <link rel="up" title="Python笔记" href="index.html"/>
+        <link rel="prev" title="4. wsgi基础" href="wsgi.html"/> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> Blogs
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.1
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Python笔记</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="pysnmp_doc.html">1. PySNMP教程</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pysnmp_doc_example.html">2. PySNMP获取设备信息</a></li>
+<li class="toctree-l2"><a class="reference internal" href="re_doc.html">3. Python正则表达式</a></li>
+<li class="toctree-l2"><a class="reference internal" href="wsgi.html">4. wsgi基础</a></li>
+<li class="toctree-l2"><a class="reference internal" href="wsgi.html#id1">5. wsgi导论</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">6. Python正则表达式分析利器</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../index.html">Blogs</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+ 
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../index.html">Docs</a> &raquo;</li>
+      
+          <li><a href="index.html">Python笔记</a> &raquo;</li>
+      
+    <li>6. Python正则表达式分析利器</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="../_sources/py_doc/re_analysis.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="python">
+<h1>6. Python正则表达式分析利器<a class="headerlink" href="#python" title="Permalink to this headline">¶</a></h1>
+<p>tags： Python 正则表达式</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="100%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td>[TO
+C]</td>
+</tr>
+</tbody>
+</table>
+<p>在学习正则表达式及Python
+re模块中，发现一个分析正则模式的利器，下面根据自己在阅读代码时见到的最复杂的正则表达式，来进行分析。</p>
+<div class="code Python highlight-default"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">re</span>
+<span class="c1"># 该正则表达式来源于bottle框架的URL正则匹配模式，非常复杂！</span>
+<span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="s1">&#39;(</span><span class="se">\\\\</span><span class="s1">*)&#39;</span>\
+        <span class="s1">&#39;(?:(?::([a-zA-Z_][a-zA-Z_0-9]*)?()(?:#(.*?)#)?)&#39;</span>\
+          <span class="s1">&#39;|(?:&lt;([a-zA-Z_][a-zA-Z_0-9]*)?(?::([a-zA-Z_]*)&#39;</span>\
+            <span class="s1">&#39;(?::((?:</span><span class="se">\\\\</span><span class="s1">.|[^</span><span class="se">\\\\</span><span class="s1">&gt;]+)+)?)?)?&gt;))&#39;</span><span class="p">,</span> <span class="n">re</span><span class="o">.</span><span class="n">DEBUG</span><span class="p">)</span>
+
+
+<span class="c1"># 以下为在命令行交互模式下的输出！逐行进行分析。</span>
+<span class="n">subpattern</span> <span class="mi">1</span>  <span class="c1"># 捕获分组，编号为1.</span>
+  <span class="n">max_repeat</span> <span class="mi">0</span> <span class="mi">4294967295</span>   <span class="c1"># 贪婪匹配</span>
+    <span class="n">literal</span> <span class="mi">92</span>              <span class="c1"># 匹配反斜杠</span>
+<span class="n">subpattern</span> <span class="kc">None</span>             <span class="c1"># 非捕获分组</span>
+  <span class="n">branch</span>                    <span class="c1"># 选择结构</span>
+    <span class="n">subpattern</span> <span class="kc">None</span>         <span class="c1"># 非捕获分组</span>
+      <span class="n">literal</span> <span class="mi">58</span>            <span class="c1"># 匹配:</span>
+      <span class="n">max_repeat</span> <span class="mi">0</span> <span class="mi">1</span>        <span class="c1"># 可选的?</span>
+        <span class="n">subpattern</span> <span class="mi">2</span>        <span class="c1"># 捕获分组，编号为2.</span>
+          <span class="ow">in</span>                <span class="c1"># 字符类 []</span>
+            <span class="nb">range</span> <span class="p">(</span><span class="mi">97</span><span class="p">,</span> <span class="mi">122</span><span class="p">)</span>   <span class="c1"># a-z</span>
+            <span class="nb">range</span> <span class="p">(</span><span class="mi">65</span><span class="p">,</span> <span class="mi">90</span><span class="p">)</span>     <span class="c1"># A-Z</span>
+            <span class="n">literal</span> <span class="mi">95</span>         <span class="c1"># 匹配_</span>
+          <span class="n">max_repeat</span> <span class="mi">0</span> <span class="mi">4294967295</span>    <span class="c1"># 贪婪匹配</span>
+            <span class="ow">in</span>                       <span class="c1"># 字符类</span>
+              <span class="nb">range</span> <span class="p">(</span><span class="mi">97</span><span class="p">,</span> <span class="mi">122</span><span class="p">)</span>        <span class="c1"># 后面的依次进行分析即可。</span>
+              <span class="nb">range</span> <span class="p">(</span><span class="mi">65</span><span class="p">,</span> <span class="mi">90</span><span class="p">)</span>
+              <span class="n">literal</span> <span class="mi">95</span>
+              <span class="nb">range</span> <span class="p">(</span><span class="mi">48</span><span class="p">,</span> <span class="mi">57</span><span class="p">)</span>
+      <span class="n">subpattern</span> <span class="mi">3</span>
+      <span class="n">max_repeat</span> <span class="mi">0</span> <span class="mi">1</span>
+        <span class="n">subpattern</span> <span class="kc">None</span>
+          <span class="n">literal</span> <span class="mi">35</span>
+          <span class="n">subpattern</span> <span class="mi">4</span>
+            <span class="n">min_repeat</span> <span class="mi">0</span> <span class="mi">4294967295</span>
+              <span class="nb">any</span> <span class="kc">None</span>
+          <span class="n">literal</span> <span class="mi">35</span>
+  <span class="ow">or</span>
+    <span class="n">subpattern</span> <span class="kc">None</span>
+      <span class="n">literal</span> <span class="mi">60</span>
+      <span class="n">max_repeat</span> <span class="mi">0</span> <span class="mi">1</span>
+        <span class="n">subpattern</span> <span class="mi">5</span>
+          <span class="ow">in</span>
+            <span class="nb">range</span> <span class="p">(</span><span class="mi">97</span><span class="p">,</span> <span class="mi">122</span><span class="p">)</span>
+            <span class="nb">range</span> <span class="p">(</span><span class="mi">65</span><span class="p">,</span> <span class="mi">90</span><span class="p">)</span>
+            <span class="n">literal</span> <span class="mi">95</span>
+          <span class="n">max_repeat</span> <span class="mi">0</span> <span class="mi">4294967295</span>
+            <span class="ow">in</span>
+              <span class="nb">range</span> <span class="p">(</span><span class="mi">97</span><span class="p">,</span> <span class="mi">122</span><span class="p">)</span>
+              <span class="nb">range</span> <span class="p">(</span><span class="mi">65</span><span class="p">,</span> <span class="mi">90</span><span class="p">)</span>
+              <span class="n">literal</span> <span class="mi">95</span>
+              <span class="nb">range</span> <span class="p">(</span><span class="mi">48</span><span class="p">,</span> <span class="mi">57</span><span class="p">)</span>
+      <span class="n">max_repeat</span> <span class="mi">0</span> <span class="mi">1</span>
+        <span class="n">subpattern</span> <span class="kc">None</span>
+          <span class="n">literal</span> <span class="mi">58</span>
+          <span class="n">subpattern</span> <span class="mi">6</span>
+            <span class="n">max_repeat</span> <span class="mi">0</span> <span class="mi">4294967295</span>
+              <span class="ow">in</span>
+                <span class="nb">range</span> <span class="p">(</span><span class="mi">97</span><span class="p">,</span> <span class="mi">122</span><span class="p">)</span>
+                <span class="nb">range</span> <span class="p">(</span><span class="mi">65</span><span class="p">,</span> <span class="mi">90</span><span class="p">)</span>
+                <span class="n">literal</span> <span class="mi">95</span>
+          <span class="n">max_repeat</span> <span class="mi">0</span> <span class="mi">1</span>
+            <span class="n">subpattern</span> <span class="kc">None</span>
+              <span class="n">literal</span> <span class="mi">58</span>
+              <span class="n">max_repeat</span> <span class="mi">0</span> <span class="mi">1</span>
+                <span class="n">subpattern</span> <span class="mi">7</span>
+                  <span class="n">max_repeat</span> <span class="mi">1</span> <span class="mi">4294967295</span>
+                    <span class="n">subpattern</span> <span class="kc">None</span>
+                      <span class="n">branch</span>
+                        <span class="n">literal</span> <span class="mi">92</span>
+                        <span class="nb">any</span> <span class="kc">None</span>
+                      <span class="ow">or</span>
+                        <span class="n">max_repeat</span> <span class="mi">1</span> <span class="mi">4294967295</span>
+                          <span class="ow">in</span>
+                            <span class="n">negate</span> <span class="kc">None</span>      <span class="c1"># 匹配除去字符类中的其他字符，^</span>
+                            <span class="n">literal</span> <span class="mi">92</span>
+                            <span class="n">literal</span> <span class="mi">62</span>
+      <span class="n">literal</span> <span class="mi">62</span>
+<span class="o">&lt;</span><span class="n">_sre</span><span class="o">.</span><span class="n">SRE_Pattern</span> <span class="nb">object</span> <span class="n">at</span> <span class="mh">0x1381f70</span><span class="o">&gt;</span>
+</pre></div>
+</div>
+</div>
+
+
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+      
+        <a href="wsgi.html" class="btn btn-neutral" title="4. wsgi基础" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2016, chenshiqiang.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'0.1',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>
