@@ -12,3 +12,4 @@ Python笔记
     pysnmp_doc
     pysnmp_doc_example
     re_doc
+    wsgi
