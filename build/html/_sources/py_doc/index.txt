@@ -14,3 +14,4 @@ Python笔记
     re_doc
     wsgi
     re_analysis
+    python_descriptor

@@ -3,10 +3,11 @@
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-
+思甜的博客
+====================================
 .. note::
 
-    这里是 陈世强 的技术博客，欢迎交流与指教。
+    这里是 思甜 的技术博客，欢迎交流与指教。
     邮箱：bitpeng@yeah.net
 
 目录:
