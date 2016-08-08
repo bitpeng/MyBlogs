@@ -87,14 +87,14 @@
 <li class="toctree-l2"><a class="reference internal" href="pysnmp_doc.html">1. PySNMP教程</a></li>
 <li class="toctree-l2"><a class="reference internal" href="pysnmp_doc_example.html">2. PySNMP获取设备信息</a></li>
 <li class="toctree-l2 current"><a class="current reference internal" href="#">3. Python正则表达式</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#id1">摘要</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#id2">简介</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#id3">简单模式</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id1">3.1. 摘要</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id2">3.2. 简介</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id3">3.3. 简单模式</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#id4">匹配字符</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#id5">重复匹配</a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="#id6">使用正则</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id6">3.4. 使用正则</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#id7">编译正则表达式</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#id8">麻烦的反斜杠<code class="docutils literal"><span class="pre">\</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#id9">执行匹配</a></li>
@@ -102,19 +102,19 @@
 <li class="toctree-l4"><a class="reference internal" href="#id11">编译标志</a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="#id12">更复杂的模式</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id12">3.5. 更复杂的模式</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#id13">更多的元字符</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#id14">分组</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#id15">非捕获分组和命名分组</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#id16">前向断言</a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="#id17">修改字符串</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id17">3.6. 修改字符串</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#id18">切割字符串</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#id19">查找和替换</a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="#id20">常见问题</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id20">3.7. 常见问题</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#id21">使用字符串方法</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#match-search">match()和search()对比</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#id22">贪婪和非贪婪匹配</a></li>
@@ -129,6 +129,7 @@
 <li class="toctree-l2"><a class="reference internal" href="python_descriptor.html">7. Python描述器</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="../linux_tools/index.html">Linux系统工具</a></li>
 </ul>
 
             
@@ -185,12 +186,12 @@
 <div>autor: Author: A.M. Kuchling <a class="reference external" href="mailto:amk&#37;&#52;&#48;amk&#46;ca">amk<span>&#64;</span>amk<span>&#46;</span>ca</a>
 <a class="reference external" href="https://docs.python.org/2/howto/regex">https://docs.python.org/2/howto/regex</a>.html#</div></blockquote>
 <div class="section" id="id1">
-<h2>摘要<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
+<h2>3.1. 摘要<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
 <blockquote>
 <div>这份教程是Python中使用<code class="docutils literal"><span class="pre">re</span></code>模块操作正则表达式的入门教程，相对于库参考手册，它提供了一份更优雅的介绍。</div></blockquote>
 </div>
 <div class="section" id="id2">
-<h2>简介<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
+<h2>3.2. 简介<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
 <p><code class="docutils literal"><span class="pre">re</span></code>模块在1.5版本加入Python，并提供Perl风格的正则模式。之前的Python版本提供了<code class="docutils literal"><span class="pre">regex</span></code>模块，它提供Emacs风格的正则模式，<code class="docutils literal"><span class="pre">regex</span></code>模块在Python2.5被完全移除。</p>
 <p>正则表达式是嵌入Python的微小的、高度专门化的语言，可以通过<code class="docutils literal"><span class="pre">re</span></code>模块访问。用这门微小语言，你可以为你想要匹配的字符串指定一个规则；这可能包括英文句子，电子邮件地址，Tex命令或其他任何你喜欢的。然后你可以问：这个字符串匹配该模式吗？或，这个字符串是否存在一个匹配模式？使用re你还可以修改、切割字符串。</p>
 <p>正则模式编译成字节码，然后被用C语言编写的正则引擎执行。对于高级用法(advanced
@@ -198,7 +199,7 @@ use)，我们需要关注引擎如何执行一个给定的RE，并以合适的�
 <p>正则模式语言相对简单，并很严格，所以并不是所有的字符串处理任务都可以用正则表达式完成。有些任务也可以用RE完成，但是表达式会很复杂。这种情况下，你最好编写Python代码完成；虽然Python代码比精心构造的RE慢，但却更好理解。</p>
 </div>
 <div class="section" id="id3">
-<h2>简单模式<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h2>
+<h2>3.3. 简单模式<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h2>
 <p>我们从最简单的模式开始学习。由于RE被用来操作字符串，所有我们从最常见任务开始：字符匹配。</p>
 <p>关于正则表达式所隐匿的计算机科学知识(确定和非确定有限自动机)，你可以参考任一本有关编译器构造的书。</p>
 <div class="section" id="id4">
@@ -250,7 +251,7 @@ use)，我们需要关注引擎如何执行一个给定的RE，并以合适的�
 </div>
 </div>
 <div class="section" id="id6">
-<h2>使用正则<a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h2>
+<h2>3.4. 使用正则<a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h2>
 <p>我们已经学了一点正则模式了，那么在Python中如何使用他们呢？<code class="docutils literal"><span class="pre">re</span></code>模块提供一个正则引擎接口，允许你编译<code class="docutils literal"><span class="pre">re</span></code>对象，然后执行匹配操作。</p>
 <div class="section" id="id7">
 <h3>编译正则表达式<a class="headerlink" href="#id7" title="Permalink to this headline">¶</a></h3>
@@ -513,7 +514,7 @@ sub()等。这些方法以模式字符串作为第一个参数，其他的对应
 </div>
 </div>
 <div class="section" id="id12">
-<h2>更复杂的模式<a class="headerlink" href="#id12" title="Permalink to this headline">¶</a></h2>
+<h2>3.5. 更复杂的模式<a class="headerlink" href="#id12" title="Permalink to this headline">¶</a></h2>
 <p>这一节，我们会介绍更多的元字符，以及使用分组捕获之前匹配的文本。</p>
 <div class="section" id="id13">
 <h3>更多的元字符<a class="headerlink" href="#id13" title="Permalink to this headline">¶</a></h3>
@@ -716,7 +717,7 @@ re模块支持其中的大部分。想要在保持和标准正则表达式没有
 </div>
 </div>
 <div class="section" id="id17">
-<h2>修改字符串<a class="headerlink" href="#id17" title="Permalink to this headline">¶</a></h2>
+<h2>3.6. 修改字符串<a class="headerlink" href="#id17" title="Permalink to this headline">¶</a></h2>
 <p>目前为止，我们都是对固定字符串执行简单的匹配操作。实际上，RE也可以用来修改字符串，使用以下的模式方法：</p>
 <table border="1" class="docutils">
 <colgroup>
@@ -835,7 +836,7 @@ x&#8217;。</p>
 </div>
 </div>
 <div class="section" id="id20">
-<h2>常见问题<a class="headerlink" href="#id20" title="Permalink to this headline">¶</a></h2>
+<h2>3.7. 常见问题<a class="headerlink" href="#id20" title="Permalink to this headline">¶</a></h2>
 <p>正则表达式是很强大的工具，不过由于它不太直观，下面讨论RE中的一些常见问题。</p>
 <div class="section" id="id21">
 <h3>使用字符串方法<a class="headerlink" href="#id21" title="Permalink to this headline">¶</a></h3>

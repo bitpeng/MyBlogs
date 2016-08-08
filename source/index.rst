@@ -8,6 +8,7 @@
 .. note::
 
     这里是 思甜 的技术博客，欢迎交流与指教。
+
     邮箱：bitpeng@yeah.net
 
 目录:
@@ -17,6 +18,5 @@
     :maxdepth: 2
     :glob:
     
-    beginning/index
-    base/index
     py_doc/index
+    linux_tools/index
