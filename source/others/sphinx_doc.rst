@@ -5,17 +5,31 @@ sphinx模板
 
 
 
-
-
-
 一级标题
 ================================
 
 二级标题
 -------------------------------
 
-三级标题
+*三级标题*
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+个人的写作习惯，习惯把三级标题用斜体表示
+
+
+段落
+-------------------------------
+REST 是松散的文本结构，使用预定义的模式描述文章的结构。首先学习最基本的结构：段落。
+段落是被空行分割的文字片段，左侧必须对齐（没有空格，或者有相同多的空格）。
+
+
+段落还可以进行缩进;
+    REST 是松散的文本结构，使用预定义的模式描述文章的结构。首先学习最基本的结构：段落。
+    段落是被空行分割的文字片段，左侧必须对齐（没有空格，或者有相同多的空格）。
+
+段落还可以进行缩进;
+
+    REST 是松散的文本结构，使用预定义的模式描述文章的结构。首先学习最基本的结构：段落。
+    段落是被空行分割的文字片段，左侧必须对齐（没有空格，或者有相同多的空格）。
 
 超链接 `超链接 <http://www.baidu.com>`_
 
@@ -73,7 +87,8 @@ sphinx模板
 ==============================
 
 简单表
-   
+-------------------------------
+
 +------------------------+------------+----------+----------+
 | Header row, column 1   | Header 2   | Header 3 | Header 4 |
 | (header rows optional) |            |          |          |
@@ -84,6 +99,7 @@ sphinx模板
 +------------------------+------------+----------+----------+
 
 网格表
+-------------------------------
 
 =====  =====  =======
 A      B      A and B
@@ -93,6 +109,40 @@ True   False  False
 False  True   False
 True   True   True
 =====  =====  =======
+
+
+CSV表格
+-------------------------------
+.. csv-table:: Frozen Delights!
+ :header: "Treat", "Quantity", "Description"
+ :widths: 15, 10, 30
+
+ "Albatross", 2.99, "On a stick!"
+ "Crunchy Frog", 1.49, "If we took the bones out, it wouldn't be
+ crunchy, now would it?"
+ "Gannet Ripple", 1.99, "On a stick!"
+
+
+
+列表表格
+-------------------------------
+.. list-table:: Frozen Delights!
+  :widths: 15 10 30
+  :header-rows: 1
+
+  * - Treat
+    - Quantity
+    - Description
+  * - Albatross
+    - 2.99
+    - On a stick!
+  * - Crunchy Frog
+    - 1.49
+    - If we took the bones out, it wouldn't be
+      crunchy, now would it?
+  * - Gannet Ripple
+    - 1.99
+    - On a stick!
 
 
 .. _my-reference-label:
@@ -130,3 +180,12 @@ It refers to the section itself, see :ref:`my-reference-label`.
    is a comment.
 
    Still in the comment.
+
+
+
+--------
+
+.. [#] “Hello, world”最为程序员所熟知，2002年申请不到helloworld相关域名便\
+       退而求其次，申请了 worldhello.net。
+.. [#] http://liquidmarkup.org/
+.. [#] https://github.com/mojombo/jekyll/wiki/configuration

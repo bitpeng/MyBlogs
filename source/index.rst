@@ -29,3 +29,14 @@
     py_doc/index
     linux_tools/index
     others/index
+
+
+
+
+--------------
+
+参考
+^^^^^
+.. [#] http://www.jianshu.com/p/78e9e1b8553a
+.. [#] http://www.worldhello.net/gotgithub/
+.. [#] http://jwch.sdut.edu.cn/book/rst.html#fig-0601

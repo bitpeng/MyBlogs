@@ -31,8 +31,8 @@
 
   
     <link rel="top" title="Welcome to Sitian&#39;s Blog 0.1 documentation" href="../index.html"/>
-        <link rel="up" title="其他杂项" href="index.html"/>
-        <link rel="prev" title="其他杂项" href="index.html"/> 
+        <link rel="up" title="3. 其他杂项" href="index.html"/>
+        <link rel="prev" title="3. 其他杂项" href="index.html"/> 
 
   
   <script src="../_static/js/modernizr.min.js"></script>
@@ -82,16 +82,21 @@
             
             
                 <ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="../py_doc/index.html">Python相关</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../linux_tools/index.html">Linux系统工具</a></li>
-<li class="toctree-l1 current"><a class="reference internal" href="index.html">其他杂项</a><ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../py_doc/index.html">1. Python相关</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../linux_tools/index.html">2. Linux系统工具</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">3. 其他杂项</a><ul class="current">
 <li class="toctree-l2 current"><a class="current reference internal" href="#">1. sphinx模板</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#id1">1.1. 一级标题</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#id2">二级标题</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id4">段落</a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="#id5">1.2. 列表和引用块</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#id6">1.3. 表格</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id6">1.2. 列表和引用块</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id7">1.3. 表格</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#id8">简单表</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id9">网格表</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#csv">CSV表格</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id10">列表表格</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#section-to-cross-reference">Section to cross-reference</a></li>
 </ul>
 </li>
@@ -129,7 +134,7 @@
   <ul class="wy-breadcrumbs">
     <li><a href="../index.html">Docs</a> &raquo;</li>
       
-          <li><a href="index.html">其他杂项</a> &raquo;</li>
+          <li><a href="index.html">3. 其他杂项</a> &raquo;</li>
       
     <li>1. sphinx模板</li>
       <li class="wy-breadcrumbs-aside">
@@ -152,7 +157,23 @@
 <div class="section" id="id2">
 <h3>二级标题<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h3>
 <div class="section" id="id3">
-<h4>三级标题<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h4>
+<h4><em>三级标题</em><a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h4>
+<p>个人的写作习惯，习惯把三级标题用斜体表示</p>
+</div>
+</div>
+<div class="section" id="id4">
+<h3>段落<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h3>
+<p>REST 是松散的文本结构，使用预定义的模式描述文章的结构。首先学习最基本的结构：段落。
+段落是被空行分割的文字片段，左侧必须对齐（没有空格，或者有相同多的空格）。</p>
+<dl class="docutils">
+<dt>段落还可以进行缩进;</dt>
+<dd>REST 是松散的文本结构，使用预定义的模式描述文章的结构。首先学习最基本的结构：段落。
+段落是被空行分割的文字片段，左侧必须对齐（没有空格，或者有相同多的空格）。</dd>
+</dl>
+<p>段落还可以进行缩进;</p>
+<blockquote>
+<div>REST 是松散的文本结构，使用预定义的模式描述文章的结构。首先学习最基本的结构：段落。
+段落是被空行分割的文字片段，左侧必须对齐（没有空格，或者有相同多的空格）。</div></blockquote>
 <p>超链接 <a class="reference external" href="http://www.baidu.com">超链接</a></p>
 <p>单星号: <em>文本</em>  强调 (斜体 对中文一般效果不好)</p>
 <p>双星号: <strong>文本</strong> 加重 (加黑)</p>
@@ -166,9 +187,8 @@
 </div>
 </div>
 </div>
-</div>
-<div class="section" id="id5">
-<h2>1.2. 列表和引用块<a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id6">
+<h2>1.2. 列表和引用块<a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h2>
 <p>只要自然的在段落的开始放置一个星号并正确缩进. 这同样适用于带编号的列表; 也可以使用``#``签署自动编号:</p>
 <ul class="simple">
 <li>This is a bulleted list.</li>
@@ -202,9 +222,10 @@ item uses two lines.</li>
 <div class="line">the source file.</div>
 </div>
 </div>
-<div class="section" id="id6">
-<h2>1.3. 表格<a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h2>
-<p>简单表</p>
+<div class="section" id="id7">
+<h2>1.3. 表格<a class="headerlink" href="#id7" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id8">
+<h3>简单表<a class="headerlink" href="#id8" title="Permalink to this headline">¶</a></h3>
 <table border="1" class="docutils">
 <colgroup>
 <col width="43%" />
@@ -233,7 +254,9 @@ item uses two lines.</li>
 </tr>
 </tbody>
 </table>
-<p>网格表</p>
+</div>
+<div class="section" id="id9">
+<h3>网格表<a class="headerlink" href="#id9" title="Permalink to this headline">¶</a></h3>
 <table border="1" class="docutils">
 <colgroup>
 <col width="29%" />
@@ -265,10 +288,94 @@ item uses two lines.</li>
 </tr>
 </tbody>
 </table>
+</div>
+<div class="section" id="csv">
+<h3>CSV表格<a class="headerlink" href="#csv" title="Permalink to this headline">¶</a></h3>
+<table border="1" class="docutils" id="id14">
+<caption><span class="caption-text">Frozen Delights!</span><a class="headerlink" href="#id14" title="Permalink to this table">¶</a></caption>
+<colgroup>
+<col width="27%" />
+<col width="18%" />
+<col width="55%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Treat</th>
+<th class="head">Quantity</th>
+<th class="head">Description</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>Albatross</td>
+<td>2.99</td>
+<td>On a stick!</td>
+</tr>
+<tr class="row-odd"><td>Crunchy Frog</td>
+<td>1.49</td>
+<td>If we took the bones out, it wouldn&#8217;t be
+crunchy, now would it?</td>
+</tr>
+<tr class="row-even"><td>Gannet Ripple</td>
+<td>1.99</td>
+<td>On a stick!</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="id10">
+<h3>列表表格<a class="headerlink" href="#id10" title="Permalink to this headline">¶</a></h3>
+<table border="1" class="docutils" id="id15">
+<caption><span class="caption-text">Frozen Delights!</span><a class="headerlink" href="#id15" title="Permalink to this table">¶</a></caption>
+<colgroup>
+<col width="27%" />
+<col width="18%" />
+<col width="55%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Treat</th>
+<th class="head">Quantity</th>
+<th class="head">Description</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>Albatross</td>
+<td>2.99</td>
+<td>On a stick!</td>
+</tr>
+<tr class="row-odd"><td>Crunchy Frog</td>
+<td>1.49</td>
+<td>If we took the bones out, it wouldn&#8217;t be
+crunchy, now would it?</td>
+</tr>
+<tr class="row-even"><td>Gannet Ripple</td>
+<td>1.99</td>
+<td>On a stick!</td>
+</tr>
+</tbody>
+</table>
+</div>
 <div class="section" id="section-to-cross-reference">
 <span id="my-reference-label"></span><h3>Section to cross-reference<a class="headerlink" href="#section-to-cross-reference" title="Permalink to this headline">¶</a></h3>
 <p>This is the text of the section.</p>
 <p>It refers to the section itself, see <a class="reference internal" href="#my-reference-label"><span class="std std-ref">Section to cross-reference</span></a>.</p>
+<hr class="docutils" />
+<table class="docutils footnote" frame="void" id="id11" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label">[1]</td><td>“Hello, world”最为程序员所熟知，2002年申请不到helloworld相关域名便退而求其次，申请了 worldhello.net。</td></tr>
+</tbody>
+</table>
+<table class="docutils footnote" frame="void" id="id12" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label">[2]</td><td><a class="reference external" href="http://liquidmarkup.org/">http://liquidmarkup.org/</a></td></tr>
+</tbody>
+</table>
+<table class="docutils footnote" frame="void" id="id13" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label">[3]</td><td><a class="reference external" href="https://github.com/mojombo/jekyll/wiki/configuration">https://github.com/mojombo/jekyll/wiki/configuration</a></td></tr>
+</tbody>
+</table>
 </div>
 </div>
 </div>
@@ -281,7 +388,7 @@ item uses two lines.</li>
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
       
-        <a href="index.html" class="btn btn-neutral" title="其他杂项" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="index.html" class="btn btn-neutral" title="3. 其他杂项" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   
