@@ -5,12 +5,12 @@ Python正则表达式
 
 --------------
 
-[TOC]
+.. note::
+    Author: A.M. Kuchling amk@amk.ca
+
+    Website: https://docs.python.org/2/howto/regex.html#
 
 --------------
-
-    autor: Author: A.M. Kuchling amk@amk.ca
-    https://docs.python.org/2/howto/regex.html#
 
 摘要
 ----

@@ -9,7 +9,7 @@
 
 
 .. toctree::
-    :maxdepth: 3
-    :numbered: 3
+    :maxdepth: 2
+    :numbered: 2
 
     sphinx_doc

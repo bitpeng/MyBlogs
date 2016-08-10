@@ -5,13 +5,16 @@ tags： Python
 
 --------------
 
-[TOC]
+
+
+
+
+.. note::
+    该文档，将以简单的例子，示范使用PySNMP库获取设备信息的思路和方法。有关snmp协议和PySNMP库的更多信息，可以参考之前的文档《PySNMP教程》。
 
 --------------
 
-    该文档，将以简单的例子，示范使用PySNMP库获取设备信息的思路和方法。有关snmp协议和PySNMP库的更多信息，可以参考之前的文档《PySNMP教程》。
-
-可以获取的mib信息，都在网站\ `mibs.snmplabs.com <http://mibs.snmplabs.com/asn1/>`__\ 可以找到，比如，我们需要查询cpu的某些信息。
+首先, 可以获取的mib信息，都在网站\ `mibs.snmplabs.com <http://mibs.snmplabs.com/asn1/>`__\ 可以找到，比如，我们需要查询cpu的某些信息。
 
 .. code:: powershell
 

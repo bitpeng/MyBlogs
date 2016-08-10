@@ -151,11 +151,12 @@
 <h1>2. PySNMP获取设备信息<a class="headerlink" href="#pysnmp" title="Permalink to this headline">¶</a></h1>
 <p>tags： Python</p>
 <hr class="docutils" />
-<p>[TOC]</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">该文档，将以简单的例子，示范使用PySNMP库获取设备信息的思路和方法。有关snmp协议和PySNMP库的更多信息，可以参考之前的文档《PySNMP教程》。</p>
+</div>
 <hr class="docutils" />
-<blockquote>
-<div>该文档，将以简单的例子，示范使用PySNMP库获取设备信息的思路和方法。有关snmp协议和PySNMP库的更多信息，可以参考之前的文档《PySNMP教程》。</div></blockquote>
-<p>可以获取的mib信息，都在网站<a class="reference external" href="http://mibs.snmplabs.com/asn1/">mibs.snmplabs.com</a>可以找到，比如，我们需要查询cpu的某些信息。</p>
+<p>首先, 可以获取的mib信息，都在网站<a class="reference external" href="http://mibs.snmplabs.com/asn1/">mibs.snmplabs.com</a>可以找到，比如，我们需要查询cpu的某些信息。</p>
 <div class="code powershell highlight-default"><div class="highlight"><pre><span></span><span class="n">root</span><span class="nd">@ubuntu</span><span class="p">:</span><span class="o">/</span><span class="n">smbshare</span><span class="c1"># snmpwalk -v 2c -c public 10.11.113.150 ssCpuIdle</span>
 <span class="n">UCD</span><span class="o">-</span><span class="n">SNMP</span><span class="o">-</span><span class="n">MIB</span><span class="p">::</span><span class="n">ssCpuIdle</span><span class="o">.</span><span class="mi">0</span> <span class="o">=</span> <span class="n">INTEGER</span><span class="p">:</span> <span class="mi">93</span>
 </pre></div>
