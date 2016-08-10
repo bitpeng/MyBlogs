@@ -1,3 +1,4 @@
+========
 wsgi基础
 ========
 
@@ -5,13 +6,18 @@ tags： Python wsgi
 
 --------------
 
-[TOC]
+
+.. contents:: 索引
+   :depth: 3  标题搜
 
 --------------
+
+.. note::
 
     参考： http://agiliq.com/blog/2013/07/basics-wsgi/
 
 一系列术语
+-----------
 
 -  **web
    serve**\ ：指软件程序，它从客户端(一般指浏览器)接受请求，然后返回一个Response。特别需要注意，web
@@ -84,8 +90,9 @@ gunicorn所监听的端口和host； \*
 在实例中，我们的可调用app在文件web\_app.py中，所以在命令行中使用：\ ``web_application:application``
 
 wsgi导论
-========
+-----------
 
+.. note::
     和上一篇结合起来，非常好，可以对wsgi有很深入的理解。
     http://ivory.idyll.org/articles/wsgi-intro/what-is-wsgi.html
 

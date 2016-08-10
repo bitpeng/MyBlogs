@@ -32,7 +32,7 @@
   
     <link rel="top" title="Welcome to Sitian&#39;s Blog 0.1 documentation" href="../index.html"/>
         <link rel="up" title="Python笔记" href="index.html"/>
-        <link rel="next" title="6. Python正则表达式分析利器" href="re_analysis.html"/>
+        <link rel="next" title="5. Python正则表达式分析利器" href="re_analysis.html"/>
         <link rel="prev" title="3. Python正则表达式" href="re_doc.html"/> 
 
   
@@ -87,10 +87,13 @@
 <li class="toctree-l2"><a class="reference internal" href="pysnmp_doc.html">1. PySNMP教程</a></li>
 <li class="toctree-l2"><a class="reference internal" href="pysnmp_doc_example.html">2. PySNMP获取设备信息</a></li>
 <li class="toctree-l2"><a class="reference internal" href="re_doc.html">3. Python正则表达式</a></li>
-<li class="toctree-l2 current"><a class="current reference internal" href="#">4. wsgi基础</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#id1">5. wsgi导论</a></li>
-<li class="toctree-l2"><a class="reference internal" href="re_analysis.html">6. Python正则表达式分析利器</a></li>
-<li class="toctree-l2"><a class="reference internal" href="python_descriptor.html">7. Python描述器</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">4. wsgi基础</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id1">4.1. 一系列术语</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id2">4.2. wsgi导论</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="re_analysis.html">5. Python正则表达式分析利器</a></li>
+<li class="toctree-l2"><a class="reference internal" href="python_descriptor.html">6. Python描述器</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../linux_tools/index.html">Linux系统工具</a></li>
@@ -144,11 +147,13 @@
 <h1>4. wsgi基础<a class="headerlink" href="#wsgi" title="Permalink to this headline">¶</a></h1>
 <p>tags： Python wsgi</p>
 <hr class="docutils" />
-<p>[TOC]</p>
 <hr class="docutils" />
-<blockquote>
-<div>参考： <a class="reference external" href="http://agiliq.com/blog/2013/07/basics-wsgi/">http://agiliq.com/blog/2013/07/basics-wsgi/</a></div></blockquote>
-<p>一系列术语</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">参考： <a class="reference external" href="http://agiliq.com/blog/2013/07/basics-wsgi/">http://agiliq.com/blog/2013/07/basics-wsgi/</a></p>
+</div>
+<div class="section" id="id1">
+<h2>4.1. 一系列术语<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
 <li><strong>web
 serve</strong>：指软件程序，它从客户端(一般指浏览器)接受请求，然后返回一个Response。特别需要注意，web
@@ -210,14 +215,17 @@ app兼容wsgi的第二个条件； *
 gunicorn所监听的端口和host； *
 在实例中，我们的可调用app在文件web_app.py中，所以在命令行中使用：<code class="docutils literal"><span class="pre">web_application:application</span></code></p>
 </div>
-<div class="section" id="id1">
-<h1>5. wsgi导论<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h1>
-<blockquote>
-<div>和上一篇结合起来，非常好，可以对wsgi有很深入的理解。
-<a class="reference external" href="http://ivory.idyll.org/articles/wsgi-intro/what-is-wsgi.html">http://ivory.idyll.org/articles/wsgi-intro/what-is-wsgi.html</a></div></blockquote>
+<div class="section" id="id2">
+<h2>4.2. wsgi导论<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">和上一篇结合起来，非常好，可以对wsgi有很深入的理解。
+<a class="reference external" href="http://ivory.idyll.org/articles/wsgi-intro/what-is-wsgi.html">http://ivory.idyll.org/articles/wsgi-intro/what-is-wsgi.html</a></p>
+</div>
 <p>另外还可以参考：</p>
 <p><a class="reference external" href="http://www.letiantian.me/2015-09-10-understand-python-wsgi/">http://www.letiantian.me/2015-09-10-understand-python-wsgi/</a></p>
 <p><a class="reference external" href="https://segmentfault.com/a/1190000003069785">https://segmentfault.com/a/1190000003069785</a></p>
+</div>
 </div>
 
 
@@ -227,7 +235,7 @@ gunicorn所监听的端口和host； *
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="re_analysis.html" class="btn btn-neutral float-right" title="6. Python正则表达式分析利器" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="re_analysis.html" class="btn btn-neutral float-right" title="5. Python正则表达式分析利器" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
         <a href="re_doc.html" class="btn btn-neutral" title="3. Python正则表达式" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>

@@ -9,7 +9,10 @@ Tags： Python
 
 --------------
 
+.. note::
+
     地址：\ `PySNMP <http://pysnmp.sourceforge.net/contents.html>`__
+
     ``注``\ ：涉及到SNMP的专有名词一律不予以翻译, 并用粗体表示。
 
 快速入门

@@ -7,7 +7,7 @@
 ====================================
 .. note::
 
-    这里是 思甜 的技术博客，欢迎交流与指教。
+    这里是我的个人博客，欢迎交流与指教。
 
     邮箱：bitpeng@yeah.net
 
@@ -17,6 +17,6 @@
 .. toctree::
     :maxdepth: 2
     :glob:
-    
+
     py_doc/index
     linux_tools/index
