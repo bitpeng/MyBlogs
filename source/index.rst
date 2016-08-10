@@ -40,3 +40,5 @@
 .. [#] http://www.jianshu.com/p/78e9e1b8553a
 .. [#] http://www.worldhello.net/gotgithub/
 .. [#] http://jwch.sdut.edu.cn/book/rst.html#fig-0601
+.. [#] http://wstudio.web.fc2.com/others/restructuredtext.html#id5
+.. [#] http://docs.kissyui.com/1.3/docs/html/tutorials/tools/use-sphinx.html
