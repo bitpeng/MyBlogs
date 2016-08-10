@@ -11,6 +11,14 @@
 
     邮箱：bitpeng@yeah.net
 
+
+--------------
+
+个人喜欢简约的写作风格，之前一直使用markdown，但是在写文档的过程中，发现markdown的格式有时实在太弱，对于一些复杂的
+、比较长的文档，难以胜任。经过google一通之后，发现了sphinx这个写作工具，搭配我极为推崇的read the doc主题，从此爱上写文档！
+
+--------------
+
 目录:
 ^^^^^
 
@@ -20,3 +28,4 @@
 
     py_doc/index
     linux_tools/index
+    others/index
