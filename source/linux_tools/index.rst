@@ -7,6 +7,7 @@ Linux系统工具
 
 .. toctree::
     :maxdepth: 3
-    :numbered: 3    
+    :numbered: 3
 
     git_cmd
+    samba_config
