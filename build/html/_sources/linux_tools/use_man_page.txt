@@ -77,20 +77,24 @@ Linux man page一般包含以下内容:
 ================================
 在我使用的Ubuntu系统中，man page命令默认显示黑白色。如图1所示:
 
-.. figure:: img-black_color.png
+.. figure:: /_static/images/img-black_color.png
    :scale: 100
 
 .. centered:: 图1：默认黑白色显示
 
 我们可以通过手动设置，让man输出高亮显示, 把下面代码追加到/etc/bash.bashrc即可。
 
-.. literalinclude:: src-highlight_man.sh
+.. literalinclude:: /_static/src/src-highlight_man.sh
    :language: sh
    :linenos:
 
 更改后高亮效果如下所示，很美观吧。
 
-.. figure:: img-highlight_color.png
+..
+   figure:: img-highlight_color.png
+   :scale: 100
+
+.. figure:: /_static/images/img-highlight_color.png
    :scale: 100
 
 .. centered:: 图2：高亮输出

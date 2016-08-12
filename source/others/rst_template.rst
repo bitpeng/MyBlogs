@@ -6,21 +6,27 @@
 
 .. contents:: 目录
 
+..
+   section-numbering::
+
 
 --------------------
 
 段落
 --------------------
 
-标记约定::
+标记约定:
 
-一号 ====================
 
-二号 --------------------
+::
 
-三号 ^^^^^^^^^^^^^^^^^^^^
+    一号 ====================
 
-四号 """""""""""""""""""""
+    二号 --------------------
+
+    三号 ^^^^^^^^^^^^^^^^^^^^
+
+    四号 """""""""""""""""""""
 
 
 | 段落块标记；This is a line block.  It ends with a blank line.
@@ -156,7 +162,7 @@ Lorem ipsum [#f1]_ dolor sit amet ... [#f2]_
 ^^^^^^^^^^^^^^^^^^^
 图片路径为源文件的相对路径；或者以根目录为开始的
 
-.. image:: _static/me115_com.jpg
+.. image:: /_static/me115_com.jpg
     :height: 200px
     :align: center
     :alt: reStructuredText, the markup syntax

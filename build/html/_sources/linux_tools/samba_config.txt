@@ -10,7 +10,7 @@ Samba共享访问配置
 --------------------
 
 
-.. literalinclude:: src-samba_share.sh
+.. literalinclude:: /_static/src/src-samba_share.sh
    :language: bash
    :emphasize-lines: 12,15-18
    :linenos:
