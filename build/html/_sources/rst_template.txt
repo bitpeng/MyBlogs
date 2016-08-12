@@ -1,8 +1,8 @@
 .. _helloworld:
 
 
-附录：reStructuredText简明教程 
-=========================
+附录：reStructuredText简明教程
+=======================================
 
 .. contents:: 目录
 .. section-numbering::
@@ -280,7 +280,7 @@ Bullet Lists
 
 水平列表,它将列表项横向显示并减少项目的间距使其较为紧凑
 
-.. hlist::  
+.. hlist::
    :columns: 3
 
     * 第一列，生成水平列表. 

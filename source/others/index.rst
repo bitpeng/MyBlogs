@@ -12,4 +12,6 @@
     :maxdepth: 2
     :numbered: 2
 
-    sphinx_doc
+    rst_template
+
+..    sphinx_doc
