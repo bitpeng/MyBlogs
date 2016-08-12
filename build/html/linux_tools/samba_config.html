@@ -171,30 +171,62 @@
 21
 22
 23
-24</pre></div></td><td class="code"><div class="highlight"><pre><span></span>apt-get install samba
-mkdir /smbshare
-chmod <span class="m">777</span> /smbshare -R
-cp /etc/samba/smb.conf /etc/samba/smb.conf.bak
-vi /etc/samba/smb.conf
-<span class="c1">######在smb.conf文件最后增加如下内容###########</span>
-<span class="c1"># add by chenshiqiang</span>
-<span class="nv">security</span> <span class="o">=</span> user
-username <span class="nv">map</span> <span class="o">=</span> /etc/samba/users
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="ch">#!/bin/bash</span>
 
-<span class="o">[</span>smbshare<span class="o">]</span>
-<span class="hll"><span class="nv">path</span><span class="o">=</span>/smbshare
-</span><span class="nv">available</span><span class="o">=</span>yes
-<span class="nv">browseable</span><span class="o">=</span>yes
-<span class="hll"><span class="nv">public</span><span class="o">=</span>yes
-</span><span class="hll">valid <span class="nv">users</span> <span class="o">=</span> smbuser1
-</span><span class="hll">
-</span><span class="hll"><span class="nv">writeable</span><span class="o">=</span>yes
-</span><span class="c1">##############################################</span>
+<span class="nb">set</span> -x
+
+apt-get install samba
+
+<span class="k">if</span> <span class="o">[</span> ! -d /smbshare <span class="o">]</span><span class="p">;</span><span class="k">then</span>
+    mkdir /smbshare
+<span class="k">fi</span>
+chmod <span class="m">777</span> /smbshare
+
+<span class="hll"><span class="k">if</span> <span class="o">[</span> ! -e /etc/samba/smb.conf.bak <span class="o">]</span><span class="p">;</span><span class="k">then</span>
+</span>    cp /etc/samba/smb.conf /etc/samba/smb.conf.bak
+<span class="k">fi</span>
+<span class="hll">
+</span><span class="hll"><span class="k">if</span> grep -Fxq <span class="s2">&quot;# add by chenshiqiang&quot;</span> /etc/samba/smb.conf<span class="p">;</span> <span class="k">then</span>
+</span><span class="hll">    :
+</span><span class="hll"><span class="k">else</span>
+</span>    cat <span class="s">&lt;&lt; EOF &gt;&gt; /etc/samba/smb.conf</span>
+<span class="s"># add by chenshiqiang</span>
+<span class="s">security = user</span>
+<span class="s">username map = /etc/samba/users</span>
+
+<span class="s">[smbshare]</span>
+<span class="s">path=/smbshare</span>
+<span class="s">available=yes</span>
+<span class="s">browseable=yes</span>
+<span class="s">public=yes</span>
+<span class="s">valid users = smbuser1</span>
+
+<span class="s">writeable=yes</span>
+<span class="s">EOF</span>
+<span class="k">fi</span>
+
 
 touch /etc/samba/smbpasswd
 useradd smbuser1
 smbpasswd -a smbuser1
 <span class="nb">cd</span> /smbshare/
+/etc/init.d/samba restart
 </pre></div>
 </td></tr></table></div>
 </div>
