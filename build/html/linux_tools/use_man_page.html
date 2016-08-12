@@ -1,0 +1,314 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>3. 善用Linux man page &mdash; Welcome to Sitian&#39;s Blog 0.1 documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+    <link rel="top" title="Welcome to Sitian&#39;s Blog 0.1 documentation" href="../index.html"/>
+        <link rel="up" title="Hack Linux" href="index.html"/>
+        <link rel="next" title="3. 其他杂项" href="../others/index.html"/>
+        <link rel="prev" title="2. Samba共享访问配置" href="samba_config.html"/> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> Welcome to Sitian's Blog
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.1
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../py_doc/index.html">Hack Python</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Hack Linux</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="git_cmd.html">1. git 版本控制</a></li>
+<li class="toctree-l2"><a class="reference internal" href="samba_config.html">2. Samba共享访问配置</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">3. 善用Linux man page</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id1">3.1. 章节介绍</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id2">3.2. 查询指定章节</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id3">3.3. 列出所有章节</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id4">3.4. 搜索在线手册</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id5">3.5. 指定语言</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id6">3.6. 高亮显示</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id7">3.7. 参考</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../others/index.html">3. 其他杂项</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../rst_template.html">1&nbsp;&nbsp;&nbsp;附录：reStructuredText简明教程</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../index.html">Welcome to Sitian's Blog</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+ 
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../index.html">Docs</a> &raquo;</li>
+      
+          <li><a href="index.html">Hack Linux</a> &raquo;</li>
+      
+    <li>3. 善用Linux man page</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="../_sources/linux_tools/use_man_page.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="linux-man-page">
+<h1>3. 善用Linux man page<a class="headerlink" href="#linux-man-page" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="id1">
+<h2>3.1. 章节介绍<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
+<p>Linux man page一般包含以下内容:</p>
+<ul class="simple">
+<li>1   可执行程序和shell命令</li>
+<li>2   (内核提供的)系统调用</li>
+<li>3   库函数</li>
+<li>4   特殊文件(一般位于/dev)</li>
+<li>5   文件格式规范</li>
+<li>6   游戏</li>
+<li>7   杂项(包括包和规范)</li>
+<li>8   系统管理命令(只对root可用)</li>
+<li>9   内核例程</li>
+</ul>
+</div>
+<div class="section" id="id2">
+<h2>3.2. 查询指定章节<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
+<p>例如printf，既是一个shell命令，也是一个C库函数，我们可以通过指定章节查询相应的手册页。</p>
+<p><strong>查询printf命令</strong></p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">man</span> <span class="mi">1</span> <span class="n">printf</span>
+</pre></div>
+</div>
+<p><strong>查询printf函数</strong></p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">man</span> <span class="mi">3</span> <span class="n">printf</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="id3">
+<h2>3.3. 列出所有章节<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h2>
+<p>可以使用下面的命令：</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">man</span> <span class="o">-</span><span class="n">aw</span> <span class="n">printf</span>
+<span class="n">man</span> <span class="o">-</span><span class="n">a</span> <span class="n">printf</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="id4">
+<h2>3.4. 搜索在线手册<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h2>
+<p><strong>指定关键字</strong></p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">man</span> <span class="o">-</span><span class="n">k</span> <span class="n">printf</span>
+</pre></div>
+</div>
+<p><strong>正则搜索</strong></p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">man</span> <span class="o">-</span><span class="n">k</span> <span class="s2">&quot;^s.*printf&quot;</span>
+<span class="n">apropos</span> <span class="s2">&quot;^s.*printf&quot;</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="id5">
+<h2>3.5. 指定语言<a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h2>
+<p>甚至我们可以指定man page的语言，可是由于中文man page许久没有更新，有些过时。因此建议大家直接查看英文在线手册！</p>
+</div>
+<div class="section" id="id6">
+<h2>3.6. 高亮显示<a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h2>
+<p>在我使用的Ubuntu系统中，man page命令默认显示黑白色。如图1所示:</p>
+<div class="figure">
+<a class="reference internal image-reference" href="../_images/img-black_color.png"><img alt="../_images/img-black_color.png" src="../_images/img-black_color.png" style="width: 771.0px; height: 509.0px;" /></a>
+</div>
+<p class="centered">
+<strong>图1：默认黑白色显示</strong></p><p>我们可以通过手动设置，让man输出高亮显示, 把下面代码追加到/etc/bash.bashrc即可。</p>
+<div class="highlight-sh"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4
+5
+6
+7
+8</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="c1"># man高亮显示</span>
+<span class="nb">export</span> <span class="nv">LESS_TERMCAP_mb</span><span class="o">=</span><span class="s1">$&#39;\E[01;31m&#39;</span>
+<span class="nb">export</span> <span class="nv">LESS_TERMCAP_md</span><span class="o">=</span><span class="s1">$&#39;\E[01;31m&#39;</span>
+<span class="nb">export</span> <span class="nv">LESS_TERMCAP_me</span><span class="o">=</span><span class="s1">$&#39;\E[0m&#39;</span>
+<span class="nb">export</span> <span class="nv">LESS_TERMCAP_se</span><span class="o">=</span><span class="s1">$&#39;\E[0m&#39;</span>
+<span class="nb">export</span> <span class="nv">LESS_TERMCAP_so</span><span class="o">=</span><span class="s1">$&#39;\E[01;44;33m&#39;</span>
+<span class="nb">export</span> <span class="nv">LESS_TERMCAP_ue</span><span class="o">=</span><span class="s1">$&#39;\E[0m&#39;</span>
+<span class="nb">export</span> <span class="nv">LESS_TERMCAP_us</span><span class="o">=</span><span class="s1">$&#39;\E[01;32m&#39;</span>
+</pre></div>
+</td></tr></table></div>
+<p>更改后高亮效果如下所示，很美观吧。</p>
+<div class="figure">
+<a class="reference internal image-reference" href="../_images/img-highlight_color.png"><img alt="../_images/img-highlight_color.png" src="../_images/img-highlight_color.png" style="width: 753.0px; height: 405.0px;" /></a>
+</div>
+<p class="centered">
+<strong>图2：高亮输出</strong></p></div>
+<hr class="docutils" />
+<div class="section" id="id7">
+<h2>3.7. 参考<a class="headerlink" href="#id7" title="Permalink to this headline">¶</a></h2>
+<table class="docutils footnote" frame="void" id="id8" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label">[1]</td><td><a class="reference external" href="https://blog.gtwang.org/linux/linux-man-page-command-examples/">https://blog.gtwang.org/linux/linux-man-page-command-examples/</a></td></tr>
+</tbody>
+</table>
+</div>
+</div>
+
+
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../others/index.html" class="btn btn-neutral float-right" title="3. 其他杂项" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="samba_config.html" class="btn btn-neutral" title="2. Samba共享访问配置" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2016, chenshiqiang.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'0.1',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

@@ -29,6 +29,7 @@
     py_doc/index
     linux_tools/index
     others/index
+    rst_template
 
 
 
