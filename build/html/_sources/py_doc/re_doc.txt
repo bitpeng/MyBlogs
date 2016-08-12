@@ -1,11 +1,15 @@
+.. _py-regex-doc:
+
+
 Python正则表达式
 ================
 
-标签： Python 正则表达式 翻译
 
 --------------
 
 .. note::
+    这是自己翻译的一篇Python官网的Howto教程，写得非常通俗易懂，掌握该教程，能解决日常工作中90%以上的正则模式问题。
+
     Author: A.M. Kuchling amk@amk.ca
 
     Website: https://docs.python.org/2/howto/regex.html#

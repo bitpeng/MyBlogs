@@ -90,35 +90,35 @@
 <li class="toctree-l3"><a class="reference internal" href="#id1">3.1. 摘要</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#id2">3.2. 简介</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#id3">3.3. 简单模式</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#id4">匹配字符</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#id5">重复匹配</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id4">3.3.1. 匹配字符</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id5">3.3.2. 重复匹配</a></li>
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="#id6">3.4. 使用正则</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#id7">编译正则表达式</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#id8">麻烦的反斜杠<code class="docutils literal"><span class="pre">\</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="#id9">执行匹配</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#id10">模块级函数</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#id11">编译标志</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id7">3.4.1. 编译正则表达式</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id8">3.4.2. 麻烦的反斜杠<code class="docutils literal"><span class="pre">\</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id9">3.4.3. 执行匹配</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id10">3.4.4. 模块级函数</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id11">3.4.5. 编译标志</a></li>
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="#id12">3.5. 更复杂的模式</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#id13">更多的元字符</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#id14">分组</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#id15">非捕获分组和命名分组</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#id16">前向断言</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id13">3.5.1. 更多的元字符</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id14">3.5.2. 分组</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id15">3.5.3. 非捕获分组和命名分组</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id16">3.5.4. 前向断言</a></li>
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="#id17">3.6. 修改字符串</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#id18">切割字符串</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#id19">查找和替换</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id18">3.6.1. 切割字符串</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id19">3.6.2. 查找和替换</a></li>
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="#id20">3.7. 常见问题</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#id21">使用字符串方法</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#match-search">match()和search()对比</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#id22">贪婪和非贪婪匹配</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#re-verbose">使用<code class="docutils literal"><span class="pre">re.VERBOSE</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id21">3.7.1. 使用字符串方法</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#match-search">3.7.2. match()和search()对比</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id22">3.7.3. 贪婪和非贪婪匹配</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#re-verbose">3.7.4. 使用<code class="docutils literal"><span class="pre">re.VERBOSE</span></code></a></li>
 </ul>
 </li>
 </ul>
@@ -126,6 +126,7 @@
 <li class="toctree-l2"><a class="reference internal" href="wsgi.html">4. wsgi基础</a></li>
 <li class="toctree-l2"><a class="reference internal" href="re_analysis.html">5. Python正则表达式分析利器</a></li>
 <li class="toctree-l2"><a class="reference internal" href="python_descriptor.html">6. Python描述器</a></li>
+<li class="toctree-l2"><a class="reference internal" href="python_notebook.html">7. Python学习总结</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../linux_tools/index.html">Hack Linux</a></li>
@@ -177,11 +178,11 @@
            <div itemprop="articleBody">
             
   <div class="section" id="python">
-<h1>3. Python正则表达式<a class="headerlink" href="#python" title="Permalink to this headline">¶</a></h1>
-<p>标签： Python 正则表达式 翻译</p>
+<span id="py-regex-doc"></span><h1>3. Python正则表达式<a class="headerlink" href="#python" title="Permalink to this headline">¶</a></h1>
 <hr class="docutils" />
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
+<p>这是自己翻译的一篇Python官网的Howto教程，写得非常通俗易懂，掌握该教程，能解决日常工作中90%以上的正则模式问题。</p>
 <p>Author: A.M. Kuchling <a class="reference external" href="mailto:amk&#37;&#52;&#48;amk&#46;ca">amk<span>&#64;</span>amk<span>&#46;</span>ca</a></p>
 <p class="last">Website: <a class="reference external" href="https://docs.python.org/2/howto/regex">https://docs.python.org/2/howto/regex</a>.html#</p>
 </div>
@@ -204,7 +205,7 @@ use)，我们需要关注引擎如何执行一个给定的RE，并以合适的�
 <p>我们从最简单的模式开始学习。由于RE被用来操作字符串，所有我们从最常见任务开始：字符匹配。</p>
 <p>关于正则表达式所隐匿的计算机科学知识(确定和非确定有限自动机)，你可以参考任一本有关编译器构造的书。</p>
 <div class="section" id="id4">
-<h3>匹配字符<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h3>
+<h3>3.3.1. 匹配字符<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h3>
 <p>大部分字符都只会匹配它本身。例如：正则模式<code class="docutils literal"><span class="pre">test</span></code>会准确匹配字符串<em>test</em>。(当然，你可以使用大小写不敏感模式，让该模式匹配<em>Test</em>或<em>TEST</em>，后面会详细介绍。)</p>
 <p>该规则存在例外；有些字符是特殊元字符，它不会匹配它自身。这些元字符通常表示一些不寻常的匹配操作，或者通过重复、修改匹配意义来影响正则模式的其他部门。该文档的大部分都是有关不同元字符的讨论。</p>
 <p>这里有元字符的完整列表，接下来会详细讨论他们的含义。</p>
@@ -229,7 +230,7 @@ use)，我们需要关注引擎如何执行一个给定的RE，并以合适的�
 <p>这节最后提到的元字符是<code class="docutils literal"><span class="pre">.</span></code>。它可以匹配除了换行符之外的任意字符，另外还有一个可选模式re.DOTALL，它甚至也可以匹配空行。通常假如你想匹配任意字符时，就用<code class="docutils literal"><span class="pre">.</span></code>。</p>
 </div>
 <div class="section" id="id5">
-<h3>重复匹配<a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h3>
+<h3>3.3.2. 重复匹配<a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h3>
 <p>可以匹配不同的字符集时正则的第一大任务。当然，如果RE仅有这点能力，它也确实没有什么高级之处。另一个能力是指定正则模式的某部分的重复匹配次数。</p>
 <p>我们先来看<code class="docutils literal"><span class="pre">*</span></code>。它不匹配字符&#8217;*&#8217;，它指定它之前的字符可以匹配0次或多次，而不是只能一次。</p>
 <p>例如，<code class="docutils literal"><span class="pre">ca*t</span></code>可以匹配&#8217;ct&#8217;，&#8217;cat&#8217;，&#8217;caaat&#8217;等等。在正则引擎内部有一个限制，由于C语言的int类型，所以最多可以匹配一个字符20亿次。你几乎不可能有足够的内存构造这么大的字符串，所以你很少会碰到这个限制。</p>
@@ -255,7 +256,7 @@ use)，我们需要关注引擎如何执行一个给定的RE，并以合适的�
 <h2>3.4. 使用正则<a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h2>
 <p>我们已经学了一点正则模式了，那么在Python中如何使用他们呢？<code class="docutils literal"><span class="pre">re</span></code>模块提供一个正则引擎接口，允许你编译<code class="docutils literal"><span class="pre">re</span></code>对象，然后执行匹配操作。</p>
 <div class="section" id="id7">
-<h3>编译正则表达式<a class="headerlink" href="#id7" title="Permalink to this headline">¶</a></h3>
+<h3>3.4.1. 编译正则表达式<a class="headerlink" href="#id7" title="Permalink to this headline">¶</a></h3>
 <p>正则表达式编译成模式对象，它拥有不同的方法，用来执行模式搜索和替换操作。</p>
 <div class="code python highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">re</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">p</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="s1">&#39;ab*&#39;</span><span class="p">)</span>
@@ -271,7 +272,7 @@ use)，我们需要关注引擎如何执行一个给定的RE，并以合适的�
 <p>正则模式放进字符串使得使得Python核心比较简单，但是它也有一个很头疼的问题，这就是下一节的主题。</p>
 </div>
 <div class="section" id="id8">
-<h3>麻烦的反斜杠<code class="docutils literal"><span class="pre">\</span></code><a class="headerlink" href="#id8" title="Permalink to this headline">¶</a></h3>
+<h3>3.4.2. 麻烦的反斜杠<code class="docutils literal"><span class="pre">\</span></code><a class="headerlink" href="#id8" title="Permalink to this headline">¶</a></h3>
 <p>这前面的描述中，我们知道正则表达式使用<code class="docutils literal"><span class="pre">\</span></code>来表示特殊的字符序列(如<code class="docutils literal"><span class="pre">\d</span></code>)和进行元字符转义(如<code class="docutils literal"><span class="pre">\[</span></code>)。这和Python字符串字面量的某些字符用法冲突。</p>
 <p>比如你想写一个正则模式匹配字符串&#8221;\section&#8221;(不包括引号)，这在LaTeX文件中很常见。从想要匹配的字符串开始，你需要在每一个反斜杠和元字符前插入反斜杠进行转义，所以正则模式是<code class="docutils literal"><span class="pre">\\section</span></code>，这也是需要传递给re.compile()的字符串。但是，为了用字符串字面量表示这个模式，每一个反斜杠需要再一次转义。</p>
 <table border="1" class="docutils">
@@ -326,7 +327,7 @@ use)，我们需要关注引擎如何执行一个给定的RE，并以合适的�
 </table>
 </div>
 <div class="section" id="id9">
-<h3>执行匹配<a class="headerlink" href="#id9" title="Permalink to this headline">¶</a></h3>
+<h3>3.4.3. 执行匹配<a class="headerlink" href="#id9" title="Permalink to this headline">¶</a></h3>
 <p>假如你有一个编译过的正则表达式对象，你会怎么做？模式对象具有很多的属性和方法，这里只会列出最重要的。完整的参考手册请看re库手册。</p>
 <table border="1" class="docutils">
 <colgroup>
@@ -422,7 +423,7 @@ use)，我们需要关注引擎如何执行一个给定的RE，并以合适的�
 </div>
 </div>
 <div class="section" id="id10">
-<h3>模块级函数<a class="headerlink" href="#id10" title="Permalink to this headline">¶</a></h3>
+<h3>3.4.4. 模块级函数<a class="headerlink" href="#id10" title="Permalink to this headline">¶</a></h3>
 <p>你没有必要创建一个模式对象，然后调用它的方法。re模块也定义了一些顶级函数如match(),
 search(), findall(),
 sub()等。这些方法以模式字符串作为第一个参数，其他的对应参数保持不变，并依然返回None和match对象。</p>
@@ -443,7 +444,7 @@ sub()等。这些方法以模式字符串作为第一个参数，其他的对应
 </div>
 </div>
 <div class="section" id="id11">
-<h3>编译标志<a class="headerlink" href="#id11" title="Permalink to this headline">¶</a></h3>
+<h3>3.4.5. 编译标志<a class="headerlink" href="#id11" title="Permalink to this headline">¶</a></h3>
 <p>编译标志允许你修改正则表达式的某些工作方式，re模块为编译标志提供两个名字，如re.IGNORECASE和re.I。可以使用位或运算指定多个编译标志，如<code class="docutils literal"><span class="pre">re.I</span> <span class="pre">|</span> <span class="pre">re.M</span></code>表示同时设定I和M标志。</p>
 <p>可用标志列表：</p>
 <table border="1" class="docutils">
@@ -518,7 +519,7 @@ sub()等。这些方法以模式字符串作为第一个参数，其他的对应
 <h2>3.5. 更复杂的模式<a class="headerlink" href="#id12" title="Permalink to this headline">¶</a></h2>
 <p>这一节，我们会介绍更多的元字符，以及使用分组捕获之前匹配的文本。</p>
 <div class="section" id="id13">
-<h3>更多的元字符<a class="headerlink" href="#id13" title="Permalink to this headline">¶</a></h3>
+<h3>3.5.1. 更多的元字符<a class="headerlink" href="#id13" title="Permalink to this headline">¶</a></h3>
 <p>有些元字符称为零宽断言，他们不会使引擎向后处理字符串，他们不会消耗字符，只会指示成功或者失败。例如：，当前位置是单词边界；这个位置不会被。这意味着零宽断言不能重复，因为如果在一个给定位置匹配一次，那么也可以匹配无数次。</p>
 <dl class="docutils">
 <dt><code class="docutils literal"><span class="pre">\</span></code></dt>
@@ -568,7 +569,7 @@ sub()等。这些方法以模式字符串作为第一个参数，其他的对应
 </dl>
 </div>
 <div class="section" id="id14">
-<h3>分组<a class="headerlink" href="#id14" title="Permalink to this headline">¶</a></h3>
+<h3>3.5.2. 分组<a class="headerlink" href="#id14" title="Permalink to this headline">¶</a></h3>
 <p>通常需要使用正则表达式捕获更多的信息。通常，我们把正则表达式进行分组来匹配不同部分，这样来字符串进行分析。如，RFC-822
 header line被分成名字和值，他们之间用<code class="docutils literal"><span class="pre">:</span></code>分开，像这样：</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">From</span><span class="p">:</span> <span class="n">author</span><span class="nd">@example</span><span class="o">.</span><span class="n">com</span>
@@ -629,7 +630,7 @@ line时，一个分组处理名字，另外一个分组处理值。</p>
 <p>后面你会发现，反向引用在正则替换中非常有用。</p>
 </div>
 <div class="section" id="id15">
-<h3>非捕获分组和命名分组<a class="headerlink" href="#id15" title="Permalink to this headline">¶</a></h3>
+<h3>3.5.3. 非捕获分组和命名分组<a class="headerlink" href="#id15" title="Permalink to this headline">¶</a></h3>
 <p>精巧的正则表达式可能谁使用很多分组，即用分组捕获关心的子串，也用来分组正则模式自身。在复杂的模式中，跟踪分组号往往很困难，我们使用两特性来帮助处理该问题。</p>
 <p>Perl 5为标准正则表达式增加了很多额外的特性，Python
 re模块支持其中的大部分。想要在保持和标准正则表达式没有明显不同的情况下，选择新的单击元字符和以反斜杠开始的特殊序列很困难。例如，如果你使用<code class="docutils literal"><span class="pre">&amp;</span></code>作为新的元字符，老的表达式认为它是个普通字符，因此没有通过<code class="docutils literal"><span class="pre">\&amp;</span></code>和[&amp;]进行转义。</p>
@@ -679,7 +680,7 @@ re模块支持其中的大部分。想要在保持和标准正则表达式没有
 </div>
 </div>
 <div class="section" id="id16">
-<h3>前向断言<a class="headerlink" href="#id16" title="Permalink to this headline">¶</a></h3>
+<h3>3.5.4. 前向断言<a class="headerlink" href="#id16" title="Permalink to this headline">¶</a></h3>
 <p>另外一种零宽断言是前向断言，同时存在正向和负向前向断言两种形式。</p>
 <dl class="docutils">
 <dt><code class="docutils literal"><span class="pre">(?=...)</span></code></dt>
@@ -743,7 +744,7 @@ re模块支持其中的大部分。想要在保持和标准正则表达式没有
 </tbody>
 </table>
 <div class="section" id="id18">
-<h3>切割字符串<a class="headerlink" href="#id18" title="Permalink to this headline">¶</a></h3>
+<h3>3.6.1. 切割字符串<a class="headerlink" href="#id18" title="Permalink to this headline">¶</a></h3>
 <p>只要和RE匹配，模式的split()方法就可以切割字符串，返回一个list。和字符串的split()方法类似，但是分隔符可以更通用；字符串的split()方法只支持空白符或者固定的字符串。如你所愿，也存在一个模块级别re.split()函数。</p>
 <dl class="docutils">
 <dt>split(string[, maxsplit=0])</dt>
@@ -776,7 +777,7 @@ re模块支持其中的大部分。想要在保持和标准正则表达式没有
 </div>
 </div>
 <div class="section" id="id19">
-<h3>查找和替换<a class="headerlink" href="#id19" title="Permalink to this headline">¶</a></h3>
+<h3>3.6.2. 查找和替换<a class="headerlink" href="#id19" title="Permalink to this headline">¶</a></h3>
 <p>另一个常用操作是查找模式匹配，然后进行替换。sub()函数带有一个replacement参数，它可以是一个字符串，也可以是函数，然后进行处理。</p>
 <dl class="docutils">
 <dt>.sub(replacement, string[, count=0])</dt>
@@ -840,22 +841,22 @@ x&#8217;。</p>
 <h2>3.7. 常见问题<a class="headerlink" href="#id20" title="Permalink to this headline">¶</a></h2>
 <p>正则表达式是很强大的工具，不过由于它不太直观，下面讨论RE中的一些常见问题。</p>
 <div class="section" id="id21">
-<h3>使用字符串方法<a class="headerlink" href="#id21" title="Permalink to this headline">¶</a></h3>
+<h3>3.7.1. 使用字符串方法<a class="headerlink" href="#id21" title="Permalink to this headline">¶</a></h3>
 <p>首先，在你使用RE之前，优先考虑使用字符串方法是否可以解决。对于一些固定的字符串，并不需要使用RE特性的操作，使用字符串方法可以更快。</p>
 </div>
 <div class="section" id="match-search">
-<h3>match()和search()对比<a class="headerlink" href="#match-search" title="Permalink to this headline">¶</a></h3>
+<h3>3.7.2. match()和search()对比<a class="headerlink" href="#match-search" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
 <li>match()方法从字符串开头进行匹配；</li>
 <li>search()扫描字符串，返回第一次匹配；</li>
 </ul>
 </div>
 <div class="section" id="id22">
-<h3>贪婪和非贪婪匹配<a class="headerlink" href="#id22" title="Permalink to this headline">¶</a></h3>
+<h3>3.7.3. 贪婪和非贪婪匹配<a class="headerlink" href="#id22" title="Permalink to this headline">¶</a></h3>
 <p>贪婪匹配尝试匹配尽可能多的字符，而非贪婪匹配尝试匹配尽可能少的字符。非贪婪匹配对于类似html标记的工作有用。但是需要指出的是，使用RE解析xml和html非常繁琐，你最好使用专用的解析模块。</p>
 </div>
 <div class="section" id="re-verbose">
-<h3>使用<code class="docutils literal"><span class="pre">re.VERBOSE</span></code><a class="headerlink" href="#re-verbose" title="Permalink to this headline">¶</a></h3>
+<h3>3.7.4. 使用<code class="docutils literal"><span class="pre">re.VERBOSE</span></code><a class="headerlink" href="#re-verbose" title="Permalink to this headline">¶</a></h3>
 <p>你已经注意到，RE记法非常紧凑，但是非常难读。re的复杂性来源于反斜杠，括号，和元字符。对于这种RE，建议指定re.VERBOSE标志，这样你可以以更清晰的方式组织正则模式。首先，模式中空白符会被忽略(字符类中的空白符除外，不能忽略)，然后你还可以给模式添加注释；</p>
 <div class="code python highlight-default"><div class="highlight"><pre><span></span><span class="n">pat</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="s2">r&quot;&quot;&quot;</span>
 <span class="s2"> \s*                 # Skip leading whitespace</span>

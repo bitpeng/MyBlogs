@@ -13,8 +13,8 @@ Hack Python
 
 
 .. toctree::
-    :maxdepth: 2
-    :numbered: 2
+    :maxdepth: 3
+    :numbered: 3
 
     pysnmp_doc
     pysnmp_doc_example
@@ -22,3 +22,4 @@ Hack Python
     wsgi
     re_analysis
     python_descriptor
+    python_notebook

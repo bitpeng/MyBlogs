@@ -86,15 +86,15 @@
 <li class="toctree-l1 current"><a class="reference internal" href="index.html">Hack Python</a><ul class="current">
 <li class="toctree-l2 current"><a class="current reference internal" href="#">1. PySNMP教程</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#id1">1.1. 快速入门</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#snmp">获取SNMP变量</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#snmp-trap">发送<strong>SNMP TRAP</strong></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#snmp">1.1.1. 获取SNMP变量</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#snmp-trap">1.1.2. 发送<strong>SNMP TRAP</strong></a></li>
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="#id2">1.2. 参考手册</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#id3">SNMP历史</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#id6">SNMP设计</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#id13">PySNMP架构</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#id14">常用操作</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id3">1.2.1. SNMP历史</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id6">1.2.2. SNMP设计</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id13">1.2.3. PySNMP架构</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id14">1.2.4. 常用操作</a></li>
 </ul>
 </li>
 </ul>
@@ -104,6 +104,7 @@
 <li class="toctree-l2"><a class="reference internal" href="wsgi.html">4. wsgi基础</a></li>
 <li class="toctree-l2"><a class="reference internal" href="re_analysis.html">5. Python正则表达式分析利器</a></li>
 <li class="toctree-l2"><a class="reference internal" href="python_descriptor.html">6. Python描述器</a></li>
+<li class="toctree-l2"><a class="reference internal" href="python_notebook.html">7. Python学习总结</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../linux_tools/index.html">Hack Linux</a></li>
@@ -171,7 +172,7 @@
 如通过Python命令行获取某个远程<strong>SNMP
 Agent</strong>的数据(你至少需要4.3.0以上版本，才可以执行后面的示例代码)。</p>
 <div class="section" id="snmp">
-<h3>获取SNMP变量<a class="headerlink" href="#snmp" title="Permalink to this headline">¶</a></h3>
+<h3>1.1.1. 获取SNMP变量<a class="headerlink" href="#snmp" title="Permalink to this headline">¶</a></h3>
 <p>复制和粘贴下列代码到Python命令提示符上，代码将会执行<strong>SNMP
 GET</strong>操作获取<code class="docutils literal"><span class="pre">sysDescr.0</span></code>对象，这是一个公开可用的<strong>SNMP
 Command Responder</strong>,
@@ -220,7 +221,7 @@ Command Responder</strong>,
 </div>
 </div>
 <div class="section" id="snmp-trap">
-<h3>发送<strong>SNMP TRAP</strong><a class="headerlink" href="#snmp-trap" title="Permalink to this headline">¶</a></h3>
+<h3>1.1.2. 发送<strong>SNMP TRAP</strong><a class="headerlink" href="#snmp-trap" title="Permalink to this headline">¶</a></h3>
 <p>想给<a class="reference external" href="http://snmpsim.sourceforge.net/public-snmp-simulator.html">demo.snmplabs.com</a>中列出的宿主<strong>Notification
 Receiver</strong>发送<strong>TRAP</strong>消息，复制以下代码到你的交互式Python会话中。</p>
 <div class="code python highlight-default"><div class="highlight"><pre><span></span><span class="sd">&quot;&quot;&quot;</span>
@@ -274,7 +275,7 @@ MIB</strong>文件可以通过<a class="reference external" href="http://mibs.sn
 <div class="section" id="id2">
 <h2>1.2. 参考手册<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="id3">
-<h3>SNMP历史<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h3>
+<h3>1.2.1. SNMP历史<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h3>
 <p>在联网早期，计算机网络被当做是一项研究艺术而不是可被每个人使用的关键基础设施，网络管理更不被所知。当谁遇到了网络问题，他可能允许ping命令来定位问题源头，然后更改系统设置、重启软硬件，或叫同事在机房检查终端。</p>
 <p>上世纪80年代，<code class="docutils literal"><span class="pre">crash</span></code>
 是一个很有意思的讨论，在网络管理工具之前，从<a class="reference external" href="https://tools.ietf.org/html/rfc789.html">RFC
@@ -308,7 +309,7 @@ MIB</strong>文件可以通过<a class="reference external" href="http://mibs.sn
 </div>
 </div>
 <div class="section" id="id6">
-<h3>SNMP设计<a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h3>
+<h3>1.2.2. SNMP设计<a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h3>
 <p>与他的名字所暗示的意思相反，SNMP可不仅仅是一个传输管理数据的协议。随着时间推移，它变得远比它最初设计者计划设计的复杂。</p>
 <div class="section" id="id7">
 <h4><em>术语标准和实体</em><a class="headerlink" href="#id7" title="Permalink to this headline">¶</a></h4>
@@ -475,7 +476,7 @@ API.</p>
 </div>
 </div>
 <div class="section" id="id13">
-<h3>PySNMP架构<a class="headerlink" href="#id13" title="Permalink to this headline">¶</a></h3>
+<h3>1.2.3. PySNMP架构<a class="headerlink" href="#id13" title="Permalink to this headline">¶</a></h3>
 <p>我们可以从SNMP协议的进化来看PySNMP的内部结构。SNMP发展了很多年，从一个相对简单的协议到提起和结构化数据，再到一个可扩展的、模块化的、强加密和支持开箱即用的框架。</p>
 <p>In the order from most ancient SNMP services to the most current ones,
 what follows are different layers of PySNMP APIs:
@@ -514,7 +515,7 @@ Datastore)来认证对被管理对象的远程访问。当使用代理身份运�
 Agent，Proxy和manager的一些不常见特性时，都需要使用标准应用API。这时，理解SNMP操作和SNMP引擎组件是有益处的。</p>
 </div>
 <div class="section" id="id14">
-<h3>常用操作<a class="headerlink" href="#id14" title="Permalink to this headline">¶</a></h3>
+<h3>1.2.4. 常用操作<a class="headerlink" href="#id14" title="Permalink to this headline">¶</a></h3>
 <p>在这份教程中，我们会循序渐进，运行一系列SNMP请求命令和通知。我们会用高级PySNMP同步API，这使用起来最简单。</p>
 <div class="section" id="id15">
 <h4><em>创建SNMP引擎</em><a class="headerlink" href="#id15" title="Permalink to this headline">¶</a></h4>

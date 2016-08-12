@@ -1,0 +1,897 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>7. Python学习总结 &mdash; Welcome to Sitian&#39;s Blog 0.1 documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+    <link rel="top" title="Welcome to Sitian&#39;s Blog 0.1 documentation" href="../index.html"/>
+        <link rel="up" title="Hack Python" href="index.html"/>
+        <link rel="next" title="Hack Linux" href="../linux_tools/index.html"/>
+        <link rel="prev" title="6. Python描述器" href="python_descriptor.html"/> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> Welcome to Sitian's Blog
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.1
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Hack Python</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="pysnmp_doc.html">1. PySNMP教程</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pysnmp_doc_example.html">2. PySNMP获取设备信息</a></li>
+<li class="toctree-l2"><a class="reference internal" href="re_doc.html">3. Python正则表达式</a></li>
+<li class="toctree-l2"><a class="reference internal" href="wsgi.html">4. wsgi基础</a></li>
+<li class="toctree-l2"><a class="reference internal" href="re_analysis.html">5. Python正则表达式分析利器</a></li>
+<li class="toctree-l2"><a class="reference internal" href="python_descriptor.html">6. Python描述器</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">7. Python学习总结</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id2">7.1. <strong>语言特性</strong></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#dict">7.1.1. <strong>dict</strong></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#golbal">7.1.2. <strong>golbal</strong></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#andor">7.1.3. <strong>and和or</strong></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#for-else">7.1.4. <strong>for……else循环</strong></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id3">7.1.5. <strong>默认参数问题</strong></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#getattr-hasattr-setattr">7.1.6. <strong>getattr, hasattr, setattr</strong></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#callable">7.1.7. <strong>callable</strong></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id4">7.1.8. <strong>原始字符串</strong></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#id5">7.2. <strong>语言陷阱</strong></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#id6">7.2.1. <strong>浅复制</strong></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#id7">7.3. <strong>小技巧</strong></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#id8">7.3.1. <strong>获取函数名，当前行号，文件名</strong></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#id9">7.4. <strong>标准库</strong></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#httplib-http">7.4.1. <strong>Httplib：http处理</strong></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#configparser">7.4.2. <strong>ConfigParser：配置文件操作</strong></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#re">7.4.3. <strong>re：正则匹配</strong></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pexpect">7.4.4. <strong>Pexpect：自动化交互</strong></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#subprocess">7.4.5. <strong>Subprocess：创建进程</strong></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#functools">7.4.6. <strong>functools</strong></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#elementtree-xml">7.4.7. <strong>ElementTree：XML解析</strong></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#id10">7.5. <strong>第三方库</strong></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#flask">7.5.1. <strong>Flask框架</strong></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../linux_tools/index.html">Hack Linux</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../others/index.html">其他杂项</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../index.html">Welcome to Sitian's Blog</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+ 
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../index.html">Docs</a> &raquo;</li>
+      
+          <li><a href="index.html">Hack Python</a> &raquo;</li>
+      
+    <li>7. Python学习总结</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="../_sources/py_doc/python_notebook.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="python">
+<h1><a class="toc-backref" href="#id11">7. Python学习总结</a><a class="headerlink" href="#python" title="Permalink to this headline">¶</a></h1>
+<hr class="docutils" />
+<div class="admonition tip">
+<p class="first admonition-title">Tip</p>
+<p class="last">这是自己学习Python和工作中的总结，包括Python语言特性，小技巧，
+编程中容易出现的陷阱；以及常用的标准库和第三方库。</p>
+</div>
+<div class="contents topic" id="id1">
+<p class="topic-title first">目录</p>
+<ul class="simple">
+<li><a class="reference internal" href="#python" id="id11">Python学习总结</a><ul>
+<li><a class="reference internal" href="#id2" id="id12"><strong>语言特性</strong></a><ul>
+<li><a class="reference internal" href="#dict" id="id13"><strong>dict</strong></a><ul>
+<li><a class="reference internal" href="#fromkeys" id="id14"><strong>fromkeys()方法：</strong></a></li>
+<li><a class="reference internal" href="#pop" id="id15"><strong>pop()方法</strong></a></li>
+<li><a class="reference internal" href="#update" id="id16"><strong>update()</strong></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#golbal" id="id17"><strong>golbal</strong></a></li>
+<li><a class="reference internal" href="#andor" id="id18"><strong>and和or</strong></a></li>
+<li><a class="reference internal" href="#for-else" id="id19"><strong>for……else循环</strong></a></li>
+<li><a class="reference internal" href="#id3" id="id20"><strong>默认参数问题</strong></a></li>
+<li><a class="reference internal" href="#getattr-hasattr-setattr" id="id21"><strong>getattr, hasattr, setattr</strong></a></li>
+<li><a class="reference internal" href="#callable" id="id22"><strong>callable</strong></a></li>
+<li><a class="reference internal" href="#id4" id="id23"><strong>原始字符串</strong></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#id5" id="id24"><strong>语言陷阱</strong></a><ul>
+<li><a class="reference internal" href="#id6" id="id25"><strong>浅复制</strong></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#id7" id="id26"><strong>小技巧</strong></a><ul>
+<li><a class="reference internal" href="#id8" id="id27"><strong>获取函数名，当前行号，文件名</strong></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#id9" id="id28"><strong>标准库</strong></a><ul>
+<li><a class="reference internal" href="#httplib-http" id="id29"><strong>Httplib：http处理</strong></a><ul>
+<li><a class="reference internal" href="#http" id="id30"><strong>自定义http请求头部</strong></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#configparser" id="id31"><strong>ConfigParser：配置文件操作</strong></a></li>
+<li><a class="reference internal" href="#re" id="id32"><strong>re：正则匹配</strong></a></li>
+<li><a class="reference internal" href="#pexpect" id="id33"><strong>Pexpect：自动化交互</strong></a></li>
+<li><a class="reference internal" href="#subprocess" id="id34"><strong>Subprocess：创建进程</strong></a></li>
+<li><a class="reference internal" href="#functools" id="id35"><strong>functools</strong></a><ul>
+<li><a class="reference internal" href="#wraps" id="id36"><strong>wraps</strong></a></li>
+<li><a class="reference internal" href="#update-wrapper" id="id37"><strong>update_wrapper</strong></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#elementtree-xml" id="id38"><strong>ElementTree：XML解析</strong></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#id10" id="id39"><strong>第三方库</strong></a><ul>
+<li><a class="reference internal" href="#flask" id="id40"><strong>Flask框架</strong></a><ul>
+<li><a class="reference internal" href="#firefox-restclientpost" id="id41"><strong>FireFox RESTclient插件发送POST请求和参数</strong></a></li>
+<li><a class="reference internal" href="#flaskhttp-headers" id="id42"><strong>Flask框架获取HTTP headers字段</strong></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+<hr class="docutils" />
+<div class="section" id="id2">
+<h2><a class="toc-backref" href="#id12">7.1. <strong>语言特性</strong></a><a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="dict">
+<h3><a class="toc-backref" href="#id13">7.1.1. <strong>dict</strong></a><a class="headerlink" href="#dict" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="fromkeys">
+<h4><a class="toc-backref" href="#id14"><strong>fromkeys()方法：</strong></a><a class="headerlink" href="#fromkeys" title="Permalink to this headline">¶</a></h4>
+<div class="code python highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">s</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">dict</span><span class="o">.</span><span class="n">fromkeys</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
+<span class="go">{1: None, 2: None, 3: None}</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">v</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">}</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">dict</span><span class="o">.</span><span class="n">fromkeys</span><span class="p">(</span><span class="n">s</span><span class="p">,</span><span class="n">v</span><span class="p">)</span>
+<span class="go">{1: set([&#39;a&#39;, &#39;b&#39;]), 2: set([&#39;a&#39;, &#39;b&#39;]), 3: set([&#39;a&#39;, &#39;b&#39;])}</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">v</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="s1">&#39;a&#39;</span><span class="p">}</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">dict</span><span class="o">.</span><span class="n">fromkeys</span><span class="p">(</span><span class="n">s</span><span class="p">,</span><span class="n">v</span><span class="p">)</span>
+<span class="go">{1: set([&#39;a&#39;, &#39;b&#39;]), 2: set([&#39;a&#39;, &#39;b&#39;]), 3: set([&#39;a&#39;, &#39;b&#39;])}</span>
+<span class="go">&gt;&gt;&gt;</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="pop">
+<h4><a class="toc-backref" href="#id15"><strong>pop()方法</strong></a><a class="headerlink" href="#pop" title="Permalink to this headline">¶</a></h4>
+<p>dict.pop(key [,default]): 如果key存在，删除并返回dict[key];
+如果key不存在，default存在，返回default；如果default也不存在，KeyError异常。</p>
+</div>
+<div class="section" id="update">
+<h4><a class="toc-backref" href="#id16"><strong>update()</strong></a><a class="headerlink" href="#update" title="Permalink to this headline">¶</a></h4>
+</div>
+</div>
+<div class="section" id="golbal">
+<h3><a class="toc-backref" href="#id17">7.1.2. <strong>golbal</strong></a><a class="headerlink" href="#golbal" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="andor">
+<h3><a class="toc-backref" href="#id18">7.1.3. <strong>and和or</strong></a><a class="headerlink" href="#andor" title="Permalink to this headline">¶</a></h3>
+<div class="code python highlight-default"><div class="highlight"><pre><span></span><span class="c1"># and表达式都是真时，返回第二个；都是假时返回第一个；一真一假时返回假的。</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="s1">&#39;a&#39;</span> <span class="ow">and</span> <span class="s1">&#39;b&#39;</span>
+<span class="s1">&#39;b&#39;</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="s1">&#39;b&#39;</span> <span class="ow">and</span> <span class="s1">&#39;a&#39;</span>
+<span class="s1">&#39;a&#39;</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="s1">&#39;&#39;</span> <span class="ow">and</span> <span class="kc">False</span>
+<span class="s1">&#39;&#39;</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="kc">False</span> <span class="ow">and</span> <span class="s1">&#39;&#39;</span>
+<span class="kc">False</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="s1">&#39;&#39;</span> <span class="ow">and</span> <span class="s1">&#39;a&#39;</span>
+<span class="s1">&#39;&#39;</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="s1">&#39;a&#39;</span> <span class="ow">and</span> <span class="s1">&#39;&#39;</span>
+<span class="s1">&#39;&#39;</span>
+<span class="o">&gt;&gt;&gt;</span>
+<span class="c1"># or表达式都是真时返回第一个；都是假如返回第二个；一真一假返回真的。</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="s1">&#39;a&#39;</span> <span class="ow">or</span> <span class="s1">&#39;b&#39;</span>
+<span class="s1">&#39;a&#39;</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="s1">&#39;b&#39;</span> <span class="ow">or</span> <span class="s1">&#39;a&#39;</span>
+<span class="s1">&#39;b&#39;</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="s1">&#39;&#39;</span> <span class="ow">or</span> <span class="kc">False</span>
+<span class="kc">False</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="kc">False</span> <span class="ow">or</span> <span class="s1">&#39;&#39;</span>
+<span class="s1">&#39;&#39;</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="s1">&#39;&#39;</span> <span class="ow">or</span> <span class="s1">&#39;a&#39;</span>
+<span class="s1">&#39;a&#39;</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="s1">&#39;a&#39;</span> <span class="ow">or</span> <span class="s1">&#39;&#39;</span>
+<span class="s1">&#39;a&#39;</span>
+<span class="o">&gt;&gt;&gt;</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="for-else">
+<h3><a class="toc-backref" href="#id19">7.1.4. <strong>for……else循环</strong></a><a class="headerlink" href="#for-else" title="Permalink to this headline">¶</a></h3>
+<p>在for循环完整完成后才执行else；如果中途从break跳出，则连else一起跳出。</p>
+</div>
+<div class="section" id="id3">
+<h3><a class="toc-backref" href="#id20">7.1.5. <strong>默认参数问题</strong></a><a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h3>
+<p>请看代码：</p>
+<div class="code python highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">def</span> <span class="nf">f</span><span class="p">(</span><span class="n">x</span> <span class="o">=</span> <span class="p">[]):</span>
+<span class="go">    print(id(x))</span>
+<span class="go">    x.append(1)</span>
+<span class="go">    print(id(x))</span>
+
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">f</span><span class="p">()</span>
+<span class="go">38869952  # 可变默认参数是在原地更改！！！</span>
+<span class="go">38869952</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">f</span><span class="p">()</span>
+<span class="go">38869952  # 再次调用时，可变默认参数还是引用最初定义的！！！</span>
+<span class="go">38869952</span>
+<span class="go"># 注意，默认参数是在定义时赋值，且仅仅赋值一次。</span>
+<span class="go"># 当函数多次被调用，并且没有提供默认的参数值，就会从定义时赋值的地方取得值！</span>
+<span class="go"># 即使函数中给默认参数重新赋值了，下次调用还是会从定义赋值的地方取得值！</span>
+<span class="go"># 如以下的示例：当f2()多次调用，虽然在函数体里面给y重新赋值了，但是下次调用时</span>
+<span class="go"># 再次打印print id(x) 的结果也还是一样的！</span>
+<span class="go"># 所以：</span>
+<span class="go"># 1. 假如默认参数是可变对象，则会在原处直接更改对象，下次调用参数时，默认参数已经</span>
+<span class="go">#    更改过的了。如f()函数。</span>
+<span class="go"># 2. 假如默认参数不可变，那么给函数中给 参数赋值时，参数会引用内存的其他地方。下次函数调用时</span>
+<span class="go">#    默认参数还是从定义时赋值处取得值，因为没有副作用！</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">def</span> <span class="nf">f2</span><span class="p">(</span><span class="n">y</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
+<span class="go">    print(id(y))</span>
+<span class="go">    if not y:</span>
+<span class="go">        y = []</span>
+<span class="go">    y.append(1)</span>
+<span class="go">    print(id(y))</span>
+
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">f2</span><span class="p">()</span>
+<span class="go">505672708   # 定义时默认参数引用这一块内存。</span>
+<span class="go">38888872    # 函数体内赋值后，y引用其他地方。</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">f2</span><span class="p">()</span>
+<span class="go">505672708   # 再次调用，y还是引用定义时赋值的内存处。</span>
+<span class="go">43910728    # 函数体内赋值后，y引用其他地方。</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">f</span><span class="p">()</span>
+<span class="go">38869952</span>
+<span class="go">38869952</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">f2</span><span class="p">()</span>
+<span class="go">505672708</span>
+<span class="go">43909408</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">f2</span><span class="p">()</span>
+<span class="go">505672708</span>
+<span class="go">38868752</span>
+<span class="go">&gt;&gt;&gt;</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="getattr-hasattr-setattr">
+<h3><a class="toc-backref" href="#id21">7.1.6. <strong>getattr, hasattr, setattr</strong></a><a class="headerlink" href="#getattr-hasattr-setattr" title="Permalink to this headline">¶</a></h3>
+<p><strong>用法</strong>：</p>
+<ul class="simple">
+<li>getattr
+如果存在name属性（方法）则返回name的值（方法地址）,否则返回default值;</li>
+<li>hasattr 可以用来判断object中是否具有name属性;</li>
+<li>setattr(object, name, value)类似于object.name = value;</li>
+</ul>
+<div class="code python highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">class</span> <span class="nc">A</span><span class="p">:</span>
+<span class="gp">... </span>    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="gp">... </span>        <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="s1">&#39;zhangjing&#39;</span>
+<span class="gp">... </span>        <span class="c1">#self.age=&#39;24&#39;</span>
+<span class="gp">... </span>    <span class="k">def</span> <span class="nf">method</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="gp">... </span>        <span class="nb">print</span><span class="s2">&quot;method print&quot;</span>
+<span class="gp">...</span>
+<span class="go">&gt;&gt;&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">a</span> <span class="o">=</span> <span class="n">A</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">m</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="s1">&#39;method&#39;</span><span class="p">,</span> <span class="s1">&#39;default&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">um</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="s1">&#39;undef&#39;</span><span class="p">,</span> <span class="s1">&#39;default&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">m</span>
+<span class="go">&lt;bound method A.method of &lt;__main__.A instance at 0xb728d9ac&gt;&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">um</span>
+<span class="go">&#39;default&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">m</span><span class="p">()</span>
+<span class="go">method print</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">hasattr</span><span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="s1">&#39;method&#39;</span><span class="p">)</span>
+<span class="go">False</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">hasattr</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="s1">&#39;method&#39;</span><span class="p">)</span>
+<span class="go">True</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">hasattr</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="s1">&#39;method&#39;</span><span class="p">)</span>
+<span class="go">True</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">unbf</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="s1">&#39;method&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">unbf</span>
+<span class="go">&lt;unbound method A.method&gt;</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="callable">
+<h3><a class="toc-backref" href="#id22">7.1.7. <strong>callable</strong></a><a class="headerlink" href="#callable" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="id4">
+<h3><a class="toc-backref" href="#id23">7.1.8. <strong>原始字符串</strong></a><a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h3>
+<p>原始类型字符串可以简单的通过在普通字符串的双引号前面加一个字符‘r’来创建。当一个字符串是原始类型时，Python编译器不会对其尝试做任何的替换。本质上来讲，你在告诉编译器完全不要去干涉你的字符串。</p>
+<div class="code python highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">string</span> <span class="o">=</span> <span class="s1">&#39;This is a</span><span class="se">\n</span><span class="s1">normal string&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">rawString</span> <span class="o">=</span> <span class="s1">r&#39;and this is a\nraw string&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span> <span class="n">string</span>
+<span class="go">#这是一个普通字符串</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span> <span class="n">rawString</span>
+<span class="go">and this is a\nraw string</span>
+<span class="go">#这是一个原始类型字符串。</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="id5">
+<h2><a class="toc-backref" href="#id24">7.2. <strong>语言陷阱</strong></a><a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id6">
+<h3><a class="toc-backref" href="#id25">7.2.1. <strong>浅复制</strong></a><a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h3>
+<p><strong>关于Python列表赋值，特别需要注意的一点：</strong></p>
+<div class="code python highlight-default"><div class="highlight"><pre><span></span><span class="c1">#通过这个例子，看到了，用a=a=[[]]*4形式生产的列表，所有的id号都是</span>
+<span class="c1">#一样的，引用的是同一个元素！</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">a</span><span class="o">=</span><span class="p">[[]]</span><span class="o">*</span><span class="mi">4</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">a</span>
+<span class="p">[[],</span> <span class="p">[],</span> <span class="p">[],</span> <span class="p">[]]</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">4</span><span class="p">):</span>
+    <span class="nb">print</span> <span class="p">(</span><span class="nb">id</span><span class="p">(</span><span class="n">a</span><span class="p">[</span><span class="n">i</span><span class="p">]))</span>
+
+
+<span class="mi">38964480</span>
+<span class="mi">38964480</span>
+<span class="mi">38964480</span>
+<span class="mi">38964480</span>
+<span class="c1">#而通过append方式插入的元素，都是不想关的，不是同一个元素！</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">a</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">4</span><span class="p">):</span>
+    <span class="n">a</span><span class="o">.</span><span class="n">append</span><span class="p">([])</span>
+
+
+<span class="o">&gt;&gt;&gt;</span> <span class="n">a</span>
+<span class="p">[[],</span> <span class="p">[],</span> <span class="p">[],</span> <span class="p">[]]</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">4</span><span class="p">):</span>
+    <span class="nb">print</span> <span class="p">(</span><span class="nb">id</span><span class="p">(</span><span class="n">a</span><span class="p">[</span><span class="n">i</span><span class="p">]))</span>
+
+<span class="mi">38964160</span>
+<span class="mi">38964000</span>
+<span class="mi">38960384</span>
+<span class="mi">38965120</span>
+<span class="o">&gt;&gt;&gt;</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="id7">
+<h2><a class="toc-backref" href="#id26">7.3. <strong>小技巧</strong></a><a class="headerlink" href="#id7" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id8">
+<h3><a class="toc-backref" href="#id27">7.3.1. <strong>获取函数名，当前行号，文件名</strong></a><a class="headerlink" href="#id8" title="Permalink to this headline">¶</a></h3>
+<ul>
+<li><p class="first">方法一：</p>
+<div class="code python highlight-default"><div class="highlight"><pre><span></span><span class="nb">print</span> <span class="n">sys</span><span class="o">.</span><span class="n">_getframe</span><span class="p">()</span><span class="o">.</span><span class="n">f_code</span><span class="o">.</span><span class="n">co_filename</span>  <span class="c1">#当前文件名，也可以通过__file__获得</span>
+<span class="nb">print</span> <span class="n">sys</span><span class="o">.</span><span class="n">_getframe</span><span class="p">()</span><span class="o">.</span><span class="n">f_code</span><span class="o">.</span><span class="n">co_name</span>  <span class="c1">#当前函数名</span>
+<span class="nb">print</span> <span class="n">sys</span><span class="o">.</span><span class="n">_getframe</span><span class="p">()</span><span class="o">.</span><span class="n">f_lineno</span> <span class="c1">#当前行号</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first">方法二：</p>
+<div class="code python highlight-default"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">get_cur_info</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;Return the frame object for the caller&#39;s stack frame.&quot;&quot;&quot;</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">Exception</span>
+    <span class="k">except</span><span class="p">:</span>
+        <span class="n">f</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">exc_info</span><span class="p">()[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">tb_frame</span><span class="o">.</span><span class="n">f_back</span>
+    <span class="n">co_filename</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">f_code</span><span class="o">.</span><span class="n">co_filename</span>
+    <span class="n">co_filename</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="n">co_filename</span><span class="p">)</span>
+    <span class="c1">#return (__file__, f.f_code.co_filename, f.f_code.co_name, f.f_lineno)</span>
+    <span class="k">return</span> <span class="p">(</span><span class="n">co_filename</span><span class="p">,</span> <span class="n">f</span><span class="o">.</span><span class="n">f_code</span><span class="o">.</span><span class="n">co_name</span><span class="p">,</span> <span class="n">f</span><span class="o">.</span><span class="n">f_lineno</span><span class="p">)</span>
+</pre></div>
+</div>
+</li>
+</ul>
+</div>
+</div>
+<div class="section" id="id9">
+<h2><a class="toc-backref" href="#id28">7.4. <strong>标准库</strong></a><a class="headerlink" href="#id9" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="httplib-http">
+<h3><a class="toc-backref" href="#id29">7.4.1. <strong>Httplib：http处理</strong></a><a class="headerlink" href="#httplib-http" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="http">
+<h4><a class="toc-backref" href="#id30"><strong>自定义http请求头部</strong></a><a class="headerlink" href="#http" title="Permalink to this headline">¶</a></h4>
+<div class="code python highlight-default"><div class="highlight"><pre><span></span><span class="ch">#!/usr/bin/env python</span>
+<span class="c1"># -*- coding:utf-8 -*-</span>
+
+<span class="kn">import</span> <span class="nn">httplib</span>
+<span class="k">try</span><span class="p">:</span>
+    <span class="c1"># simplejson is popular and pretty good</span>
+    <span class="kn">from</span> <span class="nn">simplejson</span> <span class="k">import</span> <span class="n">loads</span> <span class="k">as</span> <span class="n">json_loads</span>
+    <span class="kn">from</span> <span class="nn">simplejson</span> <span class="k">import</span> <span class="n">dumps</span> <span class="k">as</span> <span class="n">json_dumps</span>
+<span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
+    <span class="c1"># 2.6 will have a json module in the stdlib</span>
+    <span class="kn">from</span> <span class="nn">json</span> <span class="k">import</span> <span class="n">loads</span> <span class="k">as</span> <span class="n">json_loads</span>
+    <span class="kn">from</span> <span class="nn">json</span> <span class="k">import</span> <span class="n">dumps</span> <span class="k">as</span> <span class="n">json_dumps</span>
+
+<span class="k">def</span> <span class="nf">test_httplib</span><span class="p">():</span>
+    <span class="c1"># 自定义http请求头部字段</span>
+    <span class="n">header</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;X-Auth-Token&quot;</span><span class="p">:</span><span class="s2">&quot;c83cd8ba4f8ea2e67411&quot;</span><span class="p">,</span> <span class="s1">&#39;Content-Type&#39;</span><span class="p">:</span><span class="s1">&#39;application/json&#39;</span><span class="p">}</span>
+    <span class="n">httpClient</span> <span class="o">=</span> <span class="n">httplib</span><span class="o">.</span><span class="n">HTTPConnection</span><span class="p">(</span><span class="s1">&#39;192.168.218.131&#39;</span><span class="p">,</span> <span class="mi">5000</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="mi">30</span><span class="p">)</span>
+    <span class="n">httpClient</span><span class="o">.</span><span class="n">request</span><span class="p">(</span><span class="s1">&#39;GET&#39;</span><span class="p">,</span> <span class="s1">&#39;/v2.0/tokens/5811f83601524f20a50df6023df8f9c6&#39;</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">header</span><span class="p">)</span>
+
+    <span class="c1">#resp是HTTPResponse对象</span>
+    <span class="n">resp</span> <span class="o">=</span> <span class="n">httpClient</span><span class="o">.</span><span class="n">getresponse</span><span class="p">()</span>
+    <span class="n">body</span> <span class="o">=</span> <span class="n">resp</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+    <span class="nb">print</span> <span class="n">resp</span><span class="o">.</span><span class="n">status</span><span class="p">,</span> <span class="n">resp</span><span class="o">.</span><span class="n">reason</span><span class="p">,</span> <span class="n">body</span>
+
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="n">test_httplib</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="configparser">
+<h3><a class="toc-backref" href="#id31">7.4.2. <strong>ConfigParser：配置文件操作</strong></a><a class="headerlink" href="#configparser" title="Permalink to this headline">¶</a></h3>
+<p><strong>作用</strong>：用来操作配置文件 比如有如下配置文件glusterrest.ini,
+和Python源码放在同一目录下。</p>
+<div class="code shell highlight-default"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">keystone_auth_config</span><span class="p">]</span>
+<span class="n">admin_token</span><span class="o">=</span><span class="n">c83cd8ba4f8ea2e67411</span>
+<span class="n">controller</span><span class="o">=</span><span class="mf">192.168</span><span class="o">.</span><span class="mf">218.131</span>
+<span class="n">port</span><span class="o">=</span><span class="mi">5000</span>
+<span class="p">[</span><span class="n">mysql_db_config</span><span class="p">]</span>
+<span class="n">host</span><span class="o">=</span><span class="n">localhost</span>
+<span class="n">user</span><span class="o">=</span><span class="n">root</span>
+<span class="n">passwd</span><span class="o">=</span><span class="n">root</span>
+<span class="n">db</span><span class="o">=</span><span class="n">glusterrest</span>
+</pre></div>
+</div>
+<p>读取配置文件的程序：</p>
+<div class="code python highlight-default"><div class="highlight"><pre><span></span><span class="c1"># -*- coding: utf-8 -*-</span>
+
+<span class="kn">import</span> <span class="nn">ConfigParser</span>
+<span class="kn">import</span> <span class="nn">os</span>
+
+<span class="k">def</span> <span class="nf">_config_file_path</span><span class="p">():</span>
+    <span class="c1"># 取得文件的绝对路径</span>
+    <span class="n">abs_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="n">__file__</span><span class="p">)</span>
+    <span class="n">name</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;glusterrest.ini&quot;</span><span class="p">]</span>
+    <span class="k">return</span> <span class="s1">&#39;/&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">abs_path</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;/&quot;</span><span class="p">)[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="n">name</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">get_keystone_auth_config</span><span class="p">():</span>
+    <span class="n">config_file</span> <span class="o">=</span> <span class="n">_config_file_path</span><span class="p">()</span>
+    <span class="n">cf</span> <span class="o">=</span> <span class="n">ConfigParser</span><span class="o">.</span><span class="n">ConfigParser</span><span class="p">()</span>
+    <span class="n">cf</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="n">config_file</span><span class="p">)</span>
+    <span class="c1">#s = cf.sections()</span>
+    <span class="c1">#print &#39;section:&#39;, s</span>
+    <span class="c1">#o = cf.options(&quot;baseconf&quot;)</span>
+    <span class="c1">#print &#39;options:&#39;, o</span>
+    <span class="c1">#v = cf.items(&quot;baseconf&quot;)</span>
+    <span class="c1">#print &#39;db:&#39;, v</span>
+    <span class="n">admin_token</span> <span class="o">=</span> <span class="n">cf</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;keystone_auth_config&quot;</span><span class="p">,</span> <span class="s2">&quot;admin_token&quot;</span><span class="p">)</span>
+    <span class="n">controller</span> <span class="o">=</span> <span class="n">cf</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;keystone_auth_config&quot;</span><span class="p">,</span> <span class="s2">&quot;controller&quot;</span><span class="p">)</span>
+    <span class="n">port</span> <span class="o">=</span> <span class="n">cf</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;keystone_auth_config&quot;</span><span class="p">,</span> <span class="s2">&quot;port&quot;</span><span class="p">)</span>
+    <span class="c1">#db_pwd = cf.get(&quot;baseconf&quot;, &quot;password&quot;)</span>
+    <span class="c1">#print db_host, db_port, db_user, db_pwd</span>
+    <span class="c1">#cf.set(&quot;baseconf&quot;, &quot;db_pass&quot;, &quot;123456&quot;)</span>
+    <span class="c1">#cf.write(open(&quot;config_file_path&quot;, &quot;w&quot;))</span>
+    <span class="k">return</span> <span class="n">admin_token</span><span class="p">,</span> <span class="n">controller</span><span class="p">,</span> <span class="n">port</span>
+
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="nb">print</span> <span class="n">get_keystone_auth_config</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="re">
+<h3><a class="toc-backref" href="#id32">7.4.3. <strong>re：正则匹配</strong></a><a class="headerlink" href="#re" title="Permalink to this headline">¶</a></h3>
+<p>该部分可以使用一个专门的教程来讲述。请参考另一份笔记 <a class="reference internal" href="re_doc.html#py-regex-doc"><span class="std std-ref">Python正则表达式</span></a>  。</p>
+</div>
+<div class="section" id="pexpect">
+<h3><a class="toc-backref" href="#id33">7.4.4. <strong>Pexpect：自动化交互</strong></a><a class="headerlink" href="#pexpect" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="subprocess">
+<h3><a class="toc-backref" href="#id34">7.4.5. <strong>Subprocess：创建进程</strong></a><a class="headerlink" href="#subprocess" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="functools">
+<h3><a class="toc-backref" href="#id35">7.4.6. <strong>functools</strong></a><a class="headerlink" href="#functools" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="wraps">
+<h4><a class="toc-backref" href="#id36"><strong>wraps</strong></a><a class="headerlink" href="#wraps" title="Permalink to this headline">¶</a></h4>
+<blockquote>
+<div>If using a decorator always meant losing this information about a
+function, it would be a serious problem. That&#8217;s why we have
+functools.wraps. This takes a function used in a decorator and adds
+the functionality of copying over the function name, docstring,
+arguments list, etc. And since wraps is itself a decorator, the
+following code does the correct thing:</div></blockquote>
+<div class="code python highlight-default"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">functools</span> <span class="k">import</span> <span class="n">wraps</span>
+<span class="k">def</span> <span class="nf">logged</span><span class="p">(</span><span class="n">func</span><span class="p">):</span>
+    <span class="nd">@wraps</span><span class="p">(</span><span class="n">func</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">with_logging</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="nb">print</span> <span class="n">func</span><span class="o">.</span><span class="n">__name__</span> <span class="o">+</span> <span class="s2">&quot; was called&quot;</span>
+        <span class="k">return</span> <span class="n">func</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">with_logging</span>
+
+<span class="nd">@logged</span>
+<span class="k">def</span> <span class="nf">f</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+   <span class="sd">&quot;&quot;&quot;does some math&quot;&quot;&quot;</span>
+   <span class="k">return</span> <span class="n">x</span> <span class="o">+</span> <span class="n">x</span> <span class="o">*</span> <span class="n">x</span>
+
+<span class="nb">print</span> <span class="n">f</span><span class="o">.</span><span class="n">__name__</span>  <span class="c1"># prints &#39;f&#39;</span>
+<span class="nb">print</span> <span class="n">f</span><span class="o">.</span><span class="n">__doc__</span>   <span class="c1"># prints &#39;does some math&#39;</span>
+</pre></div>
+</div>
+<p>还可以尝试进一步运行这个例子：</p>
+<div class="code python highlight-default"><div class="highlight"><pre><span></span><span class="ch">#!/usr/bin/env python</span>
+<span class="c1"># -*- coding:utf-8 -*-</span>
+
+<span class="kn">from</span> <span class="nn">functools</span> <span class="k">import</span> <span class="n">wraps</span>
+
+<span class="k">def</span> <span class="nf">test</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;function test doc string&quot;&quot;&quot;</span>
+    <span class="k">pass</span>
+
+<span class="k">def</span> <span class="nf">my_decorator</span><span class="p">(</span><span class="n">f</span><span class="p">):</span>
+     <span class="c1">#@wraps(f)</span>
+     <span class="c1">#@wraps(f)</span>
+     <span class="nd">@wraps</span><span class="p">(</span><span class="n">test</span><span class="p">)</span>
+     <span class="k">def</span> <span class="nf">wrapper</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwds</span><span class="p">):</span>
+         <span class="sd">&quot;&quot;&quot;wraps doc&quot;&quot;&quot;</span>
+         <span class="nb">print</span> <span class="s1">&#39;Calling decorated function&#39;</span>
+         <span class="k">return</span> <span class="n">f</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwds</span><span class="p">)</span>
+     <span class="k">return</span> <span class="n">wrapper</span>
+
+<span class="nd">@my_decorator</span>
+<span class="k">def</span> <span class="nf">example</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;这里是文档注释&quot;&quot;&quot;</span>
+    <span class="nb">print</span> <span class="s1">&#39;Called example function&#39;</span>
+
+<span class="c1">#example()</span>
+<span class="nb">print</span> <span class="n">example</span><span class="o">.</span><span class="n">__name__</span> <span class="c1"># &#39;example&#39;</span>
+<span class="nb">print</span> <span class="n">example</span><span class="o">.</span><span class="n">__doc__</span> <span class="c1"># &#39;这里是文档注释&#39;</span>
+</pre></div>
+</div>
+<p>下面是这个例子的输出结果：</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">root</span><span class="nd">@ceph</span><span class="o">-</span><span class="n">deploy</span><span class="p">:</span><span class="o">/</span><span class="n">smbshare</span><span class="o">/</span><span class="n">pypro</span><span class="c1"># python warps-test.py</span>
+<span class="n">wrapper</span>
+<span class="n">wraps</span> <span class="n">doc</span>
+<span class="n">root</span><span class="nd">@ceph</span><span class="o">-</span><span class="n">deploy</span><span class="p">:</span><span class="o">/</span><span class="n">smbshare</span><span class="o">/</span><span class="n">pypro</span><span class="c1"># python warps-test.py</span>
+<span class="n">example</span>
+<span class="n">这里是文档注释</span>
+<span class="n">root</span><span class="nd">@ceph</span><span class="o">-</span><span class="n">deploy</span><span class="p">:</span><span class="o">/</span><span class="n">smbshare</span><span class="o">/</span><span class="n">pypro</span><span class="c1"># python warps-test.py</span>
+<span class="n">test</span>
+<span class="n">function</span> <span class="n">test</span> <span class="n">doc</span> <span class="n">string</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="update-wrapper">
+<h4><a class="toc-backref" href="#id37"><strong>update_wrapper</strong></a><a class="headerlink" href="#update-wrapper" title="Permalink to this headline">¶</a></h4>
+<p>功能： 用被包装函数的module,
+name，doc和dict属性更新包装函数的相应部分，并返回包装函数。
+以下是update_wraps函数的实现代码：</p>
+<div class="code python highlight-default"><div class="highlight"><pre><span></span><span class="n">WRAPPER_ASSIGNMENTS</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;__module__&#39;</span><span class="p">,</span> <span class="s1">&#39;__name__&#39;</span><span class="p">,</span> <span class="s1">&#39;__doc__&#39;</span><span class="p">)</span>
+<span class="n">WRAPPER_UPDATES</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;__dict__&#39;</span><span class="p">,)</span>
+<span class="k">def</span> <span class="nf">update_wrapper</span><span class="p">(</span><span class="n">wrapper</span><span class="p">,</span>
+                   <span class="n">wrapped</span><span class="p">,</span>
+                   <span class="n">assigned</span> <span class="o">=</span> <span class="n">WRAPPER_ASSIGNMENTS</span><span class="p">,</span>
+                   <span class="n">updated</span> <span class="o">=</span> <span class="n">WRAPPER_UPDATES</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">attr</span> <span class="ow">in</span> <span class="n">assigned</span><span class="p">:</span>
+        <span class="nb">setattr</span><span class="p">(</span><span class="n">wrapper</span><span class="p">,</span> <span class="n">attr</span><span class="p">,</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">wrapped</span><span class="p">,</span> <span class="n">attr</span><span class="p">))</span>
+    <span class="k">for</span> <span class="n">attr</span> <span class="ow">in</span> <span class="n">updated</span><span class="p">:</span>
+        <span class="nb">getattr</span><span class="p">(</span><span class="n">wrapper</span><span class="p">,</span> <span class="n">attr</span><span class="p">)</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="nb">getattr</span><span class="p">(</span><span class="n">wrapped</span><span class="p">,</span> <span class="n">attr</span><span class="p">,</span> <span class="p">{}))</span>
+    <span class="k">return</span> <span class="n">wrapper</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="elementtree-xml">
+<h3><a class="toc-backref" href="#id38">7.4.7. <strong>ElementTree：XML解析</strong></a><a class="headerlink" href="#elementtree-xml" title="Permalink to this headline">¶</a></h3>
+<p>假设有如下xml文件（完整的xml文件为360云盘上的<code class="docutils literal"><span class="pre">volinfo.xml</span></code>）：</p>
+<div class="code xml highlight-default"><div class="highlight"><pre><span></span>&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; standalone=&quot;yes&quot;?&gt;
+&lt;cliOutput&gt;
+  &lt;opRet&gt;0&lt;/opRet&gt;
+  &lt;opErrno&gt;0&lt;/opErrno&gt;
+  &lt;opErrstr/&gt;
+  &lt;volInfo&gt;
+    &lt;volumes&gt;
+      &lt;volume&gt;
+        &lt;name&gt;dist-vol&lt;/name&gt;
+        &lt;id&gt;ffe97ef8-7ab9-41ab-a43b-8b8c7816cf78&lt;/id&gt;
+        &lt;status&gt;1&lt;/status&gt;
+        &lt;statusStr&gt;Started&lt;/statusStr&gt;
+        &lt;brickCount&gt;3&lt;/brickCount&gt;
+        &lt;distCount&gt;1&lt;/distCount&gt;
+        &lt;stripeCount&gt;1&lt;/stripeCount&gt;
+        &lt;replicaCount&gt;1&lt;/replicaCount&gt;
+        &lt;disperseCount&gt;0&lt;/disperseCount&gt;
+        &lt;redundancyCount&gt;0&lt;/redundancyCount&gt;
+        &lt;type&gt;0&lt;/type&gt;
+        &lt;typeStr&gt;Distribute&lt;/typeStr&gt;
+        &lt;transport&gt;0&lt;/transport&gt;
+        &lt;bricks&gt;
+          &lt;brick uuid=&quot;0a3efc15-3358-43a2-b503-1e67d6eeea02&quot;&gt;ubuntu1:/gfs-dir/dist-dir&lt;name&gt;ubuntu1:/gfs-dir/dist-dir&lt;/name&gt;&lt;hostUuid&gt;0a3efc15-3358-43a2-b503-1e67d6eeea02&lt;/hostUuid&gt;&lt;/brick&gt;
+          &lt;brick uuid=&quot;05c9c42b-e4c9-4016-8280-32721bae6703&quot;&gt;ubuntu2:/gfs-dir/dist-dir&lt;name&gt;ubuntu2:/gfs-dir/dist-dir&lt;/name&gt;&lt;hostUuid&gt;05c9c42b-e4c9-4016-8280-32721bae6703&lt;/hostUuid&gt;&lt;/brick&gt;
+          &lt;brick uuid=&quot;05c9c42b-e4c9-4016-8280-32721bae6703&quot;&gt;ubuntu2:/gfs-dir/addbrick-dir&lt;name&gt;ubuntu2:/gfs-dir/addbrick-dir&lt;/name&gt;&lt;hostUuid&gt;05c9c42b-e4c9-4016-8280-32721bae6703&lt;/hostUuid&gt;&lt;/brick&gt;
+        &lt;/bricks&gt;
+        &lt;optCount&gt;3&lt;/optCount&gt;
+        &lt;options&gt;
+          &lt;option&gt;
+            &lt;name&gt;features.quota&lt;/name&gt;
+            &lt;value&gt;on&lt;/value&gt;
+          &lt;/option&gt;
+          &lt;option&gt;
+            &lt;name&gt;diagnostics.latency-measurement&lt;/name&gt;
+            &lt;value&gt;on&lt;/value&gt;
+          &lt;/option&gt;
+          &lt;option&gt;
+            &lt;name&gt;diagnostics.count-fop-hits&lt;/name&gt;
+            &lt;value&gt;on&lt;/value&gt;
+          &lt;/option&gt;
+        &lt;/options&gt;
+      &lt;/volume&gt;
+      &lt;count&gt;3&lt;/count&gt;
+    &lt;/volumes&gt;
+  &lt;/volInfo&gt;
+&lt;/cliOutput&gt;
+</pre></div>
+</div>
+<p>操作该文件的Python程序如下：</p>
+<div class="code python highlight-default"><div class="highlight"><pre><span></span><span class="ch">#!/usr/bin/env python</span>
+<span class="c1"># -*- coding:utf-8 -*-</span>
+
+<span class="kn">import</span> <span class="nn">xml.etree.cElementTree</span> <span class="k">as</span> <span class="nn">etree</span>
+<span class="kn">import</span> <span class="nn">os</span>
+
+
+<span class="k">def</span> <span class="nf">_read_xml_file</span><span class="p">():</span>
+    <span class="n">_abs_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="n">__file__</span><span class="p">)</span>
+    <span class="n">_name</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;volinfo.xml&quot;</span><span class="p">]</span>
+    <span class="n">_p</span> <span class="o">=</span> <span class="s1">&#39;/&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">_abs_path</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;/&quot;</span><span class="p">)[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="n">_name</span><span class="p">)</span>
+    <span class="n">_xml_text</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">_p</span><span class="p">)</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+    <span class="k">return</span> <span class="n">_xml_text</span>
+
+
+<span class="k">def</span> <span class="nf">_parse_a_vol</span><span class="p">(</span><span class="n">volume_el</span><span class="p">):</span>
+    <span class="n">value</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="n">volume_el</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s1">&#39;name&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">text</span><span class="p">,</span>
+        <span class="s1">&#39;uuid&#39;</span><span class="p">:</span> <span class="n">volume_el</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s1">&#39;id&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">text</span><span class="p">,</span>
+        <span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="n">volume_el</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s1">&#39;typeStr&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">text</span><span class="o">.</span><span class="n">upper</span><span class="p">()</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;-&#39;</span><span class="p">,</span> <span class="s1">&#39;_&#39;</span><span class="p">),</span>
+        <span class="s1">&#39;status&#39;</span><span class="p">:</span> <span class="n">volume_el</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s1">&#39;statusStr&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">text</span><span class="o">.</span><span class="n">upper</span><span class="p">(),</span>
+        <span class="s1">&#39;num_bricks&#39;</span><span class="p">:</span> <span class="nb">int</span><span class="p">(</span><span class="n">volume_el</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s1">&#39;brickCount&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">text</span><span class="p">),</span>
+        <span class="s1">&#39;distribute&#39;</span><span class="p">:</span> <span class="nb">int</span><span class="p">(</span><span class="n">volume_el</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s1">&#39;distCount&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">text</span><span class="p">),</span>
+        <span class="s1">&#39;stripe&#39;</span><span class="p">:</span> <span class="nb">int</span><span class="p">(</span><span class="n">volume_el</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s1">&#39;stripeCount&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">text</span><span class="p">),</span>
+        <span class="s1">&#39;replica&#39;</span><span class="p">:</span> <span class="nb">int</span><span class="p">(</span><span class="n">volume_el</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s1">&#39;replicaCount&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">text</span><span class="p">),</span>
+        <span class="s1">&#39;transport&#39;</span><span class="p">:</span> <span class="n">volume_el</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s1">&#39;transport&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">text</span><span class="p">,</span>
+        <span class="s1">&#39;bricks&#39;</span><span class="p">:</span> <span class="p">[],</span>
+        <span class="s1">&#39;options&#39;</span><span class="p">:</span> <span class="p">[]</span>
+    <span class="p">}</span>
+    <span class="k">if</span> <span class="n">value</span><span class="p">[</span><span class="s1">&#39;transport&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;0&#39;</span><span class="p">:</span>
+        <span class="n">value</span><span class="p">[</span><span class="s1">&#39;transport&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;TCP&#39;</span>
+    <span class="k">elif</span> <span class="n">value</span><span class="p">[</span><span class="s1">&#39;transport&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;1&#39;</span><span class="p">:</span>
+        <span class="n">value</span><span class="p">[</span><span class="s1">&#39;transport&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;RDMA&#39;</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">value</span><span class="p">[</span><span class="s1">&#39;transport&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;TCP,RDMA&#39;</span>
+
+    <span class="k">for</span> <span class="n">b</span> <span class="ow">in</span> <span class="n">volume_el</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="s1">&#39;bricks/brick&#39;</span><span class="p">):</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">value</span><span class="p">[</span><span class="s1">&#39;bricks&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">({</span><span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="n">b</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s2">&quot;name&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">text</span><span class="p">,</span>
+                                    <span class="s2">&quot;hostUuid&quot;</span><span class="p">:</span> <span class="n">b</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s2">&quot;hostUuid&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">text</span><span class="p">})</span>
+        <span class="k">except</span> <span class="ne">AttributeError</span><span class="p">:</span>
+            <span class="n">value</span><span class="p">[</span><span class="s1">&#39;bricks&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">b</span><span class="o">.</span><span class="n">text</span><span class="p">)</span>
+
+    <span class="k">for</span> <span class="n">o</span> <span class="ow">in</span> <span class="n">volume_el</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="s1">&#39;options/option&#39;</span><span class="p">):</span>
+        <span class="n">value</span><span class="p">[</span><span class="s1">&#39;options&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">({</span><span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="n">o</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s1">&#39;name&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">text</span><span class="p">,</span>
+                                 <span class="s2">&quot;value&quot;</span><span class="p">:</span> <span class="n">o</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s1">&#39;value&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">text</span><span class="p">})</span>
+
+    <span class="k">return</span> <span class="n">value</span>
+
+
+<span class="k">def</span> <span class="nf">test_xml</span><span class="p">():</span>
+    <span class="n">xmldata</span> <span class="o">=</span> <span class="n">_read_xml_file</span><span class="p">()</span>
+    <span class="c1">#print xmldata</span>
+    <span class="n">tree</span> <span class="o">=</span> <span class="n">etree</span><span class="o">.</span><span class="n">fromstring</span><span class="p">(</span><span class="n">xmldata</span><span class="p">)</span>
+
+    <span class="n">volumes</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">el</span> <span class="ow">in</span> <span class="n">tree</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="s1">&#39;volInfo/volumes/volume&#39;</span><span class="p">):</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">volumes</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">_parse_a_vol</span><span class="p">(</span><span class="n">el</span><span class="p">))</span>
+        <span class="k">except</span> <span class="p">(</span><span class="n">ParseError</span><span class="p">,</span> <span class="ne">AttributeError</span><span class="p">,</span> <span class="ne">ValueError</span><span class="p">)</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">GlusterCliBadXml</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">))</span>
+
+    <span class="k">return</span> <span class="n">volumes</span>
+
+
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="nb">print</span> <span class="n">test_xml</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>具体这个例子可以参考github上的<code class="docutils literal"><span class="pre">glusterfs-rest</span></code>项目</p>
+</div>
+</div>
+<div class="section" id="id10">
+<h2><a class="toc-backref" href="#id39">7.5. <strong>第三方库</strong></a><a class="headerlink" href="#id10" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="flask">
+<h3><a class="toc-backref" href="#id40">7.5.1. <strong>Flask框架</strong></a><a class="headerlink" href="#flask" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="firefox-restclientpost">
+<h4><a class="toc-backref" href="#id41"><strong>FireFox RESTclient插件发送POST请求和参数</strong></a><a class="headerlink" href="#firefox-restclientpost" title="Permalink to this headline">¶</a></h4>
+<p>如果想发送post请求：</p>
+<blockquote>
+<div><ul class="simple">
+<li>You have to set the “request header” section of the Firefox
+plugin to have a “name” = “Content-Type” and “value” =
+“application/x-www-form-urlencoded”</li>
+<li>Now, you are able to submit parameter like
+“name=mynamehere&amp;title=TA” in the “request body” text area field</li>
+</ul>
+</div></blockquote>
+<p><strong>参考</strong>：<a class="reference external" href="http://stackoverflow.com/questions/13132794/firefox-add-on-restclient-how-to-input-post-parameters">http://stackoverflow.com/questions/13132794/firefox-add-on-restclient-how-to-input-post-parameters</a></p>
+</div>
+<div class="section" id="flaskhttp-headers">
+<h4><a class="toc-backref" href="#id42"><strong>Flask框架获取HTTP headers字段</strong></a><a class="headerlink" href="#flaskhttp-headers" title="Permalink to this headline">¶</a></h4>
+<p>使用如下方法即可：</p>
+<div class="code python highlight-default"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">flask</span> <span class="k">import</span> <span class="n">request</span>
+<span class="n">token</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">headers</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;X-Auth-Token&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../linux_tools/index.html" class="btn btn-neutral float-right" title="Hack Linux" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="python_descriptor.html" class="btn btn-neutral" title="6. Python描述器" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2016, chenshiqiang.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'0.1',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>
