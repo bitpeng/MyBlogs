@@ -32,7 +32,7 @@
   
     <link rel="top" title="Welcome to Sitian&#39;s Blog 0.1 documentation" href="../index.html"/>
         <link rel="up" title="Hack OpenStack" href="index.html"/>
-        <link rel="next" title="其他杂项" href="../others/index.html"/>
+        <link rel="next" title="2. OpenStack镜像制作" href="image-create-guide.html"/>
         <link rel="prev" title="Hack OpenStack" href="index.html"/> 
 
   
@@ -89,11 +89,14 @@
 <li class="toctree-l2 current"><a class="current reference internal" href="#">1. Horizon 二次开发指南</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#id2">1.1. Horizon结构</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#panel">1.2. 快速生成panel</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#dashboard">1.3. dashboard汉化</a></li>
 </ul>
 </li>
+<li class="toctree-l2"><a class="reference internal" href="image-create-guide.html">2. OpenStack镜像制作</a></li>
+<li class="toctree-l2"><a class="reference internal" href="deploy_synopsis.html">3. openstack 实践指南</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="../others/index.html">其他杂项</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../others/index.html">附录</a></li>
 </ul>
 
             
@@ -153,6 +156,7 @@
 <li><a class="reference internal" href="#horizon" id="id4">Horizon 二次开发指南</a><ul>
 <li><a class="reference internal" href="#id2" id="id5">Horizon结构</a></li>
 <li><a class="reference internal" href="#panel" id="id6">快速生成panel</a></li>
+<li><a class="reference internal" href="#dashboard" id="id7">dashboard汉化</a></li>
 </ul>
 </li>
 </ul>
@@ -183,7 +187,29 @@
 中的Admin_Traffic_Monitor更改成和dashboard.py中类名一致。</li>
 <li>重启apache2，刷新页面，就可以看到效果。</li>
 </ul>
-<hr class="docutils" />
+<div class="figure">
+<img alt="../_images/start_panel.png" src="../_images/start_panel.png" />
+</div>
+<p class="centered">
+<strong>图：添加panel效果</strong></p></div>
+<div class="section" id="dashboard">
+<h2><a class="toc-backref" href="#id7">1.3. dashboard汉化</a><a class="headerlink" href="#dashboard" title="Permalink to this headline">¶</a></h2>
+<p>如效果图可以看到，新添加的panel是英文显示的，可以通过如下步骤进行汉化：</p>
+<ul class="simple">
+<li>编辑dango.po文件；</li>
+<li>执行转换并重启服务器；</li>
+</ul>
+<div class="code shell highlight-default"><div class="highlight"><pre><span></span><span class="n">cd</span> <span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">cecgw</span><span class="o">/</span><span class="n">csmp</span><span class="o">/</span><span class="n">openstack_dashboard</span><span class="o">/</span><span class="n">locale</span><span class="o">/</span><span class="n">zh_CN</span><span class="o">/</span><span class="n">LC_MESSAGES</span><span class="o">/</span>
+<span class="n">vi</span> <span class="n">django</span><span class="o">.</span><span class="n">po</span>
+<span class="n">msgfmt</span> <span class="o">--</span><span class="n">statistics</span> <span class="o">--</span><span class="n">verbose</span> <span class="o">-</span><span class="n">o</span> <span class="n">django</span><span class="o">.</span><span class="n">mo</span> <span class="n">django</span><span class="o">.</span><span class="n">po</span>
+<span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">init</span><span class="o">.</span><span class="n">d</span><span class="o">/</span><span class="n">apache2</span> <span class="n">restart</span>
+</pre></div>
+</div>
+<div class="figure">
+<img alt="../_images/translation.png" src="../_images/translation.png" />
+</div>
+<p class="centered">
+<strong>图：dashboard元素汉化</strong></p><hr class="docutils" />
 <table class="docutils footnote" frame="void" id="id3" rules="none">
 <colgroup><col class="label" /><col /></colgroup>
 <tbody valign="top">
@@ -200,7 +226,7 @@
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="../others/index.html" class="btn btn-neutral float-right" title="其他杂项" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="image-create-guide.html" class="btn btn-neutral float-right" title="2. OpenStack镜像制作" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
         <a href="index.html" class="btn btn-neutral" title="Hack OpenStack" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>

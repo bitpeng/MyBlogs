@@ -64,6 +64,32 @@ OpenStak horizon为我们提供两个命令startpanel和startdash，供我们快
   中的Admin_Traffic_Monitor更改成和dashboard.py中类名一致。
 * 重启apache2，刷新页面，就可以看到效果。
 
+.. figure:: /_static/images/start_panel.png
+
+.. centered:: 图：添加panel效果
+
+
+dashboard汉化
+========================
+
+如效果图可以看到，新添加的panel是英文显示的，可以通过如下步骤进行汉化：
+
+- 编辑dango.po文件；
+- 执行转换并重启服务器；
+
+.. code:: shell
+
+    cd /opt/cecgw/csmp/openstack_dashboard/locale/zh_CN/LC_MESSAGES/
+    vi django.po
+    msgfmt --statistics --verbose -o django.mo django.po
+    /etc/init.d/apache2 restart
+
+.. figure:: /_static/images/translation.png
+
+.. centered:: 图：dashboard元素汉化
+
+
+
 
 ---------------------
 
