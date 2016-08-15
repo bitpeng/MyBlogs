@@ -1,0 +1,373 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>2. OpenStack镜像制作 &mdash; Welcome to Sitian&#39;s Blog 0.1 documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+    <link rel="top" title="Welcome to Sitian&#39;s Blog 0.1 documentation" href="../index.html"/>
+        <link rel="up" title="Hack OpenStack" href="index.html"/>
+        <link rel="next" title="3. openstack 实践指南" href="deploy_synopsis.html"/>
+        <link rel="prev" title="1. Horizon 二次开发指南" href="horizon_develop.html"/> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> Welcome to Sitian's Blog
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.1
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../py_doc/index.html">Hack Python</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../linux_tools/index.html">Hack Linux</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Hack OpenStack</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="horizon_develop.html">1. Horizon 二次开发指南</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">2. OpenStack镜像制作</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#ubuntu">2.1. Ubuntu镜像</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#img">2.1.1. 创建img文件</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id2">2.1.2. 启动安装</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id3">2.1.3. 安装完成重新启动虚拟机</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id4">2.1.4. 镜像格式转换</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id5">2.1.5. 上传镜像</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#win7">2.2. win7镜像</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#id6">2.2.1. 准备工作</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id8">2.2.2. 启动安装</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id9">2.2.3. 安装网卡驱动</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id10">2.2.4. 镜像格式转换</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id11">2.2.5. 上传镜像</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#id12">2.3. 参考</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="deploy_synopsis.html">3. openstack 实践指南</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../others/index.html">其他杂项</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../index.html">Welcome to Sitian's Blog</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+ 
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../index.html">Docs</a> &raquo;</li>
+      
+          <li><a href="index.html">Hack OpenStack</a> &raquo;</li>
+      
+    <li>2. OpenStack镜像制作</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="../_sources/openstack/image-create-guide.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="openstack">
+<span id="image-guide"></span><h1><a class="toc-backref" href="#id13">2. OpenStack镜像制作</a><a class="headerlink" href="#openstack" title="Permalink to this headline">¶</a></h1>
+<div class="contents topic" id="id1">
+<p class="topic-title first">目录</p>
+<ul class="simple">
+<li><a class="reference internal" href="#openstack" id="id13">OpenStack镜像制作</a><ul>
+<li><a class="reference internal" href="#ubuntu" id="id14">Ubuntu镜像</a><ul>
+<li><a class="reference internal" href="#img" id="id15">创建img文件</a></li>
+<li><a class="reference internal" href="#id2" id="id16">启动安装</a></li>
+<li><a class="reference internal" href="#id3" id="id17">安装完成重新启动虚拟机</a></li>
+<li><a class="reference internal" href="#id4" id="id18">镜像格式转换</a></li>
+<li><a class="reference internal" href="#id5" id="id19">上传镜像</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#win7" id="id20">win7镜像</a><ul>
+<li><a class="reference internal" href="#id6" id="id21">准备工作</a><ul>
+<li><a class="reference internal" href="#win-iso-winiso" id="id22">下载win.iso,或者准备win安装iso文件</a></li>
+<li><a class="reference internal" href="#id7" id="id23">下载驱动</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#id8" id="id24">启动安装</a></li>
+<li><a class="reference internal" href="#id9" id="id25">安装网卡驱动</a></li>
+<li><a class="reference internal" href="#id10" id="id26">镜像格式转换</a></li>
+<li><a class="reference internal" href="#id11" id="id27">上传镜像</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#id12" id="id28">参考</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<hr class="docutils" />
+<div class="section" id="ubuntu">
+<h2><a class="toc-backref" href="#id14">2.1. Ubuntu镜像</a><a class="headerlink" href="#ubuntu" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="img">
+<h3><a class="toc-backref" href="#id15">2.1.1. 创建img文件</a><a class="headerlink" href="#img" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="c1">#假如kvm-img命令提示找不到，可以使用qemu-img命令</span>
+<span class="n">kvm</span><span class="o">-</span><span class="n">img</span> <span class="n">create</span> <span class="o">-</span><span class="n">f</span> <span class="n">raw</span> <span class="n">ubuntu</span><span class="o">.</span><span class="n">img</span> <span class="mi">10</span><span class="n">G</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="id2">
+<h3><a class="toc-backref" href="#id16">2.1.2. 启动安装</a><a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">kvm</span> <span class="o">-</span><span class="n">m</span> <span class="mi">512</span> <span class="o">-</span><span class="n">cdrom</span> <span class="n">ubuntu</span><span class="o">-</span><span class="mf">12.04</span><span class="o">-</span><span class="n">server</span><span class="o">-</span><span class="n">amd64</span><span class="o">.</span><span class="n">iso</span> <span class="o">-</span><span class="n">drive</span> <span class="n">file</span><span class="o">=</span><span class="n">ubuntu</span><span class="o">.</span><span class="n">img</span> <span class="o">-</span><span class="n">boot</span> <span class="n">d</span> <span class="o">-</span><span class="n">nographic</span> <span class="o">-</span><span class="n">vnc</span> <span class="p">:</span><span class="mi">0</span>
+</pre></div>
+</div>
+<div class="admonition tip">
+<p class="first admonition-title">Tip</p>
+<ul class="last simple">
+<li>注意，这条命令可能会报错，提示地址正在使用，那么在-vnc选项后，依次使用1,2,3……，直到有一个正确的端口。</li>
+<li>启动安装成功后，根据上面成功的端口地址，使用vncviewer连接(连接地址为ip:port或者ip:port+5900)。然后在进行安装。</li>
+<li>另外ubuntu 安装成功后，按下continue会重新安装虚拟机，可以使用kill命令杀死该进程，然后执行后面提到的虚拟机重启命令即可</li>
+</ul>
+</div>
+<div class="figure align-center">
+<img alt="百度以下，你就指定" src="../_images/ubuntu_install_complete.png" />
+</div>
+</div>
+<div class="section" id="id3">
+<h3><a class="toc-backref" href="#id17">2.1.3. 安装完成重新启动虚拟机</a><a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">kvm</span> <span class="o">-</span><span class="n">m</span> <span class="mi">512</span> <span class="o">-</span><span class="n">drive</span> <span class="n">file</span><span class="o">=</span><span class="n">ubuntu</span><span class="o">.</span><span class="n">img</span> <span class="o">-</span><span class="n">boot</span> <span class="n">c</span> <span class="o">-</span><span class="n">nographic</span> <span class="o">-</span><span class="n">vnc</span> <span class="p">:</span><span class="mi">0</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="id4">
+<h3><a class="toc-backref" href="#id18">2.1.4. 镜像格式转换</a><a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">qemu</span><span class="o">-</span><span class="n">img</span> <span class="n">convert</span> <span class="o">-</span><span class="n">f</span> <span class="n">raw</span> <span class="o">-</span><span class="n">O</span> <span class="n">qcow2</span> <span class="o">./</span><span class="n">ubuntu</span><span class="o">.</span><span class="n">img</span> <span class="o">./</span><span class="n">ubuntu</span><span class="o">.</span><span class="n">qcow2</span>
+</pre></div>
+</div>
+<div class="admonition tip">
+<p class="first admonition-title">Tip</p>
+<p class="last">在V2.5版本中，由于使用ceph作为后端存储，不支持qcow2格式，格式转换这一步可以省略。</p>
+</div>
+</div>
+<div class="section" id="id5">
+<h3><a class="toc-backref" href="#id19">2.1.5. 上传镜像</a><a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="c1"># v2.3版本</span>
+<span class="n">glance</span> <span class="n">image</span><span class="o">-</span><span class="n">create</span> <span class="o">--</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;ubuntu&quot;</span> <span class="o">--</span><span class="ow">is</span><span class="o">-</span><span class="n">public</span><span class="o">=</span><span class="n">true</span> <span class="o">--</span><span class="n">container</span><span class="o">-</span><span class="nb">format</span><span class="o">=</span><span class="n">ovf</span> <span class="o">--</span><span class="n">disk</span><span class="o">-</span><span class="nb">format</span><span class="o">=</span><span class="n">qcow2</span> <span class="o">&lt;</span> <span class="n">ubuntu</span><span class="o">.</span><span class="n">qcow2</span>
+<span class="c1"># v2.5版本</span>
+<span class="n">glance</span> <span class="n">image</span><span class="o">-</span><span class="n">create</span> <span class="o">--</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;ubuntu-14.04&quot;</span> <span class="o">--</span><span class="ow">is</span><span class="o">-</span><span class="n">public</span><span class="o">=</span><span class="n">true</span> <span class="o">--</span><span class="n">container</span><span class="o">-</span><span class="nb">format</span><span class="o">=</span><span class="n">ovf</span> <span class="o">--</span><span class="n">disk</span><span class="o">-</span><span class="nb">format</span><span class="o">=</span><span class="n">raw</span><span class="o">&lt;</span><span class="n">ubuntu</span><span class="o">.</span><span class="n">img</span>
+</pre></div>
+</div>
+<div class="admonition tip">
+<p class="first admonition-title">Tip</p>
+<p class="last">特别注意：上传镜像之前在安装ceph时一定要执行cinder和glance用户的授权和认证。</p>
+</div>
+</div>
+</div>
+<div class="section" id="win7">
+<h2><a class="toc-backref" href="#id20">2.2. win7镜像</a><a class="headerlink" href="#win7" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id6">
+<h3><a class="toc-backref" href="#id21">2.2.1. 准备工作</a><a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="win-iso-winiso">
+<h4><a class="toc-backref" href="#id22">下载win.iso,或者准备win安装iso文件</a><a class="headerlink" href="#win-iso-winiso" title="Permalink to this headline">¶</a></h4>
+<p>可以从https://www.microsoft.com/en-us/evalcenter/evaluate-windows-server-2012网站下载。</p>
+</div>
+<div class="section" id="id7">
+<h4><a class="toc-backref" href="#id23">下载驱动</a><a class="headerlink" href="#id7" title="Permalink to this headline">¶</a></h4>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">wget</span> <span class="o">-</span><span class="n">c</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">fedorapeople</span><span class="o">.</span><span class="n">org</span><span class="o">/</span><span class="n">groups</span><span class="o">/</span><span class="n">virt</span><span class="o">/</span><span class="n">virtio</span><span class="o">-</span><span class="n">win</span><span class="o">/</span><span class="n">direct</span><span class="o">-</span><span class="n">downloads</span><span class="o">/</span><span class="n">stable</span><span class="o">-</span><span class="n">virtio</span><span class="o">/</span><span class="n">virtio</span><span class="o">-</span><span class="n">win</span><span class="o">.</span><span class="n">iso</span>
+<span class="n">wget</span> <span class="o">-</span><span class="n">c</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">fedorapeople</span><span class="o">.</span><span class="n">org</span><span class="o">/</span><span class="n">groups</span><span class="o">/</span><span class="n">virt</span><span class="o">/</span><span class="n">virtio</span><span class="o">-</span><span class="n">win</span><span class="o">/</span><span class="n">direct</span><span class="o">-</span><span class="n">downloads</span><span class="o">/</span><span class="n">stable</span><span class="o">-</span><span class="n">virtio</span><span class="o">/</span><span class="n">virtio</span><span class="o">-</span><span class="n">win_amd64</span><span class="o">.</span><span class="n">vfd</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="id8">
+<h3><a class="toc-backref" href="#id24">2.2.2. 启动安装</a><a class="headerlink" href="#id8" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">kvm</span> <span class="o">-</span><span class="n">m</span> <span class="mi">1024</span> <span class="o">-</span><span class="n">cdrom</span> <span class="n">win7</span><span class="o">.</span><span class="n">iso</span> <span class="o">-</span><span class="n">drive</span> <span class="n">file</span><span class="o">=</span><span class="n">win7</span><span class="o">.</span><span class="n">qcow2</span><span class="p">,</span><span class="k">if</span><span class="o">=</span><span class="n">virtio</span><span class="p">,</span><span class="n">boot</span><span class="o">=</span><span class="n">on</span> <span class="o">-</span><span class="n">fda</span> <span class="n">virtio</span><span class="o">-</span><span class="n">win</span><span class="o">-</span><span class="mf">1.1</span><span class="o">.</span><span class="mf">16.</span><span class="n">vfd</span> <span class="o">-</span><span class="n">boot</span> <span class="n">d</span> <span class="o">-</span><span class="n">nographic</span> <span class="o">-</span><span class="n">vnc</span> <span class="p">:</span><span class="mi">0</span>
+</pre></div>
+</div>
+<div class="admonition tip">
+<p class="first admonition-title">Tip</p>
+<p class="last">启动安装命令成功后，使用vncviewer连接，然后手动加载驱动程序。
+手动加载方式为：自动以(高级)——加载驱动程序——浏览——软盘驱动器——i387——win7——下一步；即可。</p>
+</div>
+</div>
+<div class="section" id="id9">
+<h3><a class="toc-backref" href="#id25">2.2.3. 安装网卡驱动</a><a class="headerlink" href="#id9" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">kvm</span> <span class="o">-</span><span class="n">m</span> <span class="mi">1024</span> <span class="o">-</span><span class="n">cdrom</span> <span class="n">virtio</span><span class="o">-</span><span class="n">win</span><span class="o">-</span><span class="mf">0.1</span><span class="o">-</span><span class="mf">59.</span><span class="n">iso</span> <span class="o">-</span><span class="n">drive</span> <span class="n">file</span><span class="o">=</span><span class="n">win7</span><span class="o">.</span><span class="n">qcow2</span><span class="p">,</span><span class="k">if</span><span class="o">=</span><span class="n">virtio</span><span class="p">,</span><span class="n">boot</span><span class="o">=</span><span class="n">on</span> <span class="o">-</span><span class="n">net</span> <span class="n">nic</span><span class="p">,</span><span class="n">model</span><span class="o">=</span><span class="n">virtio</span> <span class="o">-</span><span class="n">boot</span> <span class="n">d</span> <span class="o">-</span><span class="n">nographic</span> <span class="o">-</span><span class="n">net</span> <span class="n">user</span> <span class="o">-</span><span class="n">usb</span> <span class="o">-</span><span class="n">usbdevice</span> <span class="n">tablet</span> <span class="o">-</span><span class="n">vnc</span> <span class="p">:</span><span class="mi">0</span>
+</pre></div>
+</div>
+<div class="admonition error">
+<p class="first admonition-title">Error</p>
+<p class="last">这一步我没有安装成功，问题不知道出在哪来。</p>
+</div>
+</div>
+<div class="section" id="id10">
+<h3><a class="toc-backref" href="#id26">2.2.4. 镜像格式转换</a><a class="headerlink" href="#id10" title="Permalink to this headline">¶</a></h3>
+<p>同上</p>
+</div>
+<div class="section" id="id11">
+<h3><a class="toc-backref" href="#id27">2.2.5. 上传镜像</a><a class="headerlink" href="#id11" title="Permalink to this headline">¶</a></h3>
+<p>同上</p>
+</div>
+</div>
+<div class="section" id="id12">
+<h2><a class="toc-backref" href="#id28">2.3. 参考</a><a class="headerlink" href="#id12" title="Permalink to this headline">¶</a></h2>
+<ol class="arabic simple">
+<li><a class="reference external" href="http://yansu.org/2013/05/03/create-windows-7-image-for-openstack.html">http://yansu.org/2013/05/03/create-windows-7-image-for-openstack.html</a></li>
+<li><a class="reference external" href="http://yansu.org/2013/05/15/create-ubuntu-image-for-openstack.html">http://yansu.org/2013/05/15/create-ubuntu-image-for-openstack.html</a></li>
+<li>《Openstack kvm win7镜像制作》</li>
+<li>《OpenStack虚拟机镜像制作指南》,官方文档</li>
+</ol>
+</div>
+</div>
+
+
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="deploy_synopsis.html" class="btn btn-neutral float-right" title="3. openstack 实践指南" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="horizon_develop.html" class="btn btn-neutral" title="1. Horizon 二次开发指南" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2016, chenshiqiang.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'0.1',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

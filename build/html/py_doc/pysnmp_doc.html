@@ -85,16 +85,16 @@
                 <ul class="current">
 <li class="toctree-l1 current"><a class="reference internal" href="index.html">Hack Python</a><ul class="current">
 <li class="toctree-l2 current"><a class="current reference internal" href="#">1. PySNMP教程</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#id1">1.1. 快速入门</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id2">1.1. 快速入门</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#snmp">1.1.1. 获取SNMP变量</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#snmp-trap">1.1.2. 发送<strong>SNMP TRAP</strong></a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="#id2">1.2. 参考手册</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#id3">1.2.1. SNMP历史</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#id6">1.2.2. SNMP设计</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#id13">1.2.3. PySNMP架构</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#id14">1.2.4. 常用操作</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id3">1.2. 参考手册</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#id4">1.2.1. SNMP历史</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id7">1.2.2. SNMP设计</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id14">1.2.3. PySNMP架构</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id15">1.2.4. 常用操作</a></li>
 </ul>
 </li>
 </ul>
@@ -108,6 +108,7 @@
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../linux_tools/index.html">Hack Linux</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../openstack/index.html">Hack OpenStack</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../others/index.html">其他杂项</a></li>
 </ul>
 
@@ -156,23 +157,68 @@
            <div itemprop="articleBody">
             
   <div class="section" id="pysnmp">
-<h1>1. PySNMP教程<a class="headerlink" href="#pysnmp" title="Permalink to this headline">¶</a></h1>
-<p>Tags： Python</p>
-<hr class="docutils" />
-<p>[TOC]</p>
+<h1><a class="toc-backref" href="#id27">1. PySNMP教程</a><a class="headerlink" href="#pysnmp" title="Permalink to this headline">¶</a></h1>
+<div class="contents topic" id="id1">
+<p class="topic-title first">目录</p>
+<ul class="simple">
+<li><a class="reference internal" href="#pysnmp" id="id27">PySNMP教程</a><ul>
+<li><a class="reference internal" href="#id2" id="id28">快速入门</a><ul>
+<li><a class="reference internal" href="#snmp" id="id29">获取SNMP变量</a></li>
+<li><a class="reference internal" href="#snmp-trap" id="id30">发送<strong>SNMP TRAP</strong></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#id3" id="id31">参考手册</a><ul>
+<li><a class="reference internal" href="#id4" id="id32">SNMP历史</a><ul>
+<li><a class="reference internal" href="#id5" id="id33"><em>SNMP是否还有用？</em></a></li>
+<li><a class="reference internal" href="#id6" id="id34"><em>当前和今后的用途</em></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#id7" id="id35">SNMP设计</a><ul>
+<li><a class="reference internal" href="#id8" id="id36"><em>术语标准和实体</em></a></li>
+<li><a class="reference internal" href="#id9" id="id37"><em>结构和组件</em></a></li>
+<li><a class="reference internal" href="#id10" id="id38"><em>数据类型</em></a><ul>
+<li><a class="reference internal" href="#oid" id="id39"><em>对象标识符(OID)</em></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#id11" id="id40"><em>对象集合</em></a></li>
+<li><a class="reference internal" href="#id12" id="id41"><em>协议操作</em></a></li>
+<li><a class="reference internal" href="#id13" id="id42"><em>核心应用</em></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#id14" id="id43">PySNMP架构</a></li>
+<li><a class="reference internal" href="#id15" id="id44">常用操作</a><ul>
+<li><a class="reference internal" href="#id16" id="id45"><em>创建SNMP引擎</em></a></li>
+<li><a class="reference internal" href="#id17" id="id46"><em>执行SNMP查询</em></a></li>
+<li><a class="reference internal" href="#id18" id="id47"><em>选择SNMP协议和证书</em></a></li>
+<li><a class="reference internal" href="#id19" id="id48"><em>设置传输和目标</em></a></li>
+<li><a class="reference internal" href="#id20" id="id49"><em>处理SNMP上下文</em></a></li>
+<li><a class="reference internal" href="#mib" id="id50"><em>指定MIB对象</em></a></li>
+<li><a class="reference internal" href="#id21" id="id51"><em>读取标量值</em></a></li>
+<li><a class="reference internal" href="#id22" id="id52"><em>SNMP表</em></a></li>
+<li><a class="reference internal" href="#id23" id="id53"><em>SNMP命令操作</em></a></li>
+<li><a class="reference internal" href="#id24" id="id54"><em>发送SNMP通知</em></a></li>
+<li><a class="reference internal" href="#id25" id="id55"><em>大容量消息</em></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
 <hr class="docutils" />
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
 <p>地址：<a class="reference external" href="http://pysnmp.sourceforge.net/contents.html">PySNMP</a></p>
 <p class="last"><code class="docutils literal"><span class="pre">注</span></code>：涉及到SNMP的专有名词一律不予以翻译, 并用粗体表示。</p>
 </div>
-<div class="section" id="id1">
-<h2>1.1. 快速入门<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id2">
+<h2><a class="toc-backref" href="#id28">1.1. 快速入门</a><a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
 <p>只要你在你的计算机上下载并安装了PySNMP库，你就可以解决非常基本的SNMP问题,
 如通过Python命令行获取某个远程<strong>SNMP
 Agent</strong>的数据(你至少需要4.3.0以上版本，才可以执行后面的示例代码)。</p>
 <div class="section" id="snmp">
-<h3>1.1.1. 获取SNMP变量<a class="headerlink" href="#snmp" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id29">1.1.1. 获取SNMP变量</a><a class="headerlink" href="#snmp" title="Permalink to this headline">¶</a></h3>
 <p>复制和粘贴下列代码到Python命令提示符上，代码将会执行<strong>SNMP
 GET</strong>操作获取<code class="docutils literal"><span class="pre">sysDescr.0</span></code>对象，这是一个公开可用的<strong>SNMP
 Command Responder</strong>,
@@ -221,7 +267,7 @@ Command Responder</strong>,
 </div>
 </div>
 <div class="section" id="snmp-trap">
-<h3>1.1.2. 发送<strong>SNMP TRAP</strong><a class="headerlink" href="#snmp-trap" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id30">1.1.2. 发送<strong>SNMP TRAP</strong></a><a class="headerlink" href="#snmp-trap" title="Permalink to this headline">¶</a></h3>
 <p>想给<a class="reference external" href="http://snmpsim.sourceforge.net/public-snmp-simulator.html">demo.snmplabs.com</a>中列出的宿主<strong>Notification
 Receiver</strong>发送<strong>TRAP</strong>消息，复制以下代码到你的交互式Python会话中。</p>
 <div class="code python highlight-default"><div class="highlight"><pre><span></span><span class="sd">&quot;&quot;&quot;</span>
@@ -272,10 +318,10 @@ Receiver</strong>发送<strong>TRAP</strong>消息，复制以下代码到你的
 MIB</strong>文件可以通过<a class="reference external" href="http://mibs.snmplabs.com/asn1/">mibs.snmplabs.com</a>进行下载，也可以配置PySNMP自动下载他们。</p>
 </div>
 </div>
-<div class="section" id="id2">
-<h2>1.2. 参考手册<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="id3">
-<h3>1.2.1. SNMP历史<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h3>
+<h2><a class="toc-backref" href="#id31">1.2. 参考手册</a><a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id4">
+<h3><a class="toc-backref" href="#id32">1.2.1. SNMP历史</a><a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h3>
 <p>在联网早期，计算机网络被当做是一项研究艺术而不是可被每个人使用的关键基础设施，网络管理更不被所知。当谁遇到了网络问题，他可能允许ping命令来定位问题源头，然后更改系统设置、重启软硬件，或叫同事在机房检查终端。</p>
 <p>上世纪80年代，<code class="docutils literal"><span class="pre">crash</span></code>
 是一个很有意思的讨论，在网络管理工具之前，从<a class="reference external" href="https://tools.ietf.org/html/rfc789.html">RFC
@@ -293,29 +339,29 @@ MIB</strong>文件可以通过<a class="reference external" href="http://mibs.sn
 <p>SNMP最初被认为是一个临时的解决方案，因为当时ISO正在开发一个听起来更具理论性的系统。由于对这个新网络管理系统的期待，SNMP开发者使得它很模块化。即使这种过渡从没有发生，SNMP的模块化特性使得它发展了三个主要版本，并并广泛使用和接受。</p>
 <p>IETF
 <a class="reference external" href="https://tools.ietf.org/html/rfc3411.html">RFC3411</a>定义了SNMPv3，而<a class="reference external" href="https://tools.ietf.org/html/rfc3418.html">RFC3418</a>定义了SNMP的当前标准。IETF已经制定SNMPv3具备完全的因特网标准(RFC的最成熟等级)。实际上，SNMP实现通常支持多个版本，典型的包括：SNMPv1，SNMPv2，SNMPv3。</p>
-<div class="section" id="id4">
-<h4><em>SNMP是否还有用？</em><a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h4>
+<div class="section" id="id5">
+<h4><a class="toc-backref" href="#id33"><em>SNMP是否还有用？</em></a><a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h4>
 <p>联想到SNMP已经这么古老，你可能会有疑问为什么他还在使用，是否具有更现代的代替方案。很显然，SNMP仍是性能和故障管理的主要方式。SNMP被所有的网络设备和网络管理应用广泛支持。</p>
 <p>SNMP如此顽强的一个主要原因是：由于SNMP的广泛部署，用其他系统代替需要巨大的努力；另外一个原因是因为当前在性能和错误管理上SNMP没有什么显著的缺陷。</p>
 <p>另外，SNMP是免费的，没有被特定厂商控制，不要版权和许可费用，因此任何人都可以使用它，或者在它之上构建自己的SNMP产品。</p>
 <p>尽管技术公司和标准制定机构付出很大努力，但是并没有什么新的网络监控标准产生。当前最杰出的代替品可能是<a class="reference external" href="https://tools.ietf.org/html/rfc6241.html">NETCONF</a>，然而他的重要目标是配置管理任务而不是错误和性能监控。此外，相对于SNMP，NETCONF更是资源密集型。</p>
 <p>显然对每个人来说，提出自己的专用管理系统也是可能的。例如，在HTTPS/json之上这很容易做。但是，这只会对你的应用起作用，并且SSL引擎也会消耗更多的资源。</p>
 </div>
-<div class="section" id="id5">
-<h4><em>当前和今后的用途</em><a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h4>
+<div class="section" id="id6">
+<h4><a class="toc-backref" href="#id34"><em>当前和今后的用途</em></a><a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h4>
 <p>由于SNMP的广泛部署，在当前现代互联网上有多少支持SNMP的设备在运行时不可能的。因此人们可能只有要求SNMP监视整个互联网。</p>
 <p>你可能发现SNMP对你的网络监控和管理很有用。例如你可以很容易的安装一个开源网络监控应用来监察、收集和绘图表示你家庭网络的WIFI路由器的带宽使用量(这可以帮你发现瓶颈)。</p>
 <p>在未来几年，一个重大的变革可能会发生。这就是物联网。所有这些小功率设备都需要被监控和管理，这可能给SNMP技术带来新的生机。差不多三十年前，SNMP是为严重资源受限计算机而设计的。之后计算机变得越来越强大，资源也更多。现在我们重新回到构建大量的低功率设备为物联网，而原始SNMP的轻量级特性可以再一次为我们服务。</p>
 </div>
 </div>
-<div class="section" id="id6">
-<h3>1.2.2. SNMP设计<a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h3>
-<p>与他的名字所暗示的意思相反，SNMP可不仅仅是一个传输管理数据的协议。随着时间推移，它变得远比它最初设计者计划设计的复杂。</p>
 <div class="section" id="id7">
-<h4><em>术语标准和实体</em><a class="headerlink" href="#id7" title="Permalink to this headline">¶</a></h4>
+<h3><a class="toc-backref" href="#id35">1.2.2. SNMP设计</a><a class="headerlink" href="#id7" title="Permalink to this headline">¶</a></h3>
+<p>与他的名字所暗示的意思相反，SNMP可不仅仅是一个传输管理数据的协议。随着时间推移，它变得远比它最初设计者计划设计的复杂。</p>
+<div class="section" id="id8">
+<h4><a class="toc-backref" href="#id36"><em>术语标准和实体</em></a><a class="headerlink" href="#id8" title="Permalink to this headline">¶</a></h4>
 <p>在网络管理领域，各种组件和网络架构都有着它的特定专有术语，所以我们在这里引用这些术语。在这些术语中，最奇怪的是词汇&#8221;管理&#8221;(management)一词的过度使用，它几乎无处不在。</p>
 <p>一个网络管理架构主要有三个组件：管理实体、被管理实体，和网络管理协议。</p>
-<div class="figure" id="id25">
+<div class="figure" id="id26">
 <img alt="此处输入图片的描述" src="http://pysnmp.sourceforge.net/_images/nms-components.svg" /><p class="caption"><span class="caption-text">此处输入图片的描述</span></p>
 </div>
 <ul class="simple">
@@ -324,8 +370,8 @@ MIB</strong>文件可以通过<a class="reference external" href="http://mibs.sn
 <li>网络管理系统的第三部分是网络管理协议。协议同时运行在管理和被管理实体上，运行管理实体查询被管理实体的状态，并通过代理执行随后的动作。</li>
 </ul>
 </div>
-<div class="section" id="id8">
-<h4><em>结构和组件</em><a class="headerlink" href="#id8" title="Permalink to this headline">¶</a></h4>
+<div class="section" id="id9">
+<h4><a class="toc-backref" href="#id37"><em>结构和组件</em></a><a class="headerlink" href="#id9" title="Permalink to this headline">¶</a></h4>
 <p>SNMP由四个部分组成：</p>
 <ul class="simple">
 <li>被称为MIB对象的网络管理对象的定义。管理信息通常被描述为被管理对象的集合，他们聚合一起形成虚拟的信息存储库，通常被称为管理信息库(Management
@@ -338,8 +384,8 @@ Information，管理信息结构)，它提出了基本数据类型，并允许�
 </ul>
 <p>后面的特征在SNMPv3之前的版本中完全不存在。</p>
 </div>
-<div class="section" id="id9">
-<h4><em>数据类型</em><a class="headerlink" href="#id9" title="Permalink to this headline">¶</a></h4>
+<div class="section" id="id10">
+<h4><a class="toc-backref" href="#id38"><em>数据类型</em></a><a class="headerlink" href="#id10" title="Permalink to this headline">¶</a></h4>
 <p>SMI提出了11种基础数据类型，用来描述被管理实体对象状态，他们要么是纯<code class="docutils literal"><span class="pre">ASN.1</span></code>类型，要么是他们的特例。</p>
 <ul class="simple">
 <li>纯<code class="docutils literal"><span class="pre">ASN.1</span></code>类型：<ul>
@@ -382,7 +428,7 @@ types)，SNMP定义了一种方式：把他们收集在一个有序数组中。�
 <p>通过PySNMP传输和接收数据时，PySNMP库用户可能会遇到PyASN1类和对象。</p>
 <p>我们会深入讨论的一个数据类型是<code class="docutils literal"><span class="pre">OBJECT</span> <span class="pre">IDENTIFIER</span></code>，它被用来命名一个对象。在该系统中，对象用层次式方式标识。</p>
 <div class="section" id="oid">
-<h5><em>对象标识符(OID)</em><a class="headerlink" href="#oid" title="Permalink to this headline">¶</a></h5>
+<h5><a class="toc-backref" href="#id39"><em>对象标识符(OID)</em></a><a class="headerlink" href="#oid" title="Permalink to this headline">¶</a></h5>
 <p>在计算对象标识符时广泛使用OID，它可以由三部分描述，每一个节点都被赋予不同的组织、域、概念或对象类型、具体对象实例。从人的角度来说，OID是一串数字，被点号隔开，用来编码节点。
 <img alt="OID picture" src="http://pysnmp.sourceforge.net/_images/oid-tree.svg" />
 如图，该树的每一个分支都有一个数字和名称，而从树根到某个点的完整路径形成该点的名字，这个完整路径就是OID，靠近树根的节点通常具有极其普通的性质。</p>
@@ -411,8 +457,8 @@ OID对象可以被串接和切割，Subscription
 </div>
 </div>
 </div>
-<div class="section" id="id10">
-<h4><em>对象集合</em><a class="headerlink" href="#id10" title="Permalink to this headline">¶</a></h4>
+<div class="section" id="id11">
+<h4><a class="toc-backref" href="#id40"><em>对象集合</em></a><a class="headerlink" href="#id11" title="Permalink to this headline">¶</a></h4>
 <p>MIB可以理解为一系列相关被管理对象的形式化描述，这些被管理对象的整体值反应了子系统中被管理实体的当前状态。这些值可以通过给代理(代理运行在被管理节点上)发送SNMP消息被管理实体查询，修改或者上传。</p>
 <p>例如，在打印机上，典型的监控对象通常是不同打印机墨盒状态、和已经打印的文件数量；在交换机上，关注的对象可能是流入流出流量、丢包率、广播处理的数据包数。</p>
 <p>每一个被管理设备维持一个数据库，它的值是MIB中定义的每一项条目。<strong>所以，可用数据并不取决于数据库，而是取决于实现。认识到这一点很重要：MIB文件不包含数据，他们在功能上和数据库模式(database
@@ -437,8 +483,8 @@ MIB文件为Python模块，然后SNMP引擎在运行时按需加载模块。PySN
 MIB模块是通用的：同一个模块可以同时被管理实体和被管理实体使用。</p>
 <p>MIB转换会由PySNMP自动执行，但是技术上，他是有PySNMP的姊妹工程PySMI处理的。当然，你也可以使用PySMI的mibdump.py工具手动完成这种转换。</p>
 </div>
-<div class="section" id="id11">
-<h4><em>协议操作</em><a class="headerlink" href="#id11" title="Permalink to this headline">¶</a></h4>
+<div class="section" id="id12">
+<h4><a class="toc-backref" href="#id41"><em>协议操作</em></a><a class="headerlink" href="#id12" title="Permalink to this headline">¶</a></h4>
 <p>SNMP围绕C/S模型设计，管理和被管理实体都包含客户端和服务端组件。客户端和服务端通过名字-值形式交换数据，值是强类型化的。</p>
 <p>协议实体中间是SNMP殷勤，它用来协调所有的SNMP组件工作。 <img alt="snmp-engine.svg" src="http://pysnmp.sourceforge.net/_images/snmp-engine.svg" />
 协议操作定义了两种形式：</p>
@@ -465,8 +511,8 @@ InformRequest</li>
 </li>
 </ul>
 </div>
-<div class="section" id="id12">
-<h4><em>核心应用</em><a class="headerlink" href="#id12" title="Permalink to this headline">¶</a></h4>
+<div class="section" id="id13">
+<h4><a class="toc-backref" href="#id42"><em>核心应用</em></a><a class="headerlink" href="#id13" title="Permalink to this headline">¶</a></h4>
 <p><a class="reference external" href="https://tools.ietf.org/html/rfc3413.html">RFC
 3414</a>标准标识了一系列标准SNMP应用，他们和管理实体或者被管理实体相关联。
 <img alt="snmp-apps.svg" src="http://pysnmp.sourceforge.net/_images/snmp-apps.svg" />
@@ -475,8 +521,8 @@ API)。这种方法的背后(backside)，是对大多数SNMP任务来说，它�
 API.</p>
 </div>
 </div>
-<div class="section" id="id13">
-<h3>1.2.3. PySNMP架构<a class="headerlink" href="#id13" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id14">
+<h3><a class="toc-backref" href="#id43">1.2.3. PySNMP架构</a><a class="headerlink" href="#id14" title="Permalink to this headline">¶</a></h3>
 <p>我们可以从SNMP协议的进化来看PySNMP的内部结构。SNMP发展了很多年，从一个相对简单的协议到提起和结构化数据，再到一个可扩展的、模块化的、强加密和支持开箱即用的框架。</p>
 <p>In the order from most ancient SNMP services to the most current ones,
 what follows are different layers of PySNMP APIs:
@@ -514,11 +560,11 @@ Datastore)来认证对被管理对象的远程访问。当使用代理身份运�
 <p>在大部分情况下，用户都只期望使用高层API。可是，实现SNMP
 Agent，Proxy和manager的一些不常见特性时，都需要使用标准应用API。这时，理解SNMP操作和SNMP引擎组件是有益处的。</p>
 </div>
-<div class="section" id="id14">
-<h3>1.2.4. 常用操作<a class="headerlink" href="#id14" title="Permalink to this headline">¶</a></h3>
-<p>在这份教程中，我们会循序渐进，运行一系列SNMP请求命令和通知。我们会用高级PySNMP同步API，这使用起来最简单。</p>
 <div class="section" id="id15">
-<h4><em>创建SNMP引擎</em><a class="headerlink" href="#id15" title="Permalink to this headline">¶</a></h4>
+<h3><a class="toc-backref" href="#id44">1.2.4. 常用操作</a><a class="headerlink" href="#id15" title="Permalink to this headline">¶</a></h3>
+<p>在这份教程中，我们会循序渐进，运行一系列SNMP请求命令和通知。我们会用高级PySNMP同步API，这使用起来最简单。</p>
+<div class="section" id="id16">
+<h4><a class="toc-backref" href="#id45"><em>创建SNMP引擎</em></a><a class="headerlink" href="#id16" title="Permalink to this headline">¶</a></h4>
 <p>SNMP引擎是核心，保护伞。所有的PySNMP操作都涉及到<code class="docutils literal"><span class="pre">SnmpEngine</span></code>对象实例。PySNMP
 APP可以运行多个独立SNMP引擎，每个都被它自己的SnmpEngine对象操纵。</p>
 <div class="code python highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pysnmp.hlapi</span> <span class="k">import</span> <span class="o">*</span>
@@ -529,8 +575,8 @@ APP可以运行多个独立SNMP引擎，每个都被它自己的SnmpEngine对象
 </div>
 <p>SNMP引擎有一个独立的标识符，它可以被自动赋值，也可以管理方式赋值。这个标识符在SNMP协议操作中会被使用。</p>
 </div>
-<div class="section" id="id16">
-<h4><em>执行SNMP查询</em><a class="headerlink" href="#id16" title="Permalink to this headline">¶</a></h4>
+<div class="section" id="id17">
+<h4><a class="toc-backref" href="#id46"><em>执行SNMP查询</em></a><a class="headerlink" href="#id17" title="Permalink to this headline">¶</a></h4>
 <p>我们将会发送SNMP
 GET命令从SNMP代理中读取MIB对象。为此我们将会调用同步高级API
 getCmd()函数。也可以使用类似的方式调用相应的函数来执行SNMP命令。</p>
@@ -542,8 +588,8 @@ getCmd()函数。也可以使用类似的方式调用相应的函数来执行SNM
 </pre></div>
 </div>
 </div>
-<div class="section" id="id17">
-<h4><em>选择SNMP协议和证书</em><a class="headerlink" href="#id17" title="Permalink to this headline">¶</a></h4>
+<div class="section" id="id18">
+<h4><a class="toc-backref" href="#id47"><em>选择SNMP协议和证书</em></a><a class="headerlink" href="#id18" title="Permalink to this headline">¶</a></h4>
 <p>我们有三个SNMP协议版本可供选择。想使用SNMPv1/v2c，我们可以传递合适的<code class="docutils literal"><span class="pre">CommunityData</span></code>类初始化实例；想使用v3可以传递<code class="docutils literal"><span class="pre">UsmUserData</span></code>类实例。</p>
 <p>SNMP社区名字，在你选择v1/v2c时，就通过<code class="docutils literal"><span class="pre">CommunityData</span></code>对象传给SNMP
 LCD。</p>
@@ -563,16 +609,16 @@ LCD。</p>
 <p>PySNMP支持md5和sha消息认证算法，des，aes128/192/356和3des加密算法。</p>
 <p>为了简便，我们将使用SNMPv2。虽然不完全安全，但它仍然是使用最广泛的SNMP版本。</p>
 </div>
-<div class="section" id="id18">
-<h4><em>设置传输和目标</em><a class="headerlink" href="#id18" title="Permalink to this headline">¶</a></h4>
+<div class="section" id="id19">
+<h4><a class="toc-backref" href="#id48"><em>设置传输和目标</em></a><a class="headerlink" href="#id19" title="Permalink to this headline">¶</a></h4>
 <p>PySNMP支持UDP-over-IPv4和UDP-over-IPv6网络传输。
 在这个例子里，我们将会查询demo.snmplabs.com网站上可通过IPv4访问的public
 SNMP
 simulator。传输配置以相应的合适的<code class="docutils literal"><span class="pre">UdpTransportTarget</span></code>和<code class="docutils literal"><span class="pre">Udp6TransportTarget</span></code>对象传递给SNMP
 LCD。</p>
 </div>
-<div class="section" id="id19">
-<h4><em>处理SNMP上下文</em><a class="headerlink" href="#id19" title="Permalink to this headline">¶</a></h4>
+<div class="section" id="id20">
+<h4><a class="toc-backref" href="#id49"><em>处理SNMP上下文</em></a><a class="headerlink" href="#id20" title="Permalink to this headline">¶</a></h4>
 <p>SNMP上下文是SNMPv3消息头的一个参数，它用来处理特定的MIB集合(这些MIB让被管理实体的SNMP引擎使用)。SNMP引擎可以服务很多同一的MIB对象(这些对象代表完全不同的被管理的软硬件实体)。这就是需要snmp上下文的原因。</p>
 <p>可以使用一个合适的初始<code class="docutils literal"><span class="pre">ContextData</span></code>对象来表明snmp上下文位于高层API。在这个例子里，我们使用的是<code class="docutils literal"><span class="pre">empty</span></code>上下文(默认)。</p>
 <div class="code python highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">g</span> <span class="o">=</span> <span class="n">getCmd</span><span class="p">(</span><span class="n">SnmpEngine</span><span class="p">(),</span>
@@ -583,7 +629,7 @@ LCD。</p>
 </div>
 </div>
 <div class="section" id="mib">
-<h4><em>指定MIB对象</em><a class="headerlink" href="#mib" title="Permalink to this headline">¶</a></h4>
+<h4><a class="toc-backref" href="#id50"><em>指定MIB对象</em></a><a class="headerlink" href="#mib" title="Permalink to this headline">¶</a></h4>
 <p>最后，我们需要指定我们想要读取的MIB对象。在协议层，MIB对象由OID标识，但是人们想要用名字处理他们：</p>
 <div class="code powershell highlight-default"><div class="highlight"><pre><span></span>$ snmpget -v2c -c public demo.snmplabs.com SNMPv2-MIB::sysDescr.0
 SNMPv2-MIB::sysDescr.0 = STRING: SunOS zeus.snmplabs.com
@@ -652,8 +698,8 @@ convention(这句不知该任何翻译)。<code class="docutils literal"><span c
 <p>默认的，PySNMP将会在你的文件系统中搜索你参考的ASN.1
 MIB文件。也可以配置成从远程主机自动下载他们，<a class="reference external" href="http://pysnmp.sourceforge.net/examples/hlapi/asyncore/sync/manager/cmdgen/mib-tweaks.html">比如这个例子</a>。我们维护了一系列ASN.1模块集合，你可以在你的项目中使用他们。</p>
 </div>
-<div class="section" id="id20">
-<h4><em>读取标量值</em><a class="headerlink" href="#id20" title="Permalink to this headline">¶</a></h4>
+<div class="section" id="id21">
+<h4><a class="toc-backref" href="#id51"><em>读取标量值</em></a><a class="headerlink" href="#id21" title="Permalink to this headline">¶</a></h4>
 <p>我们终于可以发送SNMP查询，并期待接收一些有意义的应答了。</p>
 <p>同步API的一个显著特征是它围绕Python生成器构造的。每次函数调用结束后，都会返回一个生成器对象。迭代生成器对象就会执行真实的SNMP通信。在每一次迭代中构建并发送SNMP消息，等待应答，接收并解析。</p>
 <div class="code python highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pysnmp.hlapi</span> <span class="k">import</span> <span class="o">*</span>
@@ -668,8 +714,8 @@ MIB文件。也可以配置成从远程主机自动下载他们，<a class="refe
 </pre></div>
 </div>
 </div>
-<div class="section" id="id21">
-<h4><em>SNMP表</em><a class="headerlink" href="#id21" title="Permalink to this headline">¶</a></h4>
+<div class="section" id="id22">
+<h4><a class="toc-backref" href="#id52"><em>SNMP表</em></a><a class="headerlink" href="#id22" title="Permalink to this headline">¶</a></h4>
 <blockquote>
 <div>译注：SNMP
 tables是一个术语概念，实际上前面提到都是SNMP简单对象，SNMP还可以操作复合对象。它可以类比于C语言中的结构体。更多细节，请参考Stevens的《TCP/IP详解》</div></blockquote>
@@ -742,8 +788,8 @@ tables是一个术语概念，实际上前面提到都是SNMP简单对象，SNMP
 </pre></div>
 </div>
 </div>
-<div class="section" id="id22">
-<h4><em>SNMP命令操作</em><a class="headerlink" href="#id22" title="Permalink to this headline">¶</a></h4>
+<div class="section" id="id23">
+<h4><a class="toc-backref" href="#id53"><em>SNMP命令操作</em></a><a class="headerlink" href="#id23" title="Permalink to this headline">¶</a></h4>
 <blockquote>
 <div>译注：SNMP的next命令，可以获取MIB树的下一个属性，这样运行我们通过迭代的方式获取所有MIB属性。详情请参考《TCP/IP详解》</div></blockquote>
 <p>SNMP允许你获取一个给定MIB对象的下一个。这样你可以读取你事先并不知道的MIB对象。MIB对象是依据他们的OID进行字典排序的，<code class="docutils literal"><span class="pre">nextCmd</span></code>函数实现了这个特性。</p>
@@ -825,8 +871,8 @@ MIB objects batching.)。</p>
 </pre></div>
 </div>
 </div>
-<div class="section" id="id23">
-<h4><em>发送SNMP通知</em><a class="headerlink" href="#id23" title="Permalink to this headline">¶</a></h4>
+<div class="section" id="id24">
+<h4><a class="toc-backref" href="#id54"><em>发送SNMP通知</em></a><a class="headerlink" href="#id24" title="Permalink to this headline">¶</a></h4>
 <p>被管理实体可以发送未经请求的消息给管理实体。这杯称为通知，通知可以减少轮训(轮询在大规模网络中可能会成为一个问题。)</p>
 <p>SNMP通知是被枚举的(SNMP notifications are
 enumerated)，并且每一个都有确切的语义。这是通过一个特殊的，高级的SMI结构<code class="docutils literal"><span class="pre">NOTIFICATION-TYPE</span></code>完成的。和<code class="docutils literal"><span class="pre">OBJECT-TYPE</span></code>定义一个MIB对象类似，<code class="docutils literal"><span class="pre">NOTIFICATION-TYPE</span></code>也有一个唯一的OID，但是它的SNMP值引用的是其他MIB对象序列。这些MIB对象在通知被发送时用<code class="docutils literal"><span class="pre">OBJECTS</span></code>子句指定，他们的当前值被包含在通知消息中。</p>
@@ -900,8 +946,8 @@ ifOperStatus)。为了通过索引处理SNMP表对象特定的行，可以用<co
 </pre></div>
 </div>
 </div>
-<div class="section" id="id24">
-<h4><em>大容量消息</em><a class="headerlink" href="#id24" title="Permalink to this headline">¶</a></h4>
+<div class="section" id="id25">
+<h4><a class="toc-backref" href="#id55"><em>大容量消息</em></a><a class="headerlink" href="#id25" title="Permalink to this headline">¶</a></h4>
 <p>当提到管理大规模网络时，顺序读取MIB对其会有时延。在某些方面，这些时延是不可忍受的。一种广为人知的方法是并行化查询——你可以在用多线程、多进程方式执行这些操作，或者围绕异步I/O模型构建你的应用程序。</p>
 <p>和其他方式相比，异步模型最轻量级、最具扩展性。它的思想很简单：<strong>永远不要等待I/O——只要可能就去做其他的事情</strong>。这种方式的缺点是执行流不再是线性的，这将导致程序源码难以阅读分析。</p>
 <p>PySNMP高级API采用三种异步I/O框架——asyncore，twisted和asyncio。异步API的更多信息，请参考PySNMP库参考手册和<a class="reference external" href="http://pysnmp.sourceforge.net/examples/contents.html">相关示例</a></p>

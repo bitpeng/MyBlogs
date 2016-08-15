@@ -87,19 +87,21 @@
 <li class="toctree-l2"><a class="reference internal" href="pysnmp_doc.html">1. PySNMP教程</a></li>
 <li class="toctree-l2 current"><a class="current reference internal" href="#">2. PySNMP获取设备信息</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#cpu">2.1. cpu信息</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#id1">2.2. 内存信息</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id2">2.2. 内存信息</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#disk">2.3. disk信息</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#id2">2.4. 流量信息</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#id3">2.5. 总结</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id3">2.4. 流量信息</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id4">2.5. 总结</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="re_doc.html">3. Python正则表达式</a></li>
 <li class="toctree-l2"><a class="reference internal" href="wsgi.html">4. wsgi基础</a></li>
 <li class="toctree-l2"><a class="reference internal" href="re_analysis.html">5. Python正则表达式分析利器</a></li>
 <li class="toctree-l2"><a class="reference internal" href="python_descriptor.html">6. Python描述器</a></li>
+<li class="toctree-l2"><a class="reference internal" href="python_notebook.html">7. Python学习总结</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../linux_tools/index.html">Hack Linux</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../openstack/index.html">Hack OpenStack</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../others/index.html">其他杂项</a></li>
 </ul>
 
@@ -148,8 +150,20 @@
            <div itemprop="articleBody">
             
   <div class="section" id="pysnmp">
-<h1>2. PySNMP获取设备信息<a class="headerlink" href="#pysnmp" title="Permalink to this headline">¶</a></h1>
-<p>tags： Python</p>
+<h1><a class="toc-backref" href="#id7">2. PySNMP获取设备信息</a><a class="headerlink" href="#pysnmp" title="Permalink to this headline">¶</a></h1>
+<div class="contents topic" id="id1">
+<p class="topic-title first">目录</p>
+<ul class="simple">
+<li><a class="reference internal" href="#pysnmp" id="id7">PySNMP获取设备信息</a><ul>
+<li><a class="reference internal" href="#cpu" id="id8">cpu信息</a></li>
+<li><a class="reference internal" href="#id2" id="id9">内存信息</a></li>
+<li><a class="reference internal" href="#disk" id="id10">disk信息</a></li>
+<li><a class="reference internal" href="#id3" id="id11">流量信息</a></li>
+<li><a class="reference internal" href="#id4" id="id12">总结</a></li>
+</ul>
+</li>
+</ul>
+</div>
 <hr class="docutils" />
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
@@ -162,17 +176,17 @@
 </pre></div>
 </div>
 <p>然后打开UCD-SNMP-MIB目录，可以找到cpu相关的mib对象。</p>
-<div class="figure" id="id4">
+<div class="figure" id="id5">
 <img alt="ucd" src="http://images2015.cnblogs.com/blog/801114/201605/801114-20160531110607696-1312294612.png" />
 <p class="caption"><span class="caption-text">ucd</span></p>
 </div>
-<div class="figure" id="id5">
+<div class="figure" id="id6">
 <img alt="sscpu" src="http://images2015.cnblogs.com/blog/801114/201605/801114-20160531110745414-934932437.png" />
 <p class="caption"><span class="caption-text">sscpu</span></p>
 </div>
 <p>在description里有关于对象信息的详细解释。</p>
 <div class="section" id="cpu">
-<h2>2.1. cpu信息<a class="headerlink" href="#cpu" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id8">2.1. cpu信息</a><a class="headerlink" href="#cpu" title="Permalink to this headline">¶</a></h2>
 <p>根据<a class="reference external" href="http://mibs.snmplabs.com/asn1/UCD-SNMP-MIB">UCD-SNMP-MIB文件</a>，可以获取的cpu参数共有33条，这里我们主要关注的是cpu的使用率，<code class="docutils literal"><span class="pre">ssCpuIdle</span></code>获取的是cpu的空闲率，所以100
 - ssCpuIdle 既可以求得cpu的使用率。</p>
 <div class="code Python highlight-default"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">getCpuUsage</span><span class="p">(</span><span class="n">targetHost</span><span class="p">,</span> <span class="n">targetPort</span><span class="p">,</span> <span class="n">cmd</span><span class="p">,</span> <span class="n">community</span><span class="p">):</span>
@@ -200,8 +214,8 @@ CPU使用率：8.0
 </pre></div>
 </div>
 </div>
-<div class="section" id="id1">
-<h2>2.2. 内存信息<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id2">
+<h2><a class="toc-backref" href="#id9">2.2. 内存信息</a><a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
 <p>可以获取的完整内存对象信息也在<code class="docutils literal"><span class="pre">http://mibs.snmplabs.com/asn1/UCD-SNMP-MIB</span></code>上，包括memTotalFree，memShared，memBuffer等。</p>
 <div class="code python highlight-default"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">getMemUsage</span><span class="p">(</span><span class="n">targetHost</span><span class="p">,</span> <span class="n">targetPort</span><span class="p">,</span> <span class="n">cmd</span><span class="p">,</span> <span class="n">community</span><span class="p">):</span>
     <span class="n">errIndication</span><span class="p">,</span> <span class="n">errStatus</span><span class="p">,</span> <span class="n">errIndex</span><span class="p">,</span> <span class="n">varBindTable</span> <span class="o">=</span> <span class="n">cmd</span><span class="o">.</span><span class="n">nextCmd</span><span class="p">(</span>
@@ -236,7 +250,7 @@ CPU使用率：8.0
 <p>其中，比较重要的内存信息有：内存总量，缓冲区大小，cache区大小，swap区大小等。据此，可以计算出内存的使用率。</p>
 </div>
 <div class="section" id="disk">
-<h2>2.3. disk信息<a class="headerlink" href="#disk" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id10">2.3. disk信息</a><a class="headerlink" href="#disk" title="Permalink to this headline">¶</a></h2>
 <p>disk的相关信息也定义在mib文件UCD-SNMP-MIB中，根据该文件，可以获取以下disk信息：</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">DskEntry</span> <span class="p">::</span><span class="o">=</span> <span class="n">SEQUENCE</span> <span class="p">{</span>
     <span class="n">dskIndex</span>        <span class="n">Integer32</span><span class="p">,</span>
@@ -292,8 +306,8 @@ name，可以很容易看出其意思，下面的代码可以用来获取disk的
 </div>
 <p>测试时，我们获取到waf设备10.11.113.150的disk信息为空，其他设备可以正常获取。</p>
 </div>
-<div class="section" id="id2">
-<h2>2.4. 流量信息<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id3">
+<h2><a class="toc-backref" href="#id11">2.4. 流量信息</a><a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h2>
 <p>也网卡或者流量相关的对象定义定义在<a class="reference external" href="http://mibs.snmplabs.com/asn1/IF-MIB">IF-MIB</a>中，可以获取的具体信息包括：</p>
 <div class="code python highlight-default"><div class="highlight"><pre><span></span><span class="n">IfEntry</span> <span class="p">::</span><span class="o">=</span>
    <span class="n">SEQUENCE</span> <span class="p">{</span>
@@ -379,8 +393,8 @@ name，可以很容易看出其意思，下面的代码可以用来获取disk的
 </pre></div>
 </div>
 </div>
-<div class="section" id="id3">
-<h2>2.5. 总结<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id4">
+<h2><a class="toc-backref" href="#id12">2.5. 总结</a><a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h2>
 <p><code class="docutils literal"><span class="pre">asn.1</span></code>一共包括9000多个mib信息模块集合，另外我们也可以在目标机器上执行命令：</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">snmpwalk</span> <span class="o">-</span><span class="n">v</span> <span class="mi">2</span><span class="n">c</span> <span class="o">-</span><span class="n">c</span> <span class="n">public</span> <span class="n">localhost</span>
 </pre></div>

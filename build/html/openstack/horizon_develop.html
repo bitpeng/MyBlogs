@@ -1,0 +1,264 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>1. Horizon 二次开发指南 &mdash; Welcome to Sitian&#39;s Blog 0.1 documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+    <link rel="top" title="Welcome to Sitian&#39;s Blog 0.1 documentation" href="../index.html"/>
+        <link rel="up" title="Hack OpenStack" href="index.html"/>
+        <link rel="next" title="其他杂项" href="../others/index.html"/>
+        <link rel="prev" title="Hack OpenStack" href="index.html"/> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> Welcome to Sitian's Blog
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.1
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../py_doc/index.html">Hack Python</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../linux_tools/index.html">Hack Linux</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Hack OpenStack</a><ul class="current">
+<li class="toctree-l2 current"><a class="current reference internal" href="#">1. Horizon 二次开发指南</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id2">1.1. Horizon结构</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#panel">1.2. 快速生成panel</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../others/index.html">其他杂项</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../index.html">Welcome to Sitian's Blog</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+ 
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../index.html">Docs</a> &raquo;</li>
+      
+          <li><a href="index.html">Hack OpenStack</a> &raquo;</li>
+      
+    <li>1. Horizon 二次开发指南</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="../_sources/openstack/horizon_develop.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="horizon">
+<span id="horizon-develop"></span><h1><a class="toc-backref" href="#id4">1. Horizon 二次开发指南</a><a class="headerlink" href="#horizon" title="Permalink to this headline">¶</a></h1>
+<div class="admonition tip">
+<p class="first admonition-title">Tip</p>
+<p class="last">在OpenStack云平台中,horizon是一个相对比较简单的项目，是入门OpenStack开发的一个比较好的切入点，
+本文档是自己对OpenStack dashboard进行二次开发过程的总结。</p>
+</div>
+<div class="contents topic" id="id1">
+<p class="topic-title first">目录</p>
+<ul class="simple">
+<li><a class="reference internal" href="#horizon" id="id4">Horizon 二次开发指南</a><ul>
+<li><a class="reference internal" href="#id2" id="id5">Horizon结构</a></li>
+<li><a class="reference internal" href="#panel" id="id6">快速生成panel</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<hr class="docutils" />
+<div class="section" id="id2">
+<h2><a class="toc-backref" href="#id5">1.1. Horizon结构</a><a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
+<p>如图1所示的仪表盘结构，最上的导航栏为dashboard元素，左侧为panel，中间为tab和tabgroup。
+因此，我们第一步尝试自己创建一个panel。</p>
+<div class="figure">
+<a class="reference internal image-reference" href="../_images/dashboard.PNG"><img alt="../_images/dashboard.PNG" src="../_images/dashboard.PNG" style="width: 1037.0px; height: 566.0px;" /></a>
+</div>
+<p class="centered">
+<strong>图1：dashboard结构</strong></p></div>
+<div class="section" id="panel">
+<h2><a class="toc-backref" href="#id6">1.2. 快速生成panel</a><a class="headerlink" href="#panel" title="Permalink to this headline">¶</a></h2>
+<p>OpenStak horizon为我们提供两个命令startpanel和startdash，供我们快速生产panel和dashboard。我自己试了很多次startdash命令，
+新添加的dashboard命令无法显示，可能还需要修改某些地方的配置文件。而startpanel命令，测试成功。</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">cd</span> <span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">cecgw</span><span class="o">/</span><span class="n">csmp</span><span class="o">/</span><span class="n">openstack_dashboard</span><span class="o">/</span><span class="n">dashboards</span><span class="o">/</span><span class="n">admin_traffic_monitor</span>
+<span class="n">python</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">share</span><span class="o">/</span><span class="n">openstack</span><span class="o">-</span><span class="n">dashboard</span><span class="o">/</span><span class="n">manage</span><span class="o">.</span><span class="n">py</span> <span class="n">startpanel</span> <span class="n">test_panel</span> <span class="o">-</span><span class="n">d</span> <span class="n">openstack_dashboard</span><span class="o">.</span><span class="n">dashboards</span><span class="o">.</span><span class="n">admin_traffic_monitor</span>
+</pre></div>
+</div>
+<p>该命令运行成功后，会在admin_traffic_monitor目录下生产一个test_panel目录，包含该panel的所有信息。
+然后进行以下操作：</p>
+<ul class="simple">
+<li>编辑admin_traffic_monitor的dashboard.py文件，在panel属性中加上‘test_panel’元素，</li>
+<li>编辑test_panel/panel.py文件， 将dashboard.Admin_Traffic_Monitor.register(Test_Panel)
+中的Admin_Traffic_Monitor更改成和dashboard.py中类名一致。</li>
+<li>重启apache2，刷新页面，就可以看到效果。</li>
+</ul>
+<hr class="docutils" />
+<table class="docutils footnote" frame="void" id="id3" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label">[1]</td><td><a class="reference external" href="http://www.360doc.com/content/13/1114/19/8504707_329234716.shtml">http://www.360doc.com/content/13/1114/19/8504707_329234716.shtml</a></td></tr>
+</tbody>
+</table>
+</div>
+</div>
+
+
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../others/index.html" class="btn btn-neutral float-right" title="其他杂项" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="index.html" class="btn btn-neutral" title="Hack OpenStack" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2016, chenshiqiang.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'0.1',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>
