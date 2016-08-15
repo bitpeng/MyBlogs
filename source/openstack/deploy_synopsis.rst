@@ -7,6 +7,7 @@ openstack 实践指南
     利用部门服务器，自己准备搭建OpenStack来熟悉OpenStack的部署，运维等方面的知识；
 
     硬件： Dell e14s(PowerEdge R720)
+    软件： Ubuntu 14.04 LTS
 
 .. contents:: 目录
 
