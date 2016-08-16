@@ -75,8 +75,9 @@ allinone方式部署
     ceph -s
 
   .. figure:: /_static/images/ceph_status.png
+     :align: center
 
-      图：ceph状态验证
+     图：ceph状态验证
 
 - 创建pool和认证：
   ::
@@ -91,20 +92,6 @@ allinone方式部署
     -  v2.5 镜像格式只能使用raw格式，因为ceph作后端存储, 不支持qcow2格式;
 
 
-镜像制作
-+++++++++
-
-OpenStack镜像制作，可以花一篇专门的笔记来介绍，请参考 :ref:`OpenStack镜像制作 <image-guide>`
-
-.. important::
-    v2.5 镜像格式只能使用raw格式，因为ceph作后端存储, 不支持qcow2格式;
-
-
-
-OpenStack创建虚拟机
-====================
-
-
 nova设置secret
 +++++++++++++++
 
@@ -116,6 +103,27 @@ nova设置secret
    :language: sh
    :linenos:
 
+
+
+
+创建虚拟机流程
+====================
+
+镜像制作
++++++++++
+
+OpenStack镜像制作，可以花一篇专门的笔记来介绍，请参考 :ref:`OpenStack镜像制作 <image-guide>`
+
+.. important::
+    v2.5 镜像格式只能使用raw格式，因为ceph作后端存储, 不支持qcow2格式;
+
+
+创建网络和路由
+++++++++++++++
+
+步骤如下：
+
+- 
 
 
 

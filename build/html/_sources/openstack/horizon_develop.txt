@@ -37,8 +37,9 @@ Horizon结构
 
 .. figure:: /_static/images/dashboard.PNG
    :scale: 100
+   :align: center
 
-.. centered:: 图1：dashboard结构
+   图1：dashboard结构
 
 
 
@@ -65,8 +66,9 @@ OpenStak horizon为我们提供两个命令startpanel和startdash，供我们快
 * 重启apache2，刷新页面，就可以看到效果。
 
 .. figure:: /_static/images/start_panel.png
+   :align: center
 
-.. centered:: 图：添加panel效果
+   图：添加panel效果
 
 
 dashboard汉化
@@ -85,8 +87,9 @@ dashboard汉化
     /etc/init.d/apache2 restart
 
 .. figure:: /_static/images/translation.png
+   :align: center
 
-.. centered:: 图：dashboard元素汉化
+   图：dashboard元素汉化
 
 
 

@@ -37,7 +37,8 @@ Ubuntu镜像
 
 .. figure:: /_static/images/ubuntu_install_complete.png
    :align: center
-   :alt: 百度以下，你就指定
+
+   图：ubuntu完成安装
 
 
 安装完成重新启动虚拟机
@@ -71,6 +72,62 @@ Ubuntu镜像
 
 .. tip::
     特别注意：上传镜像之前在安装ceph时一定要执行cinder和glance用户的授权和认证。
+
+
+cirros镜像
+----------
+
+使用以下命令创建并上传cirros镜像:
+
+::
+
+    glance image-create --name cirros-x86_64 --is-public True --disk-format raw --container-format ovf --file cirros-0.3.1-x86_64-disk.img
+
+.. error::
+
+    使用以下命令，总是提示no bootable device错误，如下图所示，暂时不知道问题出在哪里。
+
+    ::
+
+        qemu-img create -f raw cirros.img 5G
+        kvm -m 512 -cdrom cirros-0.3.1-x86_64-disk.img -drive file=cirros.img -boot d -nographic -vnc :0
+        kvm -m 512 -drive file=cirros.img -boot c -nographic -vnc :0
+
+    .. tip::
+
+        更新：cirros镜像是直接可启动的操作系统文件，而不是安装文件，不需要安装，直接上传即可, 所以安装时提示该错误！
+
+
+.. figure:: /_static/images/cirros_no_bootable.png
+   :align: center
+
+   图：cirros镜像无法启动
+
+
+centos镜像
+----------
+
+Centos镜像的制作过程与ubuntu相同，下面直接贴出操作命令：
+
+::
+
+    qemu-img create -f raw centos-1.img 10G
+    kvm -m 512 -cdrom CentOS-6.5-x86_64-bin-DVD1.iso -drive file=centos-1.img -boot d -nographic -vnc :2
+    # 和ubuntu安装一样，centos安装完成在vncviewer里点击重启后，会再次启动安装；这时只需要使用ps + kill命令杀死安装进程即可；
+    # 然后重启虚拟机
+    kvm -m 512 -drive file=centos-1.img -boot c -nographic -vnc :2
+
+    # 转换镜像格式并上传
+    qemu-img convert -f raw -O qcow2 ./centos-1.img ./centos-1.qcow2
+    source /root/openstackrc
+    glance image-create --name="centos_6.5" --is-public=true --container-format=ovf --disk-format=qcow2 < centos-1.qcow2
+
+
+.. figure:: /_static/images/upload_centos_img.png
+   :align: center
+
+   图：centos镜像成功上传.
+
 
 
 
@@ -127,11 +184,14 @@ win7镜像
 
 同上
 
+
+
+
 参考
 ----
 
-1. http://yansu.org/2013/05/03/create-windows-7-image-for-openstack.html
-2. http://yansu.org/2013/05/15/create-ubuntu-image-for-openstack.html
-3. 《Openstack kvm win7镜像制作》
-4. 《OpenStack虚拟机镜像制作指南》,官方文档
-
+.. [#] http://yansu.org/2013/05/03/create-windows-7-image-for-openstack.html
+.. [#] http://yansu.org/2013/05/15/create-ubuntu-image-for-openstack.html
+.. [#] 《Openstack kvm win7镜像制作》
+.. [#] 《OpenStack虚拟机镜像制作指南》,官方文档
+.. [#] http://docwiki.cisco.com/w/index.php?title=OpenStack:_Storing_Images_In_Glance&oldid=56483

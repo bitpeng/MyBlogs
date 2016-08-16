@@ -100,7 +100,7 @@
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../openstack/index.html">Hack OpenStack</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../others/index.html">其他杂项</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../others/index.html">附录</a></li>
 </ul>
 
             
@@ -148,25 +148,25 @@
            <div itemprop="articleBody">
             
   <div class="section" id="linux-man-page">
-<h1><a class="toc-backref" href="#id10">3. 善用Linux man page</a><a class="headerlink" href="#linux-man-page" title="Permalink to this headline">¶</a></h1>
+<h1><a class="toc-backref" href="#id12">3. 善用Linux man page</a><a class="headerlink" href="#linux-man-page" title="Permalink to this headline">¶</a></h1>
 <div class="contents topic" id="id1">
 <p class="topic-title first">目录</p>
 <ul class="simple">
-<li><a class="reference internal" href="#linux-man-page" id="id10">善用Linux man page</a><ul>
-<li><a class="reference internal" href="#id2" id="id11">章节介绍</a></li>
-<li><a class="reference internal" href="#id3" id="id12">查询指定章节</a></li>
-<li><a class="reference internal" href="#id4" id="id13">列出所有章节</a></li>
-<li><a class="reference internal" href="#id5" id="id14">搜索在线手册</a></li>
-<li><a class="reference internal" href="#id6" id="id15">指定语言</a></li>
-<li><a class="reference internal" href="#id7" id="id16">高亮显示</a></li>
-<li><a class="reference internal" href="#id8" id="id17">参考</a></li>
+<li><a class="reference internal" href="#linux-man-page" id="id12">善用Linux man page</a><ul>
+<li><a class="reference internal" href="#id2" id="id13">章节介绍</a></li>
+<li><a class="reference internal" href="#id3" id="id14">查询指定章节</a></li>
+<li><a class="reference internal" href="#id4" id="id15">列出所有章节</a></li>
+<li><a class="reference internal" href="#id5" id="id16">搜索在线手册</a></li>
+<li><a class="reference internal" href="#id6" id="id17">指定语言</a></li>
+<li><a class="reference internal" href="#id7" id="id18">高亮显示</a></li>
+<li><a class="reference internal" href="#id8" id="id19">参考</a></li>
 </ul>
 </li>
 </ul>
 </div>
 <hr class="docutils" />
 <div class="section" id="id2">
-<h2><a class="toc-backref" href="#id11">3.1. 章节介绍</a><a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id13">3.1. 章节介绍</a><a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
 <p>Linux man page一般包含以下内容:</p>
 <ul class="simple">
 <li>1   可执行程序和shell命令</li>
@@ -181,7 +181,7 @@
 </ul>
 </div>
 <div class="section" id="id3">
-<h2><a class="toc-backref" href="#id12">3.2. 查询指定章节</a><a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id14">3.2. 查询指定章节</a><a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h2>
 <p>例如printf，既是一个shell命令，也是一个C库函数，我们可以通过指定章节查询相应的手册页。</p>
 <p><strong>查询printf命令</strong></p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">man</span> <span class="mi">1</span> <span class="n">printf</span>
@@ -193,7 +193,7 @@
 </div>
 </div>
 <div class="section" id="id4">
-<h2><a class="toc-backref" href="#id13">3.3. 列出所有章节</a><a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id15">3.3. 列出所有章节</a><a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h2>
 <p>可以使用下面的命令：</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">man</span> <span class="o">-</span><span class="n">aw</span> <span class="n">printf</span>
 <span class="n">man</span> <span class="o">-</span><span class="n">a</span> <span class="n">printf</span>
@@ -201,7 +201,7 @@
 </div>
 </div>
 <div class="section" id="id5">
-<h2><a class="toc-backref" href="#id14">3.4. 搜索在线手册</a><a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id16">3.4. 搜索在线手册</a><a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h2>
 <p><strong>指定关键字</strong></p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">man</span> <span class="o">-</span><span class="n">k</span> <span class="n">printf</span>
 </pre></div>
@@ -213,17 +213,17 @@
 </div>
 </div>
 <div class="section" id="id6">
-<h2><a class="toc-backref" href="#id15">3.5. 指定语言</a><a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id17">3.5. 指定语言</a><a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h2>
 <p>甚至我们可以指定man page的语言，可是由于中文man page许久没有更新，有些过时。因此建议大家直接查看英文在线手册！</p>
 </div>
 <div class="section" id="id7">
-<h2><a class="toc-backref" href="#id16">3.6. 高亮显示</a><a class="headerlink" href="#id7" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id18">3.6. 高亮显示</a><a class="headerlink" href="#id7" title="Permalink to this headline">¶</a></h2>
 <p>在我使用的Ubuntu系统中，man page命令默认显示黑白色。如图1所示:</p>
-<div class="figure">
+<div class="figure align-center" id="id10">
 <a class="reference internal image-reference" href="../_images/img-black_color.png"><img alt="../_images/img-black_color.png" src="../_images/img-black_color.png" style="width: 771.0px; height: 509.0px;" /></a>
+<p class="caption"><span class="caption-text">图1：默认黑白色显示</span></p>
 </div>
-<p class="centered">
-<strong>图1：默认黑白色显示</strong></p><p>我们可以通过手动设置，让man输出高亮显示, 把下面代码追加到/etc/bash.bashrc即可。</p>
+<p>我们可以通过手动设置，让man输出高亮显示, 把下面代码追加到/etc/bash.bashrc即可。</p>
 <div class="highlight-sh"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
 2
 3
@@ -242,14 +242,14 @@
 </pre></div>
 </td></tr></table></div>
 <p>更改后高亮效果如下所示，很美观吧。</p>
-<div class="figure">
+<div class="figure align-center" id="id11">
 <a class="reference internal image-reference" href="../_images/img-highlight_color.png"><img alt="../_images/img-highlight_color.png" src="../_images/img-highlight_color.png" style="width: 753.0px; height: 405.0px;" /></a>
+<p class="caption"><span class="caption-text">图2：高亮输出</span></p>
 </div>
-<p class="centered">
-<strong>图2：高亮输出</strong></p></div>
+</div>
 <hr class="docutils" />
 <div class="section" id="id8">
-<h2><a class="toc-backref" href="#id17">3.7. 参考</a><a class="headerlink" href="#id8" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id19">3.7. 参考</a><a class="headerlink" href="#id8" title="Permalink to this headline">¶</a></h2>
 <table class="docutils footnote" frame="void" id="id9" rules="none">
 <colgroup><col class="label" /><col /></colgroup>
 <tbody valign="top">

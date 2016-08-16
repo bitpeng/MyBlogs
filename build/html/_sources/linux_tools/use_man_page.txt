@@ -81,8 +81,12 @@ Linux man page一般包含以下内容:
 
 .. figure:: /_static/images/img-black_color.png
    :scale: 100
+   :align: center
 
-.. centered:: 图1：默认黑白色显示
+   图1：默认黑白色显示
+
+..
+   centered:: 图1：默认黑白色显示
 
 我们可以通过手动设置，让man输出高亮显示, 把下面代码追加到/etc/bash.bashrc即可。
 
@@ -98,8 +102,9 @@ Linux man page一般包含以下内容:
 
 .. figure:: /_static/images/img-highlight_color.png
    :scale: 100
+   :align: center
 
-.. centered:: 图2：高亮输出
+   图2：高亮输出
 
 
 
