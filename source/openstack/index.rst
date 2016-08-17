@@ -15,6 +15,7 @@ Hack OpenStack
     horizon_develop
     image-create-guide
     deploy_synopsis
+    centos_vm_netconf
 
 
 ..  sphinx_doc

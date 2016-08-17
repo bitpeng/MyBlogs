@@ -20,13 +20,13 @@ Python学习总结
 
 --------------
 
-**语言特性**
+语言特性
 ===================
 
-**dict**
+dict
 ~~~~~~~~
 
-**fromkeys()方法：**
+fromkeys()方法：
 ^^^^^^^^^^^^^^^^^^^^
 
 .. code:: python
@@ -42,19 +42,19 @@ Python学习总结
     {1: set(['a', 'b']), 2: set(['a', 'b']), 3: set(['a', 'b'])}
     >>> 
 
-**pop()方法**
+pop()方法
 ^^^^^^^^^^^^^^
 
 dict.pop(key [,default]): 如果key存在，删除并返回dict[key];
 如果key不存在，default存在，返回default；如果default也不存在，KeyError异常。
 
-**update()**
+update()
 ^^^^^^^^^^^^
 
-**golbal**
+golbal
 ~~~~~~~~~~
 
-**and和or**
+and和or
 ~~~~~~~~~~~
 
 .. code:: python
@@ -88,12 +88,12 @@ dict.pop(key [,default]): 如果key存在，删除并返回dict[key];
     'a'
     >>>
 
-**for……else循环**
+for……else循环
 ~~~~~~~~~~~~~~~~~
 
 在for循环完整完成后才执行else；如果中途从break跳出，则连else一起跳出。
 
-**默认参数问题**
+默认参数问题
 ~~~~~~~~~~~~~~~~
 
 请看代码：
@@ -147,7 +147,7 @@ dict.pop(key [,default]): 如果key存在，删除并返回dict[key];
     38868752
     >>> 
 
-**getattr, hasattr, setattr**
+getattr, hasattr, setattr
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 **用法**\ ：
@@ -186,10 +186,10 @@ dict.pop(key [,default]): 如果key存在，删除并返回dict[key];
     >>> unbf
     <unbound method A.method>
 
-**callable**
+callable
 ~~~~~~~~~~~~
 
-**原始字符串**
+原始字符串
 ~~~~~~~~~~~~~~
 
 原始类型字符串可以简单的通过在普通字符串的双引号前面加一个字符‘r’来创建。当一个字符串是原始类型时，Python编译器不会对其尝试做任何的替换。本质上来讲，你在告诉编译器完全不要去干涉你的字符串。
@@ -204,10 +204,10 @@ dict.pop(key [,default]): 如果key存在，删除并返回dict[key];
     and this is a\nraw string
     #这是一个原始类型字符串。
 
-**语言陷阱**
+语言陷阱
 ===================
 
-**浅复制**
+浅复制
 ~~~~~~~~~~
 
 **关于Python列表赋值，特别需要注意的一点：**
@@ -244,10 +244,10 @@ dict.pop(key [,default]): 如果key存在，删除并返回dict[key];
     38965120
     >>>
 
-**小技巧**
+小技巧
 ===================
 
-**获取函数名，当前行号，文件名**
+获取函数名，当前行号，文件名
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 -  方法一：
@@ -275,13 +275,13 @@ dict.pop(key [,default]): 如果key存在，删除并返回dict[key];
 
 
 
-**标准库**
+标准库
 ===================
 
-**Httplib：http处理**
+Httplib：http处理
 ~~~~~~~~~~~~~~~~~~~~~
 
-**自定义http请求头部**
+自定义http请求头部
 ^^^^^^^^^^^^^^^^^^^^^^
 
 .. code:: python
@@ -313,7 +313,7 @@ dict.pop(key [,default]): 如果key存在，删除并返回dict[key];
     if __name__ == "__main__":
         test_httplib()
 
-**ConfigParser：配置文件操作**
+ConfigParser：配置文件操作
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 **作用**\ ：用来操作配置文件 比如有如下配置文件glusterrest.ini,
@@ -368,21 +368,21 @@ dict.pop(key [,default]): 如果key存在，删除并返回dict[key];
     if __name__ == "__main__":
         print get_keystone_auth_config()
 
-**re：正则匹配**
+re：正则匹配
 ~~~~~~~~~~~~~~~~
 
 该部分可以使用一个专门的教程来讲述。请参考另一份笔记 :ref:`Python正则表达式 <py-regex-doc>`  。
 
-**Pexpect：自动化交互**
+Pexpect：自动化交互
 ~~~~~~~~~~~~~~~~~~~~~~~
 
-**Subprocess：创建进程**
+Subprocess：创建进程
 ~~~~~~~~~~~~~~~~~~~~~~~~
 
-**functools**
+functools
 ~~~~~~~~~~~~~
 
-**wraps**
+wraps
 ^^^^^^^^^
 
     If using a decorator always meant losing this information about a
@@ -456,7 +456,7 @@ dict.pop(key [,default]): 如果key存在，删除并返回dict[key];
     test
     function test doc string
 
-**update\_wrapper**
+update\_wrapper
 ^^^^^^^^^^^^^^^^^^^
 
 功能： 用被包装函数的module,
@@ -477,7 +477,7 @@ name，doc和dict属性更新包装函数的相应部分，并返回包装函数
             getattr(wrapper, attr).update(getattr(wrapped, attr, {}))
         return wrapper
 
-**ElementTree：XML解析**
+ElementTree：XML解析
 ~~~~~~~~~~~~~~~~~~~~~~~~
 
 假设有如下xml文件（完整的xml文件为360云盘上的\ ``volinfo.xml``\ ）：
@@ -605,13 +605,13 @@ name，doc和dict属性更新包装函数的相应部分，并返回包装函数
 
 具体这个例子可以参考github上的\ ``glusterfs-rest``\ 项目
 
-**第三方库**
+第三方库
 =================
 
-**Flask框架**
+Flask框架
 ~~~~~~~~~~~~~
 
-**FireFox RESTclient插件发送POST请求和参数**
+FireFox RESTclient插件发送POST请求和参数
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 如果想发送post请求：
@@ -624,7 +624,7 @@ name，doc和dict属性更新包装函数的相应部分，并返回包装函数
 
 **参考**\ ：http://stackoverflow.com/questions/13132794/firefox-add-on-restclient-how-to-input-post-parameters
 
-**Flask框架获取HTTP headers字段**
+Flask框架获取HTTP headers字段
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 使用如下方法即可：
