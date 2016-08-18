@@ -53,7 +53,7 @@ OpenStack 启动虚拟机失败分析
    创建虚拟机失败
 
 
-根据出错Id \ ``i90be2aa5-4187-44c7-94ca-567a5f7c822a``\ 查看日志
+根据出错Id \ ``90be2aa5-4187-44c7-94ca-567a5f7c822a``\ 查看日志
 
 ::
 
@@ -124,3 +124,5 @@ Nova 绑定 Ceph rbd 块设备配置
 
 .. [#] http://my.oschina.net/JerryBaby/blog/376580#OSC_h3_10
 .. [#] http://docs.ceph.org.cn/rbd/rbd-openstack/
+.. [#] http://www.aichengxu.com/view/2501948
+.. [#] http://docs.openfans.org/ceph/ceph4e2d658765876863/ceph-1/copy_of_ceph-block-device3010ceph57578bbe59073011/openstack301057578bbe59077684openstack3011#u

@@ -31,7 +31,7 @@
 
   
     <link rel="top" title="Welcome to Sitian&#39;s Blog 0.1 documentation" href="../index.html"/>
-        <link rel="up" title="Hack OpenStack" href="index.html"/>
+        <link rel="up" title="OpenStack Note" href="index.html"/>
         <link rel="next" title="附录" href="../others/index.html"/>
         <link rel="prev" title="4. Centos虚拟机联网配置" href="centos_vm_netconf.html"/> 
 
@@ -85,7 +85,7 @@
                 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../py_doc/index.html">Hack Python</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../linux_tools/index.html">Hack Linux</a></li>
-<li class="toctree-l1 current"><a class="reference internal" href="index.html">Hack OpenStack</a><ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">OpenStack Note</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="horizon_develop.html">1. Horizon 二次开发指南</a></li>
 <li class="toctree-l2"><a class="reference internal" href="image-create-guide.html">2. OpenStack镜像制作</a></li>
 <li class="toctree-l2"><a class="reference internal" href="deploy_synopsis.html">3. openstack 实践指南</a></li>
@@ -129,7 +129,7 @@
   <ul class="wy-breadcrumbs">
     <li><a href="../index.html">Docs</a> &raquo;</li>
       
-          <li><a href="index.html">Hack OpenStack</a> &raquo;</li>
+          <li><a href="index.html">OpenStack Note</a> &raquo;</li>
       
     <li>5. OpenStack 启动虚拟机失败分析</li>
       <li class="wy-breadcrumbs-aside">
@@ -146,7 +146,7 @@
            <div itemprop="articleBody">
             
   <div class="section" id="openstack">
-<span id="lanch-instance-failure"></span><h1><a class="toc-backref" href="#id12">5. OpenStack 启动虚拟机失败分析</a><a class="headerlink" href="#openstack" title="Permalink to this headline">¶</a></h1>
+<span id="lanch-instance-failure"></span><h1><a class="toc-backref" href="#id14">5. OpenStack 启动虚拟机失败分析</a><a class="headerlink" href="#openstack" title="Permalink to this headline">¶</a></h1>
 <div class="admonition tip">
 <p class="first admonition-title">Tip</p>
 <p>在聚安云平台创建虚拟机失败。通过一番定位后，问题解决，于是记录下来，以作参考。</p>
@@ -156,45 +156,45 @@
 <div class="contents topic" id="id1">
 <p class="topic-title first">目录</p>
 <ul class="simple">
-<li><a class="reference internal" href="#openstack" id="id12">OpenStack 启动虚拟机失败分析</a><ul>
-<li><a class="reference internal" href="#id2" id="id13">问题排查</a></li>
-<li><a class="reference internal" href="#nova-ceph-rbd" id="id14">Nova 绑定 Ceph rbd 块设备配置</a></li>
-<li><a class="reference internal" href="#id3" id="id15">参考</a></li>
+<li><a class="reference internal" href="#openstack" id="id14">OpenStack 启动虚拟机失败分析</a><ul>
+<li><a class="reference internal" href="#id2" id="id15">问题排查</a></li>
+<li><a class="reference internal" href="#nova-ceph-rbd" id="id16">Nova 绑定 Ceph rbd 块设备配置</a></li>
+<li><a class="reference internal" href="#id3" id="id17">参考</a></li>
 </ul>
 </li>
 </ul>
 </div>
 <hr class="docutils" />
 <div class="section" id="id2">
-<h2><a class="toc-backref" href="#id13">5.1. 问题排查</a><a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id15">5.1. 问题排查</a><a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
 <p>启动虚拟机时，选择启动方式，其中从 <cite>镜像启动</cite> 操作成功，但是选择 <cite>从镜像启动(并创建一个新磁盘)</cite> 方式启动失败.</p>
-<div class="figure align-center" id="id6">
+<div class="figure align-center" id="id8">
 <a class="reference internal image-reference" href="../_images/select_lanch_type.png"><img alt="../_images/select_lanch_type.png" src="../_images/select_lanch_type.png" style="width: 731.0px; height: 510.0px;" /></a>
 <p class="caption"><span class="caption-text">选择虚拟机启动源</span></p>
 </div>
 <p>选择 <cite>从镜像启动(并创建一个新磁盘)</cite> 方式启动失败, 出错信息如下：</p>
-<div class="figure align-center" id="id7">
+<div class="figure align-center" id="id9">
 <a class="reference internal image-reference" href="../_images/lanch_instance_error.png"><img alt="../_images/lanch_instance_error.png" src="../_images/lanch_instance_error.png" style="width: 334.0px; height: 165.0px;" /></a>
 <p class="caption"><span class="caption-text">创建虚拟机失败</span></p>
 </div>
-<p>根据出错Id <code class="docutils literal"><span class="pre">i90be2aa5-4187-44c7-94ca-567a5f7c822a</span></code>查看日志</p>
+<p>根据出错Id <code class="docutils literal"><span class="pre">90be2aa5-4187-44c7-94ca-567a5f7c822a</span></code>查看日志</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">cd</span> <span class="o">/</span><span class="n">var</span><span class="o">/</span><span class="n">logs</span>
 <span class="n">egrep</span> <span class="s2">&quot;i90be2aa5-4187-44c7-94ca-567a5f7c822a&quot;</span> <span class="o">.</span> <span class="o">-</span><span class="n">Rn</span>
 </pre></div>
 </div>
-<div class="figure align-center" id="id8">
+<div class="figure align-center" id="id10">
 <a class="reference internal image-reference" href="../_images/nova_log_error.png"><img alt="../_images/nova_log_error.png" src="../_images/nova_log_error.png" style="width: 1440.0px; height: 131.0px;" /></a>
 <p class="caption"><span class="caption-text">日志出错信息</span></p>
 </div>
 <p>查看相应日志文件:</p>
-<div class="figure align-center" id="id9">
+<div class="figure align-center" id="id11">
 <a class="reference internal image-reference" href="../_images/Invalid_volume.png"><img alt="../_images/Invalid_volume.png" src="../_images/Invalid_volume.png" style="width: 1423.0px; height: 218.0px;" /></a>
 <p class="caption"><span class="caption-text">提示Invalid volume</span></p>
 </div>
 <p>由于镜像可以上传，但是无法创建volume，暂时判断是volume和ceph配置的问题。</p>
 </div>
 <div class="section" id="nova-ceph-rbd">
-<h2><a class="toc-backref" href="#id14">5.2. Nova 绑定 Ceph rbd 块设备配置</a><a class="headerlink" href="#nova-ceph-rbd" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id16">5.2. Nova 绑定 Ceph rbd 块设备配置</a><a class="headerlink" href="#nova-ceph-rbd" title="Permalink to this headline">¶</a></h2>
 <div class="admonition important">
 <p class="first admonition-title">Important</p>
 <p>为了绑定 Cinder 设备（块设备或者启动卷），必须告诉 Nova（和 libvirt）
@@ -205,7 +205,7 @@ rbd_secret_uuid = `uuidgen`
 </pre></div>
 </div>
 </div>
-<div class="figure align-center" id="id10">
+<div class="figure align-center" id="id12">
 <a class="reference internal image-reference" href="../_images/rbd_secret_uuid.png"><img alt="../_images/rbd_secret_uuid.png" src="../_images/rbd_secret_uuid.png" style="width: 938.0px; height: 265.0px;" /></a>
 <p class="caption"><span class="caption-text">查看 nova 和 cinder 的 rbd_secret_uuid配置, 果然不一样</span></p>
 </div>
@@ -216,14 +216,14 @@ for i in nova*; do service $i restart;done
 for i in glance*; do service $i restart;done
 </pre></div>
 </div>
-<div class="figure align-center" id="id11">
+<div class="figure align-center" id="id13">
 <a class="reference internal image-reference" href="../_images/lance_instance_success.png"><img alt="../_images/lance_instance_success.png" src="../_images/lance_instance_success.png" style="width: 1230.0px; height: 181.0px;" /></a>
 <p class="caption"><span class="caption-text">成功创建虚拟机</span></p>
 </div>
 </div>
 <hr class="docutils" />
 <div class="section" id="id3">
-<h2><a class="toc-backref" href="#id15">5.3. 参考</a><a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id17">5.3. 参考</a><a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h2>
 <table class="docutils footnote" frame="void" id="id4" rules="none">
 <colgroup><col class="label" /><col /></colgroup>
 <tbody valign="top">
@@ -234,6 +234,18 @@ for i in glance*; do service $i restart;done
 <colgroup><col class="label" /><col /></colgroup>
 <tbody valign="top">
 <tr><td class="label">[2]</td><td><a class="reference external" href="http://docs.ceph.org.cn/rbd/rbd-openstack/">http://docs.ceph.org.cn/rbd/rbd-openstack/</a></td></tr>
+</tbody>
+</table>
+<table class="docutils footnote" frame="void" id="id6" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label">[3]</td><td><a class="reference external" href="http://www.aichengxu.com/view/2501948">http://www.aichengxu.com/view/2501948</a></td></tr>
+</tbody>
+</table>
+<table class="docutils footnote" frame="void" id="id7" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label">[4]</td><td><a class="reference external" href="http://docs.openfans.org/ceph/ceph4e2d658765876863/ceph-1/copy_of_ceph-block-device3010ceph57578bbe59073011/openstack301057578bbe59077684openstack3011#u">http://docs.openfans.org/ceph/ceph4e2d658765876863/ceph-1/copy_of_ceph-block-device3010ceph57578bbe59073011/openstack301057578bbe59077684openstack3011#u</a></td></tr>
 </tbody>
 </table>
 </div>

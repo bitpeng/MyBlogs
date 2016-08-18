@@ -1,6 +1,6 @@
 .. _openstack_index:
 
-Hack OpenStack
+OpenStack Note
 ============================
 
 .. tip::
