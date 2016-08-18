@@ -1,0 +1,310 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>5. OpenStack 启动虚拟机失败分析 &mdash; Welcome to Sitian&#39;s Blog 0.1 documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+    <link rel="top" title="Welcome to Sitian&#39;s Blog 0.1 documentation" href="../index.html"/>
+        <link rel="up" title="Hack OpenStack" href="index.html"/>
+        <link rel="next" title="附录" href="../others/index.html"/>
+        <link rel="prev" title="4. Centos虚拟机联网配置" href="centos_vm_netconf.html"/> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> Welcome to Sitian's Blog
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.1
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../py_doc/index.html">Hack Python</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../linux_tools/index.html">Hack Linux</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Hack OpenStack</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="horizon_develop.html">1. Horizon 二次开发指南</a></li>
+<li class="toctree-l2"><a class="reference internal" href="image-create-guide.html">2. OpenStack镜像制作</a></li>
+<li class="toctree-l2"><a class="reference internal" href="deploy_synopsis.html">3. openstack 实践指南</a></li>
+<li class="toctree-l2"><a class="reference internal" href="centos_vm_netconf.html">4. Centos虚拟机联网配置</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">5. OpenStack 启动虚拟机失败分析</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id2">5.1. 问题排查</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#nova-ceph-rbd">5.2. Nova 绑定 Ceph rbd 块设备配置</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id3">5.3. 参考</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../others/index.html">附录</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../index.html">Welcome to Sitian's Blog</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+ 
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../index.html">Docs</a> &raquo;</li>
+      
+          <li><a href="index.html">Hack OpenStack</a> &raquo;</li>
+      
+    <li>5. OpenStack 启动虚拟机失败分析</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="../_sources/openstack/lanch_instance_failure.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="openstack">
+<span id="lanch-instance-failure"></span><h1><a class="toc-backref" href="#id12">5. OpenStack 启动虚拟机失败分析</a><a class="headerlink" href="#openstack" title="Permalink to this headline">¶</a></h1>
+<div class="admonition tip">
+<p class="first admonition-title">Tip</p>
+<p>在聚安云平台创建虚拟机失败。通过一番定位后，问题解决，于是记录下来，以作参考。</p>
+<p>版本：聚安云v2.5; OpenStack Juno版本</p>
+<p class="last">出错：Ceph作为后端存储，镜像可以上传，但是无法启动虚拟机。</p>
+</div>
+<div class="contents topic" id="id1">
+<p class="topic-title first">目录</p>
+<ul class="simple">
+<li><a class="reference internal" href="#openstack" id="id12">OpenStack 启动虚拟机失败分析</a><ul>
+<li><a class="reference internal" href="#id2" id="id13">问题排查</a></li>
+<li><a class="reference internal" href="#nova-ceph-rbd" id="id14">Nova 绑定 Ceph rbd 块设备配置</a></li>
+<li><a class="reference internal" href="#id3" id="id15">参考</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<hr class="docutils" />
+<div class="section" id="id2">
+<h2><a class="toc-backref" href="#id13">5.1. 问题排查</a><a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
+<p>启动虚拟机时，选择启动方式，其中从 <cite>镜像启动</cite> 操作成功，但是选择 <cite>从镜像启动(并创建一个新磁盘)</cite> 方式启动失败.</p>
+<div class="figure align-center" id="id6">
+<a class="reference internal image-reference" href="../_images/select_lanch_type.png"><img alt="../_images/select_lanch_type.png" src="../_images/select_lanch_type.png" style="width: 731.0px; height: 510.0px;" /></a>
+<p class="caption"><span class="caption-text">选择虚拟机启动源</span></p>
+</div>
+<p>选择 <cite>从镜像启动(并创建一个新磁盘)</cite> 方式启动失败, 出错信息如下：</p>
+<div class="figure align-center" id="id7">
+<a class="reference internal image-reference" href="../_images/lanch_instance_error.png"><img alt="../_images/lanch_instance_error.png" src="../_images/lanch_instance_error.png" style="width: 334.0px; height: 165.0px;" /></a>
+<p class="caption"><span class="caption-text">创建虚拟机失败</span></p>
+</div>
+<p>根据出错Id <code class="docutils literal"><span class="pre">i90be2aa5-4187-44c7-94ca-567a5f7c822a</span></code>查看日志</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">cd</span> <span class="o">/</span><span class="n">var</span><span class="o">/</span><span class="n">logs</span>
+<span class="n">egrep</span> <span class="s2">&quot;i90be2aa5-4187-44c7-94ca-567a5f7c822a&quot;</span> <span class="o">.</span> <span class="o">-</span><span class="n">Rn</span>
+</pre></div>
+</div>
+<div class="figure align-center" id="id8">
+<a class="reference internal image-reference" href="../_images/nova_log_error.png"><img alt="../_images/nova_log_error.png" src="../_images/nova_log_error.png" style="width: 1440.0px; height: 131.0px;" /></a>
+<p class="caption"><span class="caption-text">日志出错信息</span></p>
+</div>
+<p>查看相应日志文件:</p>
+<div class="figure align-center" id="id9">
+<a class="reference internal image-reference" href="../_images/Invalid_volume.png"><img alt="../_images/Invalid_volume.png" src="../_images/Invalid_volume.png" style="width: 1423.0px; height: 218.0px;" /></a>
+<p class="caption"><span class="caption-text">提示Invalid volume</span></p>
+</div>
+<p>由于镜像可以上传，但是无法创建volume，暂时判断是volume和ceph配置的问题。</p>
+</div>
+<div class="section" id="nova-ceph-rbd">
+<h2><a class="toc-backref" href="#id14">5.2. Nova 绑定 Ceph rbd 块设备配置</a><a class="headerlink" href="#nova-ceph-rbd" title="Permalink to this headline">¶</a></h2>
+<div class="admonition important">
+<p class="first admonition-title">Important</p>
+<p>为了绑定 Cinder 设备（块设备或者启动卷），必须告诉 Nova（和 libvirt）
+用户和 UUID。libvirt 在与 Ceph 集群进行连接和认证的时候提供这个用户。</p>
+<p>这两个配置项同样用于 Nova 的后端。</p>
+<div class="last highlight-default"><div class="highlight"><pre><span></span>rbd_user = cinder
+rbd_secret_uuid = `uuidgen`
+</pre></div>
+</div>
+</div>
+<div class="figure align-center" id="id10">
+<a class="reference internal image-reference" href="../_images/rbd_secret_uuid.png"><img alt="../_images/rbd_secret_uuid.png" src="../_images/rbd_secret_uuid.png" style="width: 938.0px; height: 265.0px;" /></a>
+<p class="caption"><span class="caption-text">查看 nova 和 cinder 的 rbd_secret_uuid配置, 果然不一样</span></p>
+</div>
+<p>至此，问题已经初步定位出来了，然后把nova.conf 和 cinder.conf 的rbd_secret_uuid改为一致，并重启服务.</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span>cd /usr/bin/
+for i in cinder*; do service $i restart;done
+for i in nova*; do service $i restart;done
+for i in glance*; do service $i restart;done
+</pre></div>
+</div>
+<div class="figure align-center" id="id11">
+<a class="reference internal image-reference" href="../_images/lance_instance_success.png"><img alt="../_images/lance_instance_success.png" src="../_images/lance_instance_success.png" style="width: 1230.0px; height: 181.0px;" /></a>
+<p class="caption"><span class="caption-text">成功创建虚拟机</span></p>
+</div>
+</div>
+<hr class="docutils" />
+<div class="section" id="id3">
+<h2><a class="toc-backref" href="#id15">5.3. 参考</a><a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h2>
+<table class="docutils footnote" frame="void" id="id4" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label">[1]</td><td><a class="reference external" href="http://my.oschina.net/JerryBaby/blog/376580#OSC_h3_10">http://my.oschina.net/JerryBaby/blog/376580#OSC_h3_10</a></td></tr>
+</tbody>
+</table>
+<table class="docutils footnote" frame="void" id="id5" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label">[2]</td><td><a class="reference external" href="http://docs.ceph.org.cn/rbd/rbd-openstack/">http://docs.ceph.org.cn/rbd/rbd-openstack/</a></td></tr>
+</tbody>
+</table>
+</div>
+</div>
+
+
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../others/index.html" class="btn btn-neutral float-right" title="附录" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="centos_vm_netconf.html" class="btn btn-neutral" title="4. Centos虚拟机联网配置" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2016, chenshiqiang.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'0.1',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

@@ -110,6 +110,7 @@
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="deploy_synopsis.html">3. openstack 实践指南</a></li>
+<li class="toctree-l2"><a class="reference internal" href="centos_vm_netconf.html">4. Centos虚拟机联网配置</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../others/index.html">附录</a></li>
@@ -160,50 +161,50 @@
            <div itemprop="articleBody">
             
   <div class="section" id="openstack">
-<span id="image-guide"></span><h1><a class="toc-backref" href="#id21">2. OpenStack镜像制作</a><a class="headerlink" href="#openstack" title="Permalink to this headline">¶</a></h1>
+<span id="image-guide"></span><h1><a class="toc-backref" href="#id23">2. OpenStack镜像制作</a><a class="headerlink" href="#openstack" title="Permalink to this headline">¶</a></h1>
 <div class="contents topic" id="id1">
 <p class="topic-title first">目录</p>
 <ul class="simple">
-<li><a class="reference internal" href="#openstack" id="id21">OpenStack镜像制作</a><ul>
-<li><a class="reference internal" href="#ubuntu" id="id22">Ubuntu镜像</a><ul>
-<li><a class="reference internal" href="#img" id="id23">创建img文件</a></li>
-<li><a class="reference internal" href="#id2" id="id24">启动安装</a></li>
-<li><a class="reference internal" href="#id3" id="id25">安装完成重新启动虚拟机</a></li>
-<li><a class="reference internal" href="#id4" id="id26">镜像格式转换</a></li>
-<li><a class="reference internal" href="#id5" id="id27">上传镜像</a></li>
+<li><a class="reference internal" href="#openstack" id="id23">OpenStack镜像制作</a><ul>
+<li><a class="reference internal" href="#ubuntu" id="id24">Ubuntu镜像</a><ul>
+<li><a class="reference internal" href="#img" id="id25">创建img文件</a></li>
+<li><a class="reference internal" href="#id2" id="id26">启动安装</a></li>
+<li><a class="reference internal" href="#id3" id="id27">安装完成重新启动虚拟机</a></li>
+<li><a class="reference internal" href="#id4" id="id28">镜像格式转换</a></li>
+<li><a class="reference internal" href="#id5" id="id29">上传镜像</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#cirros" id="id28">cirros镜像</a></li>
-<li><a class="reference internal" href="#centos" id="id29">centos镜像</a></li>
-<li><a class="reference internal" href="#win7" id="id30">win7镜像</a><ul>
-<li><a class="reference internal" href="#id6" id="id31">准备工作</a><ul>
-<li><a class="reference internal" href="#win-iso-winiso" id="id32">下载win.iso,或者准备win安装iso文件</a></li>
-<li><a class="reference internal" href="#id7" id="id33">下载驱动</a></li>
+<li><a class="reference internal" href="#cirros" id="id30">cirros镜像</a></li>
+<li><a class="reference internal" href="#centos" id="id31">centos镜像</a></li>
+<li><a class="reference internal" href="#win7" id="id32">win7镜像</a><ul>
+<li><a class="reference internal" href="#id6" id="id33">准备工作</a><ul>
+<li><a class="reference internal" href="#win-iso-winiso" id="id34">下载win.iso,或者准备win安装iso文件</a></li>
+<li><a class="reference internal" href="#id7" id="id35">下载驱动</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#id8" id="id34">启动安装</a></li>
-<li><a class="reference internal" href="#id9" id="id35">安装网卡驱动</a></li>
-<li><a class="reference internal" href="#id10" id="id36">镜像格式转换</a></li>
-<li><a class="reference internal" href="#id11" id="id37">上传镜像</a></li>
+<li><a class="reference internal" href="#id8" id="id36">启动安装</a></li>
+<li><a class="reference internal" href="#id9" id="id37">安装网卡驱动</a></li>
+<li><a class="reference internal" href="#id10" id="id38">镜像格式转换</a></li>
+<li><a class="reference internal" href="#id11" id="id39">上传镜像</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#id12" id="id38">参考</a></li>
+<li><a class="reference internal" href="#id12" id="id40">参考</a></li>
 </ul>
 </li>
 </ul>
 </div>
 <hr class="docutils" />
 <div class="section" id="ubuntu">
-<h2><a class="toc-backref" href="#id22">2.1. Ubuntu镜像</a><a class="headerlink" href="#ubuntu" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id24">2.1. Ubuntu镜像</a><a class="headerlink" href="#ubuntu" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="img">
-<h3><a class="toc-backref" href="#id23">2.1.1. 创建img文件</a><a class="headerlink" href="#img" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id25">2.1.1. 创建img文件</a><a class="headerlink" href="#img" title="Permalink to this headline">¶</a></h3>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="c1">#假如kvm-img命令提示找不到，可以使用qemu-img命令</span>
 <span class="n">kvm</span><span class="o">-</span><span class="n">img</span> <span class="n">create</span> <span class="o">-</span><span class="n">f</span> <span class="n">raw</span> <span class="n">ubuntu</span><span class="o">.</span><span class="n">img</span> <span class="mi">10</span><span class="n">G</span>
 </pre></div>
 </div>
 </div>
 <div class="section" id="id2">
-<h3><a class="toc-backref" href="#id24">2.1.2. 启动安装</a><a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id26">2.1.2. 启动安装</a><a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h3>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">kvm</span> <span class="o">-</span><span class="n">m</span> <span class="mi">512</span> <span class="o">-</span><span class="n">cdrom</span> <span class="n">ubuntu</span><span class="o">-</span><span class="mf">12.04</span><span class="o">-</span><span class="n">server</span><span class="o">-</span><span class="n">amd64</span><span class="o">.</span><span class="n">iso</span> <span class="o">-</span><span class="n">drive</span> <span class="n">file</span><span class="o">=</span><span class="n">ubuntu</span><span class="o">.</span><span class="n">img</span> <span class="o">-</span><span class="n">boot</span> <span class="n">d</span> <span class="o">-</span><span class="n">nographic</span> <span class="o">-</span><span class="n">vnc</span> <span class="p">:</span><span class="mi">0</span>
 </pre></div>
 </div>
@@ -215,19 +216,19 @@
 <li>另外ubuntu 安装成功后，按下continue会重新安装虚拟机，可以使用kill命令杀死该进程，然后执行后面提到的虚拟机重启命令即可</li>
 </ul>
 </div>
-<div class="figure align-center" id="id18">
+<div class="figure align-center" id="id20">
 <img alt="../_images/ubuntu_install_complete.png" src="../_images/ubuntu_install_complete.png" />
 <p class="caption"><span class="caption-text">图：ubuntu完成安装</span></p>
 </div>
 </div>
 <div class="section" id="id3">
-<h3><a class="toc-backref" href="#id25">2.1.3. 安装完成重新启动虚拟机</a><a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id27">2.1.3. 安装完成重新启动虚拟机</a><a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h3>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">kvm</span> <span class="o">-</span><span class="n">m</span> <span class="mi">512</span> <span class="o">-</span><span class="n">drive</span> <span class="n">file</span><span class="o">=</span><span class="n">ubuntu</span><span class="o">.</span><span class="n">img</span> <span class="o">-</span><span class="n">boot</span> <span class="n">c</span> <span class="o">-</span><span class="n">nographic</span> <span class="o">-</span><span class="n">vnc</span> <span class="p">:</span><span class="mi">0</span>
 </pre></div>
 </div>
 </div>
 <div class="section" id="id4">
-<h3><a class="toc-backref" href="#id26">2.1.4. 镜像格式转换</a><a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id28">2.1.4. 镜像格式转换</a><a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h3>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">qemu</span><span class="o">-</span><span class="n">img</span> <span class="n">convert</span> <span class="o">-</span><span class="n">f</span> <span class="n">raw</span> <span class="o">-</span><span class="n">O</span> <span class="n">qcow2</span> <span class="o">./</span><span class="n">ubuntu</span><span class="o">.</span><span class="n">img</span> <span class="o">./</span><span class="n">ubuntu</span><span class="o">.</span><span class="n">qcow2</span>
 </pre></div>
 </div>
@@ -237,7 +238,7 @@
 </div>
 </div>
 <div class="section" id="id5">
-<h3><a class="toc-backref" href="#id27">2.1.5. 上传镜像</a><a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id29">2.1.5. 上传镜像</a><a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h3>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="c1"># v2.3版本</span>
 <span class="n">glance</span> <span class="n">image</span><span class="o">-</span><span class="n">create</span> <span class="o">--</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;ubuntu&quot;</span> <span class="o">--</span><span class="ow">is</span><span class="o">-</span><span class="n">public</span><span class="o">=</span><span class="n">true</span> <span class="o">--</span><span class="n">container</span><span class="o">-</span><span class="nb">format</span><span class="o">=</span><span class="n">ovf</span> <span class="o">--</span><span class="n">disk</span><span class="o">-</span><span class="nb">format</span><span class="o">=</span><span class="n">qcow2</span> <span class="o">&lt;</span> <span class="n">ubuntu</span><span class="o">.</span><span class="n">qcow2</span>
 <span class="c1"># v2.5版本</span>
@@ -251,7 +252,7 @@
 </div>
 </div>
 <div class="section" id="cirros">
-<h2><a class="toc-backref" href="#id28">2.2. cirros镜像</a><a class="headerlink" href="#cirros" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id30">2.2. cirros镜像</a><a class="headerlink" href="#cirros" title="Permalink to this headline">¶</a></h2>
 <p>使用以下命令创建并上传cirros镜像:</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">glance</span> <span class="n">image</span><span class="o">-</span><span class="n">create</span> <span class="o">--</span><span class="n">name</span> <span class="n">cirros</span><span class="o">-</span><span class="n">x86_64</span> <span class="o">--</span><span class="ow">is</span><span class="o">-</span><span class="n">public</span> <span class="kc">True</span> <span class="o">--</span><span class="n">disk</span><span class="o">-</span><span class="nb">format</span> <span class="n">raw</span> <span class="o">--</span><span class="n">container</span><span class="o">-</span><span class="nb">format</span> <span class="n">ovf</span> <span class="o">--</span><span class="n">file</span> <span class="n">cirros</span><span class="o">-</span><span class="mf">0.3</span><span class="o">.</span><span class="mi">1</span><span class="o">-</span><span class="n">x86_64</span><span class="o">-</span><span class="n">disk</span><span class="o">.</span><span class="n">img</span>
 </pre></div>
@@ -269,13 +270,13 @@
 <p class="last">更新：cirros镜像是直接可启动的操作系统文件，而不是安装文件，不需要安装，直接上传即可, 所以安装时提示该错误！</p>
 </div>
 </div>
-<div class="figure align-center" id="id19">
+<div class="figure align-center" id="id21">
 <img alt="../_images/cirros_no_bootable.png" src="../_images/cirros_no_bootable.png" />
 <p class="caption"><span class="caption-text">图：cirros镜像无法启动</span></p>
 </div>
 </div>
 <div class="section" id="centos">
-<h2><a class="toc-backref" href="#id29">2.3. centos镜像</a><a class="headerlink" href="#centos" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id31">2.3. centos镜像</a><a class="headerlink" href="#centos" title="Permalink to this headline">¶</a></h2>
 <p>Centos镜像的制作过程与ubuntu相同，下面直接贴出操作命令：</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">qemu</span><span class="o">-</span><span class="n">img</span> <span class="n">create</span> <span class="o">-</span><span class="n">f</span> <span class="n">raw</span> <span class="n">centos</span><span class="o">-</span><span class="mf">1.</span><span class="n">img</span> <span class="mi">10</span><span class="n">G</span>
 <span class="n">kvm</span> <span class="o">-</span><span class="n">m</span> <span class="mi">512</span> <span class="o">-</span><span class="n">cdrom</span> <span class="n">CentOS</span><span class="o">-</span><span class="mf">6.5</span><span class="o">-</span><span class="n">x86_64</span><span class="o">-</span><span class="nb">bin</span><span class="o">-</span><span class="n">DVD1</span><span class="o">.</span><span class="n">iso</span> <span class="o">-</span><span class="n">drive</span> <span class="n">file</span><span class="o">=</span><span class="n">centos</span><span class="o">-</span><span class="mf">1.</span><span class="n">img</span> <span class="o">-</span><span class="n">boot</span> <span class="n">d</span> <span class="o">-</span><span class="n">nographic</span> <span class="o">-</span><span class="n">vnc</span> <span class="p">:</span><span class="mi">2</span>
@@ -289,21 +290,21 @@
 <span class="n">glance</span> <span class="n">image</span><span class="o">-</span><span class="n">create</span> <span class="o">--</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;centos_6.5&quot;</span> <span class="o">--</span><span class="ow">is</span><span class="o">-</span><span class="n">public</span><span class="o">=</span><span class="n">true</span> <span class="o">--</span><span class="n">container</span><span class="o">-</span><span class="nb">format</span><span class="o">=</span><span class="n">ovf</span> <span class="o">--</span><span class="n">disk</span><span class="o">-</span><span class="nb">format</span><span class="o">=</span><span class="n">qcow2</span> <span class="o">&lt;</span> <span class="n">centos</span><span class="o">-</span><span class="mf">1.</span><span class="n">qcow2</span>
 </pre></div>
 </div>
-<div class="figure align-center" id="id20">
+<div class="figure align-center" id="id22">
 <img alt="../_images/upload_centos_img.png" src="../_images/upload_centos_img.png" />
 <p class="caption"><span class="caption-text">图：centos镜像成功上传.</span></p>
 </div>
 </div>
 <div class="section" id="win7">
-<h2><a class="toc-backref" href="#id30">2.4. win7镜像</a><a class="headerlink" href="#win7" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id32">2.4. win7镜像</a><a class="headerlink" href="#win7" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="id6">
-<h3><a class="toc-backref" href="#id31">2.4.1. 准备工作</a><a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id33">2.4.1. 准备工作</a><a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h3>
 <div class="section" id="win-iso-winiso">
-<h4><a class="toc-backref" href="#id32">下载win.iso,或者准备win安装iso文件</a><a class="headerlink" href="#win-iso-winiso" title="Permalink to this headline">¶</a></h4>
+<h4><a class="toc-backref" href="#id34">下载win.iso,或者准备win安装iso文件</a><a class="headerlink" href="#win-iso-winiso" title="Permalink to this headline">¶</a></h4>
 <p>可以从https://www.microsoft.com/en-us/evalcenter/evaluate-windows-server-2012网站下载。</p>
 </div>
 <div class="section" id="id7">
-<h4><a class="toc-backref" href="#id33">下载驱动</a><a class="headerlink" href="#id7" title="Permalink to this headline">¶</a></h4>
+<h4><a class="toc-backref" href="#id35">下载驱动</a><a class="headerlink" href="#id7" title="Permalink to this headline">¶</a></h4>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">wget</span> <span class="o">-</span><span class="n">c</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">fedorapeople</span><span class="o">.</span><span class="n">org</span><span class="o">/</span><span class="n">groups</span><span class="o">/</span><span class="n">virt</span><span class="o">/</span><span class="n">virtio</span><span class="o">-</span><span class="n">win</span><span class="o">/</span><span class="n">direct</span><span class="o">-</span><span class="n">downloads</span><span class="o">/</span><span class="n">stable</span><span class="o">-</span><span class="n">virtio</span><span class="o">/</span><span class="n">virtio</span><span class="o">-</span><span class="n">win</span><span class="o">.</span><span class="n">iso</span>
 <span class="n">wget</span> <span class="o">-</span><span class="n">c</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">fedorapeople</span><span class="o">.</span><span class="n">org</span><span class="o">/</span><span class="n">groups</span><span class="o">/</span><span class="n">virt</span><span class="o">/</span><span class="n">virtio</span><span class="o">-</span><span class="n">win</span><span class="o">/</span><span class="n">direct</span><span class="o">-</span><span class="n">downloads</span><span class="o">/</span><span class="n">stable</span><span class="o">-</span><span class="n">virtio</span><span class="o">/</span><span class="n">virtio</span><span class="o">-</span><span class="n">win_amd64</span><span class="o">.</span><span class="n">vfd</span>
 </pre></div>
@@ -311,7 +312,7 @@
 </div>
 </div>
 <div class="section" id="id8">
-<h3><a class="toc-backref" href="#id34">2.4.2. 启动安装</a><a class="headerlink" href="#id8" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id36">2.4.2. 启动安装</a><a class="headerlink" href="#id8" title="Permalink to this headline">¶</a></h3>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">kvm</span> <span class="o">-</span><span class="n">m</span> <span class="mi">1024</span> <span class="o">-</span><span class="n">cdrom</span> <span class="n">win7</span><span class="o">.</span><span class="n">iso</span> <span class="o">-</span><span class="n">drive</span> <span class="n">file</span><span class="o">=</span><span class="n">win7</span><span class="o">.</span><span class="n">qcow2</span><span class="p">,</span><span class="k">if</span><span class="o">=</span><span class="n">virtio</span><span class="p">,</span><span class="n">boot</span><span class="o">=</span><span class="n">on</span> <span class="o">-</span><span class="n">fda</span> <span class="n">virtio</span><span class="o">-</span><span class="n">win</span><span class="o">-</span><span class="mf">1.1</span><span class="o">.</span><span class="mf">16.</span><span class="n">vfd</span> <span class="o">-</span><span class="n">boot</span> <span class="n">d</span> <span class="o">-</span><span class="n">nographic</span> <span class="o">-</span><span class="n">vnc</span> <span class="p">:</span><span class="mi">0</span>
 </pre></div>
 </div>
@@ -322,7 +323,7 @@
 </div>
 </div>
 <div class="section" id="id9">
-<h3><a class="toc-backref" href="#id35">2.4.3. 安装网卡驱动</a><a class="headerlink" href="#id9" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id37">2.4.3. 安装网卡驱动</a><a class="headerlink" href="#id9" title="Permalink to this headline">¶</a></h3>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">kvm</span> <span class="o">-</span><span class="n">m</span> <span class="mi">1024</span> <span class="o">-</span><span class="n">cdrom</span> <span class="n">virtio</span><span class="o">-</span><span class="n">win</span><span class="o">-</span><span class="mf">0.1</span><span class="o">-</span><span class="mf">59.</span><span class="n">iso</span> <span class="o">-</span><span class="n">drive</span> <span class="n">file</span><span class="o">=</span><span class="n">win7</span><span class="o">.</span><span class="n">qcow2</span><span class="p">,</span><span class="k">if</span><span class="o">=</span><span class="n">virtio</span><span class="p">,</span><span class="n">boot</span><span class="o">=</span><span class="n">on</span> <span class="o">-</span><span class="n">net</span> <span class="n">nic</span><span class="p">,</span><span class="n">model</span><span class="o">=</span><span class="n">virtio</span> <span class="o">-</span><span class="n">boot</span> <span class="n">d</span> <span class="o">-</span><span class="n">nographic</span> <span class="o">-</span><span class="n">net</span> <span class="n">user</span> <span class="o">-</span><span class="n">usb</span> <span class="o">-</span><span class="n">usbdevice</span> <span class="n">tablet</span> <span class="o">-</span><span class="n">vnc</span> <span class="p">:</span><span class="mi">0</span>
 </pre></div>
 </div>
@@ -332,16 +333,16 @@
 </div>
 </div>
 <div class="section" id="id10">
-<h3><a class="toc-backref" href="#id36">2.4.4. 镜像格式转换</a><a class="headerlink" href="#id10" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id38">2.4.4. 镜像格式转换</a><a class="headerlink" href="#id10" title="Permalink to this headline">¶</a></h3>
 <p>同上</p>
 </div>
 <div class="section" id="id11">
-<h3><a class="toc-backref" href="#id37">2.4.5. 上传镜像</a><a class="headerlink" href="#id11" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id39">2.4.5. 上传镜像</a><a class="headerlink" href="#id11" title="Permalink to this headline">¶</a></h3>
 <p>同上</p>
 </div>
 </div>
 <div class="section" id="id12">
-<h2><a class="toc-backref" href="#id38">2.5. 参考</a><a class="headerlink" href="#id12" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id40">2.5. 参考</a><a class="headerlink" href="#id12" title="Permalink to this headline">¶</a></h2>
 <table class="docutils footnote" frame="void" id="id13" rules="none">
 <colgroup><col class="label" /><col /></colgroup>
 <tbody valign="top">
@@ -370,6 +371,18 @@
 <colgroup><col class="label" /><col /></colgroup>
 <tbody valign="top">
 <tr><td class="label">[5]</td><td><a class="reference external" href="http://docwiki.cisco.com/w/index.php?title=OpenStack:_Storing_Images_In_Glance&amp;oldid=56483">http://docwiki.cisco.com/w/index.php?title=OpenStack:_Storing_Images_In_Glance&amp;oldid=56483</a></td></tr>
+</tbody>
+</table>
+<table class="docutils footnote" frame="void" id="id18" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label">[6]</td><td><a class="reference external" href="http://www.aboutyun.com/thread-17125-1-1.html">http://www.aboutyun.com/thread-17125-1-1.html</a></td></tr>
+</tbody>
+</table>
+<table class="docutils footnote" frame="void" id="id19" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label">[7]</td><td><a class="reference external" href="http://www.updays.cn/archives/140">http://www.updays.cn/archives/140</a></td></tr>
 </tbody>
 </table>
 </div>

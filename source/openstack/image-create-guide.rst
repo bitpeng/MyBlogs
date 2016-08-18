@@ -195,3 +195,5 @@ win7镜像
 .. [#] 《Openstack kvm win7镜像制作》
 .. [#] 《OpenStack虚拟机镜像制作指南》,官方文档
 .. [#] http://docwiki.cisco.com/w/index.php?title=OpenStack:_Storing_Images_In_Glance&oldid=56483
+.. [#] http://www.aboutyun.com/thread-17125-1-1.html
+.. [#] http://www.updays.cn/archives/140

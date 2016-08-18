@@ -12,3 +12,4 @@ Hack Linux
     git_cmd
     samba_config
     use_man_page
+    Linux_lvm

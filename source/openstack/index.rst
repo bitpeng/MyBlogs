@@ -16,6 +16,7 @@ Hack OpenStack
     image-create-guide
     deploy_synopsis
     centos_vm_netconf
+    lanch_instance_failure
 
 
 ..  sphinx_doc
