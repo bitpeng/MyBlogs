@@ -90,6 +90,7 @@
 <li class="toctree-l2"><a class="reference internal" href="deploy_synopsis.html">3. openstack 实践指南</a></li>
 <li class="toctree-l2"><a class="reference internal" href="centos_vm_netconf.html">4. Centos虚拟机联网配置</a></li>
 <li class="toctree-l2"><a class="reference internal" href="lanch_instance_failure.html">5. OpenStack 启动虚拟机失败分析</a></li>
+<li class="toctree-l2"><a class="reference internal" href="rabbitmq_doc.html">6. rabbitmq教程</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../others/index.html">附录</a></li>
@@ -149,6 +150,12 @@
 <li class="toctree-l2"><a class="reference internal" href="horizon_develop.html#id2">1.1. Horizon结构</a></li>
 <li class="toctree-l2"><a class="reference internal" href="horizon_develop.html#panel">1.2. 快速生成panel</a></li>
 <li class="toctree-l2"><a class="reference internal" href="horizon_develop.html#dashboard">1.3. dashboard汉化</a></li>
+<li class="toctree-l2"><a class="reference internal" href="horizon_develop.html#manage-py">1.4. manage.py文件</a></li>
+<li class="toctree-l2"><a class="reference internal" href="horizon_develop.html#id3">1.5. 调试</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="horizon_develop.html#id4">1.5.1. 前端调试</a></li>
+<li class="toctree-l3"><a class="reference internal" href="horizon_develop.html#id5">1.5.2. 后端调试</a></li>
+</ul>
+</li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="image-create-guide.html">2. OpenStack镜像制作</a><ul>
@@ -207,6 +214,57 @@
 <li class="toctree-l2"><a class="reference internal" href="lanch_instance_failure.html#id2">5.1. 问题排查</a></li>
 <li class="toctree-l2"><a class="reference internal" href="lanch_instance_failure.html#nova-ceph-rbd">5.2. Nova 绑定 Ceph rbd 块设备配置</a></li>
 <li class="toctree-l2"><a class="reference internal" href="lanch_instance_failure.html#id3">5.3. 参考</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="rabbitmq_doc.html">6. rabbitmq教程</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="rabbitmq_doc.html#id2">6.1. 先决条件</a></li>
+<li class="toctree-l2"><a class="reference internal" href="rabbitmq_doc.html#id3">6.2. 获取帮助</a></li>
+<li class="toctree-l2"><a class="reference internal" href="rabbitmq_doc.html#hello-world">6.3. Hello, world</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="rabbitmq_doc.html#id4">6.3.1. Hello World</a></li>
+<li class="toctree-l3"><a class="reference internal" href="rabbitmq_doc.html#sending">6.3.2. Sending</a></li>
+<li class="toctree-l3"><a class="reference internal" href="rabbitmq_doc.html#receiving">6.3.3. Receiving</a></li>
+<li class="toctree-l3"><a class="reference internal" href="rabbitmq_doc.html#putting-it-together">6.3.4. Putting it together</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="rabbitmq_doc.html#work-queues">6.4. Work queues</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="rabbitmq_doc.html#id5">6.4.1. Work Queues</a></li>
+<li class="toctree-l3"><a class="reference internal" href="rabbitmq_doc.html#prepaartions">6.4.2. Prepaartions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="rabbitmq_doc.html#round-robin-dispatching">6.4.3. Round-robin dispatching</a></li>
+<li class="toctree-l3"><a class="reference internal" href="rabbitmq_doc.html#message-acknowledgment">6.4.4. Message acknowledgment</a></li>
+<li class="toctree-l3"><a class="reference internal" href="rabbitmq_doc.html#message-durability">6.4.5. Message durability</a></li>
+<li class="toctree-l3"><a class="reference internal" href="rabbitmq_doc.html#fair-dispatch">6.4.6. Fair dispatch</a></li>
+<li class="toctree-l3"><a class="reference internal" href="rabbitmq_doc.html#putting-it-all-together">6.4.7. Putting it all together</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="rabbitmq_doc.html#publish-subscribe">6.5. &nbsp;Publish/Subscribe</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="rabbitmq_doc.html#exchanges">6.5.1. Exchanges</a></li>
+<li class="toctree-l3"><a class="reference internal" href="rabbitmq_doc.html#temporary-queues">6.5.2. Temporary queues</a></li>
+<li class="toctree-l3"><a class="reference internal" href="rabbitmq_doc.html#bindings">6.5.3. Bindings</a></li>
+<li class="toctree-l3"><a class="reference internal" href="rabbitmq_doc.html#id6">6.5.4. Putting it all together</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="rabbitmq_doc.html#router">6.6. Router</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="rabbitmq_doc.html#id7">6.6.1. Bindings</a></li>
+<li class="toctree-l3"><a class="reference internal" href="rabbitmq_doc.html#direct-exchange">6.6.2. Direct exchange</a></li>
+<li class="toctree-l3"><a class="reference internal" href="rabbitmq_doc.html#multiple-bindings">6.6.3. Multiple bindings</a></li>
+<li class="toctree-l3"><a class="reference internal" href="rabbitmq_doc.html#emitting-logs">6.6.4. Emitting logs</a></li>
+<li class="toctree-l3"><a class="reference internal" href="rabbitmq_doc.html#subscribing">6.6.5. Subscribing</a></li>
+<li class="toctree-l3"><a class="reference internal" href="rabbitmq_doc.html#id8">6.6.6. Putting it all together</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="rabbitmq_doc.html#topics">6.7. Topics</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="rabbitmq_doc.html#topic-exchange">6.7.1. Topic exchange</a></li>
+<li class="toctree-l3"><a class="reference internal" href="rabbitmq_doc.html#id9">6.7.2. Topic Exchange</a></li>
+<li class="toctree-l3"><a class="reference internal" href="rabbitmq_doc.html#id10">6.7.3. Putting it all together</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="rabbitmq_doc.html#remote-procedure-call-rpc">6.8. Remote procedure call (RPC)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="rabbitmq_doc.html#client-interface">6.8.1. Client interface</a></li>
+<li class="toctree-l3"><a class="reference internal" href="rabbitmq_doc.html#id11">6.8.2. 总结</a></li>
+<li class="toctree-l3"><a class="reference internal" href="rabbitmq_doc.html#id12">6.8.3. Putting it all together</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="rabbitmq_doc.html#id13">6.9. 参考</a></li>
 </ul>
 </li>
 </ul>

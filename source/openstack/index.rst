@@ -17,6 +17,7 @@ OpenStack Note
     deploy_synopsis
     centos_vm_netconf
     lanch_instance_failure
+    rabbitmq_doc
 
 
 ..  sphinx_doc

@@ -43,8 +43,6 @@ Horizon结构
 
 
 
-
-
 快速生成panel
 ========================
 
@@ -60,10 +58,10 @@ OpenStak horizon为我们提供两个命令startpanel和startdash，供我们快
 该命令运行成功后，会在admin_traffic_monitor目录下生产一个test_panel目录，包含该panel的所有信息。
 然后进行以下操作：
 
-* 编辑admin_traffic_monitor的dashboard.py文件，在panel属性中加上‘test_panel’元素，
-* 编辑test_panel/panel.py文件， 将dashboard.Admin_Traffic_Monitor.register(Test_Panel)
+- 编辑admin_traffic_monitor的dashboard.py文件，在panel属性中加上‘test_panel’元素，
+- 编辑test_panel/panel.py文件， 将dashboard.Admin_Traffic_Monitor.register(Test_Panel)
   中的Admin_Traffic_Monitor更改成和dashboard.py中类名一致。
-* 重启apache2，刷新页面，就可以看到效果。
+- 重启apache2，刷新页面，就可以看到效果。
 
 .. figure:: /_static/images/start_panel.png
    :align: center
@@ -91,6 +89,32 @@ dashboard汉化
 
    图：dashboard元素汉化
 
+
+
+manage.py文件
+=============
+
+horizon项目是基于django的，而manage.py文件是django项目的一个重要文件，可以用来生成模型，自省模型，
+还可以用来开启django环境的命令行。
+
+
+
+调试
+=====
+
+前端调试
++++++++++
+
+对前端开发不是太熟，在dashboard开发中，我使用的是firebug插件，配合在js文件中使用console打印信息，
+用来跟踪变量，查看变量状态等。
+
+
+后端调试
++++++++++
+
+horizon项目中，对于前端发起的http请求，有时要跟踪跟踪后端的处理流，查看变量值等。由于horizon项目
+使用apache2进行部署，apache会把后端的操作记录在相关的日志中，因此我们可以使用log库，配合以下命令，
+跟踪变量状态；但是对于处理流程分析，我目前还没有发现好的方法，都是根据代码逻辑进行分析。
 
 
 
