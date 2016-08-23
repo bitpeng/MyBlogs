@@ -129,6 +129,9 @@ Centos镜像的制作过程与ubuntu相同，下面直接贴出操作命令：
    图：centos镜像成功上传.
 
 
+.. tip::
+    和ubuntu虚拟机不同，ubuntu启动后可以通过dhcp自动联网，但是centos虚拟机需要经过一番配置才可以联网
+    。详情请参考 :ref:`centos虚拟机联网配置 <centos_vm_netconfig>`  。
 
 
 
@@ -160,8 +163,37 @@ win7镜像
 
 .. tip::
 
-    启动安装命令成功后，使用vncviewer连接，然后手动加载驱动程序。
-    手动加载方式为：自动以(高级)——加载驱动程序——浏览——软盘驱动器——i387——win7——下一步；即可。
+    - 启动安装命令成功后，使用vncviewer连接，然后手动加载驱动程序。 
+      手动加载方式为：自定义(高级)——加载驱动程序——浏览——软盘驱动器——i387——win7——下一步；即可。
+
+    - 另外需要注意的是：安装32位时，选择i386；安装64位时，选择amd64. 并且网卡驱动也对应上！
+
+    - 安装过程中Windows会重启导致不断安装，可以用ps 命令杀死进程，然后使用下面的命令加载网卡驱动方式启动即可。
+
+
+.. figure:: /_static/images/win_driver-1.png
+   :align: center
+
+.. figure:: /_static/images/win_driver-2.png
+   :align: center
+
+.. figure:: /_static/images/win_driver-3.png
+   :align: center
+
+.. figure:: /_static/images/win_driver-4.png
+   :align: center
+
+.. figure:: /_static/images/win_driver-5.png
+   :align: center
+
+.. figure:: /_static/images/win_driver-6.png
+   :align: center
+
+**开启远程桌面：**
+
+.. figure:: /_static/images/open_remote_desktop.png
+   :align: center
+
 
 安装网卡驱动
 ~~~~~~~~~~~~
@@ -171,18 +203,52 @@ win7镜像
     kvm -m 1024 -cdrom virtio-win-0.1-59.iso -drive file=win7.qcow2,if=virtio,boot=on -net nic,model=virtio -boot d -nographic -net user -usb -usbdevice tablet -vnc :0
 
 .. error::
+    update: 2016.08.10
 
     这一步我没有安装成功，问题不知道出在哪来。
+
+.. tip::
+    update：2016.08.23
+
+    该步骤已经成功完成，网卡驱动程序目录见下图。
+
+    .. figure:: /_static/images/update_nic-1.png
+       :align: center
+
+    .. figure:: /_static/images/update_nic-2.png
+       :align: center
+
+    .. figure:: /_static/images/update_win_nic.png
+       :align: center
+
+       图：更新网卡驱动目录
+
+    .. figure:: /_static/images/update_nic-3.png
+       :align: center
+
+
 
 镜像格式转换
 ~~~~~~~~~~~~
 
-同上
+同上(ceph 作为后端存储的不用转换镜像格式)。
 
 上传镜像
 ~~~~~~~~
 
 同上
+
+
+汇总
+~~~~~~~~
+
+::
+
+    qemu-img create -f raw win7.raw 10G
+    kvm -m 1024 -cdrom cn_win7_x64.iso -drive file=win7.raw,if=virtio,boot=on -fda virtio-win-1.7.4_amd64.vfd -boot d -nographic -vnc :0
+    kvm -m 1024 -cdrom virtio-win-0.1.102.iso -drive file=win7.raw,if=virtio,boot=on -net nic,model=virtio -boot d -nographic -net user -usb -usbdevice tablet -vnc :0
+    source /root/openstackrc
+    glance image-create --name="win7" --is-public=true --container-format=ovf --disk-format=raw < win7.raw
 
 
 

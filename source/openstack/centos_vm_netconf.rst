@@ -1,4 +1,4 @@
-.. _centos_vm_netconf:
+.. _centos_vm_netconfig:
 
 
 ########################

@@ -18,6 +18,7 @@ OpenStack Note
     centos_vm_netconf
     lanch_instance_failure
     rabbitmq_doc
+    os_cmd
 
 
 ..  sphinx_doc
