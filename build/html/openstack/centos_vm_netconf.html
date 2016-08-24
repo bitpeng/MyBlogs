@@ -90,8 +90,8 @@
 <li class="toctree-l2"><a class="reference internal" href="image-create-guide.html">2. OpenStack镜像制作</a></li>
 <li class="toctree-l2"><a class="reference internal" href="deploy_synopsis.html">3. openstack 实践指南</a></li>
 <li class="toctree-l2 current"><a class="current reference internal" href="#">4. Centos虚拟机联网配置</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#id2">4.1. 查看网络配置</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#id3">4.1.1. 问题排查</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id2">4.1. 问题排查</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#id3">4.1.1. 查看网络配置</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#id4">4.1.2. 增加虚拟网卡配置</a></li>
 </ul>
 </li>
@@ -101,6 +101,7 @@
 </li>
 <li class="toctree-l2"><a class="reference internal" href="lanch_instance_failure.html">5. OpenStack 启动虚拟机失败分析</a></li>
 <li class="toctree-l2"><a class="reference internal" href="rabbitmq_doc.html">6. rabbitmq教程</a></li>
+<li class="toctree-l2"><a class="reference internal" href="os_cmd.html">7. openstack命令汇总</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../others/index.html">附录</a></li>
@@ -160,8 +161,8 @@
 <p class="topic-title first">目录</p>
 <ul class="simple">
 <li><a class="reference internal" href="#centos" id="id19">Centos虚拟机联网配置</a><ul>
-<li><a class="reference internal" href="#id2" id="id20">查看网络配置</a><ul>
-<li><a class="reference internal" href="#id3" id="id21">问题排查</a></li>
+<li><a class="reference internal" href="#id2" id="id20">问题排查</a><ul>
+<li><a class="reference internal" href="#id3" id="id21">查看网络配置</a></li>
 <li><a class="reference internal" href="#id4" id="id22">增加虚拟网卡配置</a></li>
 </ul>
 </li>
@@ -173,9 +174,9 @@
 </div>
 <hr class="docutils" />
 <div class="section" id="id2">
-<h2><a class="toc-backref" href="#id20">4.1. 查看网络配置</a><a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id20">4.1. 问题排查</a><a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="id3">
-<h3><a class="toc-backref" href="#id21">4.1.1. 问题排查</a><a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id21">4.1.1. 查看网络配置</a><a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h3>
 <p>Centos虚拟机启动后，无法联网， Centos 的网络配置如下：</p>
 <div class="figure align-center" id="id12">
 <a class="reference internal image-reference" href="../_images/centos_vm_ifconfig.png"><img alt="../_images/centos_vm_ifconfig.png" src="../_images/centos_vm_ifconfig.png" style="width: 748.0px; height: 275.0px;" /></a>
@@ -241,7 +242,8 @@
 </div>
 <div class="admonition tip">
 <p class="first admonition-title">Tip</p>
-<p>重启虚拟机之后，又无法联网了，这时只需重启网络服务并增加路由即可，如下命令：</p>
+<p>重启虚拟机之后，假如又无法联网了，这时只需重启网络服务并增加路由即可(不过经过上面的配置之后，一般
+重启之后都可以联网)，如下命令：</p>
 <div class="last highlight-default"><div class="highlight"><pre><span></span><span class="n">service</span> <span class="n">network</span> <span class="n">restart</span>
 <span class="n">route</span> <span class="n">add</span> <span class="o">-</span><span class="n">net</span> <span class="mf">0.0</span><span class="o">.</span><span class="mf">0.0</span> <span class="n">gw</span> <span class="mf">10.10</span><span class="o">.</span><span class="mf">10.1</span>
 </pre></div>
