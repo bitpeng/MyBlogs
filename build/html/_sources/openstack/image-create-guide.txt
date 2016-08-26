@@ -104,8 +104,8 @@ cirros镜像
    图：cirros镜像无法启动
 
 
-centos镜像
-----------
+centos6.5镜像
+--------------
 
 Centos镜像的制作过程与ubuntu相同，下面直接贴出操作命令：
 
@@ -133,6 +133,32 @@ Centos镜像的制作过程与ubuntu相同，下面直接贴出操作命令：
     和ubuntu虚拟机不同，ubuntu启动后可以通过dhcp自动联网，但是centos虚拟机需要经过一番配置才可以联网
     。详情请参考 :ref:`centos虚拟机联网配置 <centos_vm_netconfig>`  。
 
+
+
+centos7镜像
+--------------
+
+.. tip::
+    centos7镜像安装时没有太多区别，这里只列出安装时两点需要注意的地方。
+
+键盘选择
+~~~~~~~~
+
+键盘选择必须为Chinese，否则安装过程中需要交互输入的地方无法输入。
+
+.. figure:: /_static/images/centos_7-1.png
+   :align: center
+
+.. figure:: /_static/images/centos_7-2.png
+   :align: center
+
+软件选择
+~~~~~~~~
+
+软件选择默认为最小化安装，很多工具无法使用，因此改成工作站形式。
+
+.. figure:: /_static/images/centos_7-3.png
+   :align: center
 
 
 win7镜像
