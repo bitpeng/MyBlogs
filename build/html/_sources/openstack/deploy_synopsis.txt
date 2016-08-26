@@ -123,19 +123,190 @@ OpenStack镜像制作，可以花一篇专门的笔记来介绍，请参考 :ref
 
 步骤如下：
 
-- 
+.. note::
+    办公网络(可连接外网)的网段地址为：10.11.113.0/24
+
+    .. figure:: /_static/images/winnet_config.png
+       :align: center
+
+       办公网络网段、网关
+
+
+- admin管理员登录，创建外部网络;
+- admin管理员在外部网络中创建一个子网；
+- 新建租户cecgw，cecgw登录，创建租户网络和子网；
+- 组合cecgw创建路由，并设置网关和接口.
+
+
+网络详情如下：
+
+.. figure:: /_static/images/neutron-1.png
+   :align: center
+
+.. figure:: /_static/images/neutron-2.png
+   :align: center
+
+.. figure:: /_static/images/neutron-3.png
+   :align: center
+
+.. figure:: /_static/images/neutron-4.png
+   :align: center
+
+.. figure:: /_static/images/neutron-5.png
+   :align: center
+
+.. important::
+    - 外网是 共享，外部网络，vxlan；
+    - 外网子网注意网关和dns服务器, 并且网段要和办公网络网段一致；
+    - 租户子网网段随意选择；
+
+
+创建虚拟机
+++++++++++
+
+.. important::
+    特别注意：在虚拟机中创建云平台，一定要开启CPU虚拟机。否则会如下错误：
+
+    .. figure:: /_static/images/no_vcpu_error.png
+       :align: center
+
+       虚拟机没有开启CPU虚拟机
+
+
+    .. figure:: /_static/images/open_vcpu.png
+       :align: center
+
+       开启虚拟化
 
 
 
 
+分布式方式部署
+==============
+
+.. note::
+    - 部署环境：在vmware虚拟机中分布式部署聚安云v2.5，openstack Juno版本。
+
+    - 其中，计算节点(compute)一个，网络节点(network)一个，控制节点(controller)一个，消息队列节点(rabbitmq)一个；
+
+    - ceph作为后端存储，部署ceph集群，集群节点为compute, network, controller.
+
+.. important::
+    分布式部署，需要多台虚拟机，一定要直接安装，不要使用vmware的克隆虚拟机
+    功能(使用该功能，安装ceph集群会缺少部分组件，无法安装).
+
+激活root并配置root ssh
+++++++++++++++++++++++
+
+- 激活root
+
+  ::
+
+      sudo passwd
+      # 具有root权限时也可以使用下面的命令激活
+      passwd root
+
+- 允许root远程连接：
+
+  修改/etc/ssh/sshd_config文件并重启ssh服务。 将文件第28行的without-password改为yes，允许root用户ssh连接。
+
+  ::
+
+      #PermitRootLogin without-password
+      PermitRootLogin yes
+      # service ssh restart
+
+
+
+安装ceph集群
+++++++++++++
+
+- 配置preconf文件：
+
+  .. figure:: /_static/images/preconf.png
+     :align: center
+
+- 参考README文件，依次执行：
+
+  ::
+
+      ceph_prepare.sh
+      ceph_install.sh
+      ceph_initial.sh
+
+
+- 检查ceph状态，并在HEALTH_OK时，创建pool和auth user
+
+  ::
+
+      create_pool.sh
+      auth_user.sh
+
+
+节点安装
+++++++++
+
+- 根据安装好的四个虚拟机的ip地址，配置setup.conf文件
+
+  .. important::
+      各个节点要保证互通
+
+- 把统一配置好的安装脚本复制到各个虚拟机，然后依次安装对应组件：
+
+  ::
+
+      ./setup.sh controller
+      ./setup.sh rabbitmq
+      ./setup.sh networker
+      ./setup.sh computer
+
+  .. tip::
+      安装控制节点时，最后会提示某些服务启动失败，实际上此时已经安装成功，
+      我们只需要手动重启相应的服务即可。
+
+      .. figure:: /_static/images/multinode_setup_controller.png
+         :align: center
+
+         提示未知服务
+
+      手动启动相应服务：
+
+      ::
+
+          cd /usr/bin
+          for i in nova*;do service $i restart;done;
+          for i in neutron*;do service $i restart;done;
+          for i in cinder*;do service $i restart;done;
+          for i in glance*;do service $i restart;done;
+          for i in keystone*;do service $i restart;done;
 
 
 
 
+其他
+=========
+
+horizon ip地址配置文件
++++++++++++++++++++++++
+
+::
+
+    vi /etc/nova/nova.conf
 
 
+重启网卡、网络服务
++++++++++++++++++++++++
 
+::
 
+    service networking restart
+
+如果上面的命令不好用，则：
+
+::
+
+    ifdown br-ex
+    ifup br-ex
 
 
 --------------

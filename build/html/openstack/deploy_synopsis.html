@@ -31,8 +31,8 @@
 
   
     <link rel="top" title="Welcome to Sitian&#39;s Blog 0.1 documentation" href="../index.html"/>
-        <link rel="up" title="Hack OpenStack" href="index.html"/>
-        <link rel="next" title="附录" href="../others/index.html"/>
+        <link rel="up" title="OpenStack Note" href="index.html"/>
+        <link rel="next" title="4. Centos虚拟机联网配置" href="centos_vm_netconf.html"/>
         <link rel="prev" title="2. OpenStack镜像制作" href="image-create-guide.html"/> 
 
   
@@ -85,7 +85,7 @@
                 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../py_doc/index.html">Hack Python</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../linux_tools/index.html">Hack Linux</a></li>
-<li class="toctree-l1 current"><a class="reference internal" href="index.html">Hack OpenStack</a><ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">OpenStack Note</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="horizon_develop.html">1. Horizon 二次开发指南</a></li>
 <li class="toctree-l2"><a class="reference internal" href="image-create-guide.html">2. OpenStack镜像制作</a></li>
 <li class="toctree-l2 current"><a class="current reference internal" href="#">3. openstack 实践指南</a><ul>
@@ -103,11 +103,27 @@
 <li class="toctree-l3"><a class="reference internal" href="#id4">3.3. 创建虚拟机流程</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#id5">3.3.1. 镜像制作</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#id6">3.3.2. 创建网络和路由</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id7">3.3.3. 创建虚拟机</a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="#id7">3.4. 参考</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id8">3.4. 分布式方式部署</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#rootroot-ssh">3.4.1. 激活root并配置root ssh</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id9">3.4.2. 安装ceph集群</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id10">3.4.3. 节点安装</a></li>
 </ul>
 </li>
+<li class="toctree-l3"><a class="reference internal" href="#id11">3.5. 其他</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#horizon-ip">3.5.1. horizon ip地址配置文件</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id12">3.5.2. 重启网卡、网络服务</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#id13">3.6. 参考</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="centos_vm_netconf.html">4. Centos虚拟机联网配置</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lanch_instance_failure.html">5. OpenStack 启动虚拟机失败分析</a></li>
+<li class="toctree-l2"><a class="reference internal" href="rabbitmq_doc.html">6. rabbitmq教程</a></li>
+<li class="toctree-l2"><a class="reference internal" href="os_cmd.html">7. openstack命令汇总</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../others/index.html">附录</a></li>
@@ -141,7 +157,7 @@
   <ul class="wy-breadcrumbs">
     <li><a href="../index.html">Docs</a> &raquo;</li>
       
-          <li><a href="index.html">Hack OpenStack</a> &raquo;</li>
+          <li><a href="index.html">OpenStack Note</a> &raquo;</li>
       
     <li>3. openstack 实践指南</li>
       <li class="wy-breadcrumbs-aside">
@@ -158,7 +174,7 @@
            <div itemprop="articleBody">
             
   <div class="section" id="openstack">
-<h1><a class="toc-backref" href="#id11">3. openstack 实践指南</a><a class="headerlink" href="#openstack" title="Permalink to this headline">¶</a></h1>
+<h1><a class="toc-backref" href="#id21">3. openstack 实践指南</a><a class="headerlink" href="#openstack" title="Permalink to this headline">¶</a></h1>
 <div class="admonition tip">
 <p class="first admonition-title">Tip</p>
 <p>利用部门服务器，自己准备搭建OpenStack来熟悉OpenStack的部署，运维等方面的知识；</p>
@@ -168,52 +184,64 @@
 <div class="contents topic" id="id1">
 <p class="topic-title first">目录</p>
 <ul class="simple">
-<li><a class="reference internal" href="#openstack" id="id11">openstack 实践指南</a><ul>
-<li><a class="reference internal" href="#id2" id="id12">准备工作</a><ul>
-<li><a class="reference internal" href="#raid" id="id13">raid 管理</a></li>
-<li><a class="reference internal" href="#ubuntu-server" id="id14">安装Ubuntu Server</a></li>
+<li><a class="reference internal" href="#openstack" id="id21">openstack 实践指南</a><ul>
+<li><a class="reference internal" href="#id2" id="id22">准备工作</a><ul>
+<li><a class="reference internal" href="#raid" id="id23">raid 管理</a></li>
+<li><a class="reference internal" href="#ubuntu-server" id="id24">安装Ubuntu Server</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#allinone" id="id15">allinone方式部署</a><ul>
-<li><a class="reference internal" href="#id3" id="id16">安装allinone</a></li>
-<li><a class="reference internal" href="#ceph" id="id17">安装ceph</a></li>
-<li><a class="reference internal" href="#novasecret" id="id18">nova设置secret</a></li>
+<li><a class="reference internal" href="#allinone" id="id25">allinone方式部署</a><ul>
+<li><a class="reference internal" href="#id3" id="id26">安装allinone</a></li>
+<li><a class="reference internal" href="#ceph" id="id27">安装ceph</a></li>
+<li><a class="reference internal" href="#novasecret" id="id28">nova设置secret</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#id4" id="id19">创建虚拟机流程</a><ul>
-<li><a class="reference internal" href="#id5" id="id20">镜像制作</a></li>
-<li><a class="reference internal" href="#id6" id="id21">创建网络和路由</a></li>
+<li><a class="reference internal" href="#id4" id="id29">创建虚拟机流程</a><ul>
+<li><a class="reference internal" href="#id5" id="id30">镜像制作</a></li>
+<li><a class="reference internal" href="#id6" id="id31">创建网络和路由</a></li>
+<li><a class="reference internal" href="#id7" id="id32">创建虚拟机</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#id7" id="id22">参考</a></li>
+<li><a class="reference internal" href="#id8" id="id33">分布式方式部署</a><ul>
+<li><a class="reference internal" href="#rootroot-ssh" id="id34">激活root并配置root ssh</a></li>
+<li><a class="reference internal" href="#id9" id="id35">安装ceph集群</a></li>
+<li><a class="reference internal" href="#id10" id="id36">节点安装</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#id11" id="id37">其他</a><ul>
+<li><a class="reference internal" href="#horizon-ip" id="id38">horizon ip地址配置文件</a></li>
+<li><a class="reference internal" href="#id12" id="id39">重启网卡、网络服务</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#id13" id="id40">参考</a></li>
 </ul>
 </li>
 </ul>
 </div>
 <hr class="docutils" />
 <div class="section" id="id2">
-<h2><a class="toc-backref" href="#id12">3.1. 准备工作</a><a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id22">3.1. 准备工作</a><a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="raid">
-<h3><a class="toc-backref" href="#id13">3.1.1. raid 管理</a><a class="headerlink" href="#raid" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id23">3.1.1. raid 管理</a><a class="headerlink" href="#raid" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
 <li>v2.3版本lvm作存储，raid1一块(操作系统安装盘)，其他的作raid5；</li>
 <li>v2.5 ceph作存储，raid1一块，其他的raid0, 因为ceph本身有备份机制，不需要raid5；</li>
 </ul>
 </div>
 <div class="section" id="ubuntu-server">
-<h3><a class="toc-backref" href="#id14">3.1.2. 安装Ubuntu Server</a><a class="headerlink" href="#ubuntu-server" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id24">3.1.2. 安装Ubuntu Server</a><a class="headerlink" href="#ubuntu-server" title="Permalink to this headline">¶</a></h3>
 <p>制作为U盘引导盘后，启动服务器，按f8，然后设置system bios，选择启动方式 UEFI 模式
 保存重启，然后开始安装。</p>
 </div>
 </div>
 <div class="section" id="allinone">
-<h2><a class="toc-backref" href="#id15">3.2. allinone方式部署</a><a class="headerlink" href="#allinone" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id25">3.2. allinone方式部署</a><a class="headerlink" href="#allinone" title="Permalink to this headline">¶</a></h2>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
 <p class="last">下面以v2.5版本的juno install allinone脚本为例，说明部署方法和需要注意的细节.</p>
 </div>
 <div class="section" id="id3">
-<h3><a class="toc-backref" href="#id16">3.2.1. 安装allinone</a><a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id26">3.2.1. 安装allinone</a><a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h3>
 <p>在allinone安装脚本中，只需要配置setup.conf文件，分别设置外网、内网、管理网络的IP地址，掩码和网关即可。
 然后执行setup.sh脚本。</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">setup</span><span class="o">.</span><span class="n">sh</span>
@@ -221,7 +249,7 @@
 </div>
 </div>
 <div class="section" id="ceph">
-<h3><a class="toc-backref" href="#id17">3.2.2. 安装ceph</a><a class="headerlink" href="#ceph" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id27">3.2.2. 安装ceph</a><a class="headerlink" href="#ceph" title="Permalink to this headline">¶</a></h3>
 <p>以下以ceph allinone脚本为例说明安装过程:</p>
 <ul>
 <li><p class="first">配置文件preconf;</p>
@@ -240,7 +268,7 @@
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">ceph</span> <span class="o">-</span><span class="n">s</span>
 </pre></div>
 </div>
-<div class="figure align-center" id="id10">
+<div class="figure align-center" id="id16">
 <img alt="../_images/ceph_status.png" src="../_images/ceph_status.png" />
 <p class="caption"><span class="caption-text">图：ceph状态验证</span></p>
 </div>
@@ -262,7 +290,7 @@
 </div>
 </div>
 <div class="section" id="novasecret">
-<h3><a class="toc-backref" href="#id18">3.2.3. nova设置secret</a><a class="headerlink" href="#novasecret" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id28">3.2.3. nova设置secret</a><a class="headerlink" href="#novasecret" title="Permalink to this headline">¶</a></h3>
 <div class="admonition important">
 <p class="first admonition-title">Important</p>
 <p class="last">OpenStack用户租户创建虚拟机，计算节点一定要设置secret，否则租户创建虚拟机时肯定不会成功。
@@ -306,9 +334,9 @@ virsh secret-list
 </div>
 </div>
 <div class="section" id="id4">
-<h2><a class="toc-backref" href="#id19">3.3. 创建虚拟机流程</a><a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id29">3.3. 创建虚拟机流程</a><a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="id5">
-<h3><a class="toc-backref" href="#id20">3.3.1. 镜像制作</a><a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id30">3.3.1. 镜像制作</a><a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h3>
 <p>OpenStack镜像制作，可以花一篇专门的笔记来介绍，请参考 <a class="reference internal" href="image-create-guide.html#image-guide"><span class="std std-ref">OpenStack镜像制作</span></a></p>
 <div class="admonition important">
 <p class="first admonition-title">Important</p>
@@ -316,23 +344,189 @@ virsh secret-list
 </div>
 </div>
 <div class="section" id="id6">
-<h3><a class="toc-backref" href="#id21">3.3.2. 创建网络和路由</a><a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id31">3.3.2. 创建网络和路由</a><a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h3>
 <p>步骤如下：</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p>办公网络(可连接外网)的网段地址为：10.11.113.0/24</p>
+<div class="last figure align-center" id="id17">
+<img alt="../_images/winnet_config.png" src="../_images/winnet_config.png" />
+<p class="caption"><span class="caption-text">办公网络网段、网关</span></p>
+</div>
+</div>
 <ul class="simple">
-<li></li>
+<li>admin管理员登录，创建外部网络;</li>
+<li>admin管理员在外部网络中创建一个子网；</li>
+<li>新建租户cecgw，cecgw登录，创建租户网络和子网；</li>
+<li>组合cecgw创建路由，并设置网关和接口.</li>
+</ul>
+<p>网络详情如下：</p>
+<div class="figure align-center">
+<img alt="../_images/neutron-1.png" src="../_images/neutron-1.png" />
+</div>
+<div class="figure align-center">
+<img alt="../_images/neutron-2.png" src="../_images/neutron-2.png" />
+</div>
+<div class="figure align-center">
+<img alt="../_images/neutron-3.png" src="../_images/neutron-3.png" />
+</div>
+<div class="figure align-center">
+<img alt="../_images/neutron-4.png" src="../_images/neutron-4.png" />
+</div>
+<div class="figure align-center">
+<img alt="../_images/neutron-5.png" src="../_images/neutron-5.png" />
+</div>
+<div class="admonition important">
+<p class="first admonition-title">Important</p>
+<ul class="last simple">
+<li>外网是 共享，外部网络，vxlan；</li>
+<li>外网子网注意网关和dns服务器, 并且网段要和办公网络网段一致；</li>
+<li>租户子网网段随意选择；</li>
 </ul>
 </div>
 </div>
-<hr class="docutils" />
 <div class="section" id="id7">
-<h2><a class="toc-backref" href="#id22">3.4. 参考</a><a class="headerlink" href="#id7" title="Permalink to this headline">¶</a></h2>
-<table class="docutils footnote" frame="void" id="id8" rules="none">
+<h3><a class="toc-backref" href="#id32">3.3.3. 创建虚拟机</a><a class="headerlink" href="#id7" title="Permalink to this headline">¶</a></h3>
+<div class="admonition important">
+<p class="first admonition-title">Important</p>
+<p>特别注意：在虚拟机中创建云平台，一定要开启CPU虚拟机。否则会如下错误：</p>
+<div class="figure align-center" id="id18">
+<img alt="../_images/no_vcpu_error.png" src="../_images/no_vcpu_error.png" />
+<p class="caption"><span class="caption-text">虚拟机没有开启CPU虚拟机</span></p>
+</div>
+<div class="last figure align-center" id="id19">
+<img alt="../_images/open_vcpu.png" src="../_images/open_vcpu.png" />
+<p class="caption"><span class="caption-text">开启虚拟化</span></p>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="id8">
+<h2><a class="toc-backref" href="#id33">3.4. 分布式方式部署</a><a class="headerlink" href="#id8" title="Permalink to this headline">¶</a></h2>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<ul class="last simple">
+<li>部署环境：在vmware虚拟机中分布式部署聚安云v2.5，openstack Juno版本。</li>
+<li>其中，计算节点(compute)一个，网络节点(network)一个，控制节点(controller)一个，消息队列节点(rabbitmq)一个；</li>
+<li>ceph作为后端存储，部署ceph集群，集群节点为compute, network, controller.</li>
+</ul>
+</div>
+<div class="admonition important">
+<p class="first admonition-title">Important</p>
+<p class="last">分布式部署，需要多台虚拟机，一定要直接安装，不要使用vmware的克隆虚拟机
+功能(使用该功能，安装ceph集群会缺少部分组件，无法安装).</p>
+</div>
+<div class="section" id="rootroot-ssh">
+<h3><a class="toc-backref" href="#id34">3.4.1. 激活root并配置root ssh</a><a class="headerlink" href="#rootroot-ssh" title="Permalink to this headline">¶</a></h3>
+<ul>
+<li><p class="first">激活root</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="n">passwd</span>
+<span class="c1"># 具有root权限时也可以使用下面的命令激活</span>
+<span class="n">passwd</span> <span class="n">root</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first">允许root远程连接：</p>
+<p>修改/etc/ssh/sshd_config文件并重启ssh服务。 将文件第28行的without-password改为yes，允许root用户ssh连接。</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="c1">#PermitRootLogin without-password</span>
+<span class="n">PermitRootLogin</span> <span class="n">yes</span>
+<span class="c1"># service ssh restart</span>
+</pre></div>
+</div>
+</li>
+</ul>
+</div>
+<div class="section" id="id9">
+<h3><a class="toc-backref" href="#id35">3.4.2. 安装ceph集群</a><a class="headerlink" href="#id9" title="Permalink to this headline">¶</a></h3>
+<ul>
+<li><p class="first">配置preconf文件：</p>
+<div class="figure align-center">
+<img alt="../_images/preconf.png" src="../_images/preconf.png" />
+</div>
+</li>
+<li><p class="first">参考README文件，依次执行：</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">ceph_prepare</span><span class="o">.</span><span class="n">sh</span>
+<span class="n">ceph_install</span><span class="o">.</span><span class="n">sh</span>
+<span class="n">ceph_initial</span><span class="o">.</span><span class="n">sh</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first">检查ceph状态，并在HEALTH_OK时，创建pool和auth user</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">create_pool</span><span class="o">.</span><span class="n">sh</span>
+<span class="n">auth_user</span><span class="o">.</span><span class="n">sh</span>
+</pre></div>
+</div>
+</li>
+</ul>
+</div>
+<div class="section" id="id10">
+<h3><a class="toc-backref" href="#id36">3.4.3. 节点安装</a><a class="headerlink" href="#id10" title="Permalink to this headline">¶</a></h3>
+<ul>
+<li><p class="first">根据安装好的四个虚拟机的ip地址，配置setup.conf文件</p>
+<div class="admonition important">
+<p class="first admonition-title">Important</p>
+<p class="last">各个节点要保证互通</p>
+</div>
+</li>
+<li><p class="first">把统一配置好的安装脚本复制到各个虚拟机，然后依次安装对应组件：</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="o">./</span><span class="n">setup</span><span class="o">.</span><span class="n">sh</span> <span class="n">controller</span>
+<span class="o">./</span><span class="n">setup</span><span class="o">.</span><span class="n">sh</span> <span class="n">rabbitmq</span>
+<span class="o">./</span><span class="n">setup</span><span class="o">.</span><span class="n">sh</span> <span class="n">networker</span>
+<span class="o">./</span><span class="n">setup</span><span class="o">.</span><span class="n">sh</span> <span class="n">computer</span>
+</pre></div>
+</div>
+<div class="admonition tip">
+<p class="first admonition-title">Tip</p>
+<p>安装控制节点时，最后会提示某些服务启动失败，实际上此时已经安装成功，
+我们只需要手动重启相应的服务即可。</p>
+<div class="figure align-center" id="id20">
+<img alt="../_images/multinode_setup_controller.png" src="../_images/multinode_setup_controller.png" />
+<p class="caption"><span class="caption-text">提示未知服务</span></p>
+</div>
+<p>手动启动相应服务：</p>
+<div class="last highlight-default"><div class="highlight"><pre><span></span>cd /usr/bin
+for i in nova*;do service $i restart;done;
+for i in neutron*;do service $i restart;done;
+for i in cinder*;do service $i restart;done;
+for i in glance*;do service $i restart;done;
+for i in keystone*;do service $i restart;done;
+</pre></div>
+</div>
+</div>
+</li>
+</ul>
+</div>
+</div>
+<div class="section" id="id11">
+<h2><a class="toc-backref" href="#id37">3.5. 其他</a><a class="headerlink" href="#id11" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="horizon-ip">
+<h3><a class="toc-backref" href="#id38">3.5.1. horizon ip地址配置文件</a><a class="headerlink" href="#horizon-ip" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">vi</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">nova</span><span class="o">/</span><span class="n">nova</span><span class="o">.</span><span class="n">conf</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="id12">
+<h3><a class="toc-backref" href="#id39">3.5.2. 重启网卡、网络服务</a><a class="headerlink" href="#id12" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">service</span> <span class="n">networking</span> <span class="n">restart</span>
+</pre></div>
+</div>
+<p>如果上面的命令不好用，则：</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">ifdown</span> <span class="n">br</span><span class="o">-</span><span class="n">ex</span>
+<span class="n">ifup</span> <span class="n">br</span><span class="o">-</span><span class="n">ex</span>
+</pre></div>
+</div>
+</div>
+</div>
+<hr class="docutils" />
+<div class="section" id="id13">
+<h2><a class="toc-backref" href="#id40">3.6. 参考</a><a class="headerlink" href="#id13" title="Permalink to this headline">¶</a></h2>
+<table class="docutils footnote" frame="void" id="id14" rules="none">
 <colgroup><col class="label" /><col /></colgroup>
 <tbody valign="top">
 <tr><td class="label">[1]</td><td><a class="reference external" href="http://www.lai18.com/content/1477262.html">http://www.lai18.com/content/1477262.html</a></td></tr>
 </tbody>
 </table>
-<table class="docutils footnote" frame="void" id="id9" rules="none">
+<table class="docutils footnote" frame="void" id="id15" rules="none">
 <colgroup><col class="label" /><col /></colgroup>
 <tbody valign="top">
 <tr><td class="label">[2]</td><td>网际云安全套件v2.5 安装说明</td></tr>
@@ -348,7 +542,7 @@ virsh secret-list
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="../others/index.html" class="btn btn-neutral float-right" title="附录" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="centos_vm_netconf.html" class="btn btn-neutral float-right" title="4. Centos虚拟机联网配置" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
         <a href="image-create-guide.html" class="btn btn-neutral" title="2. OpenStack镜像制作" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>

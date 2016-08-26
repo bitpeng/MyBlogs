@@ -130,7 +130,7 @@ Centos镜像的制作过程与ubuntu相同，下面直接贴出操作命令：
 
 
 .. tip::
-    和ubuntu虚拟机不同，ubuntu启动后可以通过dhcp自动联网，但是centos虚拟机需要经过一番配置才可以联网
+    和ubuntu虚拟机不同，ubuntu启动后可以通过dhcp自动联网，但是centos(6.5版本)虚拟机需要经过一番配置才可以联网
     。详情请参考 :ref:`centos虚拟机联网配置 <centos_vm_netconfig>`  。
 
 
@@ -159,6 +159,7 @@ centos7镜像
 
 .. figure:: /_static/images/centos_7-3.png
    :align: center
+
 
 
 win7镜像
