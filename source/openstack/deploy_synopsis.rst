@@ -243,6 +243,11 @@ OpenStack镜像制作，可以花一篇专门的笔记来介绍，请参考 :ref
       auth_user.sh
 
 
+.. note::
+    有关ceph部署的更多细节，请参考《 网际云安全套件v2.5 安装说明 》
+    和 ceph_multinode 部署脚本。
+
+
 节点安装
 ++++++++
 
@@ -280,6 +285,52 @@ OpenStack镜像制作，可以花一篇专门的笔记来介绍，请参考 :ref
           for i in glance*;do service $i restart;done;
           for i in keystone*;do service $i restart;done;
 
+计算节点配置nova免密连接
+++++++++++++++++++++++++
+
+请参考 《网际云安全套件v2.5 安装说明》相应章节，然后在每个计算节点执行：
+
+::
+
+    ./setup.sh
+
+
+计算节点设置secret
+++++++++++++++++++
+
+- 在任一ceph节点执行：
+
+  ::
+
+      ceph auth get-key client.cinder | tee client.cinder.key
+
+- 将生产的 client.cinder.key文件拷贝到计算节点；
+
+- 在计算节点上执行下面的命令：
+
+  ::
+
+      UUID=`uuidgen`
+      echo $UUID
+      cat > secret.xml <<EOF
+      <secret ephemeral='no' private='no'>
+      <uuid>${UUID}</uuid>
+      <usage type='ceph'>
+      <name>client.cinder secret</name>
+      </usage>
+      </secret>
+      EOF
+      virsh secret-define --file secret.xml
+      virsh secret-set-value --secret ${UUID} --base64 $(cat client.cinder.key)
+
+- 查看生成的secret:
+
+  ::
+
+      virsh secret-list
+
+- 根据生成的secret依次更改计算节点/etc/nova/nova.conf和controller节点/etc/cinder/cinder.conf的
+  rbd_secret_uuid
 
 
 

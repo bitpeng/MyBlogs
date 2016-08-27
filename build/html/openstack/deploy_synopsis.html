@@ -110,6 +110,8 @@
 <li class="toctree-l4"><a class="reference internal" href="#rootroot-ssh">3.4.1. 激活root并配置root ssh</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#id9">3.4.2. 安装ceph集群</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#id10">3.4.3. 节点安装</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#nova">3.4.4. 计算节点配置nova免密连接</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#secret">3.4.5. 计算节点设置secret</a></li>
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="#id11">3.5. 其他</a><ul>
@@ -206,14 +208,16 @@
 <li><a class="reference internal" href="#rootroot-ssh" id="id34">激活root并配置root ssh</a></li>
 <li><a class="reference internal" href="#id9" id="id35">安装ceph集群</a></li>
 <li><a class="reference internal" href="#id10" id="id36">节点安装</a></li>
+<li><a class="reference internal" href="#nova" id="id37">计算节点配置nova免密连接</a></li>
+<li><a class="reference internal" href="#secret" id="id38">计算节点设置secret</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#id11" id="id37">其他</a><ul>
-<li><a class="reference internal" href="#horizon-ip" id="id38">horizon ip地址配置文件</a></li>
-<li><a class="reference internal" href="#id12" id="id39">重启网卡、网络服务</a></li>
+<li><a class="reference internal" href="#id11" id="id39">其他</a><ul>
+<li><a class="reference internal" href="#horizon-ip" id="id40">horizon ip地址配置文件</a></li>
+<li><a class="reference internal" href="#id12" id="id41">重启网卡、网络服务</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#id13" id="id40">参考</a></li>
+<li><a class="reference internal" href="#id13" id="id42">参考</a></li>
 </ul>
 </li>
 </ul>
@@ -458,6 +462,11 @@ virsh secret-list
 </div>
 </li>
 </ul>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">有关ceph部署的更多细节，请参考《 网际云安全套件v2.5 安装说明 》
+和 ceph_multinode 部署脚本。</p>
+</div>
 </div>
 <div class="section" id="id10">
 <h3><a class="toc-backref" href="#id36">3.4.3. 节点安装</a><a class="headerlink" href="#id10" title="Permalink to this headline">¶</a></h3>
@@ -496,17 +505,60 @@ for i in keystone*;do service $i restart;done;
 </li>
 </ul>
 </div>
+<div class="section" id="nova">
+<h3><a class="toc-backref" href="#id37">3.4.4. 计算节点配置nova免密连接</a><a class="headerlink" href="#nova" title="Permalink to this headline">¶</a></h3>
+<p>请参考 《网际云安全套件v2.5 安装说明》相应章节，然后在每个计算节点执行：</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="o">./</span><span class="n">setup</span><span class="o">.</span><span class="n">sh</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="secret">
+<h3><a class="toc-backref" href="#id38">3.4.5. 计算节点设置secret</a><a class="headerlink" href="#secret" title="Permalink to this headline">¶</a></h3>
+<ul>
+<li><p class="first">在任一ceph节点执行：</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">ceph</span> <span class="n">auth</span> <span class="n">get</span><span class="o">-</span><span class="n">key</span> <span class="n">client</span><span class="o">.</span><span class="n">cinder</span> <span class="o">|</span> <span class="n">tee</span> <span class="n">client</span><span class="o">.</span><span class="n">cinder</span><span class="o">.</span><span class="n">key</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first">将生产的 client.cinder.key文件拷贝到计算节点；</p>
+</li>
+<li><p class="first">在计算节点上执行下面的命令：</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span>UUID=`uuidgen`
+echo $UUID
+cat &gt; secret.xml &lt;&lt;EOF
+&lt;secret ephemeral=&#39;no&#39; private=&#39;no&#39;&gt;
+&lt;uuid&gt;${UUID}&lt;/uuid&gt;
+&lt;usage type=&#39;ceph&#39;&gt;
+&lt;name&gt;client.cinder secret&lt;/name&gt;
+&lt;/usage&gt;
+&lt;/secret&gt;
+EOF
+virsh secret-define --file secret.xml
+virsh secret-set-value --secret ${UUID} --base64 $(cat client.cinder.key)
+</pre></div>
+</div>
+</li>
+<li><p class="first">查看生成的secret:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">virsh</span> <span class="n">secret</span><span class="o">-</span><span class="nb">list</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first">根据生成的secret依次更改计算节点/etc/nova/nova.conf和controller节点/etc/cinder/cinder.conf的
+rbd_secret_uuid</p>
+</li>
+</ul>
+</div>
 </div>
 <div class="section" id="id11">
-<h2><a class="toc-backref" href="#id37">3.5. 其他</a><a class="headerlink" href="#id11" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id39">3.5. 其他</a><a class="headerlink" href="#id11" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="horizon-ip">
-<h3><a class="toc-backref" href="#id38">3.5.1. horizon ip地址配置文件</a><a class="headerlink" href="#horizon-ip" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id40">3.5.1. horizon ip地址配置文件</a><a class="headerlink" href="#horizon-ip" title="Permalink to this headline">¶</a></h3>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">vi</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">nova</span><span class="o">/</span><span class="n">nova</span><span class="o">.</span><span class="n">conf</span>
 </pre></div>
 </div>
 </div>
 <div class="section" id="id12">
-<h3><a class="toc-backref" href="#id39">3.5.2. 重启网卡、网络服务</a><a class="headerlink" href="#id12" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id41">3.5.2. 重启网卡、网络服务</a><a class="headerlink" href="#id12" title="Permalink to this headline">¶</a></h3>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">service</span> <span class="n">networking</span> <span class="n">restart</span>
 </pre></div>
 </div>
@@ -519,7 +571,7 @@ for i in keystone*;do service $i restart;done;
 </div>
 <hr class="docutils" />
 <div class="section" id="id13">
-<h2><a class="toc-backref" href="#id40">3.6. 参考</a><a class="headerlink" href="#id13" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id42">3.6. 参考</a><a class="headerlink" href="#id13" title="Permalink to this headline">¶</a></h2>
 <table class="docutils footnote" frame="void" id="id14" rules="none">
 <colgroup><col class="label" /><col /></colgroup>
 <tbody valign="top">
