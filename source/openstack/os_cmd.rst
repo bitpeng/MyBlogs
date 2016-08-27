@@ -57,6 +57,8 @@ nova 相关
 ::
 
     nova-manage service list|sort
+    # 或者使用
+    nova service-list
 
 .. figure:: /_static/images/check_nova_status.png
    :scale: 100
