@@ -173,11 +173,20 @@ OpenStack镜像制作，可以花一篇专门的笔记来介绍，请参考 :ref
        虚拟机没有开启CPU虚拟机
 
 
-    .. figure:: /_static/images/open_vcpu.png
-       :align: center
+    - vmware开启虚拟化：
 
-       开启虚拟化
+      .. figure:: /_static/images/open_vcpu.png
+         :align: center
 
+         开启虚拟化
+
+    - 物理主机开启虚拟化：
+
+      在系统bios中设置开启。
+
+.. error::
+    如果openstack有些虚拟机可以创建成功，而有些提示"no valid host found"，那么很可能是因为compute
+    节点内存不够。
 
 
 

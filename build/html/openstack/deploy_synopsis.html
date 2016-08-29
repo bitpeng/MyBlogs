@@ -398,10 +398,22 @@ virsh secret-list
 <img alt="../_images/no_vcpu_error.png" src="../_images/no_vcpu_error.png" />
 <p class="caption"><span class="caption-text">虚拟机没有开启CPU虚拟机</span></p>
 </div>
-<div class="last figure align-center" id="id19">
+<ul class="last">
+<li><p class="first">vmware开启虚拟化：</p>
+<div class="figure align-center" id="id19">
 <img alt="../_images/open_vcpu.png" src="../_images/open_vcpu.png" />
 <p class="caption"><span class="caption-text">开启虚拟化</span></p>
 </div>
+</li>
+<li><p class="first">物理主机开启虚拟化：</p>
+<p>在系统bios中设置开启。</p>
+</li>
+</ul>
+</div>
+<div class="admonition error">
+<p class="first admonition-title">Error</p>
+<p class="last">如果openstack有些虚拟机可以创建成功，而有些提示&#8221;no valid host found&#8221;，那么很可能是因为compute
+节点内存不够。</p>
 </div>
 </div>
 </div>
