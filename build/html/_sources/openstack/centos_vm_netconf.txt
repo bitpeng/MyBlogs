@@ -18,6 +18,8 @@ Centos虚拟机联网配置
 .. tip::
     在OpenStack云平台创建centos虚拟机，启动后发现无法上网。Google了一番之后，解决问题，于是记录下来，以作参考。
 
+    版本：Centos6.5 版
+
 
 .. contents:: 目录
 

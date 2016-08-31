@@ -1,4 +1,4 @@
-.. _database
+.. _L_HackLinux:
 
 Hack Linux
 ============================
@@ -13,3 +13,5 @@ Hack Linux
     samba_config
     use_man_page
     Linux_lvm
+    linux_cmd
+

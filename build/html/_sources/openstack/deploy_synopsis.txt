@@ -289,19 +289,10 @@ OpenStack镜像制作，可以花一篇专门的笔记来介绍，请参考 :ref
 
           cd /usr/bin
           for i in nova*;do service $i restart;done;
-          for i in neutron*;do service $i restart;done;
+          #for i in neutron*;do service $i restart;done;
           for i in cinder*;do service $i restart;done;
           for i in glance*;do service $i restart;done;
           for i in keystone*;do service $i restart;done;
-
-计算节点配置nova免密连接
-++++++++++++++++++++++++
-
-请参考 《网际云安全套件v2.5 安装说明》相应章节，然后在每个计算节点执行：
-
-::
-
-    ./setup.sh
 
 
 计算节点设置secret
@@ -341,6 +332,73 @@ OpenStack镜像制作，可以花一篇专门的笔记来介绍，请参考 :ref
 - 根据生成的secret依次更改计算节点/etc/nova/nova.conf和controller节点/etc/cinder/cinder.conf的
   rbd_secret_uuid
 
+
+计算节点配置nova免密连接
+++++++++++++++++++++++++
+
+请参考 《网际云安全套件v2.5 安装说明》相应章节，然后在每个计算节点执行：
+
+::
+
+    ./setup.sh
+
+
+扩展计算节点
++++++++++++++
+
+扩展计算节点步骤:
+
+- 安装ubuntu-14.04.1；
+- 激活root用户并配置root ssh登录；
+- 配置安装脚本setup.conf文件的compute配置项；
+
+  .. tip::
+      配置compute项时，外网ip，管理网ip，数据网ip都要改变；
+      并保证唯一.
+
+- 执行脚本：./setup.sh computer
+- 配置nova免密连接：
+
+  ::
+
+    cd rsakey_login_for_nova_compute_2015_01_29_final_version/
+    # 编辑计算节点
+    vi compute_node.conf
+    ./setup.sh
+
+- 计算节点设置secret, 将已安装计算节点的client.cinder.key 和 secret.xml文件拷贝到扩展节点，
+  然后执行：
+
+  ::
+
+    virsh secret-define --file secret.xml
+    virsh secret-set-value --secret ${UUID} --base64 $(cat client.cinder.key)
+    virsh secret-set-value --secret 4fcd7076-9fde-4c12-b2d2-d5f860401c77 --base64 $(cat client.cinder.key)
+
+  接着检查生产的secret和已安装计算节点的secret是否一致:
+
+  ::
+
+    virsh secret-list
+
+  最后更改新扩展节点的/etc/nova/nova.conf的rbd_secret_uuid选项, 并重启nova服务：
+
+  ::
+
+    cd /usr/bin/
+    for i in nova*;do service $i restart ;done
+
+- controller节点检查状态：
+
+  ::
+
+    source /root/openstackrc
+    nova service-list
+
+  .. figure:: /_static/images/add_compute_node.png
+     :align: center
+
+     成功扩展计算节点
 
 
 其他
