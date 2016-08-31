@@ -1,0 +1,372 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>6. Linux 磁盘和分区 &mdash; Welcome to Sitian&#39;s Blog 0.1 documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+    <link rel="top" title="Welcome to Sitian&#39;s Blog 0.1 documentation" href="../index.html"/>
+        <link rel="up" title="Hack Linux" href="index.html"/>
+        <link rel="next" title="OpenStack Note" href="../openstack/index.html"/>
+        <link rel="prev" title="5. Linux命令" href="linux_cmd.html"/> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> Welcome to Sitian's Blog
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.1
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../py_doc/index.html">Hack Python</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Hack Linux</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="git_cmd.html">1. git 版本控制</a></li>
+<li class="toctree-l2"><a class="reference internal" href="samba_config.html">2. Samba共享访问配置</a></li>
+<li class="toctree-l2"><a class="reference internal" href="use_man_page.html">3. 善用Linux man page</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Linux_lvm.html">4. Linux逻辑卷和lvm</a></li>
+<li class="toctree-l2"><a class="reference internal" href="linux_cmd.html">5. Linux命令</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">6. Linux 磁盘和分区</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id2">6.1. 系统分区</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#id3">6.1.1. 入门</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#mbr">6.1.2. MBR、扩展分区、逻辑分区的概念</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#windowslinux">6.2. Windows和Linux分区区别</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id4">6.3. 参考</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../openstack/index.html">OpenStack Note</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../others/index.html">附录</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../index.html">Welcome to Sitian's Blog</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+ 
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../index.html">Docs</a> &raquo;</li>
+      
+          <li><a href="index.html">Hack Linux</a> &raquo;</li>
+      
+    <li>6. Linux 磁盘和分区</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="../_sources/linux_tools/disk_note.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="linux">
+<h1><a class="toc-backref" href="#id12">6. Linux 磁盘和分区</a><a class="headerlink" href="#linux" title="Permalink to this headline">¶</a></h1>
+<div class="contents topic" id="id1">
+<p class="topic-title first">目录</p>
+<ul class="simple">
+<li><a class="reference internal" href="#linux" id="id12">Linux 磁盘和分区</a><ul>
+<li><a class="reference internal" href="#id2" id="id13">系统分区</a><ul>
+<li><a class="reference internal" href="#id3" id="id14">入门</a></li>
+<li><a class="reference internal" href="#mbr" id="id15">MBR、扩展分区、逻辑分区的概念</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#windowslinux" id="id16">Windows和Linux分区区别</a></li>
+<li><a class="reference internal" href="#id4" id="id17">参考</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<hr class="docutils" />
+<div class="section" id="id2">
+<h2><a class="toc-backref" href="#id13">6.1. 系统分区</a><a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id3">
+<h3><a class="toc-backref" href="#id14">6.1.1. 入门</a><a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h3>
+<p>首先先普及一下有关系统分区的一些知识：</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p>硬盘分区有三种，主磁盘分区、扩展磁盘分区、逻辑分区。</p>
+<p>一个硬盘主分区至少有1个，最多4个，扩展分区可以没有，最多1个。
+且主分区+扩展分区总共不能超过4个。逻辑分区可以有若干个。</p>
+<p>在windows下激活的主分区是硬盘的启动分区，他是独立的，也是硬盘的第一个分区，正常分的话就是C区。</p>
+<p>在linux下主分区和逻辑分区都可以用来放系统，引导os开机，grub会兼容windows系统开机启动。
+分出主分区后，其余的部分可以分成扩展分区，一般是剩下的部分全部分成扩展分区，也可以不全分，那剩的部分就浪费了。</p>
+<p>但扩展分区是不能直接用的，他是以逻辑分区的方式来使用的，所以说扩展分区可分成若干逻辑分区。
+他们的关系是包含的关系，所有的逻辑分区都是扩展分区的一部分。</p>
+<p>在linux中第一块硬盘分区为hda分区(或者是sda分区)，主分区编号为hda1-4，逻辑分区从5开始。</p>
+<p>硬盘的容量=主分区的容量+扩展分区的容量    扩展分区的容量=各个逻辑分区的容量之和</p>
+<p>主分区也可成为“引导分区”，会被操作系统和主板认定为这个硬盘的第一个分区。
+所以C盘永远都是排在所有磁盘分区的第一的位置上。</p>
+<p class="last">MBR（主引导记录）的分区表（主分区表）只能存放4个分区，如果要分更多的分区的话就要
+一个扩展分区表（EBR），扩展分区表放在一个系统ID为0x05的主分区上，这个主分区就是扩展分区，
+扩展分区能可以分若干个分区，每个分区都是个逻辑分区</p>
+</div>
+</div>
+<div class="section" id="mbr">
+<h3><a class="toc-backref" href="#id15">6.1.2. MBR、扩展分区、逻辑分区的概念</a><a class="headerlink" href="#mbr" title="Permalink to this headline">¶</a></h3>
+<p>一个是放置该硬盘的信息区，称之为主引导分区(master boot recorder,MBR)，
+一个是实际文件数据放置的地方.其中，MBR是整个硬盘最重要的区域.一旦MBR物理实体损坏时，
+则该硬盘就差不多报废了.一般来说，MBR有512个字节，且可以分为两个部分.</p>
+<ul class="simple">
+<li>(1)第一部分有446个字节，用于存放引导代码，即bootloader.</li>
+<li>(2)第二部分有64个字节，用于存放磁盘分区表.
+其中，每个分区的信息需要用16个字节来记录，因此，一个硬盘最多可以有4个分区.
+这4个分区称之为主分区和扩展分区(extended).</li>
+</ul>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">注：通常所说的&#8221;硬盘分区&#8221;就是指修改磁盘分区表，它定义了&#8221;第n个磁盘块是从第
+x个柱面到第y个柱面&#8221;.因此，当系统要读取第n个磁盘块时，就是去读硬盘上第x个柱面到第y个柱面的信息.</p>
+</div>
+<p>由于扩展分区只能有一个，所以这4个分区可以是4个主分区或者3个主分区加1个扩展分区，如下所示:</p>
+<p>P + P + P + P</p>
+<p>P + P + P + E</p>
+<p>重点说明的是，扩展分区不能直接使用，还需要将其划分为逻辑分区才行.这样就产生了一个问题，
+既然扩展分区不能直接使用，但为什么还要划分出一定的空间来给扩展分区呢?这是因为，如果用
+户想要将硬盘划分为5个分区的话，那该如何?此时，就需要扩展分区来帮忙了.</p>
+<p>由于MBR仅能保存4个分区的数据信息，如果超过4个，系统允许在额外的硬盘空间存放另一份磁盘
+分区信息，这就是扩展分区.若将硬盘分成3P+E，则E实际上是告诉系统，磁盘分区表在另外的那份
+分区表，即扩展分区其实是指向正确的额外分区表.本身扩展分区不能直接使用，还需要额外将扩
+展分区分成逻辑分区才能使用，因此，用户通过扩展分区就可以使用5个以上的分区了.</p>
+<div class="admonition tip">
+<p class="first admonition-title">Tip</p>
+<p>注意：</p>
+<ul class="last simple">
+<li>(1)实际上，不建议用户将硬盘分为4个主分区.这是因为，假如一个20GB的硬盘，
+若4个主分区占据了15GB的空间，则剩下的5GB空间完全不能使用，因为已经没有多余的分区表可以记录这些空间了.</li>
+<li>(2)考虑到磁盘的连续性，一般建议将扩展分区放在最后面的柱面内.</li>
+<li>(3)理论上允许一个硬盘只有1个主分区，其它空间都分配给扩展分区.</li>
+</ul>
+</div>
+<p>硬盘的分区主要分为基本分区（Primary Partion）和扩展分区(Extension Partion)两种，基本分区和扩展分区的数目之和不能大于四个，(根据上面的一些分区概念，是基本分区的数目不能超过4个，而扩展分区的数目最多只有1个，所以两者数目之和不能超过4个)。且基本分区可以马上被使用但不能再分区。扩展分区必须再进行分区后才能使用，也就是说 它必须还要进行二次分区。那么由扩展分区再分下去的是什么呢？它就是逻辑分区（Logical Partion），况且逻辑分区没有数量上限制。</p>
+<div class="figure align-center" id="id11">
+<img alt="../_images/win_disk_partion.png" src="../_images/win_disk_partion.png" />
+<p class="caption"><span class="caption-text">windows磁盘分区</span></p>
+</div>
+<p>如图，咱们最常用的windows系统的分区就是这样分区的，首先分出一个主分区
+(操作系统一般就是装在主分区里面)，然后分了一个扩展分区，因为扩展分区不能直接使用，
+所以需要在扩展分区下面将其分为若干个逻辑分区(如图所示的D、E、F、G盘就是分出来的逻辑分区)。</p>
+</div>
+</div>
+<div class="section" id="windowslinux">
+<h2><a class="toc-backref" href="#id16">6.2. Windows和Linux分区区别</a><a class="headerlink" href="#windowslinux" title="Permalink to this headline">¶</a></h2>
+<p>在Windows操作系统中，是先将物理地址分开(分出主分区和逻辑分区)，再在分区上建立目录。
+在Windows操作系统中，所有路径都是从盘符开始，如C://Program Files.</p>
+<p>Linux正好相反，是先有目录，再将物理地址(分区)映射到目录中.在Linux操作系统中，
+所有路径都是从根目录开始【/】。Linux默认可分为3个分区，分别是boot分区、swap分区和根分区.</p>
+<p>无论是Windows操作系统，还是Linux操作系统，每个分区均可以有不同的文件系统，如FAT32、NTFS等。</p>
+<p>对习惯于使用Dos或Windows的用户来说，有几个分区就有几个驱动器，并且每个分区都会获
+得一个字母标识符，然后就可以选用这个字母来指定在这个分区上的文件和目录，它们的文
+件结构都是独立的，非常好理解。但对于Linux系统来说，可不再是这样了，因为对Linux系统
+用户来说，无论有几个分区，分给哪一目录使用，它归根结底就只有一个根目录，一个独立且
+唯一的文件结构。Linux中每个分区都是用来组成整个文件系统的一部分，因为它采用了一种
+叫&#8221;挂载&#8221;的处理方法，它的整个文件系统中包含了一整套的文件和目录，且将一个分区和一个目
+录联系起来。这时要载入的一个分区将使它的存储空间在一个目录下获得。下面我们先来看看
+Linux的驱动器是如何标识的。</p>
+<p>对于IDE硬盘，驱动器标识符为“hdx~”,其中“hd”表明分区所在设备的类型，这里 是指IDE硬盘了。
+“x”为盘号（a为基本盘，b为基本从属盘，c为辅助主盘，d为辅助从属盘）,“~”代表分区，前四个分
+区用数字1到4表示，它们是主分区或扩展分区，从5开始就是逻辑分区。例，hda3表示为第一个IDE硬
+盘上的第三个主分区或扩展分区,hdb2表示为第二个IDE硬盘上的第二个主分区或扩展分区。对于SCSI
+硬盘则标识为“sdx~”，SCSI硬盘是用“sd”来表示分区所在设备的类型的，其余则和IDE硬盘的表示方法
+一样。如，sda1表示第一个SCSI硬盘上的第一个主分区或者扩展分区。</p>
+</div>
+<div class="section" id="id4">
+<h2><a class="toc-backref" href="#id17">6.3. 参考</a><a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h2>
+<table class="docutils footnote" frame="void" id="id5" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label">[1]</td><td><a class="reference external" href="http://www.cnblogs.com/xiaoluo501395377/archive/2013/04/03/2997098.html">http://www.cnblogs.com/xiaoluo501395377/archive/2013/04/03/2997098.html</a>   (强烈推荐)</td></tr>
+</tbody>
+</table>
+<table class="docutils footnote" frame="void" id="id6" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label">[2]</td><td><a class="reference external" href="http://blog.csdn.net/acmman/article/details/51870846">http://blog.csdn.net/acmman/article/details/51870846</a></td></tr>
+</tbody>
+</table>
+<table class="docutils footnote" frame="void" id="id7" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label">[3]</td><td><a class="reference external" href="http://blog.csdn.net/aaronychen/article/details/2270048">http://blog.csdn.net/aaronychen/article/details/2270048</a></td></tr>
+</tbody>
+</table>
+<table class="docutils footnote" frame="void" id="id8" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label">[4]</td><td><a class="reference external" href="http://blog.csdn.net/openn/article/details/9856451">http://blog.csdn.net/openn/article/details/9856451</a></td></tr>
+</tbody>
+</table>
+<table class="docutils footnote" frame="void" id="id9" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label">[5]</td><td><a class="reference external" href="http://os.51cto.com/art/201003/186904.htm">http://os.51cto.com/art/201003/186904.htm</a></td></tr>
+</tbody>
+</table>
+<table class="docutils footnote" frame="void" id="id10" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label">[6]</td><td><a class="reference external" href="http://os.51cto.com/art/201012/240726_all.htm">http://os.51cto.com/art/201012/240726_all.htm</a></td></tr>
+</tbody>
+</table>
+</div>
+</div>
+
+
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../openstack/index.html" class="btn btn-neutral float-right" title="OpenStack Note" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="linux_cmd.html" class="btn btn-neutral" title="5. Linux命令" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2016, chenshiqiang.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'0.1',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

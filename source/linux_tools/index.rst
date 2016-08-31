@@ -14,4 +14,5 @@ Hack Linux
     use_man_page
     Linux_lvm
     linux_cmd
+    disk_note
 
