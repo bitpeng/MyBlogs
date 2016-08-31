@@ -558,7 +558,9 @@ rbd_secret_uuid</p>
 <div class="section" id="nova">
 <h3><a class="toc-backref" href="#id40">3.4.5. 计算节点配置nova免密连接</a><a class="headerlink" href="#nova" title="Permalink to this headline">¶</a></h3>
 <p>请参考 《网际云安全套件v2.5 安装说明》相应章节，然后在每个计算节点执行：</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="o">./</span><span class="n">setup</span><span class="o">.</span><span class="n">sh</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">cd</span> <span class="n">allinone</span><span class="o">-</span><span class="n">v2</span><span class="o">.</span><span class="mi">5</span><span class="o">-</span><span class="n">install</span><span class="o">-</span><span class="n">script</span><span class="o">/</span><span class="n">rsakey_login_for_nova_compute_2015_01_29_final_version</span>
+<span class="n">vi</span> <span class="n">compute_node</span>
+<span class="o">./</span><span class="n">setup</span><span class="o">.</span><span class="n">sh</span>
 </pre></div>
 </div>
 </div>

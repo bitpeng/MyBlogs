@@ -340,6 +340,8 @@ OpenStack镜像制作，可以花一篇专门的笔记来介绍，请参考 :ref
 
 ::
 
+    cd allinone-v2.5-install-script/rsakey_login_for_nova_compute_2015_01_29_final_version
+    vi compute_node
     ./setup.sh
 
 
