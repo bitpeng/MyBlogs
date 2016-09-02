@@ -6,8 +6,8 @@ openstack 实践指南
 
     利用部门服务器，自己准备搭建OpenStack来熟悉OpenStack的部署，运维等方面的知识；
 
-    硬件： Dell e14s(PowerEdge R720)
-    软件： Ubuntu 14.04 LTS
+    - 硬件： Dell e14s(PowerEdge R720)
+    - 软件： Ubuntu 14.04 LTS
 
 .. contents:: 目录
 
@@ -188,6 +188,15 @@ OpenStack镜像制作，可以花一篇专门的笔记来介绍，请参考 :ref
     如果openstack有些虚拟机可以创建成功，而有些提示"no valid host found"，那么很可能是因为compute
     节点内存不够。
 
+.. important::
+    注意，以ceph作为后端存储时，不支持vmdk格式的镜像。启动虚拟机会出现"prepare block device" 的错误。
+
+    可以使用 qemu-img 命令查看镜像格式，并进行转换：
+
+    ::
+
+        qemu-img info cirros.img
+
 
 
 分布式方式部署
@@ -203,6 +212,11 @@ OpenStack镜像制作，可以花一篇专门的笔记来介绍，请参考 :ref
 .. important::
     分布式部署，需要多台虚拟机，一定要直接安装，不要使用vmware的克隆虚拟机
     功能(使用该功能，安装ceph集群会缺少部分组件，无法安装).
+
+.. tip::
+    分布式部署时，存在多个节点，脚本执行安装顺序为：
+    存储--> 控制 --> 网络 --> 计算
+
 
 激活root并配置root ssh
 ++++++++++++++++++++++
@@ -298,6 +312,7 @@ OpenStack镜像制作，可以花一篇专门的笔记来介绍，请参考 :ref
 计算节点设置secret
 ++++++++++++++++++
 
+
 - 在任一ceph节点执行：
 
   ::
@@ -305,6 +320,12 @@ OpenStack镜像制作，可以花一篇专门的笔记来介绍，请参考 :ref
       ceph auth get-key client.cinder | tee client.cinder.key
 
 - 将生产的 client.cinder.key文件拷贝到计算节点；
+
+  .. code-block:: bash
+
+    nc -l 12345 < client.cinder.key
+    nc -n 192.168.159.151 12345 > client.cinder.key
+
 
 - 在计算节点上执行下面的命令：
 
@@ -330,7 +351,15 @@ OpenStack镜像制作，可以花一篇专门的笔记来介绍，请参考 :ref
       virsh secret-list
 
 - 根据生成的secret依次更改计算节点/etc/nova/nova.conf和controller节点/etc/cinder/cinder.conf的
-  rbd_secret_uuid
+  rbd_secret_uuid. 并启动nova、cinder、glance服务
+
+  ::
+
+    # 在控制节点
+    for i in /usr/bin/cinder*;do service $i restart;done
+    for i in /usr/bin/glance*;do service $i restart;done
+    # 在计算节点
+    service /usr/bin/nova-compute restart
 
 
 计算节点配置nova免密连接
@@ -403,8 +432,106 @@ OpenStack镜像制作，可以花一篇专门的笔记来介绍，请参考 :ref
      成功扩展计算节点
 
 
+
+部署注意事项
+=================
+
+.. note::
+
+    脚本部署要点：
+
+    前期：
+
+    ceph节点包装硬盘数量一致。
+
+    脚本安装完成后：
+
+    mtu设置；
+
+    win7蓝屏；
+
+
+    vi /etc/neutron/dnsmasq-neutron.conf
+    修改1454为1450
+
+
+
+    操作系统安装raid一律为raid1.
+
+网段规划
++++++++++
+
+略
+
+设备安装
+++++++++++
+
+安装ubuntu 14.04.1 LTS版本，注意安装过程不要联网，也不要使用apt-get下载软件，因为可能会更新依赖，导致安装云失败。
+
+网卡配置
+++++++++
+
+eth0一律为外网；eth1一律为管理网；eth2一律为数据网。
+其中，eth1和eth2不要求能够连接外网。
+
+另外，eth1和eth2一般为static；eth0一般为dhcp。如下：
+
+::
+
+    auto lo
+    iface lo inet loopback
+
+    auto eth0
+    iface eth0 inet dhcp
+
+    auto eth2
+    iface eth2 inet static
+        address 10.10.10.250
+        netmask 255.255.255.0
+
+
+ceph 安装
++++++++++
+
+.. warning::
+    - 不管是allinone还是分布式部署，假如没有单独的ceph存储节点，ceph配置的网络一律使用数据网络。
+      ceph安装时使用数据网络.
+    - 安装ceph集群时，ceph节点要保证硬盘数量一致。
+
+.. figure:: /_static/images/allinone_conf.png
+    :align: center
+
+    allinone 配置数据网络
+
+.. figure:: /_static/images/allinone_ceph_conf.png
+    :align: center
+
+    ceph 配置使用数据网络
+
+假如有单独的ceph存储节点，那么ceph安装也不建议使用外网接口，而是使用其他固定的，不会变化的网络接口。
+
+
+
+审计管理登录
+++++++++++++
+
+
+无法正常登录，需要修改tomcat文件。
+
+::
+
+    cd /opt/apache-tomcat-7.0.50/webapps/ROOT/WEB-INF/classes
+    vi global.cec.properties
+    vi jdbc.properties
+    # 该以上两个文件有关mysql的密码部分写成固定密码。
+
+    vi /etc/cecgw/cloudsec.conf
+    # 然后更改该文件下[VAUDIT]下的IP地址。然后重启tomcat！
+
+
+
 其他
-=========
+====
 
 horizon ip地址配置文件
 +++++++++++++++++++++++

@@ -115,12 +115,20 @@
 <li class="toctree-l4"><a class="reference internal" href="#id11">3.4.6. 扩展计算节点</a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="#id12">3.5. 其他</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#horizon-ip">3.5.1. horizon ip地址配置文件</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#id13">3.5.2. 重启网卡、网络服务</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id12">3.5. 部署注意事项</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#id13">3.5.1. 网段规划</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id14">3.5.2. 设备安装</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id15">3.5.3. 网卡配置</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id16">3.5.4. ceph 安装</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id17">3.5.5. 审计管理登录</a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="#id14">3.6. 参考</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id18">3.6. 其他</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#horizon-ip">3.6.1. horizon ip地址配置文件</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id19">3.6.2. 重启网卡、网络服务</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#id20">3.7. 参考</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="centos_vm_netconf.html">4. Centos虚拟机联网配置</a></li>
@@ -177,77 +185,87 @@
            <div itemprop="articleBody">
             
   <div class="section" id="openstack">
-<h1><a class="toc-backref" href="#id23">3. openstack 实践指南</a><a class="headerlink" href="#openstack" title="Permalink to this headline">¶</a></h1>
+<h1><a class="toc-backref" href="#id31">3. openstack 实践指南</a><a class="headerlink" href="#openstack" title="Permalink to this headline">¶</a></h1>
 <div class="admonition tip">
 <p class="first admonition-title">Tip</p>
 <p>利用部门服务器，自己准备搭建OpenStack来熟悉OpenStack的部署，运维等方面的知识；</p>
-<p class="last">硬件： Dell e14s(PowerEdge R720)
-软件： Ubuntu 14.04 LTS</p>
+<ul class="last simple">
+<li>硬件： Dell e14s(PowerEdge R720)</li>
+<li>软件： Ubuntu 14.04 LTS</li>
+</ul>
 </div>
 <div class="contents topic" id="id1">
 <p class="topic-title first">目录</p>
 <ul class="simple">
-<li><a class="reference internal" href="#openstack" id="id23">openstack 实践指南</a><ul>
-<li><a class="reference internal" href="#id2" id="id24">准备工作</a><ul>
-<li><a class="reference internal" href="#raid" id="id25">raid 管理</a></li>
-<li><a class="reference internal" href="#ubuntu-server" id="id26">安装Ubuntu Server</a></li>
+<li><a class="reference internal" href="#openstack" id="id31">openstack 实践指南</a><ul>
+<li><a class="reference internal" href="#id2" id="id32">准备工作</a><ul>
+<li><a class="reference internal" href="#raid" id="id33">raid 管理</a></li>
+<li><a class="reference internal" href="#ubuntu-server" id="id34">安装Ubuntu Server</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#allinone" id="id27">allinone方式部署</a><ul>
-<li><a class="reference internal" href="#id3" id="id28">安装allinone</a></li>
-<li><a class="reference internal" href="#ceph" id="id29">安装ceph</a></li>
-<li><a class="reference internal" href="#novasecret" id="id30">nova设置secret</a></li>
+<li><a class="reference internal" href="#allinone" id="id35">allinone方式部署</a><ul>
+<li><a class="reference internal" href="#id3" id="id36">安装allinone</a></li>
+<li><a class="reference internal" href="#ceph" id="id37">安装ceph</a></li>
+<li><a class="reference internal" href="#novasecret" id="id38">nova设置secret</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#id4" id="id31">创建虚拟机流程</a><ul>
-<li><a class="reference internal" href="#id5" id="id32">镜像制作</a></li>
-<li><a class="reference internal" href="#id6" id="id33">创建网络和路由</a></li>
-<li><a class="reference internal" href="#id7" id="id34">创建虚拟机</a></li>
+<li><a class="reference internal" href="#id4" id="id39">创建虚拟机流程</a><ul>
+<li><a class="reference internal" href="#id5" id="id40">镜像制作</a></li>
+<li><a class="reference internal" href="#id6" id="id41">创建网络和路由</a></li>
+<li><a class="reference internal" href="#id7" id="id42">创建虚拟机</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#id8" id="id35">分布式方式部署</a><ul>
-<li><a class="reference internal" href="#rootroot-ssh" id="id36">激活root并配置root ssh</a></li>
-<li><a class="reference internal" href="#id9" id="id37">安装ceph集群</a></li>
-<li><a class="reference internal" href="#id10" id="id38">节点安装</a></li>
-<li><a class="reference internal" href="#secret" id="id39">计算节点设置secret</a></li>
-<li><a class="reference internal" href="#nova" id="id40">计算节点配置nova免密连接</a></li>
-<li><a class="reference internal" href="#id11" id="id41">扩展计算节点</a></li>
+<li><a class="reference internal" href="#id8" id="id43">分布式方式部署</a><ul>
+<li><a class="reference internal" href="#rootroot-ssh" id="id44">激活root并配置root ssh</a></li>
+<li><a class="reference internal" href="#id9" id="id45">安装ceph集群</a></li>
+<li><a class="reference internal" href="#id10" id="id46">节点安装</a></li>
+<li><a class="reference internal" href="#secret" id="id47">计算节点设置secret</a></li>
+<li><a class="reference internal" href="#nova" id="id48">计算节点配置nova免密连接</a></li>
+<li><a class="reference internal" href="#id11" id="id49">扩展计算节点</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#id12" id="id42">其他</a><ul>
-<li><a class="reference internal" href="#horizon-ip" id="id43">horizon ip地址配置文件</a></li>
-<li><a class="reference internal" href="#id13" id="id44">重启网卡、网络服务</a></li>
+<li><a class="reference internal" href="#id12" id="id50">部署注意事项</a><ul>
+<li><a class="reference internal" href="#id13" id="id51">网段规划</a></li>
+<li><a class="reference internal" href="#id14" id="id52">设备安装</a></li>
+<li><a class="reference internal" href="#id15" id="id53">网卡配置</a></li>
+<li><a class="reference internal" href="#id16" id="id54">ceph 安装</a></li>
+<li><a class="reference internal" href="#id17" id="id55">审计管理登录</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#id14" id="id45">参考</a></li>
+<li><a class="reference internal" href="#id18" id="id56">其他</a><ul>
+<li><a class="reference internal" href="#horizon-ip" id="id57">horizon ip地址配置文件</a></li>
+<li><a class="reference internal" href="#id19" id="id58">重启网卡、网络服务</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#id20" id="id59">参考</a></li>
 </ul>
 </li>
 </ul>
 </div>
 <hr class="docutils" />
 <div class="section" id="id2">
-<h2><a class="toc-backref" href="#id24">3.1. 准备工作</a><a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id32">3.1. 准备工作</a><a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="raid">
-<h3><a class="toc-backref" href="#id25">3.1.1. raid 管理</a><a class="headerlink" href="#raid" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id33">3.1.1. raid 管理</a><a class="headerlink" href="#raid" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
 <li>v2.3版本lvm作存储，raid1一块(操作系统安装盘)，其他的作raid5；</li>
 <li>v2.5 ceph作存储，raid1一块，其他的raid0, 因为ceph本身有备份机制，不需要raid5；</li>
 </ul>
 </div>
 <div class="section" id="ubuntu-server">
-<h3><a class="toc-backref" href="#id26">3.1.2. 安装Ubuntu Server</a><a class="headerlink" href="#ubuntu-server" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id34">3.1.2. 安装Ubuntu Server</a><a class="headerlink" href="#ubuntu-server" title="Permalink to this headline">¶</a></h3>
 <p>制作为U盘引导盘后，启动服务器，按f8，然后设置system bios，选择启动方式 UEFI 模式
 保存重启，然后开始安装。</p>
 </div>
 </div>
 <div class="section" id="allinone">
-<h2><a class="toc-backref" href="#id27">3.2. allinone方式部署</a><a class="headerlink" href="#allinone" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id35">3.2. allinone方式部署</a><a class="headerlink" href="#allinone" title="Permalink to this headline">¶</a></h2>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
 <p class="last">下面以v2.5版本的juno install allinone脚本为例，说明部署方法和需要注意的细节.</p>
 </div>
 <div class="section" id="id3">
-<h3><a class="toc-backref" href="#id28">3.2.1. 安装allinone</a><a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id36">3.2.1. 安装allinone</a><a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h3>
 <p>在allinone安装脚本中，只需要配置setup.conf文件，分别设置外网、内网、管理网络的IP地址，掩码和网关即可。
 然后执行setup.sh脚本。</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">setup</span><span class="o">.</span><span class="n">sh</span>
@@ -255,7 +273,7 @@
 </div>
 </div>
 <div class="section" id="ceph">
-<h3><a class="toc-backref" href="#id29">3.2.2. 安装ceph</a><a class="headerlink" href="#ceph" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id37">3.2.2. 安装ceph</a><a class="headerlink" href="#ceph" title="Permalink to this headline">¶</a></h3>
 <p>以下以ceph allinone脚本为例说明安装过程:</p>
 <ul>
 <li><p class="first">配置文件preconf;</p>
@@ -274,7 +292,7 @@
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">ceph</span> <span class="o">-</span><span class="n">s</span>
 </pre></div>
 </div>
-<div class="figure align-center" id="id17">
+<div class="figure align-center" id="id23">
 <img alt="../_images/ceph_status.png" src="../_images/ceph_status.png" />
 <p class="caption"><span class="caption-text">图：ceph状态验证</span></p>
 </div>
@@ -296,7 +314,7 @@
 </div>
 </div>
 <div class="section" id="novasecret">
-<h3><a class="toc-backref" href="#id30">3.2.3. nova设置secret</a><a class="headerlink" href="#novasecret" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id38">3.2.3. nova设置secret</a><a class="headerlink" href="#novasecret" title="Permalink to this headline">¶</a></h3>
 <div class="admonition important">
 <p class="first admonition-title">Important</p>
 <p class="last">OpenStack用户租户创建虚拟机，计算节点一定要设置secret，否则租户创建虚拟机时肯定不会成功。
@@ -340,9 +358,9 @@ virsh secret-list
 </div>
 </div>
 <div class="section" id="id4">
-<h2><a class="toc-backref" href="#id31">3.3. 创建虚拟机流程</a><a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id39">3.3. 创建虚拟机流程</a><a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="id5">
-<h3><a class="toc-backref" href="#id32">3.3.1. 镜像制作</a><a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id40">3.3.1. 镜像制作</a><a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h3>
 <p>OpenStack镜像制作，可以花一篇专门的笔记来介绍，请参考 <a class="reference internal" href="image-create-guide.html#image-guide"><span class="std std-ref">OpenStack镜像制作</span></a></p>
 <div class="admonition important">
 <p class="first admonition-title">Important</p>
@@ -350,12 +368,12 @@ virsh secret-list
 </div>
 </div>
 <div class="section" id="id6">
-<h3><a class="toc-backref" href="#id33">3.3.2. 创建网络和路由</a><a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id41">3.3.2. 创建网络和路由</a><a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h3>
 <p>步骤如下：</p>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
 <p>办公网络(可连接外网)的网段地址为：10.11.113.0/24</p>
-<div class="last figure align-center" id="id18">
+<div class="last figure align-center" id="id24">
 <img alt="../_images/winnet_config.png" src="../_images/winnet_config.png" />
 <p class="caption"><span class="caption-text">办公网络网段、网关</span></p>
 </div>
@@ -392,17 +410,17 @@ virsh secret-list
 </div>
 </div>
 <div class="section" id="id7">
-<h3><a class="toc-backref" href="#id34">3.3.3. 创建虚拟机</a><a class="headerlink" href="#id7" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id42">3.3.3. 创建虚拟机</a><a class="headerlink" href="#id7" title="Permalink to this headline">¶</a></h3>
 <div class="admonition important">
 <p class="first admonition-title">Important</p>
 <p>特别注意：在虚拟机中创建云平台，一定要开启CPU虚拟机。否则会如下错误：</p>
-<div class="figure align-center" id="id19">
+<div class="figure align-center" id="id25">
 <img alt="../_images/no_vcpu_error.png" src="../_images/no_vcpu_error.png" />
 <p class="caption"><span class="caption-text">虚拟机没有开启CPU虚拟机</span></p>
 </div>
 <ul class="last">
 <li><p class="first">vmware开启虚拟化：</p>
-<div class="figure align-center" id="id20">
+<div class="figure align-center" id="id26">
 <img alt="../_images/open_vcpu.png" src="../_images/open_vcpu.png" />
 <p class="caption"><span class="caption-text">开启虚拟化</span></p>
 </div>
@@ -417,10 +435,18 @@ virsh secret-list
 <p class="last">如果openstack有些虚拟机可以创建成功，而有些提示&#8221;no valid host found&#8221;，那么很可能是因为compute
 节点内存不够。</p>
 </div>
+<div class="admonition important">
+<p class="first admonition-title">Important</p>
+<p>注意，以ceph作为后端存储时，不支持vmdk格式的镜像。启动虚拟机会出现&#8221;prepare block device&#8221; 的错误。</p>
+<p>可以使用 qemu-img 命令查看镜像格式，并进行转换：</p>
+<div class="last highlight-default"><div class="highlight"><pre><span></span><span class="n">qemu</span><span class="o">-</span><span class="n">img</span> <span class="n">info</span> <span class="n">cirros</span><span class="o">.</span><span class="n">img</span>
+</pre></div>
+</div>
+</div>
 </div>
 </div>
 <div class="section" id="id8">
-<h2><a class="toc-backref" href="#id35">3.4. 分布式方式部署</a><a class="headerlink" href="#id8" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id43">3.4. 分布式方式部署</a><a class="headerlink" href="#id8" title="Permalink to this headline">¶</a></h2>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
 <ul class="last simple">
@@ -434,8 +460,13 @@ virsh secret-list
 <p class="last">分布式部署，需要多台虚拟机，一定要直接安装，不要使用vmware的克隆虚拟机
 功能(使用该功能，安装ceph集群会缺少部分组件，无法安装).</p>
 </div>
+<div class="admonition tip">
+<p class="first admonition-title">Tip</p>
+<p class="last">分布式部署时，存在多个节点，脚本执行安装顺序为：
+存储&#8211;&gt; 控制 &#8211;&gt; 网络 &#8211;&gt; 计算</p>
+</div>
 <div class="section" id="rootroot-ssh">
-<h3><a class="toc-backref" href="#id36">3.4.1. 激活root并配置root ssh</a><a class="headerlink" href="#rootroot-ssh" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id44">3.4.1. 激活root并配置root ssh</a><a class="headerlink" href="#rootroot-ssh" title="Permalink to this headline">¶</a></h3>
 <ul>
 <li><p class="first">激活root</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="n">passwd</span>
@@ -455,7 +486,7 @@ virsh secret-list
 </ul>
 </div>
 <div class="section" id="id9">
-<h3><a class="toc-backref" href="#id37">3.4.2. 安装ceph集群</a><a class="headerlink" href="#id9" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id45">3.4.2. 安装ceph集群</a><a class="headerlink" href="#id9" title="Permalink to this headline">¶</a></h3>
 <ul>
 <li><p class="first">配置preconf文件：</p>
 <div class="figure align-center">
@@ -483,7 +514,7 @@ virsh secret-list
 </div>
 </div>
 <div class="section" id="id10">
-<h3><a class="toc-backref" href="#id38">3.4.3. 节点安装</a><a class="headerlink" href="#id10" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id46">3.4.3. 节点安装</a><a class="headerlink" href="#id10" title="Permalink to this headline">¶</a></h3>
 <ul>
 <li><p class="first">根据安装好的四个虚拟机的ip地址，配置setup.conf文件</p>
 <div class="admonition important">
@@ -502,7 +533,7 @@ virsh secret-list
 <p class="first admonition-title">Tip</p>
 <p>安装控制节点时，最后会提示某些服务启动失败，实际上此时已经安装成功，
 我们只需要手动重启相应的服务即可。</p>
-<div class="figure align-center" id="id21">
+<div class="figure align-center" id="id27">
 <img alt="../_images/multinode_setup_controller.png" src="../_images/multinode_setup_controller.png" />
 <p class="caption"><span class="caption-text">提示未知服务</span></p>
 </div>
@@ -520,7 +551,7 @@ for i in keystone*;do service $i restart;done;
 </ul>
 </div>
 <div class="section" id="secret">
-<h3><a class="toc-backref" href="#id39">3.4.4. 计算节点设置secret</a><a class="headerlink" href="#secret" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id47">3.4.4. 计算节点设置secret</a><a class="headerlink" href="#secret" title="Permalink to this headline">¶</a></h3>
 <ul>
 <li><p class="first">在任一ceph节点执行：</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">ceph</span> <span class="n">auth</span> <span class="n">get</span><span class="o">-</span><span class="n">key</span> <span class="n">client</span><span class="o">.</span><span class="n">cinder</span> <span class="o">|</span> <span class="n">tee</span> <span class="n">client</span><span class="o">.</span><span class="n">cinder</span><span class="o">.</span><span class="n">key</span>
@@ -528,6 +559,10 @@ for i in keystone*;do service $i restart;done;
 </div>
 </li>
 <li><p class="first">将生产的 client.cinder.key文件拷贝到计算节点；</p>
+<div class="highlight-bash"><div class="highlight"><pre><span></span>nc -l <span class="m">12345</span> &lt; client.cinder.key
+nc -n 192.168.159.151 <span class="m">12345</span> &gt; client.cinder.key
+</pre></div>
+</div>
 </li>
 <li><p class="first">在计算节点上执行下面的命令：</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span>UUID=`uuidgen`
@@ -551,12 +586,19 @@ virsh secret-set-value --secret ${UUID} --base64 $(cat client.cinder.key)
 </div>
 </li>
 <li><p class="first">根据生成的secret依次更改计算节点/etc/nova/nova.conf和controller节点/etc/cinder/cinder.conf的
-rbd_secret_uuid</p>
+rbd_secret_uuid. 并启动nova、cinder、glance服务</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span># 在控制节点
+for i in /usr/bin/cinder*;do service $i restart;done
+for i in /usr/bin/glance*;do service $i restart;done
+# 在计算节点
+service /usr/bin/nova-compute restart
+</pre></div>
+</div>
 </li>
 </ul>
 </div>
 <div class="section" id="nova">
-<h3><a class="toc-backref" href="#id40">3.4.5. 计算节点配置nova免密连接</a><a class="headerlink" href="#nova" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id48">3.4.5. 计算节点配置nova免密连接</a><a class="headerlink" href="#nova" title="Permalink to this headline">¶</a></h3>
 <p>请参考 《网际云安全套件v2.5 安装说明》相应章节，然后在每个计算节点执行：</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">cd</span> <span class="n">allinone</span><span class="o">-</span><span class="n">v2</span><span class="o">.</span><span class="mi">5</span><span class="o">-</span><span class="n">install</span><span class="o">-</span><span class="n">script</span><span class="o">/</span><span class="n">rsakey_login_for_nova_compute_2015_01_29_final_version</span>
 <span class="n">vi</span> <span class="n">compute_node</span>
@@ -565,7 +607,7 @@ rbd_secret_uuid</p>
 </div>
 </div>
 <div class="section" id="id11">
-<h3><a class="toc-backref" href="#id41">3.4.6. 扩展计算节点</a><a class="headerlink" href="#id11" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id49">3.4.6. 扩展计算节点</a><a class="headerlink" href="#id11" title="Permalink to this headline">¶</a></h3>
 <p>扩展计算节点步骤:</p>
 <ul>
 <li><p class="first">安装ubuntu-14.04.1；</p>
@@ -611,7 +653,7 @@ for i in nova*;do service $i restart ;done
 <span class="n">nova</span> <span class="n">service</span><span class="o">-</span><span class="nb">list</span>
 </pre></div>
 </div>
-<div class="figure align-center" id="id22">
+<div class="figure align-center" id="id28">
 <img alt="../_images/add_compute_node.png" src="../_images/add_compute_node.png" />
 <p class="caption"><span class="caption-text">成功扩展计算节点</span></p>
 </div>
@@ -620,15 +662,89 @@ for i in nova*;do service $i restart ;done
 </div>
 </div>
 <div class="section" id="id12">
-<h2><a class="toc-backref" href="#id42">3.5. 其他</a><a class="headerlink" href="#id12" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id50">3.5. 部署注意事项</a><a class="headerlink" href="#id12" title="Permalink to this headline">¶</a></h2>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p>脚本部署要点：</p>
+<p>前期：</p>
+<p>ceph节点包装硬盘数量一致。</p>
+<p>脚本安装完成后：</p>
+<p>mtu设置；</p>
+<p>win7蓝屏；</p>
+<p>vi /etc/neutron/dnsmasq-neutron.conf
+修改1454为1450</p>
+<p class="last">操作系统安装raid一律为raid1.</p>
+</div>
+<div class="section" id="id13">
+<h3><a class="toc-backref" href="#id51">3.5.1. 网段规划</a><a class="headerlink" href="#id13" title="Permalink to this headline">¶</a></h3>
+<p>略</p>
+</div>
+<div class="section" id="id14">
+<h3><a class="toc-backref" href="#id52">3.5.2. 设备安装</a><a class="headerlink" href="#id14" title="Permalink to this headline">¶</a></h3>
+<p>安装ubuntu 14.04.1 LTS版本，注意安装过程不要联网，也不要使用apt-get下载软件，因为可能会更新依赖，导致安装云失败。</p>
+</div>
+<div class="section" id="id15">
+<h3><a class="toc-backref" href="#id53">3.5.3. 网卡配置</a><a class="headerlink" href="#id15" title="Permalink to this headline">¶</a></h3>
+<p>eth0一律为外网；eth1一律为管理网；eth2一律为数据网。
+其中，eth1和eth2不要求能够连接外网。</p>
+<p>另外，eth1和eth2一般为static；eth0一般为dhcp。如下：</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">auto</span> <span class="n">lo</span>
+<span class="n">iface</span> <span class="n">lo</span> <span class="n">inet</span> <span class="n">loopback</span>
+
+<span class="n">auto</span> <span class="n">eth0</span>
+<span class="n">iface</span> <span class="n">eth0</span> <span class="n">inet</span> <span class="n">dhcp</span>
+
+<span class="n">auto</span> <span class="n">eth2</span>
+<span class="n">iface</span> <span class="n">eth2</span> <span class="n">inet</span> <span class="n">static</span>
+    <span class="n">address</span> <span class="mf">10.10</span><span class="o">.</span><span class="mf">10.250</span>
+    <span class="n">netmask</span> <span class="mf">255.255</span><span class="o">.</span><span class="mf">255.0</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="id16">
+<h3><a class="toc-backref" href="#id54">3.5.4. ceph 安装</a><a class="headerlink" href="#id16" title="Permalink to this headline">¶</a></h3>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<ul class="last simple">
+<li>不管是allinone还是分布式部署，假如没有单独的ceph存储节点，ceph配置的网络一律使用数据网络。
+ceph安装时使用数据网络.</li>
+<li>安装ceph集群时，ceph节点要保证硬盘数量一致。</li>
+</ul>
+</div>
+<div class="figure align-center" id="id29">
+<img alt="../_images/allinone_conf.png" src="../_images/allinone_conf.png" />
+<p class="caption"><span class="caption-text">allinone 配置数据网络</span></p>
+</div>
+<div class="figure align-center" id="id30">
+<img alt="../_images/allinone_ceph_conf.png" src="../_images/allinone_ceph_conf.png" />
+<p class="caption"><span class="caption-text">ceph 配置使用数据网络</span></p>
+</div>
+<p>假如有单独的ceph存储节点，那么ceph安装也不建议使用外网接口，而是使用其他固定的，不会变化的网络接口。</p>
+</div>
+<div class="section" id="id17">
+<h3><a class="toc-backref" href="#id55">3.5.5. 审计管理登录</a><a class="headerlink" href="#id17" title="Permalink to this headline">¶</a></h3>
+<p>无法正常登录，需要修改tomcat文件。</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">cd</span> <span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">apache</span><span class="o">-</span><span class="n">tomcat</span><span class="o">-</span><span class="mf">7.0</span><span class="o">.</span><span class="mi">50</span><span class="o">/</span><span class="n">webapps</span><span class="o">/</span><span class="n">ROOT</span><span class="o">/</span><span class="n">WEB</span><span class="o">-</span><span class="n">INF</span><span class="o">/</span><span class="n">classes</span>
+<span class="n">vi</span> <span class="k">global</span><span class="o">.</span><span class="n">cec</span><span class="o">.</span><span class="n">properties</span>
+<span class="n">vi</span> <span class="n">jdbc</span><span class="o">.</span><span class="n">properties</span>
+<span class="c1"># 该以上两个文件有关mysql的密码部分写成固定密码。</span>
+
+<span class="n">vi</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">cecgw</span><span class="o">/</span><span class="n">cloudsec</span><span class="o">.</span><span class="n">conf</span>
+<span class="c1"># 然后更改该文件下[VAUDIT]下的IP地址。然后重启tomcat！</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="id18">
+<h2><a class="toc-backref" href="#id56">3.6. 其他</a><a class="headerlink" href="#id18" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="horizon-ip">
-<h3><a class="toc-backref" href="#id43">3.5.1. horizon ip地址配置文件</a><a class="headerlink" href="#horizon-ip" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id57">3.6.1. horizon ip地址配置文件</a><a class="headerlink" href="#horizon-ip" title="Permalink to this headline">¶</a></h3>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">vi</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">nova</span><span class="o">/</span><span class="n">nova</span><span class="o">.</span><span class="n">conf</span>
 </pre></div>
 </div>
 </div>
-<div class="section" id="id13">
-<h3><a class="toc-backref" href="#id44">3.5.2. 重启网卡、网络服务</a><a class="headerlink" href="#id13" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id19">
+<h3><a class="toc-backref" href="#id58">3.6.2. 重启网卡、网络服务</a><a class="headerlink" href="#id19" title="Permalink to this headline">¶</a></h3>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">service</span> <span class="n">networking</span> <span class="n">restart</span>
 </pre></div>
 </div>
@@ -640,15 +756,15 @@ for i in nova*;do service $i restart ;done
 </div>
 </div>
 <hr class="docutils" />
-<div class="section" id="id14">
-<h2><a class="toc-backref" href="#id45">3.6. 参考</a><a class="headerlink" href="#id14" title="Permalink to this headline">¶</a></h2>
-<table class="docutils footnote" frame="void" id="id15" rules="none">
+<div class="section" id="id20">
+<h2><a class="toc-backref" href="#id59">3.7. 参考</a><a class="headerlink" href="#id20" title="Permalink to this headline">¶</a></h2>
+<table class="docutils footnote" frame="void" id="id21" rules="none">
 <colgroup><col class="label" /><col /></colgroup>
 <tbody valign="top">
 <tr><td class="label">[1]</td><td><a class="reference external" href="http://www.lai18.com/content/1477262.html">http://www.lai18.com/content/1477262.html</a></td></tr>
 </tbody>
 </table>
-<table class="docutils footnote" frame="void" id="id16" rules="none">
+<table class="docutils footnote" frame="void" id="id22" rules="none">
 <colgroup><col class="label" /><col /></colgroup>
 <tbody valign="top">
 <tr><td class="label">[2]</td><td>网际云安全套件v2.5 安装说明</td></tr>

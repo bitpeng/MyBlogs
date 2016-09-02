@@ -365,8 +365,8 @@ Bullet Lists
 
 高亮语法的标记：
 
-.. code-block:: python   
-    :linenos:   
+.. code-block:: python
+    :linenos:
     :emphasize-lines: 3,5
 
     def foo():
@@ -375,7 +375,7 @@ Bullet Lists
 
 
 .. code-block:: sh
-    
+
     /opt/app/todeav1$ps -fe| grep ls
     root      3676     1  0  2012 ?        02:58:14 /usr/sbin/vmtoolsd
 
