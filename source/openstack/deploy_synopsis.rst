@@ -165,12 +165,12 @@ OpenStack镜像制作，可以花一篇专门的笔记来介绍，请参考 :ref
 ++++++++++
 
 .. important::
-    特别注意：在虚拟机中创建云平台，一定要开启CPU虚拟机。否则会如下错误：
+    特别注意：在虚拟机中创建云平台，一定要开启CPU虚拟化。否则会如下错误：
 
     .. figure:: /_static/images/no_vcpu_error.png
        :align: center
 
-       虚拟机没有开启CPU虚拟机
+       虚拟机没有开启CPU虚拟化
 
 
     - vmware开启虚拟化：
@@ -472,7 +472,7 @@ OpenStack镜像制作，可以花一篇专门的笔记来介绍，请参考 :ref
 ++++++++
 
 eth0一律为外网；eth1一律为管理网；eth2一律为数据网。
-其中，eth1和eth2不要求能够连接外网。
+其中，eth1和eth2不要求能够连接外网。(特定环境下)
 
 另外，eth1和eth2一般为static；eth0一般为dhcp。如下：
 
@@ -528,7 +528,94 @@ ceph 安装
     vi /etc/cecgw/cloudsec.conf
     # 然后更改该文件下[VAUDIT]下的IP地址。然后重启tomcat！
 
+    # 注意，请使用下面的命令重启tomcat，否则将无法重启
+    cd /opt/apache-tomcat-7.0.50/bin
+    ./shutdown.sh
+    ./startup.sh
 
+
+主机地址映射
+++++++++++++
+
+.. note::
+    - 注意，部署时，openstack每一个节点都需要配置/etc/hosts文件，加快解析。地址对应关系为节点的管理网络。
+    - ceph节点的hosts解析文件使用ceph节点的数据网络。
+    - 每一个安装节点，都需要配置hosts文件。
+
+
+
+
+存在独立存储节点时
+++++++++++++++++++
+
+.. error::
+
+    更改/etc/cinder/cinder.conf和/etc/nova/nova.conf文件的 rbd_secret_uuid 项时，直接更改，不要使用注释。
+
+    ::
+
+        # 不要这么改
+        # rbd_secret_uuid=xxxxxxx
+        rbd_secret_uuid=yyyyyy
+
+.. error::
+    - 注意，存在单独的ceph集群节点时，需要把ceph节点的/etc/ceph下的文件拷贝到controller节点的/etc/ceph目录下，否则无法上传镜像。
+    - 此外，还需要把/etc/ceph文件拷贝到计算节点的对应目录下，否则启动虚拟机也会失败；
+
+解决日志过大问题
+++++++++++++++++
+
+编辑/etc/crontab 文件，最后加上一行。
+
+::
+
+    vi /etc/crontab
+    */10 * * * *    root    echo "" > /opt/apache-tomcat-7.0.50/logs/catalina.out
+    # 设置十分钟执行一次，清空大文件
+
+
+解决内存泄露问题
++++++++++++++++++
+
+编辑/etc/crontab 文件，最后加上一行。
+
+::
+
+    # free -hl
+    vi /etc/crontab
+    */60 * * * *    root    echo 3 > /proc/sys/vm/drop_caches
+
+
+
+重启服务
+++++++++
+
+.. error::
+
+    重启服务时，不能使用下面的命令：
+
+    ::
+
+        for i in /usr/bin/cinder*; do service $i restart;done
+
+    使用该命令重启服务会提示未知服务，重启失败；
+
+    .. figure:: /_static/images/error_restart.png
+        :align: center
+
+        错误重启服务方式
+
+    而应该用：
+
+    ::
+
+        cd /usr/bin/;
+        for i in cinder*;do service $i restart;done
+
+    .. figure:: /_static/images/success_restart.png
+        :align: center
+
+        正确重启方式
 
 其他
 ====
@@ -542,7 +629,7 @@ horizon ip地址配置文件
 
 
 重启网卡、网络服务
-+++++++++++++++++++++++
+++++++++++++++++++
 
 ::
 
@@ -554,6 +641,26 @@ horizon ip地址配置文件
 
     ifdown br-ex
     ifup br-ex
+
+
+修改磁盘镜像模板方式
+++++++++++++++++++++
+
+创建硬盘快照：
+不可行；
+
+- 通过虚拟机保存快照的多种方式测试，均不可行；
+
+- 唯一的方式，是用kvm方式启动镜像模板然后更改密码。
+
+在计算节点安装kvm命令:
+
+::
+
+    # 在计算节点上，安装包执行顺序。三个包。
+    dpkg -i libxen-4.4_4.4.2-0ubuntu0.14.04.6_amd64.deb
+    dpkg -i qemu-system-x86_2.0.0+dfsg-2ubuntu1.27_amd64.deb
+    dpkg -i qemu-kvm_2.0.0+dfsg-2ubuntu1.27_amd64.deb
 
 
 --------------
