@@ -137,6 +137,20 @@ OpenStack镜像制作，可以花一篇专门的笔记来介绍，请参考 :ref
 - 新建租户cecgw，cecgw登录，创建租户网络和子网；
 - 组合cecgw创建路由，并设置网关和接口.
 
+.. important::
+
+    另外要特别注意和指出的是，虚拟机获取的浮动IP和相连接的外网子网IP池一致。
+
+    .. figure:: /_static/images/floating_ip-1.png
+       :align: center
+
+       外网子网地址池
+
+    .. figure:: /_static/images/floating_ip-2.png
+       :align: center
+
+       获取的浮动IP
+
 
 网络详情如下：
 
