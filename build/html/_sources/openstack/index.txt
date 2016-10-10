@@ -19,6 +19,7 @@ OpenStack Note
     lanch_instance_failure
     rabbitmq_doc
     os_cmd
+    kvm_error
 
 
 ..  sphinx_doc

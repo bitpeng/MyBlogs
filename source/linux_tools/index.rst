@@ -15,4 +15,5 @@ Hack Linux
     Linux_lvm
     linux_cmd
     disk_note
+    ubuntu_lvm_extend
 
