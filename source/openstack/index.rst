@@ -20,6 +20,7 @@ OpenStack Note
     rabbitmq_doc
     os_cmd
     kvm_error
+    django_middleware
 
 
 ..  sphinx_doc
