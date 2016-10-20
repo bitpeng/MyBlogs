@@ -54,7 +54,7 @@ tags： Python
                 value = self.func(obj)
                 obj.__dict__[self.__name__] = value
             return value
-            
+
         def __set__(self, obj, value):
             pass
 

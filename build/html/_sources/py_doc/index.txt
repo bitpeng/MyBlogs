@@ -23,3 +23,4 @@ Hack Python
     re_analysis
     python_descriptor
     python_notebook
+    django_note
