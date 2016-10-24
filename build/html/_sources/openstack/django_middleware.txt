@@ -13,11 +13,10 @@ django中间件和openstack用户重登录分析
     二号 ++++++++++++++++++++
     三号 --------------------
     四号 ^^^^^^^^^^^^^^^^^^^^
-
+    开始尝试读openstack源码，把阅读源码过程总结下来，以作参考。有不正确或严谨的地方，欢迎指正。
 
 .. note::
 
-    开始尝试读openstack源码，把阅读源码过程总结下来，以作参考。
 
     这一部分，分析的是openstack的用户重登录机制：简而言之，在规定的未使用时限后，
     系统断开会话或者重新鉴别用户 ，系统应提供时限的默认值；
@@ -184,6 +183,112 @@ Django项目的安装并不强制要求任何中间件，如果你愿意， MIDD
 对于每一个请求，django根据会话，得出上一次活动时间，并计算时间戳是否大于超时时间，如果大于，则
 页面直接重定向到登录页面，后续的view调用等都会忽略；如果没有超时，则只需要简单的更新一下上一次活动时间，
 接下来会按照正常流程处理。
+
+
+Horizon 用户登录流程分析
+=========================
+
+下面对用户登录horizon的流程进行分析。
+
+- 用户输入IP地址，根据setting.py ROOT_URLCONF配置项来决定根URL映射函数；
+
+  .. figure:: /_static/images/root_urlconf.png
+     :scale: 100
+     :align: center
+
+     openstack_dashboard/setting.py ROOT_URLCONF 配置项
+
+- 根据URL匹配调用view处理函数(splash 函数。)
+
+  .. figure:: /_static/images/url_map.png
+     :scale: 100
+     :align: center
+
+     openstack_dashboard/urls.py
+
+- 根据request session判断用户是否认证(请求中间件拦截，判断是否会话失效，这里不予考虑)，
+  如果认证，则重定向到用户主界面；否则就加载模板系统，显示登录主界面；
+
+  .. figure:: /_static/images/splash.png
+     :scale: 100
+     :align: center
+
+     openstack_dashboard/views.py
+
+  .. figure:: /_static/images/splash_html.png
+     :scale: 100
+     :align: center
+
+     horizon/templates/splash.html 模板include表单模板
+
+- 用户输入登录信息，登录；
+
+- django框架表单数据校验；
+
+  .. figure:: /_static/images/clean_f1.png
+     :scale: 100
+     :align: center
+
+     表单数据校验：openstack_auth/form.py
+
+  .. note::
+
+    - 表单数据检验，注意可以使用clean_message方法来校验每一个表单属性，
+      也可以使用clean 方法整体校验。
+    - 表单校验clean函数，需要返回原始数据(cleaned_data)，否则会发生数据丢失。
+
+- 假如数据校验成功()，则提交表单，根据表单action 属性匹配映射处理函数。
+
+  .. figure:: /_static/images/form_action.png
+     :scale: 100
+     :align: center
+
+     登录页面，表单action属性。
+
+  .. error::
+
+      _login.html 表单继承 model_from1.html，并重写action 属性，但是{% url 'login' %} 最后怎么转换成"auth/login"，
+      还需要进一步的分析。
+
+      .. figure:: /_static/images/model_form1.png
+         :scale: 100
+         :align: center
+
+         基类表单模板action属性
+
+      .. figure:: /_static/images/model_form1.png
+         :scale: 100
+         :align: center
+
+         _login.html 模板表单重写action 属性
+
+- URL截断，分级URL匹配；
+
+  .. figure:: /_static/images/url_include_1.png
+     :scale: 100
+     :align: center
+
+     URL include 截断匹配
+
+  .. figure:: /_static/images/auth_url.png
+     :scale: 100
+     :align: center
+
+     URL分级匹配
+
+  .. important::
+
+     每当Django遇到 include() 时，它将截断匹配的URL，并把剩余的字符串发往包含的URLconf作进一步处理。
+
+     include 通常用于网站目录分类处理，使项目中urls高度统一。
+
+- 调用login处理函数和keystone认证后端，进行处理；
+
+  .. figure:: /_static/images/auth_backend.png
+     :scale: 100
+     :align: center
+
+     setting.py 认证后端项
 
 ---------------------
 
