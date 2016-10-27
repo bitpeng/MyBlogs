@@ -1,0 +1,397 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>11. django通用视图：一个问题引发的思考 &mdash; Welcome to Sitian&#39;s Blog 0.1 documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+    <link rel="top" title="Welcome to Sitian&#39;s Blog 0.1 documentation" href="../index.html"/>
+        <link rel="up" title="OpenStack Note" href="index.html"/>
+        <link rel="next" title="web开发" href="../web/index.html"/>
+        <link rel="prev" title="10. horizon启动虚拟机分析" href="horizon_launch_instance.html"/> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> Welcome to Sitian's Blog
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.1
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../py_doc/index.html">Hack Python</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../linux_tools/index.html">Hack Linux</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">OpenStack Note</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="horizon_develop.html">1. Horizon 二次开发指南</a></li>
+<li class="toctree-l2"><a class="reference internal" href="image-create-guide.html">2. OpenStack镜像制作</a></li>
+<li class="toctree-l2"><a class="reference internal" href="deploy_synopsis.html">3. openstack 实践指南</a></li>
+<li class="toctree-l2"><a class="reference internal" href="centos_vm_netconf.html">4. Centos虚拟机联网配置</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lanch_instance_failure.html">5. OpenStack 启动虚拟机失败分析</a></li>
+<li class="toctree-l2"><a class="reference internal" href="rabbitmq_doc.html">6. rabbitmq教程</a></li>
+<li class="toctree-l2"><a class="reference internal" href="os_cmd.html">7. openstack命令汇总</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kvm_error.html">8. KVM错误问题</a></li>
+<li class="toctree-l2"><a class="reference internal" href="django_middleware.html">9. django中间件和openstack用户重登录分析</a></li>
+<li class="toctree-l2"><a class="reference internal" href="horizon_launch_instance.html">10. horizon启动虚拟机分析</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">11. django通用视图：一个问题引发的思考</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id2">11.1. 问题</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id3">11.2. 分析</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#workflowviewgetpost">11.2.1. WorkflowView类GET和POST方法</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#as-view">11.2.2. 通用视图as_view()处理逻辑</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#id4">11.3. 参考</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../web/index.html">web开发</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../others/index.html">附录</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../index.html">Welcome to Sitian's Blog</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+ 
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../index.html">Docs</a> &raquo;</li>
+      
+          <li><a href="index.html">OpenStack Note</a> &raquo;</li>
+      
+    <li>11. django通用视图：一个问题引发的思考</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="../_sources/openstack/django-generic_view.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="django">
+<span id="django-generic-view"></span><h1><a class="toc-backref" href="#id18">11. django通用视图：一个问题引发的思考</a><a class="headerlink" href="#django" title="Permalink to this headline">¶</a></h1>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p>在分析openstack web UI方式启动虚拟机时，发现一个小问题。
+其实也不算是问题，而是知识掌握不到位引起的。</p>
+<p class="last">ps：该问题涉及到的知识点在django book有完整介绍，该书自己应该读过2+
+遍，但是由于代码实践的支撑，掌握并不是很牢靠。因此，应该把理论和实践结合起来。</p>
+</div>
+<div class="contents topic" id="id1">
+<p class="topic-title first">目录</p>
+<ul class="simple">
+<li><a class="reference internal" href="#django" id="id18">django通用视图：一个问题引发的思考</a><ul>
+<li><a class="reference internal" href="#id2" id="id19">问题</a></li>
+<li><a class="reference internal" href="#id3" id="id20">分析</a><ul>
+<li><a class="reference internal" href="#workflowviewgetpost" id="id21">WorkflowView类GET和POST方法</a></li>
+<li><a class="reference internal" href="#as-view" id="id22">通用视图as_view()处理逻辑</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#id4" id="id23">参考</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<hr class="docutils" />
+<div class="section" id="id2">
+<h2><a class="toc-backref" href="#id19">11.1. 问题</a><a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
+<p>下面以“更新虚拟机”图例介绍。</p>
+<ol class="arabic">
+<li><p class="first">登录horizon，打开虚拟机资源列表。尝试更新某个虚拟机的信息：</p>
+<div class="figure align-center" id="id8">
+<a class="reference internal image-reference" href="../_images/try_update_instance.png"><img alt="../_images/try_update_instance.png" src="../_images/try_update_instance.png" style="width: 1377.0px; height: 665.0px;" /></a>
+<p class="caption"><span class="caption-text">点击编辑虚拟机</span></p>
+</div>
+</li>
+<li><p class="first">该页面源码，可知点击编辑虚拟机是一个超链接，那么根据django URLconf系统，会引起view处理函数的调用。</p>
+<blockquote>
+<div><div class="figure align-center" id="id9">
+<a class="reference internal image-reference" href="../_images/update_instance_href.png"><img alt="../_images/update_instance_href.png" src="../_images/update_instance_href.png" style="width: 1019.0px; height: 86.0px;" /></a>
+<p class="caption"><span class="caption-text">点击虚拟机对应的超链接</span></p>
+</div>
+</div></blockquote>
+</li>
+<li><p class="first">根据URLconf映射，会调用UpdateView.as_view()函数。</p>
+<div class="figure align-center" id="id10">
+<a class="reference internal image-reference" href="../_images/update_instance_urlconf.png"><img alt="../_images/update_instance_urlconf.png" src="../_images/update_instance_urlconf.png" style="width: 750.0px; height: 60.0px;" /></a>
+<p class="caption"><span class="caption-text">urls.py映射</span></p>
+</div>
+</li>
+<li><p class="first">编辑虚拟机信息，保存，会提交表单。触发action，再次发送post类型的request。</p>
+<div class="figure align-center" id="id11">
+<a class="reference internal image-reference" href="../_images/save_update_instance.png"><img alt="../_images/save_update_instance.png" src="../_images/save_update_instance.png" style="width: 853.0px; height: 723.0px;" /></a>
+<p class="caption"><span class="caption-text">点击保存，触发表单提交</span></p>
+</div>
+<div class="figure align-center" id="id12">
+<a class="reference internal image-reference" href="../_images/update_instance_post_action.png"><img alt="../_images/update_instance_post_action.png" src="../_images/update_instance_post_action.png" style="width: 920.0px; height: 299.0px;" /></a>
+<p class="caption"><span class="caption-text">触发表单提交对应的post请求</span></p>
+</div>
+</li>
+</ol>
+<p><strong>于是问题来了:</strong></p>
+<ol class="arabic">
+<li><p class="first">之前点击&#8221;编辑虚拟机&#8221;触发http请求的URL和点击&#8221;保存&#8221;提
+交表单触发请求的URL一样。那么点击保存之后，是不是会再一次调用UpdateView，弹出表单?</p>
+</li>
+<li><p class="first">此外，一般在view处理函数中，会通过request.method对HTTP GET和POST请求分别处理。
+而上面两个http请求中，超链接对应的一定是GET请求，提交表单已经指定是POST请求，那么UpdateView
+对着那种请求时如何区分的，处理代码又在哪里？</p>
+<div class="figure align-center" id="id13">
+<a class="reference internal image-reference" href="../_images/view_diff_post_get.png"><img alt="../_images/view_diff_post_get.png" src="../_images/view_diff_post_get.png" style="width: 678.0px; height: 413.0px;" /></a>
+<p class="caption"><span class="caption-text">一般的view视图需要区分GET和POST请求并分别处理</span></p>
+</div>
+</li>
+</ol>
+</div>
+<div class="section" id="id3">
+<h2><a class="toc-backref" href="#id20">11.2. 分析</a><a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h2>
+<p>从urls.py中的views.UpdateView.as_view()可知，这是一个通用视图。</p>
+<div class="admonition important">
+<p class="first admonition-title">Important</p>
+<ul class="last">
+<li><p class="first">最初 django 的视图都是用函数实现的，后来开发出一些通用视图函数，
+以取代某些常见的重复性代码。通用视图就像是一些封装好的处理器，
+使用它们的时候只须要给出特定的参数集即可，不必关心具体的实现。各种通
+用视图的参考参见：<a class="reference external" href="https://docs.djangoproject.com/en/1.6/ref/class-based-views/">https://docs.djangoproject.com/en/1.6/ref/class-based-views/</a></p>
+</li>
+<li><p class="first">因为 URLConf 仍然使用“给一个可调用对象传入 HttpRequest ，
+并期待其返回一个 HttpResponse”这样的逻辑，所以对于类视图，必须
+设计一个可调用的接口。这就是类视图的 as_view() 类方法。他接受 request，并
+实例化类视图，接着调用实例的 dispatch() 方法。这个方法会依据 request 的请求
+类型再去调用实例的对应同名方法，并把 request 传过去，如果没有对应的方法，就引
+发一个 HttpResponseNotAllowed 异常。（可以捕捉这个异常用以返回一个 404）值
+得注意的是，这个（比如 get）方法的返回值和普通的视图函数的返回值没有什么不同，
+这意味着，http shortcuts（render_to_response之类的）和 TemplateResponse 在
+类视图里也是有效的。</p>
+</li>
+<li><p class="first">django 提供了一系列现成的类视图，他们都继承自一个 View 基
+类（django.views.generic.base.View）。在这个基类里实现了与
+URLs 的接口（as_view）、请求方法匹配（dispatch）和一些其他的基本功能。
+比如 RedirectView 实现了一个简单的 HTTP 重定向，TemplateView 给 View
+添加了一个渲染模板的功能。</p>
+</li>
+<li><p class="first">通用视图一个很pythonic的地方是：子类里面定义get post方法，就不需要写类似这种东西了。</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="n">request</span><span class="o">.</span><span class="n">method</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="o">==</span> <span class="s1">&#39;get&#39;</span><span class="p">:</span>
+        <span class="n">do_something</span><span class="p">()</span>
+<span class="k">else</span><span class="p">:</span>
+        <span class="n">do_otherthing</span><span class="p">()</span>
+</pre></div>
+</div>
+</li>
+</ul>
+</div>
+<div class="section" id="workflowviewgetpost">
+<h3><a class="toc-backref" href="#id21">11.2.1. WorkflowView类GET和POST方法</a><a class="headerlink" href="#workflowviewgetpost" title="Permalink to this headline">¶</a></h3>
+<p>现在我们来分析，UpdateView如何利用通用视图来处理http请求的。</p>
+<div class="figure align-center" id="id14">
+<a class="reference internal image-reference" href="../_images/UpdateView.png"><img alt="../_images/UpdateView.png" src="../_images/UpdateView.png" style="width: 803.0px; height: 111.0px;" /></a>
+<p class="caption"><span class="caption-text">UpdateView 继承 WorkflowView</span></p>
+</div>
+<p>我们来看看WorkflowView类，里面有两个关键函数，get和POST方法。分别用来处理GET和POST请求：</p>
+<div class="figure align-center" id="id15">
+<a class="reference internal image-reference" href="../_images/workflow-get_post.png"><img alt="../_images/workflow-get_post.png" src="../_images/workflow-get_post.png" style="width: 860.0px; height: 722.0px;" /></a>
+<p class="caption"><span class="caption-text">WorkflowView类的GET和POST方法</span></p>
+</div>
+<p>WorkflowView类的GET和POST方法逻辑是很显然的：</p>
+<ul class="simple">
+<li>对于GET请求(点击编辑虚拟机超链接)，则加载模板，显示页面表单；</li>
+<li>对于POST请求，比如点击表单的保存按钮，则检查表单的有效性，如果有效，则进行页面重定向；
+如果表单信息校验失败，如输入信息不合法等，则会重新加载模板显示表单。</li>
+</ul>
+</div>
+<div class="section" id="as-view">
+<h3><a class="toc-backref" href="#id22">11.2.2. 通用视图as_view()处理逻辑</a><a class="headerlink" href="#as-view" title="Permalink to this headline">¶</a></h3>
+<p>下面分析通用视图函数，是怎么区分GET和POST请求的：(代码路径为：<cite>django/views/generic/base.py</cite>)</p>
+<div class="figure align-center" id="id16">
+<a class="reference internal image-reference" href="../_images/as_view.png"><img alt="../_images/as_view.png" src="../_images/as_view.png" style="width: 869.0px; height: 663.0px;" /></a>
+<p class="caption"><span class="caption-text">通用视图as_view()方法</span></p>
+</div>
+<p>可以看到，as_view 函数是一个闭包，对于http request，它实际上将调用view包装函数，然后进行dispatch处理。</p>
+<div class="figure align-center" id="id17">
+<a class="reference internal image-reference" href="../_images/view_dispatch.png"><img alt="../_images/view_dispatch.png" src="../_images/view_dispatch.png" style="width: 977.0px; height: 400.0px;" /></a>
+<p class="caption"><span class="caption-text">dispatch调用</span></p>
+</div>
+<p>为什么不需要写if else判断，而在子类里面定义get post即可，可以看到是下面的dispatch方法做了通用的处理。在dispatch方法中，根据request.method获取同名处理函数(子类一般会重写)。然后直接调用返回！</p>
+</div>
+</div>
+<hr class="docutils" />
+<div class="section" id="id4">
+<h2><a class="toc-backref" href="#id23">11.3. 参考</a><a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h2>
+<table class="docutils footnote" frame="void" id="id5" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label">[1]</td><td><a class="reference external" href="http://www.pythontip.com/blog/post/12172/">http://www.pythontip.com/blog/post/12172/</a></td></tr>
+</tbody>
+</table>
+<table class="docutils footnote" frame="void" id="id6" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label">[2]</td><td><a class="reference external" href="http://www.tuicool.com/articles/UZjEVr7">http://www.tuicool.com/articles/UZjEVr7</a></td></tr>
+</tbody>
+</table>
+<table class="docutils footnote" frame="void" id="id7" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label">[3]</td><td><a class="reference external" href="http://blog.csdn.net/hackerain/article/details/40919789">http://blog.csdn.net/hackerain/article/details/40919789</a></td></tr>
+</tbody>
+</table>
+</div>
+</div>
+
+
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../web/index.html" class="btn btn-neutral float-right" title="web开发" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="horizon_launch_instance.html" class="btn btn-neutral" title="10. horizon启动虚拟机分析" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2016, chenshiqiang.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'0.1',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>
