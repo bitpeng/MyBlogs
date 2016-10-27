@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>11. django通用视图：一个问题引发的思考 &mdash; Welcome to Sitian&#39;s Blog 0.1 documentation</title>
+  <title>11. django通用视图：一个小问题引发的思考 &mdash; Welcome to Sitian&#39;s Blog 0.1 documentation</title>
   
 
   
@@ -96,7 +96,7 @@
 <li class="toctree-l2"><a class="reference internal" href="kvm_error.html">8. KVM错误问题</a></li>
 <li class="toctree-l2"><a class="reference internal" href="django_middleware.html">9. django中间件和openstack用户重登录分析</a></li>
 <li class="toctree-l2"><a class="reference internal" href="horizon_launch_instance.html">10. horizon启动虚拟机分析</a></li>
-<li class="toctree-l2 current"><a class="current reference internal" href="#">11. django通用视图：一个问题引发的思考</a><ul>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">11. django通用视图：一个小问题引发的思考</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#id2">11.1. 问题</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#id3">11.2. 分析</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#workflowviewgetpost">11.2.1. WorkflowView类GET和POST方法</a></li>
@@ -142,7 +142,7 @@
       
           <li><a href="index.html">OpenStack Note</a> &raquo;</li>
       
-    <li>11. django通用视图：一个问题引发的思考</li>
+    <li>11. django通用视图：一个小问题引发的思考</li>
       <li class="wy-breadcrumbs-aside">
         
           
@@ -157,18 +157,19 @@
            <div itemprop="articleBody">
             
   <div class="section" id="django">
-<span id="django-generic-view"></span><h1><a class="toc-backref" href="#id18">11. django通用视图：一个问题引发的思考</a><a class="headerlink" href="#django" title="Permalink to this headline">¶</a></h1>
+<span id="django-generic-view"></span><h1><a class="toc-backref" href="#id18">11. django通用视图：一个小问题引发的思考</a><a class="headerlink" href="#django" title="Permalink to this headline">¶</a></h1>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
 <p>在分析openstack web UI方式启动虚拟机时，发现一个小问题。
 其实也不算是问题，而是知识掌握不到位引起的。</p>
-<p class="last">ps：该问题涉及到的知识点在django book有完整介绍，该书自己应该读过2+
-遍，但是由于代码实践的支撑，掌握并不是很牢靠。因此，应该把理论和实践结合起来。</p>
+<p>该问题涉及到的知识点在django book有完整介绍，该书自己应该读过2+
+遍，但是由于缺失代码实践的支撑，掌握并不是很牢靠。因此，应该把理论和实践结合起来。</p>
+<p class="last"><strong>纸上得来终觉浅，绝知此事要躬行！</strong></p>
 </div>
 <div class="contents topic" id="id1">
 <p class="topic-title first">目录</p>
 <ul class="simple">
-<li><a class="reference internal" href="#django" id="id18">django通用视图：一个问题引发的思考</a><ul>
+<li><a class="reference internal" href="#django" id="id18">django通用视图：一个小问题引发的思考</a><ul>
 <li><a class="reference internal" href="#id2" id="id19">问题</a></li>
 <li><a class="reference internal" href="#id3" id="id20">分析</a><ul>
 <li><a class="reference internal" href="#workflowviewgetpost" id="id21">WorkflowView类GET和POST方法</a></li>
@@ -223,9 +224,9 @@
 </li>
 <li><p class="first">此外，一般在view处理函数中，会通过request.method对HTTP GET和POST请求分别处理。
 而上面两个http请求中，超链接对应的一定是GET请求，提交表单已经指定是POST请求，那么UpdateView
-对着那种请求时如何区分的，处理代码又在哪里？</p>
+对两种请求是如何区分的，处理代码又在哪里？</p>
 <div class="figure align-center" id="id13">
-<a class="reference internal image-reference" href="../_images/view_diff_post_get.png"><img alt="../_images/view_diff_post_get.png" src="../_images/view_diff_post_get.png" style="width: 678.0px; height: 413.0px;" /></a>
+<a class="reference internal image-reference" href="../_images/view_diff_post_get.png"><img alt="../_images/view_diff_post_get.png" src="../_images/view_diff_post_get.png" style="width: 735.0px; height: 510.0px;" /></a>
 <p class="caption"><span class="caption-text">一般的view视图需要区分GET和POST请求并分别处理</span></p>
 </div>
 </li>
@@ -289,7 +290,7 @@ URLs 的接口（as_view）、请求方法匹配（dispatch）和一些其他的
 </div>
 <div class="section" id="as-view">
 <h3><a class="toc-backref" href="#id22">11.2.2. 通用视图as_view()处理逻辑</a><a class="headerlink" href="#as-view" title="Permalink to this headline">¶</a></h3>
-<p>下面分析通用视图函数，是怎么区分GET和POST请求的：(代码路径为：<cite>django/views/generic/base.py</cite>)</p>
+<p>下面分析通用视图函数，是怎么区分GET和POST请求的。(代码路径为：<cite>django/views/generic/base.py</cite>)</p>
 <div class="figure align-center" id="id16">
 <a class="reference internal image-reference" href="../_images/as_view.png"><img alt="../_images/as_view.png" src="../_images/as_view.png" style="width: 869.0px; height: 663.0px;" /></a>
 <p class="caption"><span class="caption-text">通用视图as_view()方法</span></p>
