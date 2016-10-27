@@ -21,6 +21,7 @@ OpenStack Note
     os_cmd
     kvm_error
     django_middleware
+    horizon_launch_instance
 
 
 ..  sphinx_doc
