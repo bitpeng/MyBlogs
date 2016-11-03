@@ -1,0 +1,390 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>10. horizon workflows分析 &mdash; Welcome to Sitian&#39;s Blog 0.1 documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+    <link rel="top" title="Welcome to Sitian&#39;s Blog 0.1 documentation" href="../index.html"/>
+        <link rel="up" title="OpenStack Note" href="index.html"/>
+        <link rel="next" title="11. horizon启动虚拟机分析" href="horizon_launch_instance.html"/>
+        <link rel="prev" title="9. django中间件和openstack用户重登录分析" href="django_middleware.html"/> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> Welcome to Sitian's Blog
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.1
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../py_doc/index.html">Hack Python</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../linux_tools/index.html">Hack Linux</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">OpenStack Note</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="horizon_develop.html">1. Horizon 二次开发指南</a></li>
+<li class="toctree-l2"><a class="reference internal" href="image-create-guide.html">2. OpenStack镜像制作</a></li>
+<li class="toctree-l2"><a class="reference internal" href="deploy_synopsis.html">3. openstack 实践指南</a></li>
+<li class="toctree-l2"><a class="reference internal" href="centos_vm_netconf.html">4. Centos虚拟机联网配置</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lanch_instance_failure.html">5. OpenStack 启动虚拟机失败分析</a></li>
+<li class="toctree-l2"><a class="reference internal" href="rabbitmq_doc.html">6. rabbitmq教程</a></li>
+<li class="toctree-l2"><a class="reference internal" href="os_cmd.html">7. openstack命令汇总</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kvm_error.html">8. KVM错误问题</a></li>
+<li class="toctree-l2"><a class="reference internal" href="django_middleware.html">9. django中间件和openstack用户重登录分析</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">10. horizon workflows分析</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#workflows">10.1. workflows</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#workflow">10.1.1. 一个workflow的复杂例子</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#id2">10.2. 参考</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="horizon_launch_instance.html">11. horizon启动虚拟机分析</a></li>
+<li class="toctree-l2"><a class="reference internal" href="django-generic_view.html">12. django通用视图：一个小问题引发的思考</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../web/index.html">web开发</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../others/index.html">附录</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../index.html">Welcome to Sitian's Blog</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+ 
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../index.html">Docs</a> &raquo;</li>
+      
+          <li><a href="index.html">OpenStack Note</a> &raquo;</li>
+      
+    <li>10. horizon workflows分析</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="../_sources/openstack/horizon_workflows_analysis.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="horizon-workflows">
+<span id="id1"></span><h1>10. horizon workflows分析<a class="headerlink" href="#horizon-workflows" title="Permalink to this headline">¶</a></h1>
+<div class="admonition tip">
+<p class="first admonition-title">Tip</p>
+<ul class="last simple">
+<li>这篇文章以openstack Havana版本&#8221;编辑虚拟机&#8221;项对openstack horizon工作流进行分析；</li>
+<li>阅读相关参考资料的过程中，尽量阅读官网或者英文文档。比如horizon workflow机制，
+官网英文并不难理解，倒是在参考中文资料的过程中，由于翻译晦涩甚至翻译错误，反而难以理解。</li>
+</ul>
+</div>
+<p>构建引人注目的用户体验最具挑战性的方面之一是制作复杂的多部分工作流。
+Horizon的工作流模块旨在将该功能带入日常生活。</p>
+<div class="section" id="workflows">
+<h2>10.1. workflows<a class="headerlink" href="#workflows" title="Permalink to this headline">¶</a></h2>
+<p>workflows是复杂的包括多tab的表单。每一个workflow包括一系列继承 <code class="docutils literal"><span class="pre">Workflow</span></code> ， <code class="docutils literal"><span class="pre">Step</span></code> 和 <code class="docutils literal"><span class="pre">Action</span></code> 的类。</p>
+<div class="section" id="workflow">
+<h3>10.1.1. 一个workflow的复杂例子<a class="headerlink" href="#workflow" title="Permalink to this headline">¶</a></h3>
+<p>下面是一个复杂例子，它阐述了数据怎样在urls、views、workflows和templates之间交换。</p>
+<ol class="arabic">
+<li><p class="first">在urls.py中，我们包括一个命名参数(正则表达式命名元组)。如：resource_class_id.</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">RESOURCE_CLASS</span> <span class="o">=</span> <span class="s1">r&#39;^(?P&lt;resource_class_id&gt;[^/]+)/</span><span class="si">%s</span><span class="s1">$&#39;</span>
+
+<span class="n">urlpatterns</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="n">url</span><span class="p">(</span><span class="n">RESOURCE_CLASS</span> <span class="o">%</span> <span class="s1">&#39;update&#39;</span><span class="p">,</span> <span class="n">UpdateView</span><span class="o">.</span><span class="n">as_view</span><span class="p">(),</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;update&#39;</span><span class="p">)</span>
+<span class="p">]</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first">在views.py中，我们把数据传递给templates和action(是一种表单)。
+(action也可以传递数据到 <code class="docutils literal"><span class="pre">get_context_data</span></code> 函数和传到templates上。)</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">UpdateView</span><span class="p">(</span><span class="n">workflows</span><span class="o">.</span><span class="n">WorkflowView</span><span class="p">):</span>
+    <span class="n">workflow_class</span> <span class="o">=</span> <span class="n">UpdateResourceClass</span>
+
+    <span class="k">def</span> <span class="nf">get_context_data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="n">context</span> <span class="o">=</span> <span class="nb">super</span><span class="p">(</span><span class="n">UpdateView</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">get_context_data</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="c1"># Data from URL are always in self.kwargs, here we pass the data</span>
+        <span class="c1"># to the template.</span>
+        <span class="c1"># URL参数传递的数据一般在self.kwargs中，我们把它传递给模板；</span>
+        <span class="n">context</span><span class="p">[</span><span class="s2">&quot;resource_class_id&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">kwargs</span><span class="p">[</span><span class="s1">&#39;resource_class_id&#39;</span><span class="p">]</span>
+        <span class="c1"># Data contributed by Workflow&#39;s Steps are in the</span>
+        <span class="c1"># context[&#39;workflow&#39;].context list. We can use that in the</span>
+        <span class="c1"># template too.</span>
+        <span class="c1"># 由workflow&#39;s Step贡献的数据在context[&#39;workflow&#39;].context列表中，我们在模板中也可以使用。</span>
+        <span class="k">return</span> <span class="n">context</span>
+
+    <span class="k">def</span> <span class="nf">_get_object</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="c1"># Data from URL are always in self.kwargs, we can use them here</span>
+        <span class="c1"># to load our object of interest.</span>
+        <span class="c1"># URL参数传递的数据一般在self.kwargs中，我们可以通过它加载一些对象。</span>
+        <span class="n">resource_class_id</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">kwargs</span><span class="p">[</span><span class="s1">&#39;resource_class_id&#39;</span><span class="p">]</span>
+        <span class="c1"># Code omitted, this method should return some object obtained</span>
+        <span class="c1"># from API.</span>
+        <span class="c1"># 通过id获取对象，并返回，代码略。</span>
+
+    <span class="k">def</span> <span class="nf">get_initial</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">resource_class</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_object</span><span class="p">()</span>
+        <span class="c1"># This data will be available in the Action&#39;s methods and</span>
+        <span class="c1"># Workflow&#39;s handle method.</span>
+        <span class="c1"># But only if the steps will depend on them.</span>
+        <span class="c1"># 假如steps depends_on这些数据，那么这些数据可以在Action的函数和workflow 的handle函数中使用。</span>
+        <span class="k">return</span> <span class="p">{</span><span class="s1">&#39;resource_class_id&#39;</span><span class="p">:</span> <span class="n">resource_class</span><span class="o">.</span><span class="n">id</span><span class="p">,</span>
+                <span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="n">resource_class</span><span class="o">.</span><span class="n">name</span><span class="p">,</span>
+                <span class="s1">&#39;service_type&#39;</span><span class="p">:</span> <span class="n">resource_class</span><span class="o">.</span><span class="n">service_type</span><span class="p">}</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first">在 workflows.py中，我们处理数据，它仅仅是一个更复杂的表单而已。</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">ResourcesAction</span><span class="p">(</span><span class="n">workflows</span><span class="o">.</span><span class="n">Action</span><span class="p">):</span>
+    <span class="c1"># The name field will be automatically available in all action&#39;s</span>
+    <span class="c1"># methods.</span>
+    <span class="c1"># If we want this field to be used in the another Step or Workflow,</span>
+    <span class="c1"># it has to be contributed by this step, then depend on in another</span>
+    <span class="c1"># step.</span>
+    <span class="n">name</span> <span class="o">=</span> <span class="n">forms</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="mi">255</span><span class="p">,</span>
+                           <span class="n">label</span><span class="o">=</span><span class="n">_</span><span class="p">(</span><span class="s2">&quot;Testing Name&quot;</span><span class="p">),</span>
+                           <span class="n">help_text</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span>
+                           <span class="n">required</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">handle</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
+        <span class="k">pass</span>
+        <span class="c1"># If we want to use some data from the URL, the Action&#39;s step</span>
+        <span class="c1"># has to depend on them. It&#39;s then available in</span>
+        <span class="c1"># self.initial[&#39;resource_class_id&#39;] or data[&#39;resource_class_id&#39;].</span>
+        <span class="c1"># In other words, resource_class_id has to be passed by view&#39;s</span>
+        <span class="c1"># get_initial and listed in step&#39;s depends_on list.</span>
+
+        <span class="c1"># We can also use here the data from the other steps. If we want</span>
+        <span class="c1"># the data from the other step, the step needs to contribute the</span>
+        <span class="c1"># data and the steps needs to be ordered properly.</span>
+
+<span class="k">class</span> <span class="nc">UpdateResources</span><span class="p">(</span><span class="n">workflows</span><span class="o">.</span><span class="n">Step</span><span class="p">):</span>
+    <span class="n">action_class</span> <span class="o">=</span> <span class="n">ResourcesAction</span>
+    <span class="c1"># This passes data from Workflow context to action methods</span>
+    <span class="c1"># (handle, clean). Workflow context consists of URL data and data</span>
+    <span class="c1"># contributed by other steps.</span>
+    <span class="n">depends_on</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;resource_class_id&quot;</span><span class="p">,)</span>
+
+    <span class="c1"># By contributing, the data on these indexes will become available to</span>
+    <span class="c1"># Workflow and to other Steps (if they will depend on them). Notice,</span>
+    <span class="c1"># that the resources_object_ids key has to be manually added in</span>
+    <span class="c1"># contribute method first.</span>
+    <span class="n">contributes</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;resources_object_ids&quot;</span><span class="p">,</span> <span class="s2">&quot;name&quot;</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">contribute</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">context</span><span class="p">):</span>
+        <span class="c1"># We can obtain the http request from workflow.</span>
+        <span class="n">request</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">workflow</span><span class="o">.</span><span class="n">request</span>
+        <span class="k">if</span> <span class="n">data</span><span class="p">:</span>
+            <span class="c1"># Only fields defined in Action are automatically</span>
+            <span class="c1"># available for contribution. If we want to contribute</span>
+            <span class="c1"># something else, We need to override the contribute method</span>
+            <span class="c1"># and manually add it to the dictionary.</span>
+            <span class="c1"># 只有Action中定义的fields可用。如果要使得其他东西可用，</span>
+            <span class="c1"># 需要重写contribute函数并手动更新context字典；</span>
+            <span class="n">context</span><span class="p">[</span><span class="s2">&quot;resources_object_ids&quot;</span><span class="p">]</span> <span class="o">=</span>\
+                <span class="n">request</span><span class="o">.</span><span class="n">POST</span><span class="o">.</span><span class="n">getlist</span><span class="p">(</span><span class="s2">&quot;resources_object_ids&quot;</span><span class="p">)</span>
+
+        <span class="c1"># We have to merge new context with the passed data or let</span>
+        <span class="c1"># the superclass do this.</span>
+        <span class="n">context</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">context</span>
+
+<span class="k">class</span> <span class="nc">UpdateResourceClass</span><span class="p">(</span><span class="n">workflows</span><span class="o">.</span><span class="n">Workflow</span><span class="p">):</span>
+    <span class="n">default_steps</span> <span class="o">=</span> <span class="p">(</span><span class="n">UpdateResources</span><span class="p">,)</span>
+
+    <span class="k">def</span> <span class="nf">handle</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
+        <span class="k">pass</span>
+        <span class="c1"># This method is called as last (after all Action&#39;s handle</span>
+        <span class="c1"># methods). All data that are listed in step&#39;s &#39;contributes=&#39;</span>
+        <span class="c1"># and &#39;depends_on=&#39; are available here.</span>
+        <span class="c1"># It can be easier to have the saving logic only here if steps</span>
+        <span class="c1"># are heavily connected or complex.</span>
+
+        <span class="c1"># data[&quot;resources_object_ids&quot;], data[&quot;name&quot;] and</span>
+        <span class="c1"># data[&quot;resources_class_id&quot;] are available here.</span>
+</pre></div>
+</div>
+</li>
+</ol>
+</div>
+</div>
+<hr class="docutils" />
+<div class="section" id="id2">
+<h2>10.2. 参考<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
+<table class="docutils footnote" frame="void" id="id3" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label">[1]</td><td><a class="reference external" href="http://docs.openstack.org/developer/horizon/topics/workflows.html">http://docs.openstack.org/developer/horizon/topics/workflows.html</a></td></tr>
+</tbody>
+</table>
+<table class="docutils footnote" frame="void" id="id4" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label">[2]</td><td><a class="reference external" href="http://docs.openstack.org/developer/horizon/ref/workflows.html">http://docs.openstack.org/developer/horizon/ref/workflows.html</a></td></tr>
+</tbody>
+</table>
+<table class="docutils footnote" frame="void" id="id5" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label">[3]</td><td></td></tr>
+</tbody>
+</table>
+</div>
+</div>
+
+
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="horizon_launch_instance.html" class="btn btn-neutral float-right" title="11. horizon启动虚拟机分析" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="django_middleware.html" class="btn btn-neutral" title="9. django中间件和openstack用户重登录分析" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2016, chenshiqiang.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'0.1',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

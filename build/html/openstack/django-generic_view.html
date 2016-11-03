@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>11. django通用视图：一个小问题引发的思考 &mdash; Welcome to Sitian&#39;s Blog 0.1 documentation</title>
+  <title>12. django通用视图：一个小问题引发的思考 &mdash; Welcome to Sitian&#39;s Blog 0.1 documentation</title>
   
 
   
@@ -33,7 +33,7 @@
     <link rel="top" title="Welcome to Sitian&#39;s Blog 0.1 documentation" href="../index.html"/>
         <link rel="up" title="OpenStack Note" href="index.html"/>
         <link rel="next" title="web开发" href="../web/index.html"/>
-        <link rel="prev" title="10. horizon启动虚拟机分析" href="horizon_launch_instance.html"/> 
+        <link rel="prev" title="11. horizon启动虚拟机分析" href="horizon_launch_instance.html"/> 
 
   
   <script src="../_static/js/modernizr.min.js"></script>
@@ -95,15 +95,16 @@
 <li class="toctree-l2"><a class="reference internal" href="os_cmd.html">7. openstack命令汇总</a></li>
 <li class="toctree-l2"><a class="reference internal" href="kvm_error.html">8. KVM错误问题</a></li>
 <li class="toctree-l2"><a class="reference internal" href="django_middleware.html">9. django中间件和openstack用户重登录分析</a></li>
-<li class="toctree-l2"><a class="reference internal" href="horizon_launch_instance.html">10. horizon启动虚拟机分析</a></li>
-<li class="toctree-l2 current"><a class="current reference internal" href="#">11. django通用视图：一个小问题引发的思考</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#id2">11.1. 问题</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#id3">11.2. 分析</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#workflowviewgetpost">11.2.1. WorkflowView类GET和POST方法</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#as-view">11.2.2. 通用视图as_view()处理逻辑</a></li>
+<li class="toctree-l2"><a class="reference internal" href="horizon_workflows_analysis.html">10. horizon workflows????</a></li>
+<li class="toctree-l2"><a class="reference internal" href="horizon_launch_instance.html">11. horizon启动虚拟机分析</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">12. django通用视图：一个小问题引发的思考</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id2">12.1. 问题</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id3">12.2. 分析</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#workflowviewgetpost">12.2.1. WorkflowView类GET和POST方法</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#as-view">12.2.2. 通用视图as_view()处理逻辑</a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="#id4">11.3. 参考</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id4">12.3. 参考</a></li>
 </ul>
 </li>
 </ul>
@@ -142,7 +143,7 @@
       
           <li><a href="index.html">OpenStack Note</a> &raquo;</li>
       
-    <li>11. django通用视图：一个小问题引发的思考</li>
+    <li>12. django通用视图：一个小问题引发的思考</li>
       <li class="wy-breadcrumbs-aside">
         
           
@@ -157,7 +158,7 @@
            <div itemprop="articleBody">
             
   <div class="section" id="django">
-<span id="django-generic-view"></span><h1><a class="toc-backref" href="#id18">11. django通用视图：一个小问题引发的思考</a><a class="headerlink" href="#django" title="Permalink to this headline">¶</a></h1>
+<span id="django-generic-view"></span><h1><a class="toc-backref" href="#id18">12. django通用视图：一个小问题引发的思考</a><a class="headerlink" href="#django" title="Permalink to this headline">¶</a></h1>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
 <p>在分析openstack web UI方式启动虚拟机时，发现一个小问题。
@@ -183,7 +184,7 @@
 </div>
 <hr class="docutils" />
 <div class="section" id="id2">
-<h2><a class="toc-backref" href="#id19">11.1. 问题</a><a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id19">12.1. 问题</a><a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
 <p>下面以“更新虚拟机”图例介绍。</p>
 <ol class="arabic">
 <li><p class="first">登录horizon，打开虚拟机资源列表。尝试更新某个虚拟机的信息：</p>
@@ -233,7 +234,7 @@
 </ol>
 </div>
 <div class="section" id="id3">
-<h2><a class="toc-backref" href="#id20">11.2. 分析</a><a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id20">12.2. 分析</a><a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h2>
 <p>从urls.py中的views.UpdateView.as_view()可知，这是一个通用视图。</p>
 <div class="admonition important">
 <p class="first admonition-title">Important</p>
@@ -270,7 +271,7 @@ URLs 的接口（as_view）、请求方法匹配（dispatch）和一些其他的
 </ul>
 </div>
 <div class="section" id="workflowviewgetpost">
-<h3><a class="toc-backref" href="#id21">11.2.1. WorkflowView类GET和POST方法</a><a class="headerlink" href="#workflowviewgetpost" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id21">12.2.1. WorkflowView类GET和POST方法</a><a class="headerlink" href="#workflowviewgetpost" title="Permalink to this headline">¶</a></h3>
 <p>现在我们来分析，UpdateView如何利用通用视图来处理http请求的。</p>
 <div class="figure align-center" id="id14">
 <a class="reference internal image-reference" href="../_images/UpdateView.png"><img alt="../_images/UpdateView.png" src="../_images/UpdateView.png" style="width: 803.0px; height: 111.0px;" /></a>
@@ -289,7 +290,7 @@ URLs 的接口（as_view）、请求方法匹配（dispatch）和一些其他的
 </ul>
 </div>
 <div class="section" id="as-view">
-<h3><a class="toc-backref" href="#id22">11.2.2. 通用视图as_view()处理逻辑</a><a class="headerlink" href="#as-view" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id22">12.2.2. 通用视图as_view()处理逻辑</a><a class="headerlink" href="#as-view" title="Permalink to this headline">¶</a></h3>
 <p>下面分析通用视图函数，是怎么区分GET和POST请求的。(代码路径为：<cite>django/views/generic/base.py</cite>)</p>
 <div class="figure align-center" id="id16">
 <a class="reference internal image-reference" href="../_images/as_view.png"><img alt="../_images/as_view.png" src="../_images/as_view.png" style="width: 869.0px; height: 663.0px;" /></a>
@@ -305,7 +306,7 @@ URLs 的接口（as_view）、请求方法匹配（dispatch）和一些其他的
 </div>
 <hr class="docutils" />
 <div class="section" id="id4">
-<h2><a class="toc-backref" href="#id23">11.3. 参考</a><a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id23">12.3. 参考</a><a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h2>
 <table class="docutils footnote" frame="void" id="id5" rules="none">
 <colgroup><col class="label" /><col /></colgroup>
 <tbody valign="top">
@@ -337,7 +338,7 @@ URLs 的接口（as_view）、请求方法匹配（dispatch）和一些其他的
         <a href="../web/index.html" class="btn btn-neutral float-right" title="web开发" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="horizon_launch_instance.html" class="btn btn-neutral" title="10. horizon启动虚拟机分析" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="horizon_launch_instance.html" class="btn btn-neutral" title="11. horizon启动虚拟机分析" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   

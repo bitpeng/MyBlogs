@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>10. horizon启动虚拟机分析 &mdash; Welcome to Sitian&#39;s Blog 0.1 documentation</title>
+  <title>11. horizon启动虚拟机分析 &mdash; Welcome to Sitian&#39;s Blog 0.1 documentation</title>
   
 
   
@@ -32,8 +32,8 @@
   
     <link rel="top" title="Welcome to Sitian&#39;s Blog 0.1 documentation" href="../index.html"/>
         <link rel="up" title="OpenStack Note" href="index.html"/>
-        <link rel="next" title="web开发" href="../web/index.html"/>
-        <link rel="prev" title="9. django中间件和openstack用户重登录分析" href="django_middleware.html"/> 
+        <link rel="next" title="12. django通用视图：一个小问题引发的思考" href="django-generic_view.html"/>
+        <link rel="prev" title="10. horizon workflows????" href="horizon_workflows_analysis.html"/> 
 
   
   <script src="../_static/js/modernizr.min.js"></script>
@@ -95,14 +95,16 @@
 <li class="toctree-l2"><a class="reference internal" href="os_cmd.html">7. openstack命令汇总</a></li>
 <li class="toctree-l2"><a class="reference internal" href="kvm_error.html">8. KVM错误问题</a></li>
 <li class="toctree-l2"><a class="reference internal" href="django_middleware.html">9. django中间件和openstack用户重登录分析</a></li>
-<li class="toctree-l2 current"><a class="current reference internal" href="#">10. horizon启动虚拟机分析</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#id2">10.1. 步骤</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#workflow">10.1.1. 启动虚拟机workflow</a></li>
+<li class="toctree-l2"><a class="reference internal" href="horizon_workflows_analysis.html">10. horizon workflows????</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">11. horizon启动虚拟机分析</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id2">11.1. 步骤</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#workflow">11.1.1. 启动虚拟机workflow</a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="#id3">10.2. 参考</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id3">11.2. 参考</a></li>
 </ul>
 </li>
+<li class="toctree-l2"><a class="reference internal" href="django-generic_view.html">12. django通用视图：一个小问题引发的思考</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../web/index.html">web开发</a></li>
@@ -139,7 +141,7 @@
       
           <li><a href="index.html">OpenStack Note</a> &raquo;</li>
       
-    <li>10. horizon启动虚拟机分析</li>
+    <li>11. horizon启动虚拟机分析</li>
       <li class="wy-breadcrumbs-aside">
         
           
@@ -154,7 +156,7 @@
            <div itemprop="articleBody">
             
   <div class="section" id="horizon">
-<span id="horizon-launch-instance"></span><h1><a class="toc-backref" href="#id12">10. horizon启动虚拟机分析</a><a class="headerlink" href="#horizon" title="Permalink to this headline">¶</a></h1>
+<span id="horizon-launch-instance"></span><h1><a class="toc-backref" href="#id12">11. horizon启动虚拟机分析</a><a class="headerlink" href="#horizon" title="Permalink to this headline">¶</a></h1>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
 <p class="last">本篇文章分析OpenStack通过horizon启动虚拟机的流程。</p>
@@ -174,7 +176,7 @@
 </div>
 <hr class="docutils" />
 <div class="section" id="id2">
-<h2><a class="toc-backref" href="#id13">10.1. 步骤</a><a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id13">11.1. 步骤</a><a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
 <ul>
 <li><p class="first">URLs.py URL映射</p>
 <div class="figure align-center" id="id6">
@@ -202,7 +204,7 @@
 </li>
 </ul>
 <div class="section" id="workflow">
-<h3><a class="toc-backref" href="#id14">10.1.1. 启动虚拟机workflow</a><a class="headerlink" href="#workflow" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id14">11.1.1. 启动虚拟机workflow</a><a class="headerlink" href="#workflow" title="Permalink to this headline">¶</a></h3>
 <ol class="arabic">
 <li><p class="first">启动虚拟机工作流中，五个steps中第一个通过设置permissions进行隐藏，它的主要
 作用是贡献两个字段让后面的步骤进行依赖(depends_on)，从而对后面的steps中Action(表单)数据进行校验。</p>
@@ -245,7 +247,7 @@
 </div>
 <hr class="docutils" />
 <div class="section" id="id3">
-<h2><a class="toc-backref" href="#id15">10.2. 参考</a><a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id15">11.2. 参考</a><a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h2>
 <table class="docutils footnote" frame="void" id="id4" rules="none">
 <colgroup><col class="label" /><col /></colgroup>
 <tbody valign="top">
@@ -268,10 +270,10 @@
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="../web/index.html" class="btn btn-neutral float-right" title="web开发" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="django-generic_view.html" class="btn btn-neutral float-right" title="12. django通用视图：一个小问题引发的思考" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="django_middleware.html" class="btn btn-neutral" title="9. django中间件和openstack用户重登录分析" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="horizon_workflows_analysis.html" class="btn btn-neutral" title="10. horizon workflows????" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   

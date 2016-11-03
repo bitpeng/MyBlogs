@@ -151,6 +151,7 @@ Lorem ipsum [#f1]_ dolor sit amet ... [#f2]_
 
 也可以使用自动标号的尾注：[#]_
 熟悉Git\ [#]_\ 的人几乎都知道并喜欢
+
 .. [#] http://git-scm.com/
 
 

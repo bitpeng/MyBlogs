@@ -21,6 +21,7 @@ OpenStack Note
     os_cmd
     kvm_error
     django_middleware
+    horizon_workflows_analysis
     horizon_launch_instance
     django-generic_view
 
