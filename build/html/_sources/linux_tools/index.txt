@@ -16,4 +16,4 @@ Hack Linux
     linux_cmd
     disk_note
     ubuntu_lvm_extend
-
+    dell_server_manual

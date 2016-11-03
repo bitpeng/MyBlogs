@@ -1,0 +1,382 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>8. DELL 服务器操作手册 &mdash; Welcome to Sitian&#39;s Blog 0.1 documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+    <link rel="top" title="Welcome to Sitian&#39;s Blog 0.1 documentation" href="../index.html"/>
+        <link rel="up" title="Hack Linux" href="index.html"/>
+        <link rel="next" title="OpenStack Note" href="../openstack/index.html"/>
+        <link rel="prev" title="7. Ubuntu根分区使用Lvm扩容" href="ubuntu_lvm_extend.html"/> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> Welcome to Sitian's Blog
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.1
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../py_doc/index.html">Hack Python</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Hack Linux</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="git_cmd.html">1. git 版本控制</a></li>
+<li class="toctree-l2"><a class="reference internal" href="samba_config.html">2. Samba共享访问配置</a></li>
+<li class="toctree-l2"><a class="reference internal" href="use_man_page.html">3. 善用Linux man page</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Linux_lvm.html">4. Linux逻辑卷和lvm</a></li>
+<li class="toctree-l2"><a class="reference internal" href="linux_cmd.html">5. Linux命令</a></li>
+<li class="toctree-l2"><a class="reference internal" href="disk_note.html">6. Linux 磁盘和分区</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ubuntu_lvm_extend.html">7. Ubuntu根分区使用Lvm扩容</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">8. DELL 服务器操作手册</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#raid">8.1. 磁盘与raid管理</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#id2">8.1.1. 硬盘状态</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id3">8.1.2. raid 配置</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id4">8.1.3. raid初始化</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#life-controller">8.2. Life Controller</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#boot-mode">8.3. Boot Mode</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id5">8.4. 参考</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../openstack/index.html">OpenStack Note</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../web/index.html">web开发</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../others/index.html">附录</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../index.html">Welcome to Sitian's Blog</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+ 
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../index.html">Docs</a> &raquo;</li>
+      
+          <li><a href="index.html">Hack Linux</a> &raquo;</li>
+      
+    <li>8. DELL 服务器操作手册</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="../_sources/linux_tools/dell_server_manual.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="dell">
+<span id="dell-server-manual"></span><h1><a class="toc-backref" href="#id14">8. DELL 服务器操作手册</a><a class="headerlink" href="#dell" title="Permalink to this headline">¶</a></h1>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">在公司有机会在Dell服务器上部署OS上多次，现在把相关问题和知识点记录下来，作为参考。</p>
+</div>
+<div class="contents topic" id="id1">
+<p class="topic-title first">目录</p>
+<ul class="simple">
+<li><a class="reference internal" href="#dell" id="id14">DELL 服务器操作手册</a><ul>
+<li><a class="reference internal" href="#raid" id="id15">磁盘与raid管理</a><ul>
+<li><a class="reference internal" href="#id2" id="id16">硬盘状态</a></li>
+<li><a class="reference internal" href="#id3" id="id17">raid 配置</a></li>
+<li><a class="reference internal" href="#id4" id="id18">raid初始化</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#life-controller" id="id19">Life Controller</a></li>
+<li><a class="reference internal" href="#boot-mode" id="id20">Boot Mode</a></li>
+<li><a class="reference internal" href="#id5" id="id21">参考</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<hr class="docutils" />
+<div class="section" id="raid">
+<h2><a class="toc-backref" href="#id15">8.1. 磁盘与raid管理</a><a class="headerlink" href="#raid" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id2">
+<h3><a class="toc-backref" href="#id16">8.1.1. 硬盘状态</a><a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h3>
+<p>在安装系统之前，我们首先需要进行raid配置。raid配置涉及到硬盘的一些状态，主要包括如下几种：</p>
+<dl class="attribute">
+<dt id="failed">
+<code class="descname">failed</code><a class="headerlink" href="#failed" title="Permalink to this definition">¶</a></dt>
+<dd><p>硬盘状态错误，此时需要重启服务器，让系统对raid卡进行自检管理，一般重启后failed状态的硬盘会变成ready；</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="foreign">
+<code class="descname">foreign</code><a class="headerlink" href="#foreign" title="Permalink to this definition">¶</a></dt>
+<dd><p>此时需要执行clear foreign disk。清除完成后，一般硬盘状态会变成ready;</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="ready">
+<code class="descname">ready</code><a class="headerlink" href="#ready" title="Permalink to this definition">¶</a></dt>
+<dd><p>硬盘状态正常。此时需要通过新建virtual disk，硬盘才可以使用；</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="online">
+<code class="descname">online</code><a class="headerlink" href="#online" title="Permalink to this definition">¶</a></dt>
+<dd><p>进行raid配置后正常的硬盘状态，此时硬盘可以被操作系统识别，或者进行系统安装等；</p>
+</dd></dl>
+
+</div>
+<div class="section" id="id3">
+<h3><a class="toc-backref" href="#id17">8.1.2. raid 配置</a><a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h3>
+<p>一般进行raid配置前(create new virtual disk), 需要清除之前的raid配置信息。</p>
+<div class="admonition important">
+<p class="first admonition-title">Important</p>
+<p>清除之前已有raid配置信息，并不会清除磁盘里面的用户数据。我们可以在原有的硬盘上，
+创建同样的raid配置信息，来恢复硬盘数据。(来自于dell官网)</p>
+<div class="last figure align-center" id="id10">
+<a class="reference internal image-reference" href="../_images/clear_raid_config.png"><img alt="../_images/clear_raid_config.png" src="../_images/clear_raid_config.png" style="width: 723.0px; height: 404.0px;" /></a>
+<p class="caption"><span class="caption-text">清除raid配置信息，该步骤不会清除硬盘数据</span></p>
+</div>
+</div>
+<p>清除原有raid配置信息后，可以创建同样的磁盘阵列。只要没有做初始化，用户数据是存在的。
+例如，服务器原先安装的Ubuntu操作系统还保存在硬盘上，马上我们就可以重启服务器，进入操作系统。</p>
+</div>
+<div class="section" id="id4">
+<h3><a class="toc-backref" href="#id18">8.1.3. raid初始化</a><a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h3>
+<p>如果我们创建RAID阵列的目的是新部署一台服务器，我们建议所有新创建的RAID
+阵列都应该做初始化操作。对raid执行初始化操作可以认为是普通硬盘的格式化操作，
+raid硬盘上原有的用户数据将被清除。</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p>对于Dell服务器而言，raid阵列建好后，可以执行完全初始化(start init)和快速初始化(fast init)。
+完全初始化比较慢，一般1T的硬盘完全初始化需要1个半小时。执行快速初始化既可！</p>
+<div class="last figure align-center" id="id11">
+<a class="reference internal image-reference" href="../_images/raid_init.png"><img alt="../_images/raid_init.png" src="../_images/raid_init.png" style="width: 727.0px; height: 407.0px;" /></a>
+<p class="caption"><span class="caption-text">raid阵列初始化操作，该步骤会清除硬盘所有用户数据。</span></p>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="life-controller">
+<h2><a class="toc-backref" href="#id19">8.2. Life Controller</a><a class="headerlink" href="#life-controller" title="Permalink to this headline">¶</a></h2>
+<p>有时我们无法成功安装OS，这时可以通过生命控制器进行安装。life controller具有很多功能，
+可以进行系统部署，raid 制作，硬件检测，系统日志等诸多操作。</p>
+<div class="figure align-center" id="id12">
+<a class="reference internal image-reference" href="../_images/life_controller.png"><img alt="../_images/life_controller.png" src="../_images/life_controller.png" style="width: 1002.0px; height: 686.0px;" /></a>
+<p class="caption"><span class="caption-text">生命周期控制器</span></p>
+</div>
+<div class="admonition tip">
+<p class="first admonition-title">Tip</p>
+<p>通过生命周期控制器部署系统，需要注意如下事项(Dell售后技术支持提供)：</p>
+<ul class="last simple">
+<li>boot mode只能选择bios，不能选UEFI；</li>
+<li>只支持通过USB光驱进行系统安装，不支持U盘安装；</li>
+<li>通过该方式部署，最好事先和服务器厂商确认所支持的操作系统。例如：dell h730 mini
+型号设备所支持的ubuntu系列仅仅为ubuntu-14.04.1;</li>
+</ul>
+</div>
+<div class="admonition error">
+<p class="first admonition-title">Error</p>
+<p class="last">假如系统重启后Life  Controller不可用，如提示Life Controller update required等。
+这时可以尝试按住开机按钮旁边的i键20秒，然后&lt;ctrl + alt + del&gt;重启机器，一般就可以使用F10进入
+Life Controller了。(Dell 技术支持提供，亲测有效。)</p>
+</div>
+</div>
+<div class="section" id="boot-mode">
+<h2><a class="toc-backref" href="#id20">8.3. Boot Mode</a><a class="headerlink" href="#boot-mode" title="Permalink to this headline">¶</a></h2>
+<p>Dell系列服务器支持bios 和 UEFI启动模式。关于这两种启动模式的更多细节，可以自己网上
+搜索相关材料。</p>
+<div class="figure align-center" id="id13">
+<a class="reference internal image-reference" href="../_images/boot_mode.png"><img alt="../_images/boot_mode.png" src="../_images/boot_mode.png" style="width: 1054.0px; height: 655.0px;" /></a>
+<p class="caption"><span class="caption-text">Boot Mode，在system bios里设置。</span></p>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">特别需要注意的是，假如设置boot mode为UEFI，这时系统启动后，将跳过
+raid自检，所以启动速度比较快。但是，这种方式也会造成用户无法通过
+&lt;ctrl + R&gt;进入Bios Configuration Utility。也就无法执行raid初始化
+等操作。</p>
+</div>
+</div>
+<hr class="docutils" />
+<div class="section" id="id5">
+<h2><a class="toc-backref" href="#id21">8.4. 参考</a><a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h2>
+<table class="docutils footnote" frame="void" id="id6" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label">[1]</td><td><a class="reference external" href="http://zh.community.dell.com/techcenter/systems-management/w/wiki/390.raid">http://zh.community.dell.com/techcenter/systems-management/w/wiki/390.raid</a></td></tr>
+</tbody>
+</table>
+<table class="docutils footnote" frame="void" id="id7" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label">[2]</td><td><a class="reference external" href="http://zh.community.dell.com/techcenter/systems-management/w/wiki/388.percraid">http://zh.community.dell.com/techcenter/systems-management/w/wiki/388.percraid</a></td></tr>
+</tbody>
+</table>
+<table class="docutils footnote" frame="void" id="id8" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label">[3]</td><td><a class="reference external" href="http://www.cqeis.com/news_detail/newsId=1654.html">http://www.cqeis.com/news_detail/newsId=1654.html</a></td></tr>
+</tbody>
+</table>
+<table class="docutils footnote" frame="void" id="id9" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label">[4]</td><td><a class="reference external" href="http://zh.community.dell.com/techcenter/w/techcenter_wiki/190.poweredgelifecycle-controller">http://zh.community.dell.com/techcenter/w/techcenter_wiki/190.poweredgelifecycle-controller</a></td></tr>
+</tbody>
+</table>
+</div>
+</div>
+
+
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../openstack/index.html" class="btn btn-neutral float-right" title="OpenStack Note" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="ubuntu_lvm_extend.html" class="btn btn-neutral" title="7. Ubuntu根分区使用Lvm扩容" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2016, chenshiqiang.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'0.1',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

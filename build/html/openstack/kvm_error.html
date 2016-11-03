@@ -32,7 +32,7 @@
   
     <link rel="top" title="Welcome to Sitian&#39;s Blog 0.1 documentation" href="../index.html"/>
         <link rel="up" title="OpenStack Note" href="index.html"/>
-        <link rel="next" title="附录" href="../others/index.html"/>
+        <link rel="next" title="9. django中间件和openstack用户重登录分析" href="django_middleware.html"/>
         <link rel="prev" title="7. openstack命令汇总" href="os_cmd.html"/> 
 
   
@@ -95,12 +95,16 @@
 <li class="toctree-l2"><a class="reference internal" href="os_cmd.html">7. openstack命令汇总</a></li>
 <li class="toctree-l2 current"><a class="current reference internal" href="#">8. KVM错误问题</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#id2">8.1. 问题</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#id3">8.2. 问题</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id3">8.2. 解决方案</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#id4">8.3. 参考</a></li>
 </ul>
 </li>
+<li class="toctree-l2"><a class="reference internal" href="django_middleware.html">9. django中间件和openstack用户重登录分析</a></li>
+<li class="toctree-l2"><a class="reference internal" href="horizon_launch_instance.html">10. horizon启动虚拟机分析</a></li>
+<li class="toctree-l2"><a class="reference internal" href="django-generic_view.html">11. django通用视图：一个小问题引发的思考</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="../web/index.html">web开发</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../others/index.html">附录</a></li>
 </ul>
 
@@ -159,7 +163,7 @@
 <ul class="simple">
 <li><a class="reference internal" href="#kvm" id="id9">KVM错误问题</a><ul>
 <li><a class="reference internal" href="#id2" id="id10">问题</a></li>
-<li><a class="reference internal" href="#id3" id="id11">问题</a></li>
+<li><a class="reference internal" href="#id3" id="id11">解决方案</a></li>
 <li><a class="reference internal" href="#id4" id="id12">参考</a></li>
 </ul>
 </li>
@@ -175,7 +179,7 @@
 </div>
 </div>
 <div class="section" id="id3">
-<h2><a class="toc-backref" href="#id11">8.2. 问题</a><a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id11">8.2. 解决方案</a><a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h2>
 <p>实际上，这个问题已经多次遇到了，但是每次还是会犯错。非常简单，就是CPU没有开启虚拟化。
 并且，google后，前几页就是该链接就是该问题。</p>
 <div class="figure align-center" id="id8">
@@ -215,7 +219,7 @@
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="../others/index.html" class="btn btn-neutral float-right" title="附录" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="django_middleware.html" class="btn btn-neutral float-right" title="9. django中间件和openstack用户重登录分析" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
         <a href="os_cmd.html" class="btn btn-neutral" title="7. openstack命令汇总" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
