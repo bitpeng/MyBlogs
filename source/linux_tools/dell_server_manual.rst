@@ -22,6 +22,117 @@ DELL 服务器操作手册
 
 -------------------
 
+raid 基础知识
+=============
+
+.. figure:: /_static/images/why_raid.png
+   :scale: 100
+   :align: center
+
+
+.. figure:: /_static/images/raid_howto.png
+   :scale: 100
+   :align: center
+   
+
+.. figure:: /_static/images/raid_obj.png
+   :scale: 100
+   :align: center
+
+**RAID中有三项关键技术：分条、镜像和奇偶校验**
+
+
+.. figure:: /_static/images/raid_stripe.png
+   :scale: 100
+   :align: center
+   
+
+.. figure:: /_static/images/raid_img.png
+   :scale: 100
+   :align: center
+   
+
+.. figure:: /_static/images/raid_check.png
+   :scale: 100
+   :align: center
+
+   
+.. figure:: /_static/images/raid_data_restore.png
+   :scale: 100
+   :align: center   
+
+一共有0~6一共7种，这其中RAID0、RAID1、RAID5和RAID6比较常用。
+
+
+.. figure:: /_static/images/raid_level.png
+   :scale: 100
+   :align: center  
+   
+   raid 常用级别
+
+.. attribute:: RAID0
+
+	如果你有n块磁盘，原来只能同时写一块磁盘，写满了再下一块，做了RAID 0之后，
+	n块可以同时写，速度提升很快，但由于没有备份，可靠性很差。**n最少为2(自备注：在实践中，一块
+	硬盘也可以制作raid0)。**
+	
+	.. figure:: /_static/images/raid0.png
+	   :scale: 100
+	   :align: center  
+
+.. attribute:: RAID1
+
+	正因为RAID 0太不可靠，所以衍生出了RAID 1。如果你有n块磁盘，把其中n/2
+	块磁盘作为镜像磁盘，在往其中一块磁盘写入数据时，也同时往另一块写数据。
+	坏了其中一块时，镜像磁盘自动顶上，可靠性最佳，但空间利用率太低。n最少为2。
+	
+	.. figure:: /_static/images/raid1.png
+	   :scale: 100
+	   :align: center  
+
+.. attribute:: RAID3
+
+	为了说明白RAID 5，先说RAID 3.RAID 3是若你有n块盘，其中1块盘作为校
+	验盘，剩余n-1块盘相当于作RAID 0同时读写，当其中一块盘坏掉时，
+	可以通过校验码还原出坏掉盘的原始数据。这个校验方式比较特别，奇偶检验，
+	1 XOR 0 XOR 1=0，0 XOR 1 XOR 0=1，最后的数据时校验数据，
+	当中间缺了一个数据时，可以通过其他盘的数据和校验数据推算出来。
+	但是这有个问题，由于n-1块盘做了RAID 0，每一次读写都要牵动所有盘来为它服务，
+	而且万一校验盘坏掉就完蛋了。最多允许坏一块盘。n最少为3.
+
+	.. figure:: /_static/images/raid3.png
+	   :scale: 100
+	   :align: center  
+
+.. attribute:: RAID5
+
+	在RAID 3的基础上有所区别，同样是相当于是1块盘的大小作为校验盘，n-1
+	块盘的大小作为数据盘，但校验码分布在各个磁盘中，不是单独的一块磁盘，
+	也就是分布式校验盘，这样做好处多多。最多坏一块盘。n最少为3.
+
+	.. figure:: /_static/images/raid5.png
+	   :scale: 100
+	   :align: center  
+
+
+**raid 级别比较汇总**
+
++-------+--------+--------+----------+--------+--------+--------------+
+| 级别  |最少磁盘|冗余磁盘|磁盘利用率|读取性能|写入性能|可靠性        |
++=======+========+========+==========+========+========+==============+
+| raid0 |     1  | 0颗    | 100%     | 高     | 最高   | 无           |
++-------+--------+--------+----------+--------+--------+--------------+
+| raid1 |     2  | n/2颗  | 50%      | 最高   | 最差   | 最高         |
++-------+--------+--------+----------+--------+--------+--------------+
+| raid3 |     3  | 1颗    | (n-1)/n  | 良好   | 一般   |支持单硬盘故障|
++-------+--------+--------+----------+--------+--------+--------------+
+| raid5 | 3      | 1颗    | (n-1)/n  | 良好   | 一般   |支持单硬盘故障|
++-------+--------+--------+----------+--------+--------+--------------+
+
+有关更多信息，可以参考：
+
+.. [#] http://www.linuxidc.com/Linux/2015-08/122191.htm
+.. [#] https://www.zhihu.com/question/20131784
 
 磁盘与raid管理
 ==============

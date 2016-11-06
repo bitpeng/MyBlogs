@@ -93,15 +93,16 @@
 <li class="toctree-l2"><a class="reference internal" href="disk_note.html">6. Linux 磁盘和分区</a></li>
 <li class="toctree-l2"><a class="reference internal" href="ubuntu_lvm_extend.html">7. Ubuntu根分区使用Lvm扩容</a></li>
 <li class="toctree-l2 current"><a class="current reference internal" href="#">8. DELL 服务器操作手册</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#raid">8.1. 磁盘与raid管理</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#id2">8.1.1. 硬盘状态</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#id3">8.1.2. raid 配置</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#id4">8.1.3. raid初始化</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#raid">8.1. raid 基础知识</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id4">8.2. 磁盘与raid管理</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#id5">8.2.1. 硬盘状态</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id6">8.2.2. raid 配置</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id7">8.2.3. raid初始化</a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="#life-controller">8.2. Life Controller</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#boot-mode">8.3. Boot Mode</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#id5">8.4. 参考</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#life-controller">8.3. Life Controller</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#boot-mode">8.4. Boot Mode</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id8">8.5. 参考</a></li>
 </ul>
 </li>
 </ul>
@@ -156,7 +157,7 @@
            <div itemprop="articleBody">
             
   <div class="section" id="dell">
-<span id="dell-server-manual"></span><h1><a class="toc-backref" href="#id14">8. DELL 服务器操作手册</a><a class="headerlink" href="#dell" title="Permalink to this headline">¶</a></h1>
+<span id="dell-server-manual"></span><h1><a class="toc-backref" href="#id18">8. DELL 服务器操作手册</a><a class="headerlink" href="#dell" title="Permalink to this headline">¶</a></h1>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
 <p class="last">在公司有机会在Dell服务器上部署OS上多次，现在把相关问题和知识点记录下来，作为参考。</p>
@@ -164,25 +165,173 @@
 <div class="contents topic" id="id1">
 <p class="topic-title first">目录</p>
 <ul class="simple">
-<li><a class="reference internal" href="#dell" id="id14">DELL 服务器操作手册</a><ul>
-<li><a class="reference internal" href="#raid" id="id15">磁盘与raid管理</a><ul>
-<li><a class="reference internal" href="#id2" id="id16">硬盘状态</a></li>
-<li><a class="reference internal" href="#id3" id="id17">raid 配置</a></li>
-<li><a class="reference internal" href="#id4" id="id18">raid初始化</a></li>
+<li><a class="reference internal" href="#dell" id="id18">DELL 服务器操作手册</a><ul>
+<li><a class="reference internal" href="#raid" id="id19">raid 基础知识</a></li>
+<li><a class="reference internal" href="#id4" id="id20">磁盘与raid管理</a><ul>
+<li><a class="reference internal" href="#id5" id="id21">硬盘状态</a></li>
+<li><a class="reference internal" href="#id6" id="id22">raid 配置</a></li>
+<li><a class="reference internal" href="#id7" id="id23">raid初始化</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#life-controller" id="id19">Life Controller</a></li>
-<li><a class="reference internal" href="#boot-mode" id="id20">Boot Mode</a></li>
-<li><a class="reference internal" href="#id5" id="id21">参考</a></li>
+<li><a class="reference internal" href="#life-controller" id="id24">Life Controller</a></li>
+<li><a class="reference internal" href="#boot-mode" id="id25">Boot Mode</a></li>
+<li><a class="reference internal" href="#id8" id="id26">参考</a></li>
 </ul>
 </li>
 </ul>
 </div>
 <hr class="docutils" />
 <div class="section" id="raid">
-<h2><a class="toc-backref" href="#id15">8.1. 磁盘与raid管理</a><a class="headerlink" href="#raid" title="Permalink to this headline">¶</a></h2>
-<div class="section" id="id2">
-<h3><a class="toc-backref" href="#id16">8.1.1. 硬盘状态</a><a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h3>
+<h2><a class="toc-backref" href="#id19">8.1. raid 基础知识</a><a class="headerlink" href="#raid" title="Permalink to this headline">¶</a></h2>
+<div class="figure align-center">
+<a class="reference internal image-reference" href="../_images/why_raid.png"><img alt="../_images/why_raid.png" src="../_images/why_raid.png" style="width: 741.0px; height: 537.0px;" /></a>
+</div>
+<div class="figure align-center">
+<a class="reference internal image-reference" href="../_images/raid_howto.png"><img alt="../_images/raid_howto.png" src="../_images/raid_howto.png" style="width: 744.0px; height: 410.0px;" /></a>
+</div>
+<div class="figure align-center">
+<a class="reference internal image-reference" href="../_images/raid_obj.png"><img alt="../_images/raid_obj.png" src="../_images/raid_obj.png" style="width: 715.0px; height: 433.0px;" /></a>
+</div>
+<p><strong>RAID中有三项关键技术：分条、镜像和奇偶校验</strong></p>
+<div class="figure align-center">
+<a class="reference internal image-reference" href="../_images/raid_stripe.png"><img alt="../_images/raid_stripe.png" src="../_images/raid_stripe.png" style="width: 739.0px; height: 544.0px;" /></a>
+</div>
+<div class="figure align-center">
+<a class="reference internal image-reference" href="../_images/raid_img.png"><img alt="../_images/raid_img.png" src="../_images/raid_img.png" style="width: 749.0px; height: 491.0px;" /></a>
+</div>
+<div class="figure align-center">
+<a class="reference internal image-reference" href="../_images/raid_check.png"><img alt="../_images/raid_check.png" src="../_images/raid_check.png" style="width: 736.0px; height: 499.0px;" /></a>
+</div>
+<div class="figure align-center">
+<a class="reference internal image-reference" href="../_images/raid_data_restore.png"><img alt="../_images/raid_data_restore.png" src="../_images/raid_data_restore.png" style="width: 746.0px; height: 498.0px;" /></a>
+</div>
+<p>一共有0~6一共7种，这其中RAID0、RAID1、RAID5和RAID6比较常用。</p>
+<div class="figure align-center" id="id13">
+<a class="reference internal image-reference" href="../_images/raid_level.png"><img alt="../_images/raid_level.png" src="../_images/raid_level.png" style="width: 742.0px; height: 325.0px;" /></a>
+<p class="caption"><span class="caption-text">raid 常用级别</span></p>
+</div>
+<dl class="attribute">
+<dt id="RAID0">
+<code class="descname">RAID0</code><a class="headerlink" href="#RAID0" title="Permalink to this definition">¶</a></dt>
+<dd><p>如果你有n块磁盘，原来只能同时写一块磁盘，写满了再下一块，做了RAID 0之后，
+n块可以同时写，速度提升很快，但由于没有备份，可靠性很差。<strong>n最少为2(自备注：在实践中，一块
+硬盘也可以制作raid0)。</strong></p>
+<div class="figure align-center">
+<a class="reference internal image-reference" href="../_images/raid0.png"><img alt="../_images/raid0.png" src="../_images/raid0.png" style="width: 722.0px; height: 497.0px;" /></a>
+</div>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="RAID1">
+<code class="descname">RAID1</code><a class="headerlink" href="#RAID1" title="Permalink to this definition">¶</a></dt>
+<dd><p>正因为RAID 0太不可靠，所以衍生出了RAID 1。如果你有n块磁盘，把其中n/2
+块磁盘作为镜像磁盘，在往其中一块磁盘写入数据时，也同时往另一块写数据。
+坏了其中一块时，镜像磁盘自动顶上，可靠性最佳，但空间利用率太低。n最少为2。</p>
+<div class="figure align-center">
+<a class="reference internal image-reference" href="../_images/raid1.png"><img alt="../_images/raid1.png" src="../_images/raid1.png" style="width: 726.0px; height: 494.0px;" /></a>
+</div>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="RAID3">
+<code class="descname">RAID3</code><a class="headerlink" href="#RAID3" title="Permalink to this definition">¶</a></dt>
+<dd><p>为了说明白RAID 5，先说RAID 3.RAID 3是若你有n块盘，其中1块盘作为校
+验盘，剩余n-1块盘相当于作RAID 0同时读写，当其中一块盘坏掉时，
+可以通过校验码还原出坏掉盘的原始数据。这个校验方式比较特别，奇偶检验，
+1 XOR 0 XOR 1=0，0 XOR 1 XOR 0=1，最后的数据时校验数据，
+当中间缺了一个数据时，可以通过其他盘的数据和校验数据推算出来。
+但是这有个问题，由于n-1块盘做了RAID 0，每一次读写都要牵动所有盘来为它服务，
+而且万一校验盘坏掉就完蛋了。最多允许坏一块盘。n最少为3.</p>
+<div class="figure align-center">
+<a class="reference internal image-reference" href="../_images/raid3.png"><img alt="../_images/raid3.png" src="../_images/raid3.png" style="width: 737.0px; height: 515.0px;" /></a>
+</div>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="RAID5">
+<code class="descname">RAID5</code><a class="headerlink" href="#RAID5" title="Permalink to this definition">¶</a></dt>
+<dd><p>在RAID 3的基础上有所区别，同样是相当于是1块盘的大小作为校验盘，n-1
+块盘的大小作为数据盘，但校验码分布在各个磁盘中，不是单独的一块磁盘，
+也就是分布式校验盘，这样做好处多多。最多坏一块盘。n最少为3.</p>
+<div class="figure align-center">
+<a class="reference internal image-reference" href="../_images/raid5.png"><img alt="../_images/raid5.png" src="../_images/raid5.png" style="width: 729.0px; height: 505.0px;" /></a>
+</div>
+</dd></dl>
+
+<p><strong>raid 级别比较汇总</strong></p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="11%" />
+<col width="13%" />
+<col width="13%" />
+<col width="16%" />
+<col width="13%" />
+<col width="13%" />
+<col width="22%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">级别</th>
+<th class="head">最少磁盘</th>
+<th class="head">冗余磁盘</th>
+<th class="head">磁盘利用率</th>
+<th class="head">读取性能</th>
+<th class="head">写入性能</th>
+<th class="head">可靠性</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>raid0</td>
+<td>1</td>
+<td>0颗</td>
+<td>100%</td>
+<td>高</td>
+<td>最高</td>
+<td>无</td>
+</tr>
+<tr class="row-odd"><td>raid1</td>
+<td>2</td>
+<td>n/2颗</td>
+<td>50%</td>
+<td>最高</td>
+<td>最差</td>
+<td>最高</td>
+</tr>
+<tr class="row-even"><td>raid3</td>
+<td>3</td>
+<td>1颗</td>
+<td>(n-1)/n</td>
+<td>良好</td>
+<td>一般</td>
+<td>支持单硬盘故障</td>
+</tr>
+<tr class="row-odd"><td>raid5</td>
+<td>3</td>
+<td>1颗</td>
+<td>(n-1)/n</td>
+<td>良好</td>
+<td>一般</td>
+<td>支持单硬盘故障</td>
+</tr>
+</tbody>
+</table>
+<p>有关更多信息，可以参考：</p>
+<table class="docutils footnote" frame="void" id="id2" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label">[1]</td><td><a class="reference external" href="http://www.linuxidc.com/Linux/2015-08/122191.htm">http://www.linuxidc.com/Linux/2015-08/122191.htm</a></td></tr>
+</tbody>
+</table>
+<table class="docutils footnote" frame="void" id="id3" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label">[2]</td><td><a class="reference external" href="https://www.zhihu.com/question/20131784">https://www.zhihu.com/question/20131784</a></td></tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="id4">
+<h2><a class="toc-backref" href="#id20">8.2. 磁盘与raid管理</a><a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id5">
+<h3><a class="toc-backref" href="#id21">8.2.1. 硬盘状态</a><a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h3>
 <p>在安装系统之前，我们首先需要进行raid配置。raid配置涉及到硬盘的一些状态，主要包括如下几种：</p>
 <dl class="attribute">
 <dt id="failed">
@@ -209,14 +358,14 @@
 </dd></dl>
 
 </div>
-<div class="section" id="id3">
-<h3><a class="toc-backref" href="#id17">8.1.2. raid 配置</a><a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id6">
+<h3><a class="toc-backref" href="#id22">8.2.2. raid 配置</a><a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h3>
 <p>一般进行raid配置前(create new virtual disk), 需要清除之前的raid配置信息。</p>
 <div class="admonition important">
 <p class="first admonition-title">Important</p>
 <p>清除之前已有raid配置信息，并不会清除磁盘里面的用户数据。我们可以在原有的硬盘上，
 创建同样的raid配置信息，来恢复硬盘数据。(来自于dell官网)</p>
-<div class="last figure align-center" id="id10">
+<div class="last figure align-center" id="id14">
 <a class="reference internal image-reference" href="../_images/clear_raid_config.png"><img alt="../_images/clear_raid_config.png" src="../_images/clear_raid_config.png" style="width: 723.0px; height: 404.0px;" /></a>
 <p class="caption"><span class="caption-text">清除raid配置信息，该步骤不会清除硬盘数据</span></p>
 </div>
@@ -224,8 +373,8 @@
 <p>清除原有raid配置信息后，可以创建同样的磁盘阵列。只要没有做初始化，用户数据是存在的。
 例如，服务器原先安装的Ubuntu操作系统还保存在硬盘上，马上我们就可以重启服务器，进入操作系统。</p>
 </div>
-<div class="section" id="id4">
-<h3><a class="toc-backref" href="#id18">8.1.3. raid初始化</a><a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id7">
+<h3><a class="toc-backref" href="#id23">8.2.3. raid初始化</a><a class="headerlink" href="#id7" title="Permalink to this headline">¶</a></h3>
 <p>如果我们创建RAID阵列的目的是新部署一台服务器，我们建议所有新创建的RAID
 阵列都应该做初始化操作。对raid执行初始化操作可以认为是普通硬盘的格式化操作，
 raid硬盘上原有的用户数据将被清除。</p>
@@ -233,7 +382,7 @@ raid硬盘上原有的用户数据将被清除。</p>
 <p class="first admonition-title">Note</p>
 <p>对于Dell服务器而言，raid阵列建好后，可以执行完全初始化(start init)和快速初始化(fast init)。
 完全初始化比较慢，一般1T的硬盘完全初始化需要1个半小时。执行快速初始化既可！</p>
-<div class="last figure align-center" id="id11">
+<div class="last figure align-center" id="id15">
 <a class="reference internal image-reference" href="../_images/raid_init.png"><img alt="../_images/raid_init.png" src="../_images/raid_init.png" style="width: 727.0px; height: 407.0px;" /></a>
 <p class="caption"><span class="caption-text">raid阵列初始化操作，该步骤会清除硬盘所有用户数据。</span></p>
 </div>
@@ -241,10 +390,10 @@ raid硬盘上原有的用户数据将被清除。</p>
 </div>
 </div>
 <div class="section" id="life-controller">
-<h2><a class="toc-backref" href="#id19">8.2. Life Controller</a><a class="headerlink" href="#life-controller" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id24">8.3. Life Controller</a><a class="headerlink" href="#life-controller" title="Permalink to this headline">¶</a></h2>
 <p>有时我们无法成功安装OS，这时可以通过生命控制器进行安装。life controller具有很多功能，
 可以进行系统部署，raid 制作，硬件检测，系统日志等诸多操作。</p>
-<div class="figure align-center" id="id12">
+<div class="figure align-center" id="id16">
 <a class="reference internal image-reference" href="../_images/life_controller.png"><img alt="../_images/life_controller.png" src="../_images/life_controller.png" style="width: 1002.0px; height: 686.0px;" /></a>
 <p class="caption"><span class="caption-text">生命周期控制器</span></p>
 </div>
@@ -266,10 +415,10 @@ Life Controller了。(Dell 技术支持提供，亲测有效。)</p>
 </div>
 </div>
 <div class="section" id="boot-mode">
-<h2><a class="toc-backref" href="#id20">8.3. Boot Mode</a><a class="headerlink" href="#boot-mode" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id25">8.4. Boot Mode</a><a class="headerlink" href="#boot-mode" title="Permalink to this headline">¶</a></h2>
 <p>Dell系列服务器支持bios 和 UEFI启动模式。关于这两种启动模式的更多细节，可以自己网上
 搜索相关材料。</p>
-<div class="figure align-center" id="id13">
+<div class="figure align-center" id="id17">
 <a class="reference internal image-reference" href="../_images/boot_mode.png"><img alt="../_images/boot_mode.png" src="../_images/boot_mode.png" style="width: 1054.0px; height: 655.0px;" /></a>
 <p class="caption"><span class="caption-text">Boot Mode，在system bios里设置。</span></p>
 </div>
@@ -282,30 +431,30 @@ raid自检，所以启动速度比较快。但是，这种方式也会造成用�
 </div>
 </div>
 <hr class="docutils" />
-<div class="section" id="id5">
-<h2><a class="toc-backref" href="#id21">8.4. 参考</a><a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h2>
-<table class="docutils footnote" frame="void" id="id6" rules="none">
-<colgroup><col class="label" /><col /></colgroup>
-<tbody valign="top">
-<tr><td class="label">[1]</td><td><a class="reference external" href="http://zh.community.dell.com/techcenter/systems-management/w/wiki/390.raid">http://zh.community.dell.com/techcenter/systems-management/w/wiki/390.raid</a></td></tr>
-</tbody>
-</table>
-<table class="docutils footnote" frame="void" id="id7" rules="none">
-<colgroup><col class="label" /><col /></colgroup>
-<tbody valign="top">
-<tr><td class="label">[2]</td><td><a class="reference external" href="http://zh.community.dell.com/techcenter/systems-management/w/wiki/388.percraid">http://zh.community.dell.com/techcenter/systems-management/w/wiki/388.percraid</a></td></tr>
-</tbody>
-</table>
-<table class="docutils footnote" frame="void" id="id8" rules="none">
-<colgroup><col class="label" /><col /></colgroup>
-<tbody valign="top">
-<tr><td class="label">[3]</td><td><a class="reference external" href="http://www.cqeis.com/news_detail/newsId=1654.html">http://www.cqeis.com/news_detail/newsId=1654.html</a></td></tr>
-</tbody>
-</table>
+<div class="section" id="id8">
+<h2><a class="toc-backref" href="#id26">8.5. 参考</a><a class="headerlink" href="#id8" title="Permalink to this headline">¶</a></h2>
 <table class="docutils footnote" frame="void" id="id9" rules="none">
 <colgroup><col class="label" /><col /></colgroup>
 <tbody valign="top">
-<tr><td class="label">[4]</td><td><a class="reference external" href="http://zh.community.dell.com/techcenter/w/techcenter_wiki/190.poweredgelifecycle-controller">http://zh.community.dell.com/techcenter/w/techcenter_wiki/190.poweredgelifecycle-controller</a></td></tr>
+<tr><td class="label">[3]</td><td><a class="reference external" href="http://zh.community.dell.com/techcenter/systems-management/w/wiki/390.raid">http://zh.community.dell.com/techcenter/systems-management/w/wiki/390.raid</a></td></tr>
+</tbody>
+</table>
+<table class="docutils footnote" frame="void" id="id10" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label">[4]</td><td><a class="reference external" href="http://zh.community.dell.com/techcenter/systems-management/w/wiki/388.percraid">http://zh.community.dell.com/techcenter/systems-management/w/wiki/388.percraid</a></td></tr>
+</tbody>
+</table>
+<table class="docutils footnote" frame="void" id="id11" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label">[5]</td><td><a class="reference external" href="http://www.cqeis.com/news_detail/newsId=1654.html">http://www.cqeis.com/news_detail/newsId=1654.html</a></td></tr>
+</tbody>
+</table>
+<table class="docutils footnote" frame="void" id="id12" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label">[6]</td><td><a class="reference external" href="http://zh.community.dell.com/techcenter/w/techcenter_wiki/190.poweredgelifecycle-controller">http://zh.community.dell.com/techcenter/w/techcenter_wiki/190.poweredgelifecycle-controller</a></td></tr>
 </tbody>
 </table>
 </div>
