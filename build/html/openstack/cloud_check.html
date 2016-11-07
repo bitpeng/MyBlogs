@@ -1,0 +1,389 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>13. 云平台服务器重启注意事项 &mdash; Welcome to Sitian&#39;s Blog 0.1 documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+    <link rel="top" title="Welcome to Sitian&#39;s Blog 0.1 documentation" href="../index.html"/>
+        <link rel="up" title="OpenStack Note" href="index.html"/>
+        <link rel="next" title="web开发" href="../web/index.html"/>
+        <link rel="prev" title="12. django通用视图：一个小问题引发的思考" href="django-generic_view.html"/> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> Welcome to Sitian's Blog
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.1
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../py_doc/index.html">Hack Python</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../linux_tools/index.html">Hack Linux</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">OpenStack Note</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="horizon_develop.html">1. Horizon 二次开发指南</a></li>
+<li class="toctree-l2"><a class="reference internal" href="image-create-guide.html">2. OpenStack镜像制作</a></li>
+<li class="toctree-l2"><a class="reference internal" href="deploy_synopsis.html">3. openstack 实践指南</a></li>
+<li class="toctree-l2"><a class="reference internal" href="centos_vm_netconf.html">4. Centos虚拟机联网配置</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lanch_instance_failure.html">5. OpenStack 启动虚拟机失败分析</a></li>
+<li class="toctree-l2"><a class="reference internal" href="rabbitmq_doc.html">6. rabbitmq教程</a></li>
+<li class="toctree-l2"><a class="reference internal" href="os_cmd.html">7. openstack命令汇总</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kvm_error.html">8. KVM错误问题</a></li>
+<li class="toctree-l2"><a class="reference internal" href="django_middleware.html">9. django中间件和openstack用户重登录分析</a></li>
+<li class="toctree-l2"><a class="reference internal" href="horizon_workflows_analysis.html">10. horizon workflows分析</a></li>
+<li class="toctree-l2"><a class="reference internal" href="horizon_launch_instance.html">11. horizon启动虚拟机分析</a></li>
+<li class="toctree-l2"><a class="reference internal" href="django-generic_view.html">12. django通用视图：一个小问题引发的思考</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">13. 云平台服务器重启注意事项</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id3">13.1. 核心服务状态检查</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#cinder">13.1.1. cinder服务</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#neutron">13.1.2. neutron服务</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#nova">13.1.3. nova服务</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#glance">13.1.4. glance 服务</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id4">13.1.5. 消息队列服务状态</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#ceph">13.1.6. Ceph集群状态</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#id5">13.2. 异常服务重启</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#id6">13.2.1. 重启neutron服务</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id7">13.2.2. 重启nova服务</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#id8">13.3. 启动虚拟机测试</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../web/index.html">web开发</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../others/index.html">附录</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../index.html">Welcome to Sitian's Blog</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+ 
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../index.html">Docs</a> &raquo;</li>
+      
+          <li><a href="index.html">OpenStack Note</a> &raquo;</li>
+      
+    <li>13. 云平台服务器重启注意事项</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="../_sources/openstack/cloud_check.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="cloud-check">
+<span id="id1"></span><h1><a class="toc-backref" href="#id15">13. 云平台服务器重启注意事项</a><a class="headerlink" href="#cloud-check" title="Permalink to this headline">¶</a></h1>
+<div class="contents topic" id="id2">
+<p class="topic-title first">目录</p>
+<ul class="simple">
+<li><a class="reference internal" href="#cloud-check" id="id15">云平台服务器重启注意事项</a><ul>
+<li><a class="reference internal" href="#id3" id="id16">核心服务状态检查</a><ul>
+<li><a class="reference internal" href="#cinder" id="id17">cinder服务</a></li>
+<li><a class="reference internal" href="#neutron" id="id18">neutron服务</a></li>
+<li><a class="reference internal" href="#nova" id="id19">nova服务</a></li>
+<li><a class="reference internal" href="#glance" id="id20">glance 服务</a></li>
+<li><a class="reference internal" href="#id4" id="id21">消息队列服务状态</a></li>
+<li><a class="reference internal" href="#ceph" id="id22">Ceph集群状态</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#id5" id="id23">异常服务重启</a><ul>
+<li><a class="reference internal" href="#id6" id="id24">重启neutron服务</a></li>
+<li><a class="reference internal" href="#id7" id="id25">重启nova服务</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#id8" id="id26">启动虚拟机测试</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<hr class="docutils" />
+<p>由于服务器重启，导致云平台服务异常。因此写一个简单的文档，供参考!</p>
+<div class="section" id="id3">
+<h2><a class="toc-backref" href="#id16">13.1. 核心服务状态检查</a><a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="cinder">
+<h3><a class="toc-backref" href="#id17">13.1.1. cinder服务</a><a class="headerlink" href="#cinder" title="Permalink to this headline">¶</a></h3>
+<div class="figure align-center" id="id9">
+<a class="reference internal image-reference" href="../_images/cinder_status.png"><img alt="../_images/cinder_status.png" src="../_images/cinder_status.png" style="width: 1063.0px; height: 191.0px;" /></a>
+<p class="caption"><span class="caption-text">cinder 服务状态正常</span></p>
+</div>
+</div>
+<div class="section" id="neutron">
+<h3><a class="toc-backref" href="#id18">13.1.2. neutron服务</a><a class="headerlink" href="#neutron" title="Permalink to this headline">¶</a></h3>
+<div class="figure align-center" id="id10">
+<a class="reference internal image-reference" href="../_images/neutron_status.png"><img alt="../_images/neutron_status.png" src="../_images/neutron_status.png" style="width: 796.0px; height: 106.0px;" /></a>
+<p class="caption"><span class="caption-text">neutron 服务状态正常</span></p>
+</div>
+</div>
+<div class="section" id="nova">
+<h3><a class="toc-backref" href="#id19">13.1.3. nova服务</a><a class="headerlink" href="#nova" title="Permalink to this headline">¶</a></h3>
+<div class="figure align-center" id="id11">
+<a class="reference internal image-reference" href="../_images/nova_bad_status.png"><img alt="../_images/nova_bad_status.png" src="../_images/nova_bad_status.png" style="width: 1161.0px; height: 247.0px;" /></a>
+<p class="caption"><span class="caption-text">nova 服务状态正常</span></p>
+</div>
+</div>
+<div class="section" id="glance">
+<h3><a class="toc-backref" href="#id20">13.1.4. glance 服务</a><a class="headerlink" href="#glance" title="Permalink to this headline">¶</a></h3>
+<div class="figure align-center" id="id12">
+<a class="reference internal image-reference" href="../_images/glance_status.png"><img alt="../_images/glance_status.png" src="../_images/glance_status.png" style="width: 1219.0px; height: 378.0px;" /></a>
+<p class="caption"><span class="caption-text">glance 服务状态正常</span></p>
+</div>
+</div>
+<div class="section" id="id4">
+<h3><a class="toc-backref" href="#id21">13.1.5. 消息队列服务状态</a><a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h3>
+<p>在控制节点，使用如下的命令：</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">rabbitmqctl</span> <span class="n">status</span>
+</pre></div>
+</div>
+<div class="figure align-center" id="id13">
+<a class="reference internal image-reference" href="../_images/rabbitmq_status.png"><img alt="../_images/rabbitmq_status.png" src="../_images/rabbitmq_status.png" style="width: 804.0px; height: 539.0px;" /></a>
+<p class="caption"><span class="caption-text">rabbitmq 服务状态正常</span></p>
+</div>
+</div>
+<div class="section" id="ceph">
+<h3><a class="toc-backref" href="#id22">13.1.6. Ceph集群状态</a><a class="headerlink" href="#ceph" title="Permalink to this headline">¶</a></h3>
+<p>在ceph集群上任意一个节点，使用ceph –s 命令：</p>
+<div class="figure align-center" id="id14">
+<a class="reference internal image-reference" href="../_images/ceph_status2.png"><img alt="../_images/ceph_status2.png" src="../_images/ceph_status2.png" style="width: 966.0px; height: 233.0px;" /></a>
+<p class="caption"><span class="caption-text">rabbitmq 服务状态正常</span></p>
+</div>
+</div>
+</div>
+<div class="section" id="id5">
+<h2><a class="toc-backref" href="#id23">13.2. 异常服务重启</a><a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h2>
+<p>从上面的可以看到，nova服务、neutron服务异常，我们需要手动重启异常服务。</p>
+<div class="section" id="id6">
+<h3><a class="toc-backref" href="#id24">13.2.1. 重启neutron服务</a><a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h3>
+<ul>
+<li><p class="first">首先在网络节点：</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span>cd /usr/bin/;
+for i in neutron*; do service $i restart; done;
+</pre></div>
+</div>
+</li>
+<li><p class="first">然后在控制节点：</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span>cd /usr/bin/;
+for i in neutron*; do service $i restart; done;
+</pre></div>
+</div>
+</li>
+<li><p class="first">然后检查状态:</p>
+<div class="figure align-center">
+<a class="reference internal image-reference" href="../_images/neutron_status2.png"><img alt="../_images/neutron_status2.png" src="../_images/neutron_status2.png" style="width: 1295.0px; height: 351.0px;" /></a>
+</div>
+<div class="figure align-center">
+<a class="reference internal image-reference" href="../_images/neutron_status3.png"><img alt="../_images/neutron_status3.png" src="../_images/neutron_status3.png" style="width: 1283.0px; height: 329.0px;" /></a>
+</div>
+<div class="figure align-center">
+<a class="reference internal image-reference" href="../_images/neutron_status4.png"><img alt="../_images/neutron_status4.png" src="../_images/neutron_status4.png" style="width: 1296.0px; height: 333.0px;" /></a>
+</div>
+<p>看最后一张图，neutron服务状态正常了。</p>
+</li>
+</ul>
+</div>
+<div class="section" id="id7">
+<h3><a class="toc-backref" href="#id25">13.2.2. 重启nova服务</a><a class="headerlink" href="#id7" title="Permalink to this headline">¶</a></h3>
+<ol class="arabic">
+<li><p class="first">在控制节点</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span>cd /usr/bin;
+for i in nova*; do service $i restart; done
+</pre></div>
+</div>
+</li>
+<li><p class="first">然后在计算节点：</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span>cd /usr/bin;
+for i in nova*; do service $i restart; done
+</pre></div>
+</div>
+</li>
+<li><p class="first">检查服务：</p>
+<div class="figure align-center">
+<a class="reference internal image-reference" href="../_images/nova_status2.png"><img alt="../_images/nova_status2.png" src="../_images/nova_status2.png" style="width: 1165.0px; height: 243.0px;" /></a>
+</div>
+<div class="figure align-center">
+<a class="reference internal image-reference" href="../_images/nova_status3.png"><img alt="../_images/nova_status3.png" src="../_images/nova_status3.png" style="width: 1116.0px; height: 239.0px;" /></a>
+</div>
+<p>可以看到，nova服务状态也正常了。</p>
+</li>
+</ol>
+</div>
+</div>
+<div class="section" id="id8">
+<h2><a class="toc-backref" href="#id26">13.3. 启动虚拟机测试</a><a class="headerlink" href="#id8" title="Permalink to this headline">¶</a></h2>
+<p>租户用户登录，然后创建虚拟机。使用cirros测试镜像。</p>
+<div class="figure align-center">
+<a class="reference internal image-reference" href="../_images/lanch_instance_test1.png"><img alt="../_images/lanch_instance_test1.png" src="../_images/lanch_instance_test1.png" style="width: 749.0px; height: 529.0px;" /></a>
+</div>
+<div class="figure align-center">
+<a class="reference internal image-reference" href="../_images/lanch_instance_test2.png"><img alt="../_images/lanch_instance_test2.png" src="../_images/lanch_instance_test2.png" style="width: 716.0px; height: 497.0px;" /></a>
+</div>
+<div class="figure align-center">
+<a class="reference internal image-reference" href="../_images/lanch_instance_test3.png"><img alt="../_images/lanch_instance_test3.png" src="../_images/lanch_instance_test3.png" style="width: 1126.0px; height: 144.0px;" /></a>
+</div>
+<p>从最后一张图可以看到，虚拟机创建成功。至此，云平台核心服务正常。</p>
+</div>
+</div>
+
+
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../web/index.html" class="btn btn-neutral float-right" title="web开发" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="django-generic_view.html" class="btn btn-neutral" title="12. django通用视图：一个小问题引发的思考" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2016, chenshiqiang.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'0.1',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

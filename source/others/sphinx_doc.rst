@@ -189,3 +189,4 @@ It refers to the section itself, see :ref:`my-reference-label`.
        退而求其次，申请了 worldhello.net。
 .. [#] http://liquidmarkup.org/
 .. [#] https://github.com/mojombo/jekyll/wiki/configuration
+.. [#] http://docutils-zh-cn.readthedocs.io/zh_CN/latest/index.html#

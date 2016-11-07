@@ -24,6 +24,7 @@ OpenStack Note
     horizon_workflows_analysis
     horizon_launch_instance
     django-generic_view
+    cloud_check
 
 
 ..  sphinx_doc
