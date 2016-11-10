@@ -164,4 +164,4 @@ MDS控制Client与OSD对象的交互。
 参考
 =====
 
-.. [#] http://f.dataguru.cn/thread-127360-1-1.html
+
