@@ -56,6 +56,24 @@ client端：
 
 然后两端分别使用md5sum命令核对文件传输是否出错.
 
+scp
+===
+
+- 远程拷贝文件
+
+  ::
+
+      scp root@10.11.113.198:/smbshare/win7.raw .
+
+- 远程拷贝目录
+
+  ::
+
+      scp -r root@10.11.113.198:/smbshare/ .
+
+
+
+
 性能调优
 =========
 
@@ -65,3 +83,10 @@ client端：
 ::
 
     echo 3 > /proc/sys/vm/drop_caches
+
+查看内存使用
+++++++++++++++++
+
+::
+
+    free -hl

@@ -32,7 +32,7 @@
   
     <link rel="top" title="Welcome to Sitian&#39;s Blog 0.1 documentation" href="../index.html"/>
         <link rel="up" title="Hack Linux" href="index.html"/>
-        <link rel="next" title="OpenStack Note" href="../openstack/index.html"/>
+        <link rel="next" title="6. Linux 磁盘和分区" href="disk_note.html"/>
         <link rel="prev" title="4. Linux逻辑卷和lvm" href="Linux_lvm.html"/> 
 
   
@@ -99,15 +99,21 @@
 <li class="toctree-l4"><a class="reference internal" href="#id4">5.2.2. 传输文件</a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="#id5">5.3. 性能调优</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#id6">5.3.1. 释放缓存</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#scp">5.3. scp</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id5">5.4. 性能调优</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#id6">5.4.1. 释放缓存</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id7">5.4.2. 查看内存使用</a></li>
 </ul>
 </li>
 </ul>
 </li>
+<li class="toctree-l2"><a class="reference internal" href="disk_note.html">6. Linux 磁盘和分区</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ubuntu_lvm_extend.html">7. Ubuntu根分区使用Lvm扩容</a></li>
+<li class="toctree-l2"><a class="reference internal" href="dell_server_manual.html">8. DELL 服务器操作手册</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../openstack/index.html">OpenStack Note</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../web/index.html">web开发</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../others/index.html">附录</a></li>
 </ul>
 
@@ -156,22 +162,24 @@
            <div itemprop="articleBody">
             
   <div class="section" id="linux">
-<h1><a class="toc-backref" href="#id7">5. Linux命令</a><a class="headerlink" href="#linux" title="Permalink to this headline">¶</a></h1>
+<h1><a class="toc-backref" href="#id8">5. Linux命令</a><a class="headerlink" href="#linux" title="Permalink to this headline">¶</a></h1>
 <div class="contents topic" id="id1">
 <p class="topic-title first">目录</p>
 <ul class="simple">
-<li><a class="reference internal" href="#linux" id="id7">Linux命令</a><ul>
-<li><a class="reference internal" href="#get" id="id8">get</a><ul>
-<li><a class="reference internal" href="#id2" id="id9">下载整个网站</a></li>
+<li><a class="reference internal" href="#linux" id="id8">Linux命令</a><ul>
+<li><a class="reference internal" href="#get" id="id9">get</a><ul>
+<li><a class="reference internal" href="#id2" id="id10">下载整个网站</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#nc" id="id10">nc</a><ul>
-<li><a class="reference internal" href="#id3" id="id11">传输目录</a></li>
-<li><a class="reference internal" href="#id4" id="id12">传输文件</a></li>
+<li><a class="reference internal" href="#nc" id="id11">nc</a><ul>
+<li><a class="reference internal" href="#id3" id="id12">传输目录</a></li>
+<li><a class="reference internal" href="#id4" id="id13">传输文件</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#id5" id="id13">性能调优</a><ul>
-<li><a class="reference internal" href="#id6" id="id14">释放缓存</a></li>
+<li><a class="reference internal" href="#scp" id="id14">scp</a></li>
+<li><a class="reference internal" href="#id5" id="id15">性能调优</a><ul>
+<li><a class="reference internal" href="#id6" id="id16">释放缓存</a></li>
+<li><a class="reference internal" href="#id7" id="id17">查看内存使用</a></li>
 </ul>
 </li>
 </ul>
@@ -180,9 +188,9 @@
 </div>
 <hr class="docutils" />
 <div class="section" id="get">
-<h2><a class="toc-backref" href="#id8">5.1. get</a><a class="headerlink" href="#get" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id9">5.1. get</a><a class="headerlink" href="#get" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="id2">
-<h3><a class="toc-backref" href="#id9">5.1.1. 下载整个网站</a><a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id10">5.1.1. 下载整个网站</a><a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h3>
 <p>下载网站的整个目录，以供离线浏览</p>
 <div class="code shell highlight-default"><div class="highlight"><pre><span></span><span class="n">wget</span> <span class="o">-</span><span class="n">c</span> <span class="o">-</span><span class="n">r</span> <span class="o">-</span><span class="n">np</span> <span class="o">-</span><span class="n">k</span> <span class="o">-</span><span class="n">L</span> <span class="o">-</span><span class="n">p</span> <span class="n">http</span><span class="p">:</span><span class="o">//</span><span class="n">docs</span><span class="o">.</span><span class="n">ceph</span><span class="o">.</span><span class="n">org</span><span class="o">.</span><span class="n">cn</span>
 </pre></div>
@@ -190,9 +198,9 @@
 </div>
 </div>
 <div class="section" id="nc">
-<h2><a class="toc-backref" href="#id10">5.2. nc</a><a class="headerlink" href="#nc" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id11">5.2. nc</a><a class="headerlink" href="#nc" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="id3">
-<h3><a class="toc-backref" href="#id11">5.2.1. 传输目录</a><a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id12">5.2.1. 传输目录</a><a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h3>
 <p>server端：</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">tar</span> <span class="o">-</span><span class="n">cvf</span> <span class="o">-</span> <span class="n">allinone</span><span class="o">-</span><span class="n">v2</span><span class="o">.</span><span class="mi">5</span><span class="o">-</span><span class="n">install</span><span class="o">-</span><span class="n">script</span> <span class="o">|</span> <span class="n">nc</span> <span class="o">-</span><span class="n">l</span> <span class="mi">12345</span>
 </pre></div>
@@ -203,7 +211,7 @@
 </div>
 </div>
 <div class="section" id="id4">
-<h3><a class="toc-backref" href="#id12">5.2.2. 传输文件</a><a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id13">5.2.2. 传输文件</a><a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h3>
 <p>server端：</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">nc</span> <span class="o">-</span><span class="n">l</span> <span class="mi">12345</span> <span class="o">&lt;</span> <span class="n">file</span><span class="o">.</span><span class="n">txt</span>
 </pre></div>
@@ -215,11 +223,32 @@
 <p>然后两端分别使用md5sum命令核对文件传输是否出错.</p>
 </div>
 </div>
+<div class="section" id="scp">
+<h2><a class="toc-backref" href="#id14">5.3. scp</a><a class="headerlink" href="#scp" title="Permalink to this headline">¶</a></h2>
+<ul>
+<li><p class="first">远程拷贝文件</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">scp</span> <span class="n">root</span><span class="nd">@10</span><span class="o">.</span><span class="mf">11.113</span><span class="o">.</span><span class="mi">198</span><span class="p">:</span><span class="o">/</span><span class="n">smbshare</span><span class="o">/</span><span class="n">win7</span><span class="o">.</span><span class="n">raw</span> <span class="o">.</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first">远程拷贝目录</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">scp</span> <span class="o">-</span><span class="n">r</span> <span class="n">root</span><span class="nd">@10</span><span class="o">.</span><span class="mf">11.113</span><span class="o">.</span><span class="mi">198</span><span class="p">:</span><span class="o">/</span><span class="n">smbshare</span><span class="o">/</span> <span class="o">.</span>
+</pre></div>
+</div>
+</li>
+</ul>
+</div>
 <div class="section" id="id5">
-<h2><a class="toc-backref" href="#id13">5.3. 性能调优</a><a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id15">5.4. 性能调优</a><a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="id6">
-<h3><a class="toc-backref" href="#id14">5.3.1. 释放缓存</a><a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id16">5.4.1. 释放缓存</a><a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h3>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">echo</span> <span class="mi">3</span> <span class="o">&gt;</span> <span class="o">/</span><span class="n">proc</span><span class="o">/</span><span class="n">sys</span><span class="o">/</span><span class="n">vm</span><span class="o">/</span><span class="n">drop_caches</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="id7">
+<h3><a class="toc-backref" href="#id17">5.4.2. 查看内存使用</a><a class="headerlink" href="#id7" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">free</span> <span class="o">-</span><span class="n">hl</span>
 </pre></div>
 </div>
 </div>
@@ -233,7 +262,7 @@
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="../openstack/index.html" class="btn btn-neutral float-right" title="OpenStack Note" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="disk_note.html" class="btn btn-neutral float-right" title="6. Linux 磁盘和分区" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
         <a href="Linux_lvm.html" class="btn btn-neutral" title="4. Linux逻辑卷和lvm" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>

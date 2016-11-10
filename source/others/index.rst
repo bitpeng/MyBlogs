@@ -9,9 +9,10 @@
 
 
 .. toctree::
-    :maxdepth: 2
-    :numbered: 2
+    :maxdepth: 3
+    :numbered: 3
 
     rst_template
+    store_intro
 
 ..    sphinx_doc

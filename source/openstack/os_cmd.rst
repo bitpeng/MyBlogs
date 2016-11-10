@@ -46,6 +46,11 @@ neutron 相关
 
    neutron 正常状态
 
+查看网络列表：
+
+::
+
+    neutron net-list
 
 
 nova 相关
@@ -65,6 +70,15 @@ nova 相关
    :align: center
 
    nova 正常状态
+
+
+命令行新建虚拟机
+
+::
+
+    nova --debug boot csq_test --flavor m1.tiny --image "dec2596b-1b1f-4eec-9cd9-b72fc8dc6f95" --security-groups default --nic net-id=1283f65b-2adc-4654-9cbe-0d0566bb0c1e
+
+其中
 
 ---------------------
 
