@@ -99,9 +99,11 @@
 </li>
 <li class="toctree-l3"><a class="reference internal" href="#nova">7.2. nova 相关</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#id3">7.2.1. 检查状态</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id4">7.2.2. 命令行新建虚拟机</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id5">7.2.3. 命令行启动虚拟机</a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="#id4">7.3. 参考</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id6">7.3. 参考</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="kvm_error.html">8. KVM错误问题</a></li>
@@ -161,7 +163,7 @@
            <div itemprop="articleBody">
             
   <div class="section" id="openstack">
-<span id="l-os-cmd"></span><h1><a class="toc-backref" href="#id8">7. openstack命令汇总</a><a class="headerlink" href="#openstack" title="Permalink to this headline">¶</a></h1>
+<span id="l-os-cmd"></span><h1><a class="toc-backref" href="#id10">7. openstack命令汇总</a><a class="headerlink" href="#openstack" title="Permalink to this headline">¶</a></h1>
 <div class="admonition tip">
 <p class="first admonition-title">Tip</p>
 <ul class="last simple">
@@ -172,29 +174,31 @@
 <div class="contents topic" id="id1">
 <p class="topic-title first">目录</p>
 <ul class="simple">
-<li><a class="reference internal" href="#openstack" id="id8">openstack命令汇总</a><ul>
-<li><a class="reference internal" href="#neutron" id="id9">neutron 相关</a><ul>
-<li><a class="reference internal" href="#id2" id="id10">检查状态</a></li>
+<li><a class="reference internal" href="#openstack" id="id10">openstack命令汇总</a><ul>
+<li><a class="reference internal" href="#neutron" id="id11">neutron 相关</a><ul>
+<li><a class="reference internal" href="#id2" id="id12">检查状态</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#nova" id="id11">nova 相关</a><ul>
-<li><a class="reference internal" href="#id3" id="id12">检查状态</a></li>
+<li><a class="reference internal" href="#nova" id="id13">nova 相关</a><ul>
+<li><a class="reference internal" href="#id3" id="id14">检查状态</a></li>
+<li><a class="reference internal" href="#id4" id="id15">命令行新建虚拟机</a></li>
+<li><a class="reference internal" href="#id5" id="id16">命令行启动虚拟机</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#id4" id="id13">参考</a></li>
+<li><a class="reference internal" href="#id6" id="id17">参考</a></li>
 </ul>
 </li>
 </ul>
 </div>
 <hr class="docutils" />
 <div class="section" id="neutron">
-<h2><a class="toc-backref" href="#id9">7.1. neutron 相关</a><a class="headerlink" href="#neutron" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id11">7.1. neutron 相关</a><a class="headerlink" href="#neutron" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="id2">
-<h3><a class="toc-backref" href="#id10">7.1.1. 检查状态</a><a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id12">7.1.1. 检查状态</a><a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h3>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">neutron</span> <span class="n">agent</span><span class="o">-</span><span class="nb">list</span>
 </pre></div>
 </div>
-<div class="figure align-center" id="id6">
+<div class="figure align-center" id="id8">
 <a class="reference internal image-reference" href="../_images/check_neutron_status.png"><img alt="../_images/check_neutron_status.png" src="../_images/check_neutron_status.png" style="width: 1246.0px; height: 211.0px;" /></a>
 <p class="caption"><span class="caption-text">neutron 正常状态</span></p>
 </div>
@@ -205,32 +209,46 @@
 </div>
 </div>
 <div class="section" id="nova">
-<h2><a class="toc-backref" href="#id11">7.2. nova 相关</a><a class="headerlink" href="#nova" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id13">7.2. nova 相关</a><a class="headerlink" href="#nova" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="id3">
-<h3><a class="toc-backref" href="#id12">7.2.1. 检查状态</a><a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id14">7.2.1. 检查状态</a><a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h3>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">nova</span><span class="o">-</span><span class="n">manage</span> <span class="n">service</span> <span class="nb">list</span><span class="o">|</span><span class="n">sort</span>
 <span class="c1"># 或者使用</span>
 <span class="n">nova</span> <span class="n">service</span><span class="o">-</span><span class="nb">list</span>
 </pre></div>
 </div>
-<div class="figure align-center" id="id7">
+<div class="figure align-center" id="id9">
 <a class="reference internal image-reference" href="../_images/check_nova_status.png"><img alt="../_images/check_nova_status.png" src="../_images/check_nova_status.png" style="width: 1127.0px; height: 173.0px;" /></a>
 <p class="caption"><span class="caption-text">nova 正常状态</span></p>
 </div>
-<p>命令行新建虚拟机</p>
+</div>
+<div class="section" id="id4">
+<h3><a class="toc-backref" href="#id15">7.2.2. 命令行新建虚拟机</a><a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h3>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">nova</span> <span class="o">--</span><span class="n">debug</span> <span class="n">boot</span> <span class="n">csq_test</span> <span class="o">--</span><span class="n">flavor</span> <span class="n">m1</span><span class="o">.</span><span class="n">tiny</span> <span class="o">--</span><span class="n">image</span> <span class="s2">&quot;dec2596b-1b1f-4eec-9cd9-b72fc8dc6f95&quot;</span> <span class="o">--</span><span class="n">security</span><span class="o">-</span><span class="n">groups</span> <span class="n">default</span> <span class="o">--</span><span class="n">nic</span> <span class="n">net</span><span class="o">-</span><span class="nb">id</span><span class="o">=</span><span class="mi">1283</span><span class="n">f65b</span><span class="o">-</span><span class="mi">2</span><span class="n">adc</span><span class="o">-</span><span class="mi">4654</span><span class="o">-</span><span class="mi">9</span><span class="n">cbe</span><span class="o">-</span><span class="mi">0</span><span class="n">d0566bb0c1e</span>
 </pre></div>
 </div>
-<p>其中</p>
+<p>其中 flavor、security-groups、net-id分别使用下面命令可以获取：</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">nova</span> <span class="n">flavor</span><span class="o">-</span><span class="nb">list</span>
+<span class="n">nova</span> <span class="n">secgroup</span><span class="o">-</span><span class="nb">list</span>
+<span class="n">glance</span> <span class="n">image</span><span class="o">-</span><span class="nb">list</span>
+<span class="n">neutron</span> <span class="n">net</span><span class="o">-</span><span class="nb">list</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="id5">
+<h3><a class="toc-backref" href="#id16">7.2.3. 命令行启动虚拟机</a><a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">nova</span> <span class="n">start</span><span class="o">/</span><span class="n">stop</span> <span class="n">vm_id</span>
+</pre></div>
+</div>
 </div>
 </div>
 <hr class="docutils" />
-<div class="section" id="id4">
-<h2><a class="toc-backref" href="#id13">7.3. 参考</a><a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h2>
-<table class="docutils footnote" frame="void" id="id5" rules="none">
+<div class="section" id="id6">
+<h2><a class="toc-backref" href="#id17">7.3. 参考</a><a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h2>
+<table class="docutils footnote" frame="void" id="id7" rules="none">
 <colgroup><col class="label" /><col /></colgroup>
 <tbody valign="top">
-<tr><td class="label">[1]</td><td><a class="reference external" href="http://www.jb51.net/os/RedHat/189963.html">http://www.jb51.net/os/RedHat/189963.html</a></td></tr>
+<tr><td class="label">[1]</td><td><a class="reference external" href="http://os.51cto.com/art/201404/435615.htm">http://os.51cto.com/art/201404/435615.htm</a></td></tr>
 </tbody>
 </table>
 </div>

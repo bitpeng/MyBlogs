@@ -73,17 +73,32 @@ nova 相关
 
 
 命令行新建虚拟机
+++++++++++++++++
 
 ::
 
     nova --debug boot csq_test --flavor m1.tiny --image "dec2596b-1b1f-4eec-9cd9-b72fc8dc6f95" --security-groups default --nic net-id=1283f65b-2adc-4654-9cbe-0d0566bb0c1e
 
-其中
+其中 flavor、security-groups、net-id分别使用下面命令可以获取：
+
+::
+
+	nova flavor-list
+	nova secgroup-list
+	glance image-list
+	neutron net-list
+	
+命令行启动虚拟机
+++++++++++++++++
+
+::
+
+	nova start/stop vm_id
 
 ---------------------
 
 参考
 =====
 
-.. [#] http://www.jb51.net/os/RedHat/189963.html
+.. [#] http://os.51cto.com/art/201404/435615.htm
 
