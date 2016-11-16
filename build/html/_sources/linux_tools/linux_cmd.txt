@@ -1,6 +1,6 @@
-##############
-Linux命令
-##############
+################
+Linux命令和shell
+################
 
 .. contents:: 目录
 
@@ -72,6 +72,25 @@ scp
       scp -r root@10.11.113.198:/smbshare/ .
 
 
+cut
+====
+
+
+
+::
+
+	echo "test/dev/mapper/juno" | cut -d '/' -f1
+	#test
+	echo "test/dev/mapper/juno" | cut -d '/' -f2
+	#dev
+	echo "test/dev/mapper/juno" | cut -d '/' -f2-
+	#dev/mapper/juno
+	echo "/dev/mapper/juno" | cut -d '/' -f1
+	#
+	echo "/dev/mapper/juno" | cut -d '/' -f2
+	#dev
+
+.. [#] http://www.jb51.net/article/41872.htm
 
 
 性能调优

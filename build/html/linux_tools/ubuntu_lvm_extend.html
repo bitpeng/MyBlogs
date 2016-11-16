@@ -32,7 +32,7 @@
   
     <link rel="top" title="Welcome to Sitian&#39;s Blog 0.1 documentation" href="../index.html"/>
         <link rel="up" title="Hack Linux" href="index.html"/>
-        <link rel="next" title="OpenStack Note" href="../openstack/index.html"/>
+        <link rel="next" title="8. DELL 服务器操作手册" href="dell_server_manual.html"/>
         <link rel="prev" title="6. Linux 磁盘和分区" href="disk_note.html"/> 
 
   
@@ -89,16 +89,19 @@
 <li class="toctree-l2"><a class="reference internal" href="samba_config.html">2. Samba共享访问配置</a></li>
 <li class="toctree-l2"><a class="reference internal" href="use_man_page.html">3. 善用Linux man page</a></li>
 <li class="toctree-l2"><a class="reference internal" href="Linux_lvm.html">4. Linux逻辑卷和lvm</a></li>
-<li class="toctree-l2"><a class="reference internal" href="linux_cmd.html">5. Linux命令</a></li>
+<li class="toctree-l2"><a class="reference internal" href="linux_cmd.html">5. Linux命令和shell</a></li>
 <li class="toctree-l2"><a class="reference internal" href="disk_note.html">6. Linux 磁盘和分区</a></li>
 <li class="toctree-l2 current"><a class="current reference internal" href="#">7. Ubuntu根分区使用Lvm扩容</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#id2">7.1. 操作步骤</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#id3">7.2. 命令汇总</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id2">7.1. 使用新硬盘扩展根文件系统</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id3">7.2. 用未完全使用硬盘扩展根文件系统</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id4">7.3. 命令参考和自动化脚本</a></li>
 </ul>
 </li>
+<li class="toctree-l2"><a class="reference internal" href="dell_server_manual.html">8. DELL 服务器操作手册</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../openstack/index.html">OpenStack Note</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../web/index.html">web开发</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../others/index.html">附录</a></li>
 </ul>
 
@@ -147,13 +150,14 @@
            <div itemprop="articleBody">
             
   <div class="section" id="ubuntulvm">
-<span id="ubuntu-lvm-extend"></span><h1><a class="toc-backref" href="#id13">7. Ubuntu根分区使用Lvm扩容</a><a class="headerlink" href="#ubuntulvm" title="Permalink to this headline">¶</a></h1>
+<span id="ubuntu-lvm-extend"></span><h1><a class="toc-backref" href="#id14">7. Ubuntu根分区使用Lvm扩容</a><a class="headerlink" href="#ubuntulvm" title="Permalink to this headline">¶</a></h1>
 <div class="contents topic" id="id1">
 <p class="topic-title first">目录</p>
 <ul class="simple">
-<li><a class="reference internal" href="#ubuntulvm" id="id13">Ubuntu根分区使用Lvm扩容</a><ul>
-<li><a class="reference internal" href="#id2" id="id14">操作步骤</a></li>
-<li><a class="reference internal" href="#id3" id="id15">命令汇总</a></li>
+<li><a class="reference internal" href="#ubuntulvm" id="id14">Ubuntu根分区使用Lvm扩容</a><ul>
+<li><a class="reference internal" href="#id2" id="id15">使用新硬盘扩展根文件系统</a></li>
+<li><a class="reference internal" href="#id3" id="id16">用未完全使用硬盘扩展根文件系统</a></li>
+<li><a class="reference internal" href="#id4" id="id17">命令参考和自动化脚本</a></li>
 </ul>
 </li>
 </ul>
@@ -165,26 +169,26 @@
 <p class="last">系统版本：ubuntu-14.04 LTS</p>
 </div>
 <div class="section" id="id2">
-<h2><a class="toc-backref" href="#id14">7.1. 操作步骤</a><a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id15">7.1. 使用新硬盘扩展根文件系统</a><a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
 <ul>
 <li><p class="first">新建一块硬盘并进行分区：</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">fdisk</span> <span class="o">/</span><span class="n">dev</span><span class="o">/</span><span class="n">sde</span>
 </pre></div>
 </div>
 <p>依次键入n, 创建新分区；然后分区类型选择p; 其他默认输入即可。</p>
-<div class="figure align-center" id="id4">
+<div class="figure align-center" id="id5">
 <a class="reference internal image-reference" href="../_images/ubuntu_lvm_1.png"><img alt="../_images/ubuntu_lvm_1.png" src="../_images/ubuntu_lvm_1.png" style="width: 741.0px; height: 299.0px;" /></a>
 <p class="caption"><span class="caption-text">图1：创建新分区</span></p>
 </div>
 <p>分区创建完成后，修改分区类型为lvm:</p>
-<div class="figure align-center" id="id5">
+<div class="figure align-center" id="id6">
 <a class="reference internal image-reference" href="../_images/ubuntu_lvm_2.png"><img alt="../_images/ubuntu_lvm_2.png" src="../_images/ubuntu_lvm_2.png" style="width: 710.0px; height: 535.0px;" /></a>
 <p class="caption"><span class="caption-text">图2：修改分区类型</span></p>
 </div>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
 <p>新建的分区类型不能为扩展分区，否则不能更改分区类型，目前还不清楚原因，需要继续查找其他资料, 弄清原因。</p>
-<div class="last figure align-center" id="id6">
+<div class="last figure align-center" id="id7">
 <a class="reference internal image-reference" href="../_images/ubuntu_lvm_3.png"><img alt="../_images/ubuntu_lvm_3.png" src="../_images/ubuntu_lvm_3.png" style="width: 727.0px; height: 101.0px;" /></a>
 <p class="caption"><span class="caption-text">图3：扩展分区修改类型失败</span></p>
 </div>
@@ -201,50 +205,159 @@
 </div>
 </li>
 <li><p class="first">查看卷组信息，并扩展根系统所在卷组：</p>
-<div class="figure align-center" id="id7">
+<div class="figure align-center" id="id8">
 <a class="reference internal image-reference" href="../_images/lvm_vginfo.png"><img alt="../_images/lvm_vginfo.png" src="../_images/lvm_vginfo.png" style="width: 667.0px; height: 439.0px;" /></a>
 <p class="caption"><span class="caption-text">图4：查看卷组信息</span></p>
 </div>
-<div class="figure align-center" id="id8">
+<div class="figure align-center" id="id9">
 <a class="reference internal image-reference" href="../_images/lvm_extend_vg.png"><img alt="../_images/lvm_extend_vg.png" src="../_images/lvm_extend_vg.png" style="width: 623.0px; height: 76.0px;" /></a>
 <p class="caption"><span class="caption-text">图5：扩展卷组</span></p>
 </div>
 </li>
 <li><p class="first">扩展根文件系统所在逻辑卷组；</p>
-<div class="figure align-center" id="id9">
+<div class="figure align-center" id="id10">
 <a class="reference internal image-reference" href="../_images/lvm_df_info.png"><img alt="../_images/lvm_df_info.png" src="../_images/lvm_df_info.png" style="width: 771.0px; height: 285.0px;" /></a>
 <p class="caption"><span class="caption-text">图6：根文件系统信息</span></p>
 </div>
-<div class="figure align-center" id="id10">
+<div class="figure align-center" id="id11">
 <a class="reference internal image-reference" href="../_images/lvm_extend_lv.png"><img alt="../_images/lvm_extend_lv.png" src="../_images/lvm_extend_lv.png" style="width: 716.0px; height: 89.0px;" /></a>
 <p class="caption"><span class="caption-text">图7：扩展逻辑卷</span></p>
 </div>
 </li>
 <li><p class="first">使得扩容生效：</p>
-<div class="figure align-center" id="id11">
+<div class="figure align-center" id="id12">
 <a class="reference internal image-reference" href="../_images/resize2fs.png"><img alt="../_images/resize2fs.png" src="../_images/resize2fs.png" style="width: 802.0px; height: 155.0px;" /></a>
 <p class="caption"><span class="caption-text">图8：执行扩容命令</span></p>
 </div>
-<div class="figure align-center" id="id12">
+<div class="figure align-center" id="id13">
 <a class="reference internal image-reference" href="../_images/lvm_new_df_info.png"><img alt="../_images/lvm_new_df_info.png" src="../_images/lvm_new_df_info.png" style="width: 798.0px; height: 292.0px;" /></a>
 <p class="caption"><span class="caption-text">图9：根文件系统可用空间已经增大</span></p>
 </div>
 </li>
 </ul>
 </div>
+<hr class="docutils" />
 <div class="section" id="id3">
-<h2><a class="toc-backref" href="#id15">7.2. 命令汇总</a><a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h2>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">fdisk</span> <span class="o">/</span><span class="n">dev</span><span class="o">/</span><span class="n">sde</span>
-<span class="n">partprobe</span>
-<span class="n">fdisk</span>  <span class="o">/</span><span class="n">dev</span><span class="o">/</span><span class="n">sde</span>
-<span class="n">mkfs</span><span class="o">.</span><span class="n">ext4</span> <span class="o">/</span><span class="n">dev</span><span class="o">/</span><span class="n">sde1</span>
-<span class="n">pvcreate</span> <span class="o">/</span><span class="n">dev</span><span class="o">/</span><span class="n">sde1</span>
-<span class="n">vgdisplay</span>
-<span class="n">df</span> <span class="o">-</span><span class="n">hl</span>
-<span class="n">vgextend</span>  <span class="n">ubuntu</span><span class="o">-</span><span class="n">vg</span> <span class="o">/</span><span class="n">dev</span><span class="o">/</span><span class="n">sde1</span>
-<span class="n">lvdisplay</span>
-<span class="n">lvextend</span> <span class="o">-</span><span class="n">L</span> <span class="mi">37</span><span class="n">G</span> <span class="o">/</span><span class="n">dev</span><span class="o">/</span><span class="n">mapper</span><span class="o">/</span><span class="n">ubuntu</span><span class="o">--</span><span class="n">vg</span><span class="o">-</span><span class="n">root</span>
-<span class="n">resize2fs</span> <span class="o">/</span><span class="n">dev</span><span class="o">/</span><span class="n">mapper</span><span class="o">/</span><span class="n">ubuntu</span><span class="o">--</span><span class="n">vg</span><span class="o">-</span><span class="n">root</span>
+<h2><a class="toc-backref" href="#id16">7.2. 用未完全使用硬盘扩展根文件系统</a><a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h2>
+<p>假如没有新硬盘可用，并且系统挂载的硬盘有空闲扇区。那么可以通过空闲扇区新建分区来进行扩展。</p>
+<div class="highlight-bash"><div class="highlight"><pre><span></span><span class="c1"># 对已经使用但是没有完全使用的分区进行lvm扩容。</span>
+<span class="c1"># 比如，有vda,总容量为500G，但是只有两个分区:vda1和vda2且只用了10G。</span>
+<span class="c1"># 因此可以使用下面的命令进行操作新建分区。</span>
+<span class="c1"># 对于一块完整的未使用的硬盘，参考原来写的。</span>
+
+<span class="o">[</span>root@host-13-13-13-4 ~<span class="o">]</span><span class="c1"># fdisk /dev/vda</span>
+
+WARNING: DOS-compatible mode is deprecated. It is strongly recommended to
+                 switch off the mode <span class="o">(</span><span class="nb">command</span> <span class="s1">&#39;c&#39;</span><span class="o">)</span> and change display units to
+                 sectors <span class="o">(</span><span class="nb">command</span> <span class="s1">&#39;u&#39;</span><span class="o">)</span>.
+
+Command <span class="o">(</span>m <span class="k">for</span> <span class="nb">help</span><span class="o">)</span>: p
+
+Disk /dev/vda: 214.7 GB, <span class="m">214748364800</span> bytes
+<span class="m">16</span> heads, <span class="m">63</span> sectors/track, <span class="m">416101</span> cylinders
+<span class="nv">Units</span> <span class="o">=</span> cylinders of <span class="m">1008</span> * <span class="nv">512</span> <span class="o">=</span> <span class="m">516096</span> bytes
+Sector size <span class="o">(</span>logical/physical<span class="o">)</span>: <span class="m">512</span> bytes / <span class="m">512</span> bytes
+I/O size <span class="o">(</span>minimum/optimal<span class="o">)</span>: <span class="m">512</span> bytes / <span class="m">512</span> bytes
+Disk identifier: 0x000b404e
+
+   Device Boot      Start         End      Blocks   Id  System
+/dev/vda1   *           <span class="m">3</span>        <span class="m">1018</span>      <span class="m">512000</span>   <span class="m">83</span>  Linux
+Partition <span class="m">1</span> does not end on cylinder boundary.
+/dev/vda2            <span class="m">1018</span>       <span class="m">20806</span>     <span class="m">9972736</span>   8e  Linux LVM
+Partition <span class="m">2</span> does not end on cylinder boundary.
+
+Command <span class="o">(</span>m <span class="k">for</span> <span class="nb">help</span><span class="o">)</span>: n
+Command action
+   e   extended
+   p   primary partition <span class="o">(</span>1-4<span class="o">)</span>
+p
+Partition number <span class="o">(</span>1-4<span class="o">)</span>: 3
+First cylinder <span class="o">(</span>1-416101, default 1<span class="o">)</span>:
+Using default value 1
+Last cylinder, +cylinders or +size<span class="o">{</span>K,M,G<span class="o">}</span> <span class="o">(</span>1-2, default 2<span class="o">)</span>:
+Using default value 2
+
+Command <span class="o">(</span>m <span class="k">for</span> <span class="nb">help</span><span class="o">)</span>: n
+Command action
+   e   extended
+   p   primary partition <span class="o">(</span>1-4<span class="o">)</span>
+p
+Selected partition 4
+First cylinder <span class="o">(</span>20806-416101, default 20806<span class="o">)</span>:
+Using default value 20806
+Last cylinder, +cylinders or +size<span class="o">{</span>K,M,G<span class="o">}</span> <span class="o">(</span>20806-416101, default 416101<span class="o">)</span>:
+Using default value 416101
+
+Command <span class="o">(</span>m <span class="k">for</span> <span class="nb">help</span><span class="o">)</span>: p
+
+Disk /dev/vda: 214.7 GB, <span class="m">214748364800</span> bytes
+<span class="m">16</span> heads, <span class="m">63</span> sectors/track, <span class="m">416101</span> cylinders
+<span class="nv">Units</span> <span class="o">=</span> cylinders of <span class="m">1008</span> * <span class="nv">512</span> <span class="o">=</span> <span class="m">516096</span> bytes
+Sector size <span class="o">(</span>logical/physical<span class="o">)</span>: <span class="m">512</span> bytes / <span class="m">512</span> bytes
+I/O size <span class="o">(</span>minimum/optimal<span class="o">)</span>: <span class="m">512</span> bytes / <span class="m">512</span> bytes
+Disk identifier: 0x000b404e
+
+   Device Boot      Start         End      Blocks   Id  System
+/dev/vda1   *           <span class="m">3</span>        <span class="m">1018</span>      <span class="m">512000</span>   <span class="m">83</span>  Linux
+Partition <span class="m">1</span> does not end on cylinder boundary.
+/dev/vda2            <span class="m">1018</span>       <span class="m">20806</span>     <span class="m">9972736</span>   8e  Linux LVM
+Partition <span class="m">2</span> does not end on cylinder boundary.
+/dev/vda3               <span class="m">1</span>           <span class="m">2</span>         976+  <span class="m">83</span>  Linux
+/dev/vda4           <span class="m">20806</span>      <span class="m">416101</span>   <span class="m">199229144</span>   <span class="m">83</span>  Linux
+
+Partition table entries are not in disk order
+
+Command <span class="o">(</span>m <span class="k">for</span> <span class="nb">help</span><span class="o">)</span>: t
+Partition number <span class="o">(</span>1-4<span class="o">)</span>: 3
+Hex code <span class="o">(</span><span class="nb">type</span> L to list codes<span class="o">)</span>: 8e
+Changed system <span class="nb">type</span> of partition <span class="m">3</span> to 8e <span class="o">(</span>Linux LVM<span class="o">)</span>
+
+Command <span class="o">(</span>m <span class="k">for</span> <span class="nb">help</span><span class="o">)</span>: t
+Partition number <span class="o">(</span>1-4<span class="o">)</span>: 4
+Hex code <span class="o">(</span><span class="nb">type</span> L to list codes<span class="o">)</span>: 8e
+Changed system <span class="nb">type</span> of partition <span class="m">4</span> to 8e <span class="o">(</span>Linux LVM<span class="o">)</span>
+
+Command <span class="o">(</span>m <span class="k">for</span> <span class="nb">help</span><span class="o">)</span>: w
+The partition table has been altered!
+
+Calling ioctl<span class="o">()</span> to re-read partition table.
+
+WARNING: Re-reading the partition table failed with error 16: 设备或资源忙.
+The kernel still uses the old table. The new table will be used at
+the next reboot or after you run partprobe<span class="o">(</span>8<span class="o">)</span> or kpartx<span class="o">(</span>8<span class="o">)</span>
+Syncing disks.
+<span class="o">[</span>root@host-13-13-13-4 ~<span class="o">]</span><span class="c1"># reboot</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="id4">
+<h2><a class="toc-backref" href="#id17">7.3. 命令参考和自动化脚本</a><a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h2>
+<p>fdisk 命令新建好分区后，扩展根文件系统的相关命令以及自动化脚本。</p>
+<div class="highlight-bash"><div class="highlight"><pre><span></span>fdisk /dev/sde
+<span class="c1"># 新建分区完成后，需要重读分区表。</span>
+<span class="c1"># 如果重读分区表命令不可行，可以reboot重启系统。</span>
+partprobe
+fdisk  /dev/sde
+mkfs.ext4 /dev/sde1
+pvcreate /dev/sde1
+vgdisplay
+df -hl
+vgextend  ubuntu-vg /dev/sde1
+lvdisplay
+lvextend -L 37G /dev/mapper/ubuntu--vg-root
+resize2fs /dev/mapper/ubuntu--vg-root
+</pre></div>
+</div>
+<p>以下是自动化脚本，供参考，经测试可以直接复制使用！唯一需要注意的是扩展后的空间大小！</p>
+<div class="highlight-bash"><div class="highlight"><pre><span></span><span class="c1"># 然后使用下面的命令扩展根文件系统</span>
+mkfs.ext4 /dev/vda4
+pvcreate /dev/vda4
+<span class="nv">VG_NAME</span><span class="o">=</span><span class="sb">`</span>vgdisplay<span class="p">|</span> grep <span class="s2">&quot;VG Name&quot;</span> <span class="p">|</span> awk <span class="s1">&#39;{print $3}&#39;</span><span class="sb">`</span>
+vgextend <span class="nv">$VG_NAME</span> /dev/vda4
+<span class="c1">#LVM_ROOT=`df -hl | grep &quot;/dev/mapper&quot; | awk &#39;{print $1}&#39; | cut -d &quot;/&quot; -f4`</span>
+<span class="nv">LVM_ROOT</span><span class="o">=</span><span class="sb">`</span>df -hl <span class="p">|</span> grep <span class="s2">&quot;/dev/mapper&quot;</span> <span class="p">|</span> awk <span class="s1">&#39;{print $1}&#39;</span>
+lvextend -L 190G <span class="nv">$LVM_ROOT</span>
+resize2fs /dev/mapper/VolGroup-lv_root
 </pre></div>
 </div>
 </div>
@@ -257,7 +370,7 @@
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="../openstack/index.html" class="btn btn-neutral float-right" title="OpenStack Note" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="dell_server_manual.html" class="btn btn-neutral float-right" title="8. DELL 服务器操作手册" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
         <a href="disk_note.html" class="btn btn-neutral" title="6. Linux 磁盘和分区" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>

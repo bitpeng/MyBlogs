@@ -1,0 +1,24 @@
+" add by chenshiqiang
+" append those lines to the end of /etc/vim/vimrc
+
+"set ts=4
+autocmd FileType python set expandtab
+autocmd FileType python setlocal et sta sw=4 sts=4
+autocmd FileType python set ts=4
+"set expandtab
+"setlocal et sta sw=4 sts=4
+"set ts=4
+set ai
+"set background=dark
+set smartindent
+syntax on
+set list
+set listchars=tab:>-,trail:-
+imap ,, <ESC>
+nmap ,, <ESC>
+map <C-h> <C-w>h
+map <C-j> <C-w>j
+map <C-k> <C-w>k
+map <C-l> <C-w>l
+set nu
+
