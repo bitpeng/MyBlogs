@@ -75,20 +75,18 @@ scp
 cut
 ====
 
-
-
 ::
 
-	echo "test/dev/mapper/juno" | cut -d '/' -f1
-	#test
-	echo "test/dev/mapper/juno" | cut -d '/' -f2
-	#dev
-	echo "test/dev/mapper/juno" | cut -d '/' -f2-
-	#dev/mapper/juno
-	echo "/dev/mapper/juno" | cut -d '/' -f1
-	#
-	echo "/dev/mapper/juno" | cut -d '/' -f2
-	#dev
+    echo "test/dev/mapper/juno" | cut -d '/' -f1
+    #test
+    echo "test/dev/mapper/juno" | cut -d '/' -f2
+    #dev
+    echo "test/dev/mapper/juno" | cut -d '/' -f2-
+    #dev/mapper/juno
+    echo "/dev/mapper/juno" | cut -d '/' -f1
+    #
+    echo "/dev/mapper/juno" | cut -d '/' -f2
+    #dev
 
 .. [#] http://www.jb51.net/article/41872.htm
 
