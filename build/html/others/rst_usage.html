@@ -1,0 +1,277 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>2. rst 用法自我总结 &mdash; Welcome to Sitian&#39;s Blog 0.1 documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+    <link rel="top" title="Welcome to Sitian&#39;s Blog 0.1 documentation" href="../index.html"/>
+        <link rel="up" title="附录" href="index.html"/>
+        <link rel="next" title="3. 分布式存储入门" href="store_intro.html"/>
+        <link rel="prev" title="1. reStructuredText简明教程" href="rst_template.html"/> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> Welcome to Sitian's Blog
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.1
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../py_doc/index.html">Hack Python</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../linux_tools/index.html">Hack Linux</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../openstack/index.html">OpenStack Note</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../web/index.html">web开发</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">附录</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="rst_template.html">1. reStructuredText简明教程</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">2. rst 用法自我总结</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id2">2.1. 锚点链接</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id3">2.2. 代码相关</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id4">2.3. 引用图片</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id5">2.4. 注释</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="store_intro.html">3. 分布式存储入门</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../index.html">Welcome to Sitian's Blog</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+ 
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../index.html">Docs</a> &raquo;</li>
+      
+          <li><a href="index.html">附录</a> &raquo;</li>
+      
+    <li>2. rst 用法自我总结</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="../_sources/others/rst_usage.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="rst">
+<h1><a class="toc-backref" href="#id6">2. rst 用法自我总结</a><a class="headerlink" href="#rst" title="Permalink to this headline">¶</a></h1>
+<div class="contents topic" id="id1">
+<p class="topic-title first">目录</p>
+<ul class="simple">
+<li><a class="reference internal" href="#rst" id="id6">rst 用法自我总结</a><ul>
+<li><a class="reference internal" href="#id2" id="id7">锚点链接</a></li>
+<li><a class="reference internal" href="#id3" id="id8">代码相关</a></li>
+<li><a class="reference internal" href="#id4" id="id9">引用图片</a></li>
+<li><a class="reference internal" href="#id5" id="id10">注释</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<hr class="docutils" />
+<div class="section" id="id2">
+<h2><a class="toc-backref" href="#id7">2.1. 锚点链接</a><a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
+<p id="link-text"><a class="reference internal" href="#link-text"><span class="std std-ref">点击链接</span></a></p>
+</div>
+<div class="section" id="id3">
+<h2><a class="toc-backref" href="#id8">2.2. 代码相关</a><a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h2>
+<p>普通代码定义：</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">code</span> <span class="n">here</span>
+</pre></div>
+</div>
+<p>高亮代码定义1：</p>
+<div class="highlight-python"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="n">code</span> <span class="n">here</span>
+</pre></div>
+</td></tr></table></div>
+<p>高亮代码定义2：</p>
+<div class="code python highlight-default"><div class="highlight"><pre><span></span><span class="n">code</span> <span class="n">here</span>
+</pre></div>
+</div>
+<p>引用代码文件：</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="o">..</span> <span class="n">literalinclude</span><span class="p">::</span> <span class="n">example</span><span class="o">.</span><span class="n">py</span>
+        <span class="p">:</span><span class="n">language</span><span class="p">:</span> <span class="n">python</span>
+
+        <span class="n">code</span> <span class="n">here</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="id4">
+<h2><a class="toc-backref" href="#id9">2.3. 引用图片</a><a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="o">..</span> <span class="n">figure</span><span class="p">::</span> <span class="o">/</span><span class="n">_static</span><span class="o">/</span><span class="n">images</span><span class="o">/</span><span class="n">kvm_error</span><span class="o">.</span><span class="n">png</span>
+   <span class="p">:</span><span class="n">scale</span><span class="p">:</span> <span class="mi">100</span>
+   <span class="p">:</span><span class="n">align</span><span class="p">:</span> <span class="n">center</span>
+
+   <span class="n">KVM启动虚拟机错误</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="id5">
+<h2><a class="toc-backref" href="#id10">2.4. 注释</a><a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="o">..</span>
+        <span class="n">这是注释</span>
+        <span class="n">这也是注释</span>
+</pre></div>
+</div>
+</div>
+</div>
+
+
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="store_intro.html" class="btn btn-neutral float-right" title="3. 分布式存储入门" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="rst_template.html" class="btn btn-neutral" title="1. reStructuredText简明教程" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2016, chenshiqiang.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'0.1',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

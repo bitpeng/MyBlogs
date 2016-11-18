@@ -64,20 +64,20 @@ button标签
 - 假如button包含在form中，那么点击表单，则会向服务端提交表单。然后服务端会调用相应的表单处理程序。
 
   对于django框架来说，通过from提交时 的action，依据URL匹配来决定调用的view(表单处理程序)。
-  
+
   比如在《django book 2.0》给出的示例中，表单的action="/search/"，因此点击按钮，会根据url.py，决定调用
   view.py的search函数。
-  
+
   .. figure:: /_static/images/form_temp.png
      :scale: 100
      :align: center
-  
+
      表单的action属性
 
   .. figure:: /_static/images/button_action.png
      :scale: 100
      :align: center
-  
+
      提交表单时服务端会调用view.search 处理程序。
 
   至于表单提交的GET和POST方法，会在另外一篇文章专门分析。

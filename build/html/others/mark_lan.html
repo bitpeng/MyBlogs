@@ -1,0 +1,930 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>4. 附录：轻量级标记语言 &mdash; Welcome to Sitian&#39;s Blog 0.1 documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+    <link rel="top" title="Welcome to Sitian&#39;s Blog 0.1 documentation" href="../index.html"/>
+        <link rel="up" title="附录" href="index.html"/>
+        <link rel="prev" title="3. 分布式存储入门" href="store_intro.html"/> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> Welcome to Sitian's Blog
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.1
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../py_doc/index.html">Hack Python</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../linux_tools/index.html">Hack Linux</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../openstack/index.html">OpenStack Note</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../web/index.html">web开发</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">附录</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="rst_template.html">1. reStructuredText简明教程</a></li>
+<li class="toctree-l2"><a class="reference internal" href="rst_usage.html">2. rst 用法自我总结</a></li>
+<li class="toctree-l2"><a class="reference internal" href="store_intro.html">3. 分布式存储入门</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">4. 附录：轻量级标记语言</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../index.html">Welcome to Sitian's Blog</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+ 
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../index.html">Docs</a> &raquo;</li>
+      
+          <li><a href="index.html">附录</a> &raquo;</li>
+      
+    <li>4. 附录：轻量级标记语言</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="../_sources/others/mark_lan.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="markups">
+<span id="id1"></span><h1>4. 附录：轻量级标记语言<a class="headerlink" href="#markups" title="Permalink to this headline">¶</a></h1>
+<p>没有标记语言就没有Web和丰富多彩的互联网，但创造了Web的HTML语言并非尽善尽美，存在诸如难读、难写、难以向其他格式转换的问题。究其根源是因为HTML语言是一种“重”标记语言，对机器友好而并非对人友好。</p>
+<p>下面这段HTML源码，非技术控阅读起来会遇到困难。</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span>&lt;html&gt;
+&lt;head&gt;
+  &lt;meta content=&#39;application/xhtml+xml;charset=utf-8&#39; http-equiv=&#39;Content-type&#39; /&gt;
+  &lt;title&gt;轻量级标记语言&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;h1 id=&#39;id1&#39;&gt;轻量级标记语言&lt;/h1&gt;
+
+  &lt;p&gt;&lt;strong&gt;轻量级标记语言&lt;/strong&gt; 是一种 &lt;em&gt;语法简单&lt;/em&gt; 的标记语言。
+  它使用易于理解的格式标记，没有古怪的 &lt;code&gt;&amp;lt;标签&amp;gt;&lt;/code&gt; 。&lt;/p&gt;
+
+  &lt;ul&gt;
+  &lt;li&gt;可以使用最简单的文本编辑器编辑。&lt;/li&gt;
+  &lt;li&gt;所见即所得，非技术控亦可直接阅读源码。&lt;/li&gt;
+  &lt;li&gt;可版本控制。&lt;/li&gt;
+  &lt;li&gt;实现单一源文件出版。&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;body&gt;
+&lt;/html&gt;
+</pre></div>
+</div>
+<p>同样的信息如果换用轻量级标记语言来表达，就非常直观了。如下所示：</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span>轻量级标记语言
+==============
+
+**轻量级标记语言** 是一种 *语法简单* 的标记语言。
+它使用易于理解的格式标记，没有古怪的 `&lt;标签&gt;` 。
+
+- 可以使用最简单的文本编辑器编辑。
+- 所见即所得，非技术控亦可直接阅读源码。
+- 可版本控制。
+- 实现单一源文件出版。
+</pre></div>
+</div>
+<p>GitHub令人着迷的一个因素就在于GitHub为用户提供更为便捷地创建UGC（用户生成内容）的方法，其奥秘就在于使用了轻量级标记语言。无论是代码提交说明、提交评注、问题描述、项目的README文件、维基页面、用户主页和项目主页都可以使用Markdown<a class="footnote-reference" href="#id24" id="id2">[4]</a>等轻量级标记语言来撰写。轻量级标记语言如Markdown是对人友好的标记语言，一些语法参照了我们写电子邮件时的习惯，即使第一次接触用轻量级标记语言撰写的文件，也可以毫无障碍地理解其中的内容。</p>
+<p>虽然GitHub更倾向于使用Markdown标记语言<a class="footnote-reference" href="#id25" id="id3">[5]</a>，但很多地方也提供对其他轻量级标记语言的支持。包括为Python程序员所熟悉的reStructedText<a class="footnote-reference" href="#id26" id="id4">[6]</a>，为Ruby程序员所熟悉的Textile<a class="footnote-reference" href="#id27" id="id5">[7]</a>、RDoc<a class="footnote-reference" href="#id28" id="id6">[8]</a>，为Perl程序员所熟悉的POD<a class="footnote-reference" href="#id29" id="id7">[9]</a>，为Emacs用户所熟悉的Org-mode<a class="footnote-reference" href="#id30" id="id8">[10]</a>，为维基用户所熟悉的MediaWiki<a class="footnote-reference" href="#id31" id="id9">[11]</a>和Creole<a class="footnote-reference" href="#id32" id="id10">[12]</a>，以及可作为DocBook<a class="footnote-reference" href="#id33" id="id11">[13]</a>前端的颇有前途的AsciiDoc<a class="footnote-reference" href="#id34" id="id12">[14]</a>标记语言。</p>
+<p>下面通过一张表格对几种常用的轻量级标记语言加以对照，供有不同标记语言偏好的用户参考，便于在GitHub某些不能随意更换标记语言而只能使用GFM（GitHub风格的Markdown）的场合可以自如地转换。</p>
+<p>在“<a class="reference internal" href="#tbl-markups"><span class="std std-ref">表7-1：常用轻量级标记语言对照</span></a>”中，为使表格更加紧凑使用代号表示各种标记语言。例如：md为Markdown，gfm是GitHub风格的Markdown，rst为reStructedText，ttl为Textile，asc为AsciiDoc，org为Org-mode。</p>
+<table border="1" class="classic docutils" id="id37">
+<span id="tbl-markups"></span><caption><span class="caption-text">表7-1：常用轻量级标记语言对照</span><a class="headerlink" href="#id37" title="Permalink to this table">¶</a></caption>
+<colgroup>
+<col width="9%" />
+<col width="9%" />
+<col width="42%" />
+<col width="40%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head" colspan="2">类别</th>
+<th class="head">代码示例</th>
+<th class="head">输出示例</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td colspan="2">&nbsp;</td>
+<td><div class="first last highlight-none"><div class="highlight"><pre><span></span>一级标题
+========
+
+二级标题
+--------
+
+三级标题
+~~~~~~~~
+
+四级标题
+^^^^^^^^
+
+五级标题
+++++++++
+
+六级标题
+````````
+</pre></div>
+</div>
+</td>
+<td><p class="first">输出略。</p>
+<div class="last admonition note">
+<p class="first admonition-title">Note</p>
+<ul class="last simple">
+<li>标题级别和下划线无对应，文档中保持一致就好。</li>
+<li>reST标题可用下列符号标记：
+# * = - ^ ~ ` : . _ + &#8221; 等。</li>
+</ul>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td rowspan="7">段落</td>
+<td>空行分段</td>
+<td><div class="first last highlight-none"><div class="highlight"><pre><span></span>第一段内容。
+
+第二段和第一段间有一空行。
+</pre></div>
+</div>
+</td>
+<td><p class="first">第一段内容。</p>
+<p class="last">第二段和第一段间有一空行。</p>
+</td>
+</tr>
+<tr class="row-even"><td>自动续行</td>
+<td><div class="first last highlight-none"><div class="highlight"><pre><span></span>一个回车不分段，
+本行续上行。
+</pre></div>
+</div>
+</td>
+<td>本行续上行。</td>
+</tr>
+<tr class="row-odd"><td>不留白续行</td>
+<td><div class="first last highlight-none"><div class="highlight"><pre><span></span>行尾转义字符让\
+续行之间不留白。
+</pre></div>
+</div>
+</td>
+<td>行尾转义字符让续行之间不留白。</td>
+</tr>
+<tr class="row-even"><td rowspan="2">&nbsp;</td>
+<td><div class="first last highlight-none"><div class="highlight"><pre><span></span>| 保持换行符，
+| 本行不续行。
+</pre></div>
+</div>
+</td>
+<td><div class="first last line-block">
+<div class="line">保持换行符，</div>
+<div class="line">本行不续行。</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><div class="first last highlight-none"><div class="highlight"><pre><span></span>.. role:: raw-html(raw)
+   :format: html
+
+用新定义的role插入换行，
+:raw-html:`&lt;br /&gt;`
+本行不再续行。
+</pre></div>
+</div>
+</td>
+<td>用新定义的role插入换行，
+<span class="raw-html"><br /></span>
+本行不再续行。</td>
+</tr>
+<tr class="row-even"><td rowspan="2">段落缩进</td>
+<td><div class="first last highlight-none"><div class="highlight"><pre><span></span>邮件体段落缩进：
+
+&gt; 第一级段落缩进。
+&gt;
+&gt; &gt; 第二级段落缩进。
+&gt;
+&gt; 返回一级段落缩进。
+</pre></div>
+</div>
+</td>
+<td><p class="first">邮件体段落缩进：</p>
+<blockquote class="last">
+<div><p>第一级段落缩进。</p>
+<blockquote>
+<div>第二级段落缩进。</div></blockquote>
+<p>返回一级段落缩进。</p>
+</div></blockquote>
+</td>
+</tr>
+<tr class="row-odd"><td><div class="first last highlight-none"><div class="highlight"><pre><span></span>Python式段落缩进：
+
+  第一级段落缩进。
+
+    第二级段落缩进。
+
+  返回一级段落缩进。
+</pre></div>
+</div>
+</td>
+<td><p class="first">Python式段落缩进：</p>
+<blockquote class="last">
+<div><p>第一级段落缩进。</p>
+<blockquote>
+<div>第二级段落缩进。</div></blockquote>
+<p>返回一级段落缩进。</p>
+</div></blockquote>
+</td>
+</tr>
+<tr class="row-even"><td colspan="2">&nbsp;</td>
+<td><div class="first last highlight-none"><div class="highlight"><pre><span></span>双冒号后缩进为代码块。
+
+::
+
+  $ printf &quot;Hello, world.\n&quot;
+
+还可声明语言类型实现语法加亮。
+
+.. code-block:: sh
+
+   $ printf &quot;Hello, world.\n&quot;
+</pre></div>
+</div>
+</td>
+<td><p class="first">双冒号后缩进为代码块。</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>$ printf &quot;Hello, world.\n&quot;
+</pre></div>
+</div>
+<p>还可声明语言类型实现语法加亮。</p>
+<div class="last highlight-sh"><div class="highlight"><pre><span></span>$ <span class="nb">printf</span> <span class="s2">&quot;Hello, world.\n&quot;</span>
+</pre></div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td rowspan="4">列表</td>
+<td>无序列表</td>
+<td><div class="first last highlight-none"><div class="highlight"><pre><span></span>* 星号、减号、加号开始列表。
+
+  - 列表层级和缩进有关。
+
+    + 和具体符号无关。
+
+* 返回一级列表。
+</pre></div>
+</div>
+</td>
+<td><ul class="first last simple">
+<li>星号、减号、加号开始列表。<ul>
+<li>列表层级和缩进有关。<ul>
+<li>和具体符号无关。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>返回一级列表。</li>
+</ul>
+</td>
+</tr>
+<tr class="row-even"><td rowspan="2">&nbsp;</td>
+<td><div class="first last highlight-none"><div class="highlight"><pre><span></span>1. 数字和点是一种编号方式。
+
+   A. 大写字母编号。
+
+      a. 小写字母编号。
+
+2. 继续一级列表。
+
+   (I) 大写罗马编号。
+
+       i) 小写罗马编号。
+</pre></div>
+</div>
+</td>
+<td><ol class="first last arabic simple">
+<li>数字和点是一种编号方式。<ol class="upperalpha">
+<li>大写字母编号。<ol class="loweralpha">
+<li>小写字母编号。</li>
+</ol>
+</li>
+</ol>
+</li>
+<li>继续一级列表。<ol class="upperroman">
+<li>大写罗马编号。<ol class="lowerroman">
+<li>小写罗马编号。</li>
+</ol>
+</li>
+</ol>
+</li>
+</ol>
+</td>
+</tr>
+<tr class="row-odd"><td><div class="first last highlight-none"><div class="highlight"><pre><span></span>1. 列表项可以折行，
+   对齐则自动续行。
+
+2. 列表项可包含多个段落。
+
+   空行开始的新段落，
+   新段落要和列表项内容对齐。
+
+3. 列表下的代码段注意对齐即可。
+
+   ::
+
+     $ printf &quot;Hello, world.\n&quot;
+</pre></div>
+</div>
+</td>
+<td><ol class="first last arabic">
+<li><p class="first">列表项可以折行，
+对齐则自动续行。</p>
+</li>
+<li><p class="first">列表项可包含多个段落。</p>
+<p>空行开始的新段落，
+新段落要和列表项内容对齐。</p>
+</li>
+<li><p class="first">列表下的代码段注意对齐即可。</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>$ printf &quot;Hello, world.\n&quot;
+</pre></div>
+</div>
+</li>
+</ol>
+</td>
+</tr>
+<tr class="row-even"><td>定义</td>
+<td><div class="first last highlight-none"><div class="highlight"><pre><span></span>git
+  Simple and beautiful.
+
+hg
+  Another DVCS.
+
+subversion
+  VCS with many constrains.
+
+  Why not Git?
+</pre></div>
+</div>
+</td>
+<td><dl class="first last docutils">
+<dt>git</dt>
+<dd>Simple and beautiful.</dd>
+<dt>hg</dt>
+<dd>Another DVCS.</dd>
+<dt>subversion</dt>
+<dd><p class="first">VCS with many constrains.</p>
+<p class="last">Why not Git?</p>
+</dd>
+</dl>
+</td>
+</tr>
+<tr class="row-odd"><td colspan="2">&nbsp;</td>
+<td><div class="first last highlight-none"><div class="highlight"><pre><span></span>四条短线或以上显示为分隔线。
+
+----
+</pre></div>
+</div>
+</td>
+<td>输出略。</td>
+</tr>
+<tr class="row-even"><td rowspan="6">&nbsp;</td>
+<td>&nbsp;</td>
+<td><div class="first last highlight-none"><div class="highlight"><pre><span></span>这是 **粗体** ，这是 *斜体* 。
+
+不留白的\ **粗体**\ 和\ *斜体*\ 效果。
+</pre></div>
+</div>
+</td>
+<td><p class="first">这是 <strong>粗体</strong> ，这是 <em>斜体</em> 。</p>
+<p class="last">不留白的<strong>粗体</strong>和<em>斜体</em>效果。</p>
+</td>
+</tr>
+<tr class="row-odd"><td>&nbsp;</td>
+<td><div class="first last highlight-none"><div class="highlight"><pre><span></span>.. role:: strike
+   :class: strike
+
+:strike:`删除线` 效果
+
+不留白的\ :strike:`删除线`\ 效果
+</pre></div>
+</div>
+</td>
+<td><p class="first"><span class="strike">删除线</span> 效果</p>
+<p class="last">不留白的<span class="strike">删除线</span>效果</p>
+</td>
+</tr>
+<tr class="row-even"><td>&nbsp;</td>
+<td><div class="first last highlight-none"><div class="highlight"><pre><span></span>.. role:: ul
+   :class: underline
+
+:ul:`下划线` 效果
+
+不留白的\ :ul:`下划线`\ 效果
+</pre></div>
+</div>
+</td>
+<td><p class="first"><span class="underline">下划线</span> 效果</p>
+<p class="last">不留白的<span class="underline">下划线</span>效果</p>
+</td>
+</tr>
+<tr class="row-odd"><td>&nbsp;</td>
+<td><div class="first last highlight-none"><div class="highlight"><pre><span></span>- Water: H\ :sub:`2`\ O
+- E = mc\ :sup:`2`
+</pre></div>
+</div>
+</td>
+<td><ul class="first last simple">
+<li>Water: H<sub>2</sub>O</li>
+<li>E = mc<sup>2</sup></li>
+</ul>
+</td>
+</tr>
+<tr class="row-even"><td>&nbsp;</td>
+<td><div class="first last highlight-none"><div class="highlight"><pre><span></span>两个连续反引号嵌入代码，如: ``git status`` 。
+</pre></div>
+</div>
+</td>
+<td><p class="first">两个连续反引号嵌入代码，如: <code class="docutils literal"><span class="pre">git</span> <span class="pre">status</span></code> 。</p>
+<div class="last admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">相当于 :literal:`git status` 。
+只用一个反引号则相当于 :title-reference:`引言` 。</p>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td>引言</td>
+<td><div class="first last highlight-none"><div class="highlight"><pre><span></span>`Got GitHub` by Jiang Xin.
+</pre></div>
+</div>
+</td>
+<td><cite>Got GitHub</cite> by Jiang Xin.</td>
+</tr>
+<tr class="row-even"><td rowspan="4">链接</td>
+<td>URL自动链接</td>
+<td><div class="first last highlight-none"><div class="highlight"><pre><span></span>- 网址 http://github.com/
+- 邮件 me@foo.bar
+</pre></div>
+</div>
+</td>
+<td><ul class="first last simple">
+<li>网址 <a class="reference external" href="http://github.com/">http://github.com/</a></li>
+<li>邮件 <a class="reference external" href="mailto:me&#37;&#52;&#48;foo&#46;bar">me<span>&#64;</span>foo<span>&#46;</span>bar</a></li>
+</ul>
+</td>
+</tr>
+<tr class="row-odd"><td>&nbsp;</td>
+<td><div class="first last highlight-none"><div class="highlight"><pre><span></span>- 访问 `Google &lt;http://google.com/&gt;`_ 。
+- 上面已定义，直接引用 google_ 链接。
+- 链接地址在后面定义，如： GitHub_ 。
+- 反引号括起多个单词的链接。如 `my blog`_ 。
+
+.. _GitHub: http://github.com
+.. _my blog: http://www.worldhello.net
+</pre></div>
+</div>
+</td>
+<td><ul class="first last simple">
+<li>访问 <a class="reference external" href="http://google.com/">Google</a>。</li>
+<li>上面已定义，直接引用 <a class="reference external" href="http://google.com/">google</a> 链接。</li>
+<li>链接地址在后面定义，如： <a class="reference external" href="http://github.com">GitHub</a>。</li>
+<li>反引号括起多个单词的链接。如 <a class="reference external" href="http://www.worldhello.net">my blog</a>。</li>
+</ul>
+</td>
+</tr>
+<tr class="row-even"><td>&nbsp;</td>
+<td><div class="first last highlight-none"><div class="highlight"><pre><span></span>.. _fig1:
+
+.. figure:: /images/github.png
+
+   内部跳转图例
+
+上面定义的位置，可以：
+
+- 通过 fig1_ 跳转。
+- 或者 `点击这里 &lt;#fig1&gt;`__ 跳转。
+- 或者参见 :ref:`fig1`\ 。
+</pre></div>
+</div>
+</td>
+<td><div class="first figure" id="id38">
+<span id="fig1"></span><img alt="../_images/github.png" src="../_images/github.png" />
+<p class="caption"><span class="caption-text">内部跳转图例</span></p>
+</div>
+<p>上面定义的位置，可以：</p>
+<ul class="last simple">
+<li>通过 <a class="reference internal" href="#fig1">fig1</a> 跳转。</li>
+<li>或者 <a class="reference external" href="#fig1">点击这里</a> 跳转。</li>
+<li>或者参见 <a class="reference internal" href="#fig1"><span class="std std-ref">内部跳转图例</span></a>。</li>
+</ul>
+</td>
+</tr>
+<tr class="row-odd"><td>脚注</td>
+<td><div class="first last highlight-none"><div class="highlight"><pre><span></span>reST脚注的多种表示法：
+
+- 脚注即可以手动分配数字 [1]_ ，
+  也可以使用井号自动分配 [#]_ 。
+
+- 自动分配脚注 [#label]_ 也可以用
+  添加标签形式 [#label]_ 多次引用。
+
+- 还支持用星号嵌入符号式脚注，
+  如这个 [*]_ 和 这个 [*]_ 。
+
+- 使用单词做标识亦可 [CIT2012]_ 。
+
+
+.. [1] 数字编号脚注。
+.. [#] 井号自动编号。
+.. [#label] 井号添加标签以便多次引用。
+.. [*] 星号自动用符号做脚注标记。
+.. [*] 星号自动用符号做脚注标记。
+.. [CIT2012] 单词或其他规定格式。
+</pre></div>
+</div>
+</td>
+<td><p class="first">reST脚注的多种表示法：</p>
+<ul class="simple">
+<li>脚注即可以手动分配数字<a class="footnote-reference" href="#id20" id="id13">[1]</a>，
+也可以使用井号自动分配<a class="footnote-reference" href="#id21" id="id14">[2]</a>。</li>
+<li>自动分配脚注<a class="footnote-reference" href="#label" id="id15">[3]</a>也可以用添加标签形式<a class="footnote-reference" href="#label" id="id16">[3]</a>多次引用。</li>
+<li>还支持用星号嵌入符号式脚注，
+如这个<a class="footnote-reference" href="#id22" id="id17">[*]</a>和 这个<a class="footnote-reference" href="#id23" id="id18">[†]</a>。</li>
+<li>使用单词做标识亦可<a class="reference internal" href="#cit2012" id="id19">[CIT2012]</a>。</li>
+</ul>
+<table class="docutils footnote" frame="void" id="id20" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id13">[1]</a></td><td>数字编号脚注。</td></tr>
+</tbody>
+</table>
+<table class="docutils footnote" frame="void" id="id21" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id14">[2]</a></td><td>井号自动编号。</td></tr>
+</tbody>
+</table>
+<table class="docutils footnote" frame="void" id="label" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label">[3]</td><td><em>(<a class="fn-backref" href="#id15">1</a>, <a class="fn-backref" href="#id16">2</a>)</em> 井号添加标签以便多次引用。</td></tr>
+</tbody>
+</table>
+<table class="docutils footnote" frame="void" id="id22" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id17">[*]</a></td><td>星号自动用符号做脚注标记。</td></tr>
+</tbody>
+</table>
+<table class="docutils footnote" frame="void" id="id23" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id18">[†]</a></td><td>星号自动用符号做脚注标记。</td></tr>
+</tbody>
+</table>
+<table class="last docutils citation" frame="void" id="cit2012" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id19">[CIT2012]</a></td><td>单词或其他规定格式。</td></tr>
+</tbody>
+</table>
+</td>
+</tr>
+<tr class="row-even"><td colspan="2">&nbsp;</td>
+<td><div class="first last highlight-none"><div class="highlight"><pre><span></span>.. figure:: /images/github.png
+   :width: 32
+
+   图：GitHub Octocat
+
+- GitHub Logo: |octocat|
+- 带链接的图片：
+  |imglink|_
+- 下图向右浮动。
+   .. image:: /images/github.png
+      :align: right
+
+.. |octocat| image:: /images/github.png
+.. |imglink| image:: /images/github.png
+.. _imglink: https://github.com/
+</pre></div>
+</div>
+</td>
+<td><div class="first figure" id="id39">
+<a class="reference internal image-reference" href="../_images/github.png"><img alt="../_images/github.png" src="../_images/github.png" style="width: 32px;" /></a>
+<p class="caption"><span class="caption-text">图：GitHub Octocat</span></p>
+</div>
+<ul class="last">
+<li><p class="first">GitHub Logo: <img alt="octocat" src="../_images/gb.png" /></p>
+</li>
+<li><p class="first">带链接的图片：
+<a class="reference external" href="https://github.com/"><img alt="imglink" src="../_images/gb.png" /></a></p>
+</li>
+<li><dl class="first docutils">
+<dt>下图向右浮动。</dt>
+<dd><img alt="../_images/github.png" class="first last align-right" src="../_images/github.png" />
+</dd>
+</dl>
+</li>
+</ul>
+</td>
+</tr>
+<tr class="row-odd"><td colspan="2">&nbsp;</td>
+<td><div class="first last highlight-none"><div class="highlight"><pre><span></span>.. table:: 示例表格
+   :class: classic
+
+   +---------+--------+--------+
+   | head1   | head2  | head3  |
+   +=========+========+========+
+   |         | cell   | cell   |
+   | rowspan +--------+--------+
+   |         | * colspan       |
+   |         | * another line  |
+   +---------+-----------------+
+</pre></div>
+</div>
+</td>
+<td><table border="1" class="classic first last docutils" id="id40">
+<caption><span class="caption-text">示例表格</span><a class="headerlink" href="#id40" title="Permalink to this table">¶</a></caption>
+<colgroup>
+<col width="36%" />
+<col width="32%" />
+<col width="32%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">head1</th>
+<th class="head">head2</th>
+<th class="head">head3</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td rowspan="2">rowspan</td>
+<td>cell</td>
+<td>cell</td>
+</tr>
+<tr class="row-odd"><td colspan="2"><ul class="first last simple">
+<li>colspan</li>
+<li>another line</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+<tr class="row-even"><td rowspan="2">&nbsp;</td>
+<td>转义</td>
+<td><div class="first last highlight-none"><div class="highlight"><pre><span></span>反斜线作为转义字符，\
+禁止对后面 \*字符* 做语法解析。
+</pre></div>
+</div>
+</td>
+<td>反斜线作为转义字符，禁止对后面 *字符* 做语法解析。</td>
+</tr>
+<tr class="row-odd"><td>注释</td>
+<td><div class="first last highlight-none"><div class="highlight"><pre><span></span>.. 注释
+
+..
+   缩进内容也是注释
+</pre></div>
+</div>
+</td>
+<td>无输出。</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<ul class="last simple">
+<li>部分标记语言代号后添加了星标，代表该标记语言相应的语法实现稍有区别，或者GitHub的具体实现和标准有出入。</li>
+<li>为突出部分空格，使用符号 <code class="docutils literal"><span class="pre">°</span></code> 标记。</li>
+</ul>
+</div>
+<hr class="docutils" />
+<table class="docutils footnote" frame="void" id="id24" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id2">[4]</a></td><td>Markdown是在Ruby应用中广泛使用的标记语言，语法简洁并可混用HTML。标准的Markdown语法缺乏如表格等关键特性的支持，虽然不同的解析器都对其语法进行了扩展，但实现各有不同，造成一定的混乱。网址：<a class="reference external" href="http://daringfireball.net/projects/markdown/">http://daringfireball.net/projects/markdown/</a>。</td></tr>
+</tbody>
+</table>
+<table class="docutils footnote" frame="void" id="id25" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id3">[5]</a></td><td>GitHub使用Redcarpet作为Markdown的解析工具，并添加了额外的语法扩展。网址：<a class="reference external" href="http://github.github.com/github-flavored-markdown/">http://github.github.com/github-flavored-markdown/</a>。</td></tr>
+</tbody>
+</table>
+<table class="docutils footnote" frame="void" id="id26" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id4">[6]</a></td><td>reStructuredText可简写为reST或RST，是在Python中广泛使用的标记语言。reST的语法简洁严谨，本书就是使用Sphinx扩展的reST语法和工具撰写的。网址：<a class="reference external" href="http://docutils.sourceforge.net/rst.html">http://docutils.sourceforge.net/rst.html</a>。</td></tr>
+</tbody>
+</table>
+<table class="docutils footnote" frame="void" id="id27" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id5">[7]</a></td><td>Textile是在Ruby应用中广泛使用的标记语言，例如Redmine就将Textile作为内置的标记语言。网址：<a class="reference external" href="http://redcloth.org/textile">http://redcloth.org/textile</a>。</td></tr>
+</tbody>
+</table>
+<table class="docutils footnote" frame="void" id="id28" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id6">[8]</a></td><td>RDoc是内嵌于Ruby代码中用于维护软件文档的标记语言。网址：<a class="reference external" href="http://rdoc.sourceforge.net/doc/">http://rdoc.sourceforge.net/doc/</a>。</td></tr>
+</tbody>
+</table>
+<table class="docutils footnote" frame="void" id="id29" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id7">[9]</a></td><td>POD是内嵌于Perl代码中用于维护软件文档的标记语言。网址：<a class="reference external" href="http://perldoc.perl.org/perlpod.html">http://perldoc.perl.org/perlpod.html</a>。</td></tr>
+</tbody>
+</table>
+<table class="docutils footnote" frame="void" id="id30" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id8">[10]</a></td><td>Org-mode是Emacs的一种编辑模式，除文档外还被广泛应用于维护TODO列表、项目计划等。网址：<a class="reference external" href="http://orgmode.org/org.html">http://orgmode.org/org.html</a>。</td></tr>
+</tbody>
+</table>
+<table class="docutils footnote" frame="void" id="id31" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id9">[11]</a></td><td>MediaWiki是著名的维基百科（WikiPedia）所使用的维基语言。网址：<a class="reference external" href="http://www.mediawiki.org/wiki/Help:Formatting">http://www.mediawiki.org/wiki/Help:Formatting</a>。</td></tr>
+</tbody>
+</table>
+<table class="docutils footnote" frame="void" id="id32" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id10">[12]</a></td><td>维基的实现有上百种，语法各不相同。Creole试图建立统一的维基语法标准。网址：<a class="reference external" href="http://www.wikicreole.org/">http://www.wikicreole.org/</a>。</td></tr>
+</tbody>
+</table>
+<table class="docutils footnote" frame="void" id="id33" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id11">[13]</a></td><td>DocBook是著名的用于文档撰写的标记语言，采用XML文件格式及大量的面向出版的格式标签，能够实现单一源文件出版（Single-Source Publishing），即一次撰写多种格式输出（Write once, publish many）。但复杂的XML标签给写作过程带来不小的负担。网址：<a class="reference external" href="http://www.docbook.org/">http://www.docbook.org/</a>。</td></tr>
+</tbody>
+</table>
+<table class="docutils footnote" frame="void" id="id34" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id12">[14]</a></td><td>AsciiDoc的轻量级标签和DocBook的XML标签语法有着清晰的对应关系，既解决了DocBook语言标签复杂、难读难写的问题，又可利用DocBook丰富的工具链实现单一源文件向多种格式的输出转换。网址：<a class="reference external" href="http://www.methods.co.nz/asciidoc">http://www.methods.co.nz/asciidoc</a>。</td></tr>
+</tbody>
+</table>
+<table class="docutils footnote" frame="void" id="id35" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label">[15]</td><td><a class="reference external" href="https://github.com/mojombo/god/commit/cea00609ca8441c82bc9760ae5eea7d7509d85b3">https://github.com/mojombo/god/commit/cea00609ca8441c82bc9760ae5eea7d7509d85b3</a></td></tr>
+</tbody>
+</table>
+<table class="docutils footnote" frame="void" id="id36" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label">[16]</td><td><a class="reference external" href="https://github.com/mojombo/god/issues/1">https://github.com/mojombo/god/issues/1</a></td></tr>
+</tbody>
+</table>
+</div>
+
+
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+      
+        <a href="store_intro.html" class="btn btn-neutral" title="3. 分布式存储入门" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2016, chenshiqiang.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'0.1',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

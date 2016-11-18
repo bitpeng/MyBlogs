@@ -13,6 +13,8 @@
     :numbered: 3
 
     rst_template
+    rst_usage
     store_intro
+    mark_lan
 
 ..    sphinx_doc

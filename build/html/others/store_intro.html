@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>2. 分布式存储入门 &mdash; Welcome to Sitian&#39;s Blog 0.1 documentation</title>
+  <title>3. 分布式存储入门 &mdash; Welcome to Sitian&#39;s Blog 0.1 documentation</title>
   
 
   
@@ -32,7 +32,7 @@
   
     <link rel="top" title="Welcome to Sitian&#39;s Blog 0.1 documentation" href="../index.html"/>
         <link rel="up" title="附录" href="index.html"/>
-        <link rel="prev" title="1. reStructuredText简明教程" href="rst_template.html"/> 
+        <link rel="prev" title="2. rst ?÷??????ܽ?" href="rst_usage.html"/> 
 
   
   <script src="../_static/js/modernizr.min.js"></script>
@@ -88,14 +88,15 @@
 <li class="toctree-l1"><a class="reference internal" href="../web/index.html">web开发</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="index.html">附录</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="rst_template.html">1. reStructuredText简明教程</a></li>
-<li class="toctree-l2 current"><a class="current reference internal" href="#">2. 分布式存储入门</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#id3">2.1. 对象存储</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#id4">2.1.1. 概念</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#id9">2.1.2. 特点</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#id14">2.1.3. 对象存储系统组成</a></li>
+<li class="toctree-l2"><a class="reference internal" href="rst_usage.html">2. rst ?÷??????ܽ?</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">3. 分布式存储入门</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id3">3.1. 对象存储</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#id4">3.1.1. 概念</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id9">3.1.2. 特点</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id14">3.1.3. 对象存储系统组成</a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="#id18">2.2. 参考</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id18">3.2. 参考</a></li>
 </ul>
 </li>
 </ul>
@@ -132,7 +133,7 @@
       
           <li><a href="index.html">附录</a> &raquo;</li>
       
-    <li>2. 分布式存储入门</li>
+    <li>3. 分布式存储入门</li>
       <li class="wy-breadcrumbs-aside">
         
           
@@ -147,7 +148,7 @@
            <div itemprop="articleBody">
             
   <div class="section" id="storage-intro">
-<span id="id1"></span><h1><a class="toc-backref" href="#id19">2. 分布式存储入门</a><a class="headerlink" href="#storage-intro" title="Permalink to this headline">¶</a></h1>
+<span id="id1"></span><h1><a class="toc-backref" href="#id19">3. 分布式存储入门</a><a class="headerlink" href="#storage-intro" title="Permalink to this headline">¶</a></h1>
 <div class="contents topic" id="id2">
 <p class="topic-title first">目录</p>
 <ul class="simple">
@@ -178,9 +179,9 @@
 比如&#8221;Ceph 独一无二地用统一的系统提供了对象、块、和文件存储功能&#8221;，那么又什么是块存储、对象存储、文件
 存储呢？于是在网上找了很多资料进行学习总结，如有不当之处，请指正。</p>
 <div class="section" id="id3">
-<h2><a class="toc-backref" href="#id20">2.1. 对象存储</a><a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id20">3.1. 对象存储</a><a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="id4">
-<h3><a class="toc-backref" href="#id21">2.1.1. 概念</a><a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id21">3.1.1. 概念</a><a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h3>
 <p>对象存储的概念并没有一个准确的定义，可以简单的认为它是 <strong>分布式的key/value存储</strong> .</p>
 <p>通过查找相关文献，发现对对象存储阐述的比较好的有以下观点：</p>
 <ul>
@@ -257,7 +258,7 @@
 </ul>
 </div>
 <div class="section" id="id9">
-<h3><a class="toc-backref" href="#id22">2.1.2. 特点</a><a class="headerlink" href="#id9" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id22">3.1.2. 特点</a><a class="headerlink" href="#id9" title="Permalink to this headline">¶</a></h3>
 <p>下面从接口，结构等方面概述对象存储的特点。</p>
 <div class="section" id="id10">
 <h4><a class="toc-backref" href="#id23">接口</a><a class="headerlink" href="#id10" title="Permalink to this headline">¶</a></h4>
@@ -289,7 +290,7 @@
 </div>
 </div>
 <div class="section" id="id14">
-<h3><a class="toc-backref" href="#id25">2.1.3. 对象存储系统组成</a><a class="headerlink" href="#id14" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id25">3.1.3. 对象存储系统组成</a><a class="headerlink" href="#id14" title="Permalink to this headline">¶</a></h3>
 <p>对象存储结构组成部分包括：对象、对象存储设备、元数据服务器、对象存储系统的客户端。</p>
 <div class="section" id="id15">
 <h4><a class="toc-backref" href="#id26">对象</a><a class="headerlink" href="#id15" title="Permalink to this headline">¶</a></h4>
@@ -317,7 +318,7 @@
 </div>
 <hr class="docutils" />
 <div class="section" id="id18">
-<h2><a class="toc-backref" href="#id30">2.2. 参考</a><a class="headerlink" href="#id18" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id30">3.2. 参考</a><a class="headerlink" href="#id18" title="Permalink to this headline">¶</a></h2>
 </div>
 </div>
 
@@ -329,7 +330,7 @@
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
       
-        <a href="rst_template.html" class="btn btn-neutral" title="1. reStructuredText简明教程" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="rst_usage.html" class="btn btn-neutral" title="2. rst ?÷??????ܽ?" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   
