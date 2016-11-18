@@ -1,0 +1,341 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>9. shell 元字符问题 &mdash; Welcome to Sitian&#39;s Blog 0.1 documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+    <link rel="top" title="Welcome to Sitian&#39;s Blog 0.1 documentation" href="../index.html"/>
+        <link rel="up" title="Hack Linux" href="index.html"/>
+        <link rel="next" title="OpenStack Note" href="../openstack/index.html"/>
+        <link rel="prev" title="8. DELL 服务器操作手册" href="dell_server_manual.html"/> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> Welcome to Sitian's Blog
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.1
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../py_doc/index.html">Hack Python</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Hack Linux</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="git_cmd.html">1. git 版本控制</a></li>
+<li class="toctree-l2"><a class="reference internal" href="samba_config.html">2. Samba共享访问配置</a></li>
+<li class="toctree-l2"><a class="reference internal" href="use_man_page.html">3. 善用Linux man page</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Linux_lvm.html">4. Linux逻辑卷和lvm</a></li>
+<li class="toctree-l2"><a class="reference internal" href="linux_cmd.html">5. Linux命令和shell</a></li>
+<li class="toctree-l2"><a class="reference internal" href="disk_note.html">6. Linux 磁盘和分区</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ubuntu_lvm_extend.html">7. Ubuntu根分区使用Lvm扩容</a></li>
+<li class="toctree-l2"><a class="reference internal" href="dell_server_manual.html">8. DELL 服务器操作手册</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">9. shell 元字符问题</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#curl">9.1. curl 命令行参数截断问题</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id1">9.2. 引号</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../openstack/index.html">OpenStack Note</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../web/index.html">web开发</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../others/index.html">附录</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../index.html">Welcome to Sitian's Blog</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+ 
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../index.html">Docs</a> &raquo;</li>
+      
+          <li><a href="index.html">Hack Linux</a> &raquo;</li>
+      
+    <li>9. shell 元字符问题</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="../_sources/linux_tools/curl_param_cut.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="shell">
+<span id="curl-param-cut"></span><h1>9. shell 元字符问题<a class="headerlink" href="#shell" title="Permalink to this headline">¶</a></h1>
+<hr class="docutils" />
+<div class="section" id="curl">
+<h2>9.1. curl 命令行参数截断问题<a class="headerlink" href="#curl" title="Permalink to this headline">¶</a></h2>
+<p>在使用curl 测试paste库的过程中，发现总是出现错误：</p>
+<p>curl 请求及输出如下：</p>
+<div class="code sh highlight-default"><div class="highlight"><pre><span></span>root@juno-controller:/# curl http://localhost:9999/calc?oper=plus&amp;op1=20&amp;op2=30
+[1] 10390
+[2] 10391
+root@juno-controller:/# A server error occurred.  Please contact the administrator.
+[1]-  Done                    curl http://localhost:9999/calc?oper=plus
+[2]+  Done                    op1=20
+</pre></div>
+</div>
+<p>通过查看服务端程序输出，发现只有plus参数成功专递，后面的op1和op2两个参数不见了。</p>
+<div class="figure align-center" id="id2">
+<a class="reference internal image-reference" href="../_images/curl_error.png"><img alt="../_images/curl_error.png" src="../_images/curl_error.png" style="width: 795.0px; height: 251.0px;" /></a>
+<p class="caption"><span class="caption-text">curl 参数截断</span></p>
+</div>
+<p>原来，&amp;字符是shell的元字符，被shell解释了。根本没有传递给curl程序！因此，我们使用反斜杠对&amp;进行转义即可！
+现在传递的参数也正常了。</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">root</span><span class="nd">@juno</span><span class="o">-</span><span class="n">controller</span><span class="p">:</span><span class="o">/</span><span class="c1"># curl http://localhost:9999/calc?oper=plus\&amp;op1=20\&amp;op2=30</span>
+<span class="n">GET</span><span class="p">([(</span><span class="s1">u&#39;oper&#39;</span><span class="p">,</span> <span class="s1">u&#39;plus&#39;</span><span class="p">),</span> <span class="p">(</span><span class="s1">u&#39;op1&#39;</span><span class="p">,</span> <span class="s1">u&#39;20&#39;</span><span class="p">),</span> <span class="p">(</span><span class="s1">u&#39;op2&#39;</span><span class="p">,</span> <span class="s1">u&#39;30&#39;</span><span class="p">)])</span>
+<span class="n">RESULT</span> <span class="o">=</span> <span class="mi">50</span>
+</pre></div>
+</div>
+<div class="figure align-center">
+<a class="reference internal image-reference" href="../_images/curl_ok.png"><img alt="../_images/curl_ok.png" src="../_images/curl_ok.png" style="width: 900.0px; height: 90.0px;" /></a>
+</div>
+</div>
+<div class="section" id="id1">
+<h2>9.2. 引号<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
+<p>先来看看原来编写lvm自动化脚本遇到的问题：</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">vgdisplay</span><span class="o">|</span> <span class="n">grep</span> <span class="s2">&quot;VG Name&quot;</span> <span class="o">|</span> <span class="n">awk</span> <span class="s2">&quot;{print $3}&quot;</span>
+<span class="c1">#  VG Name               juno-controller-vg</span>
+<span class="n">vgdisplay</span><span class="o">|</span> <span class="n">grep</span> <span class="s2">&quot;VG Name&quot;</span> <span class="o">|</span> <span class="n">awk</span> <span class="s1">&#39;{print $3}&#39;</span>
+<span class="c1">#juno-controller-vg</span>
+</pre></div>
+</div>
+<p>上面的命令，是想取得系统的LVM逻辑卷组，但是，我们可以看到，第一条命令才是正确的。
+这里涉及到单双引号关闭元字符的问题。</p>
+<ul class="simple">
+<li>hard quote：单引号，关闭所有的meta（什么是meta，自己查吧）</li>
+<li>soft quote：双引号，关闭大部分的meta，但是某些保留，例如$</li>
+</ul>
+<p>这里也提一下escape：反斜杠，它只会关闭紧跟escape之后的字符。</p>
+<p>参考cu上经典的十三问，hard quote关闭shell的meta，而soft quote关闭大部分的shell meta，但是$例外，对于bash的来说，命令的解释是从左到右的，首先遇到hard quote和soft quote，所作的解释是不一样，看这个例子：</p>
+<div class="figure align-center" id="id3">
+<a class="reference internal image-reference" href="../_images/quote_test.png"><img alt="../_images/quote_test.png" src="../_images/quote_test.png" style="width: 595.0px; height: 225.0px;" /></a>
+<p class="caption"><span class="caption-text">单双引号区别测试</span></p>
+</div>
+<div class="highlight-default"><div class="highlight"><pre><span></span>root@juno-controller:/# a=1
+root@juno-controller:/# echo &quot;$a&quot;    #$被bash解释到
+1
+root@juno-controller:/# echo &#39;$a&#39;    #$被hard quote被关闭
+$a
+root@juno-controller:/# echo &#39;&quot;$a&quot;&#39;  #$被hard quote关闭
+&quot;$a&quot;
+root@juno-controller:/# echo &quot;&#39;$a&#39;&quot;  #所有都被关闭了
+&#39;1&#39;
+</pre></div>
+</div>
+<p>如果能够理解上面的了，那基本知道怎么用单引号和双引号了。</p>
+<p>而对于awk、ed等等命令，需要区分shell meta和command meta
+对于awk来说，它的{ }：是将其内的命令置于non-named function 中执行，awk用{ }来区分命令段，例如BEGIN，END等等。举个例子：</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">root</span><span class="nd">@ubuntu</span><span class="p">:</span><span class="o">/</span><span class="c1"># head -4 /etc/passwd | awk -F: {print $1}</span>
+<span class="n">awk</span><span class="p">:</span> <span class="n">line</span> <span class="mi">2</span><span class="p">:</span> <span class="n">missing</span> <span class="p">}</span> <span class="n">near</span> <span class="n">end</span> <span class="n">of</span> <span class="n">file</span>
+</pre></div>
+</div>
+<p>看看报错，如果直接使用{ }，那么我们知道{ }没有被shell关闭，也就是说它看成shell的meta了，当然报错了，所以要关闭，同时shell中的$也关闭，也就是$需要成为awk的meta了，很好理解吧？如下输出了内容。</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">root</span><span class="nd">@ubuntu</span><span class="p">:</span><span class="o">/</span><span class="c1"># head -4 /etc/passwd | awk -F: &#39;{print $1}&#39;</span>
+<span class="n">root</span>
+<span class="n">daemon</span>
+<span class="nb">bin</span>
+<span class="n">sys</span>
+</pre></div>
+</div>
+<p>既然要要关闭{ }，那么也可以用soft quote，</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">root</span><span class="nd">@ubuntu</span><span class="p">:</span><span class="o">/</span><span class="c1"># head -4 /etc/passwd | awk -F: &quot;{print $1}&quot;</span>
+<span class="n">root</span><span class="p">:</span><span class="n">x</span><span class="p">:</span><span class="mi">0</span><span class="p">:</span><span class="mi">0</span><span class="p">:</span><span class="n">root</span><span class="p">:</span><span class="o">/</span><span class="n">root</span><span class="p">:</span><span class="o">/</span><span class="nb">bin</span><span class="o">/</span><span class="n">bash</span>
+<span class="n">daemon</span><span class="p">:</span><span class="n">x</span><span class="p">:</span><span class="mi">1</span><span class="p">:</span><span class="mi">1</span><span class="p">:</span><span class="n">daemon</span><span class="p">:</span><span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">sbin</span><span class="p">:</span><span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">sbin</span><span class="o">/</span><span class="n">nologin</span>
+<span class="nb">bin</span><span class="p">:</span><span class="n">x</span><span class="p">:</span><span class="mi">2</span><span class="p">:</span><span class="mi">2</span><span class="p">:</span><span class="nb">bin</span><span class="p">:</span><span class="o">/</span><span class="nb">bin</span><span class="p">:</span><span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">sbin</span><span class="o">/</span><span class="n">nologin</span>
+<span class="n">sys</span><span class="p">:</span><span class="n">x</span><span class="p">:</span><span class="mi">3</span><span class="p">:</span><span class="mi">3</span><span class="p">:</span><span class="n">sys</span><span class="p">:</span><span class="o">/</span><span class="n">dev</span><span class="p">:</span><span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">sbin</span><span class="o">/</span><span class="n">nologin</span>
+</pre></div>
+</div>
+<p>可以看到，soft quote预期的关闭了{ }，但是$还是被shell解释了，这次我们可以用escape，将$关闭了。</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">root</span><span class="nd">@ubuntu</span><span class="p">:</span><span class="o">/</span><span class="c1"># head -4 /etc/passwd | awk -F: &quot;{print \$1}&quot;</span>
+<span class="n">root</span>
+<span class="n">daemon</span>
+<span class="nb">bin</span>
+<span class="n">sys</span>
+</pre></div>
+</div>
+<p>说到这里，可以大家都一点明白了，并不是awk &#8216;{ }&#8217; urfile是awk的固定语法，而是为了让awk能够跳脱shell的偷取其命令和参数，看看这个例子就明白了。</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">root</span><span class="nd">@ubuntu</span><span class="p">:</span><span class="o">/</span><span class="c1"># head -4 /etc/passwd | awk -F: \{print\ \$1}</span>
+<span class="n">root</span>
+<span class="n">daemon</span>
+<span class="nb">bin</span>
+<span class="n">sys</span>
+</pre></div>
+</div>
+<p>所作的一切是为了让awk或者自己的meta，请切记注意print后的空格，也要关闭，要不又被shell解释了。</p>
+<p><strong>总结</strong></p>
+<ul class="simple">
+<li>双引号作用与单引号类似，区别在于它没有那么严格。单引号告诉shell
+忽略所有特殊字符，而双引号只要求忽略大多数，具体说，括在双引号
+中的三种特殊字符不被忽略：$,,` ,即双引号会解释字符串的特别意思,
+而单引号直接使用字符串.</li>
+<li>反斜杠backslash-escaped( )一般用作转义字符,或称逃脱字符,
+linux如果echo要让转义字符发生作用,就要使用-e选项,且转义字符要使
+用双引号echo -e &#8220;n&#8221;反斜杠的另一种作用,就是当反斜杠用于一行的
+最后一个字符时，shell把行尾的反斜杠作为续行，
+这种结构在分几行输入长命令时经常使用。</li>
+<li><em>$()和``的区别</em>：反引号和$()的功能是命令替换，将反引号或$()中的字符串做为命令来执行，
+我们在用shell编程时经常用的到　将系统命令的执行结果赋给一个变量
+但反引号内不能再引用反引号，而$()中可以引用反引号</li>
+</ul>
+</div>
+</div>
+
+
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../openstack/index.html" class="btn btn-neutral float-right" title="OpenStack Note" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="dell_server_manual.html" class="btn btn-neutral" title="8. DELL 服务器操作手册" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2016, chenshiqiang.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'0.1',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>
