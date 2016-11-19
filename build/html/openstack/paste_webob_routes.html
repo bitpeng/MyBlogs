@@ -105,9 +105,10 @@
 <li class="toctree-l4"><a class="reference internal" href="#id3">14.1.2. paste配置讲解</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#loadapp-name">14.1.3. loadapp() name参数</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#url">14.1.4. URL匹配</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id4">14.1.5. 总结</a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="#id6">14.2. 参考</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id7">14.2. 参考</a></li>
 </ul>
 </li>
 </ul>
@@ -161,7 +162,7 @@
            <div itemprop="articleBody">
             
   <div class="section" id="openstack-rest-api-paste-webob-routes">
-<span id="paste-webob-routes"></span><h1><a class="toc-backref" href="#id14">14. OpenStack REST-API基础：paste/webob/routes库</a><a class="headerlink" href="#openstack-rest-api-paste-webob-routes" title="Permalink to this headline">¶</a></h1>
+<span id="paste-webob-routes"></span><h1><a class="toc-backref" href="#id15">14. OpenStack REST-API基础：paste/webob/routes库</a><a class="headerlink" href="#openstack-rest-api-paste-webob-routes" title="Permalink to this headline">¶</a></h1>
 <div class="admonition tip">
 <p class="first admonition-title">Tip</p>
 <p class="last">在分析openstack源码的过程中，对于每一类服务入口都是通过rest-API提供的。而python rest-api服务的发布涉及
@@ -171,30 +172,31 @@
 <div class="contents topic" id="id1">
 <p class="topic-title first">目录</p>
 <ul class="simple">
-<li><a class="reference internal" href="#openstack-rest-api-paste-webob-routes" id="id14">OpenStack REST-API基础：paste/webob/routes库</a><ul>
-<li><a class="reference internal" href="#paste" id="id15">paste库</a><ul>
-<li><a class="reference internal" href="#id2" id="id16">程序示例</a></li>
-<li><a class="reference internal" href="#id3" id="id17">paste配置讲解</a><ul>
-<li><a class="reference internal" href="#section-composite" id="id18">section composite</a></li>
-<li><a class="reference internal" href="#section-pipeline" id="id19">section pipeline</a></li>
-<li><a class="reference internal" href="#section-filter" id="id20">section filter</a></li>
-<li><a class="reference internal" href="#section-app" id="id21">section app</a></li>
+<li><a class="reference internal" href="#openstack-rest-api-paste-webob-routes" id="id15">OpenStack REST-API基础：paste/webob/routes库</a><ul>
+<li><a class="reference internal" href="#paste" id="id16">paste库</a><ul>
+<li><a class="reference internal" href="#id2" id="id17">程序示例</a></li>
+<li><a class="reference internal" href="#id3" id="id18">paste配置讲解</a><ul>
+<li><a class="reference internal" href="#section-composite" id="id19">section composite</a></li>
+<li><a class="reference internal" href="#section-pipeline" id="id20">section pipeline</a></li>
+<li><a class="reference internal" href="#section-filter" id="id21">section filter</a></li>
+<li><a class="reference internal" href="#section-app" id="id22">section app</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#loadapp-name" id="id22">loadapp() name参数</a></li>
-<li><a class="reference internal" href="#url" id="id23">URL匹配</a></li>
+<li><a class="reference internal" href="#loadapp-name" id="id23">loadapp() name参数</a></li>
+<li><a class="reference internal" href="#url" id="id24">URL匹配</a></li>
+<li><a class="reference internal" href="#id4" id="id25">总结</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#id6" id="id24">参考</a></li>
+<li><a class="reference internal" href="#id7" id="id26">参考</a></li>
 </ul>
 </li>
 </ul>
 </div>
 <hr class="docutils" />
 <div class="section" id="paste">
-<h2><a class="toc-backref" href="#id15">14.1. paste库</a><a class="headerlink" href="#paste" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id16">14.1. paste库</a><a class="headerlink" href="#paste" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="id2">
-<h3><a class="toc-backref" href="#id16">14.1.1. 程序示例</a><a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id17">14.1.1. 程序示例</a><a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h3>
 <p>paste的核心是paste配置文件，因此看懂paste.ini配置文件是关键，先来看一个例子。</p>
 <p>paste配置文件：</p>
 <div class="highlight-default"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
@@ -495,17 +497,17 @@
 </pre></div>
 </td></tr></table></div>
 <p>运行服务端程序：</p>
-<div class="figure align-center" id="id9">
+<div class="figure align-center" id="id10">
 <a class="reference internal image-reference" href="../_images/run_paste_test.png"><img alt="../_images/run_paste_test.png" src="../_images/run_paste_test.png" style="width: 1417.0px; height: 615.0px;" /></a>
 <p class="caption"><span class="caption-text">运行程序：服务端</span></p>
 </div>
-<div class="figure align-center" id="id10">
+<div class="figure align-center" id="id11">
 <a class="reference internal image-reference" href="../_images/curl_paste.png"><img alt="../_images/curl_paste.png" src="../_images/curl_paste.png" style="width: 1011.0px; height: 180.0px;" /></a>
 <p class="caption"><span class="caption-text">curl客户端测试</span></p>
 </div>
 </div>
 <div class="section" id="id3">
-<h3><a class="toc-backref" href="#id17">14.1.2. paste配置讲解</a><a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id18">14.1.2. paste配置讲解</a><a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h3>
 <p>使用Paste和PasteDeploy模块来实现WSGI服务时，都需要一个paste.ini文件。
 这个文件也是Paste框架的精髓，这里需要重点说明一下这个文件如何阅读。</p>
 <p>paste.ini文件的格式类似于INI格式，每个section的格式为[type:name]。
@@ -536,7 +538,7 @@
 
 <p>然后对照程序，来挨个分析每个section。</p>
 <div class="section" id="section-composite">
-<h4><a class="toc-backref" href="#id18">section composite</a><a class="headerlink" href="#section-composite" title="Permalink to this headline">¶</a></h4>
+<h4><a class="toc-backref" href="#id19">section composite</a><a class="headerlink" href="#section-composite" title="Permalink to this headline">¶</a></h4>
 <p>这种section用来决定如何分发HTTP请求。路由的对象其实就是paste.ini中其他secion的名字，类型必须是app或者pipeline。</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">composite</span><span class="p">:</span><span class="n">pdl</span><span class="p">]</span>
 <span class="n">use</span><span class="o">=</span><span class="n">egg</span><span class="p">:</span><span class="n">Paste</span><span class="c1">#urlmap            # use 为关键字</span>
@@ -550,7 +552,7 @@
 </div>
 </div>
 <div class="section" id="section-pipeline">
-<h4><a class="toc-backref" href="#id19">section pipeline</a><a class="headerlink" href="#section-pipeline" title="Permalink to this headline">¶</a></h4>
+<h4><a class="toc-backref" href="#id20">section pipeline</a><a class="headerlink" href="#section-pipeline" title="Permalink to this headline">¶</a></h4>
 <p>pipeline是把filter和app串起来的一种section。它只有一个关键字就是pipeline。</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">pipeline</span><span class="p">:</span><span class="n">root</span><span class="p">]</span>
 <span class="n">pipeline</span> <span class="o">=</span> <span class="n">logrequest</span> <span class="n">showversion</span>
@@ -566,13 +568,13 @@
 </ul>
 <p>pipeline关键字指定了很多个名字，这些名字也是paste.ini文件中其他section的名字。
 请求会从最前面的section开始处理，一直向后传递。</p>
-<div class="figure align-center" id="id11">
+<div class="figure align-center" id="id12">
 <a class="reference internal image-reference" href="../_images/call_filter_first.png"><img alt="../_images/call_filter_first.png" src="../_images/call_filter_first.png" style="width: 881.0px; height: 149.0px;" /></a>
 <p class="caption"><span class="caption-text">filter定义在前，因此先调用filter,再调用app</span></p>
 </div>
 </div>
 <div class="section" id="section-filter">
-<h4><a class="toc-backref" href="#id20">section filter</a><a class="headerlink" href="#section-filter" title="Permalink to this headline">¶</a></h4>
+<h4><a class="toc-backref" href="#id21">section filter</a><a class="headerlink" href="#section-filter" title="Permalink to this headline">¶</a></h4>
 <p>filter是用来过滤请求和响应的，以WSGI中间件的方式实现。
 其中的paste.filter_factory表示调用哪个函数来获得这个filter中间件。</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="p">[</span><span class="nb">filter</span><span class="p">:</span><span class="n">logrequest</span><span class="p">]</span>
@@ -594,7 +596,7 @@
 </div>
 </div>
 <div class="section" id="section-app">
-<h4><a class="toc-backref" href="#id21">section app</a><a class="headerlink" href="#section-app" title="Permalink to this headline">¶</a></h4>
+<h4><a class="toc-backref" href="#id22">section app</a><a class="headerlink" href="#section-app" title="Permalink to this headline">¶</a></h4>
 <p>app表示实现主要功能的应用，是一个标准的WSGI application。
 paste.app_factory表示调用哪个函数来获得这个app。</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">app</span><span class="p">:</span><span class="n">showversion</span><span class="p">]</span>
@@ -609,32 +611,42 @@ paste.app_factory表示调用哪个函数来获得这个app。</p>
 </div>
 </div>
 <div class="section" id="loadapp-name">
-<h3><a class="toc-backref" href="#id22">14.1.3. loadapp() name参数</a><a class="headerlink" href="#loadapp-name" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id23">14.1.3. loadapp() name参数</a><a class="headerlink" href="#loadapp-name" title="Permalink to this headline">¶</a></h3>
 <p>loadapp 函数的name很关键，必须和配置文件的某个 composite对应上，否则出错。
 实际上，name变量表示paste.ini中一个section的名字，指定这个section作为HTTP请求处理的第一站。</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span>    <span class="c1">#wsgi_app = loadapp(&quot;config:%s&quot; % os.path.abspath(configfile), appname)</span>
 <span class="n">wsgi_app</span> <span class="o">=</span> <span class="n">loadapp</span><span class="p">(</span><span class="s2">&quot;config:</span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="n">configfile</span><span class="p">),</span> <span class="s2">&quot;test_paste&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
-<div class="figure align-center" id="id12">
+<div class="figure align-center" id="id13">
 <a class="reference internal image-reference" href="../_images/modify_app_name_error.png"><img alt="../_images/modify_app_name_error.png" src="../_images/modify_app_name_error.png" style="width: 1040.0px; height: 395.0px;" /></a>
 <p class="caption"><span class="caption-text">更改name 参数程序报错</span></p>
 </div>
 </div>
 <div class="section" id="url">
-<h3><a class="toc-backref" href="#id23">14.1.4. URL匹配</a><a class="headerlink" href="#url" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id24">14.1.4. URL匹配</a><a class="headerlink" href="#url" title="Permalink to this headline">¶</a></h3>
 <p>路径不是绝对匹配，只要开头匹配就可以，但是假如有更精确的匹配，那就采用更精确的。(有点类似于IP路由的最长最佳路由匹配)</p>
-<div class="figure align-center" id="id13">
+<div class="figure align-center" id="id14">
 <a class="reference internal image-reference" href="../_images/paste_head_match.png"><img alt="../_images/paste_head_match.png" src="../_images/paste_head_match.png" style="width: 1070.0px; height: 275.0px;" /></a>
 <p class="caption"><span class="caption-text">开头匹配和最长精确匹配</span></p>
 </div>
-<table class="docutils footnote" frame="void" id="id4" rules="none">
+</div>
+<div class="section" id="id4">
+<h3><a class="toc-backref" href="#id25">14.1.5. 总结</a><a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h3>
+<p>paste.ini中这一大堆配置的作用就是把我们用Python写的WSGI application和middleware串起来，规定好HTTP请求处理的路径。
+即规定，对哪个URL path 调用对应的app！</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">如果使用wsgiref.make_server创建一个server，只有一个app，那么所以的请求都会使用该app处理！
+可以参考 <a class="reference internal" href="../py_doc/wsgi.html#wsgi-basic"><span class="std std-ref">wsgi 基础</span></a></p>
+</div>
+<table class="docutils footnote" frame="void" id="id5" rules="none">
 <colgroup><col class="label" /><col /></colgroup>
 <tbody valign="top">
 <tr><td class="label">[1]</td><td><a class="reference external" href="https://www.ustack.com/blog/demoapi2/">https://www.ustack.com/blog/demoapi2/</a></td></tr>
 </tbody>
 </table>
-<table class="docutils footnote" frame="void" id="id5" rules="none">
+<table class="docutils footnote" frame="void" id="id6" rules="none">
 <colgroup><col class="label" /><col /></colgroup>
 <tbody valign="top">
 <tr><td class="label">[2]</td><td><a class="reference external" href="http://blog.csdn.net/sonicatnoc/article/details/6539716">http://blog.csdn.net/sonicatnoc/article/details/6539716</a></td></tr>
@@ -643,15 +655,15 @@ paste.app_factory表示调用哪个函数来获得这个app。</p>
 </div>
 </div>
 <hr class="docutils" />
-<div class="section" id="id6">
-<h2><a class="toc-backref" href="#id24">14.2. 参考</a><a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h2>
-<table class="docutils footnote" frame="void" id="id7" rules="none">
+<div class="section" id="id7">
+<h2><a class="toc-backref" href="#id26">14.2. 参考</a><a class="headerlink" href="#id7" title="Permalink to this headline">¶</a></h2>
+<table class="docutils footnote" frame="void" id="id8" rules="none">
 <colgroup><col class="label" /><col /></colgroup>
 <tbody valign="top">
 <tr><td class="label">[3]</td><td><a class="reference external" href="http://f.dataguru.cn/thread-127360-1-1.html">http://f.dataguru.cn/thread-127360-1-1.html</a></td></tr>
 </tbody>
 </table>
-<table class="docutils footnote" frame="void" id="id8" rules="none">
+<table class="docutils footnote" frame="void" id="id9" rules="none">
 <colgroup><col class="label" /><col /></colgroup>
 <tbody valign="top">
 <tr><td class="label">[4]</td><td><a class="reference external" href="http://askubuntu.com/questions/140360/kvm-kernel-module-error">http://askubuntu.com/questions/140360/kvm-kernel-module-error</a></td></tr>

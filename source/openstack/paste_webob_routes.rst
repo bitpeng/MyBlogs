@@ -198,6 +198,16 @@ URL匹配
 
    开头匹配和最长精确匹配
 
+总结
++++++
+
+paste.ini中这一大堆配置的作用就是把我们用Python写的WSGI application和middleware串起来，规定好HTTP请求处理的路径。
+即规定，对哪个URL path 调用对应的app！
+
+.. note::
+
+	如果使用wsgiref.make_server创建一个server，只有一个app，那么所以的请求都会使用该app处理！
+	可以参考 :ref:`wsgi 基础<wsgi_basic>`
 
 .. [#] https://www.ustack.com/blog/demoapi2/
 .. [#] http://blog.csdn.net/sonicatnoc/article/details/6539716

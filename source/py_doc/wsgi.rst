@@ -133,6 +133,20 @@ wsgi 中间件也是一个可调用的app，它接受另一个app为参数，并
 	httpd = make_server('127.0.0.1', 8051, application)
 	httpd.serve_forever()
 
+特别注意
+---------
+
+.. important::
+
+	wsgi只规定了web server和web app之间如何通信。但是，一般而言，不同的URL path应该用不同的app进行
+	处理，但是wsgi对此并未规定。就上面的例子而言，由于只定义了一个app，因此，只要IP 和端口正确的所有
+	http 请求，都将由simple_app处理。
+
+	对于如何将不同的URL path分发给不同的app进行处理，这就是其他库的任务了。如典型的pasteDelopy，它
+	就是通过配置文件定义实现，在openstack等项目中使用！
+
+
+
 
 其他：wsgi导论
 --------------
