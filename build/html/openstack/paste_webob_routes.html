@@ -1,0 +1,731 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>14. OpenStack REST-API基础：paste/webob/routes库 &mdash; Welcome to Sitian&#39;s Blog 0.1 documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+    <link rel="top" title="Welcome to Sitian&#39;s Blog 0.1 documentation" href="../index.html"/>
+        <link rel="up" title="OpenStack Note" href="index.html"/>
+        <link rel="next" title="web开发" href="../web/index.html"/>
+        <link rel="prev" title="13. 云平台服务器重启注意事项" href="cloud_check.html"/> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> Welcome to Sitian's Blog
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.1
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../py_doc/index.html">Hack Python</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../linux_tools/index.html">Hack Linux</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">OpenStack Note</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="horizon_develop.html">1. Horizon 二次开发指南</a></li>
+<li class="toctree-l2"><a class="reference internal" href="image-create-guide.html">2. OpenStack镜像制作</a></li>
+<li class="toctree-l2"><a class="reference internal" href="deploy_synopsis.html">3. openstack 实践指南</a></li>
+<li class="toctree-l2"><a class="reference internal" href="centos_vm_netconf.html">4. Centos虚拟机联网配置</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lanch_instance_failure.html">5. OpenStack 启动虚拟机失败分析</a></li>
+<li class="toctree-l2"><a class="reference internal" href="rabbitmq_doc.html">6. rabbitmq教程</a></li>
+<li class="toctree-l2"><a class="reference internal" href="os_cmd.html">7. openstack命令汇总</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kvm_error.html">8. KVM错误问题</a></li>
+<li class="toctree-l2"><a class="reference internal" href="django_middleware.html">9. django中间件和openstack用户重登录分析</a></li>
+<li class="toctree-l2"><a class="reference internal" href="horizon_workflows_analysis.html">10. horizon workflows分析</a></li>
+<li class="toctree-l2"><a class="reference internal" href="horizon_launch_instance.html">11. horizon启动虚拟机分析</a></li>
+<li class="toctree-l2"><a class="reference internal" href="django-generic_view.html">12. django通用视图：一个小问题引发的思考</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cloud_check.html">13. 云平台服务器重启注意事项</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">14. OpenStack REST-API基础：paste/webob/routes库</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#paste">14.1. paste库</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#id2">14.1.1. 程序示例</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id3">14.1.2. paste配置讲解</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#loadapp-name">14.1.3. loadapp() name参数</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#url">14.1.4. URL匹配</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#id6">14.2. 参考</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../web/index.html">web开发</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../others/index.html">附录</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../index.html">Welcome to Sitian's Blog</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+ 
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../index.html">Docs</a> &raquo;</li>
+      
+          <li><a href="index.html">OpenStack Note</a> &raquo;</li>
+      
+    <li>14. OpenStack REST-API基础：paste/webob/routes库</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="../_sources/openstack/paste_webob_routes.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="openstack-rest-api-paste-webob-routes">
+<span id="paste-webob-routes"></span><h1><a class="toc-backref" href="#id14">14. OpenStack REST-API基础：paste/webob/routes库</a><a class="headerlink" href="#openstack-rest-api-paste-webob-routes" title="Permalink to this headline">¶</a></h1>
+<div class="admonition tip">
+<p class="first admonition-title">Tip</p>
+<p class="last">在分析openstack源码的过程中，对于每一类服务入口都是通过rest-API提供的。而python rest-api服务的发布涉及
+到wsgi，路由分发等诸多问题。openstack使用的paste+webob+routes模块，使用起来比较复杂，自己因此也
+花费了很多时间也学习相关基础知识，渐有心得，因此记录下来，供参考。</p>
+</div>
+<div class="contents topic" id="id1">
+<p class="topic-title first">目录</p>
+<ul class="simple">
+<li><a class="reference internal" href="#openstack-rest-api-paste-webob-routes" id="id14">OpenStack REST-API基础：paste/webob/routes库</a><ul>
+<li><a class="reference internal" href="#paste" id="id15">paste库</a><ul>
+<li><a class="reference internal" href="#id2" id="id16">程序示例</a></li>
+<li><a class="reference internal" href="#id3" id="id17">paste配置讲解</a><ul>
+<li><a class="reference internal" href="#section-composite" id="id18">section composite</a></li>
+<li><a class="reference internal" href="#section-pipeline" id="id19">section pipeline</a></li>
+<li><a class="reference internal" href="#section-filter" id="id20">section filter</a></li>
+<li><a class="reference internal" href="#section-app" id="id21">section app</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#loadapp-name" id="id22">loadapp() name参数</a></li>
+<li><a class="reference internal" href="#url" id="id23">URL匹配</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#id6" id="id24">参考</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<hr class="docutils" />
+<div class="section" id="paste">
+<h2><a class="toc-backref" href="#id15">14.1. paste库</a><a class="headerlink" href="#paste" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id2">
+<h3><a class="toc-backref" href="#id16">14.1.1. 程序示例</a><a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h3>
+<p>paste的核心是paste配置文件，因此看懂paste.ini配置文件是关键，先来看一个例子。</p>
+<p>paste配置文件：</p>
+<div class="highlight-default"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">DEFAULT</span><span class="p">]</span>
+<span class="n">key1</span><span class="o">=</span><span class="n">value1</span>
+<span class="n">key2</span><span class="o">=</span><span class="n">value2</span>
+<span class="n">key3</span><span class="o">=</span><span class="n">values</span>
+
+<span class="p">[</span><span class="n">composite</span><span class="p">:</span><span class="n">pdl</span><span class="p">]</span>
+<span class="n">use</span><span class="o">=</span><span class="n">egg</span><span class="p">:</span><span class="n">Paste</span><span class="c1">#urlmap</span>
+<span class="o">/</span><span class="p">:</span><span class="n">root</span>
+<span class="o">/</span><span class="n">calc</span><span class="p">:</span><span class="n">calc</span>
+<span class="c1">#/v1:api_v1</span>
+
+<span class="c1">#[app:api_v1]</span>
+<span class="c1">#paste.app_factory = v1.router:MyRouterApp.factory</span>
+
+<span class="p">[</span><span class="n">pipeline</span><span class="p">:</span><span class="n">root</span><span class="p">]</span>
+<span class="n">pipeline</span> <span class="o">=</span> <span class="n">logrequest</span> <span class="n">showversion</span>
+
+<span class="p">[</span><span class="n">pipeline</span><span class="p">:</span><span class="n">calc</span><span class="p">]</span>
+<span class="n">pipeline</span> <span class="o">=</span> <span class="n">test_filter</span> <span class="n">calculator</span>
+
+<span class="p">[</span><span class="nb">filter</span><span class="p">:</span><span class="n">logrequest</span><span class="p">]</span>
+<span class="n">username</span> <span class="o">=</span> <span class="n">root</span>
+<span class="n">password</span> <span class="o">=</span> <span class="n">root123</span>
+<span class="n">paste</span><span class="o">.</span><span class="n">filter_factory</span> <span class="o">=</span> <span class="n">pastedeploylab</span><span class="p">:</span><span class="n">LogFilter</span><span class="o">.</span><span class="n">factory</span>
+
+<span class="c1"># add by chenshiqiang for test</span>
+<span class="p">[</span><span class="nb">filter</span><span class="p">:</span><span class="n">test_filter</span><span class="p">]</span>
+<span class="n">k1</span> <span class="o">=</span> <span class="n">m1</span>
+<span class="n">k2</span> <span class="o">=</span> <span class="n">m2</span>
+<span class="n">paste</span><span class="o">.</span><span class="n">filter_factory</span> <span class="o">=</span> <span class="n">pastedeploylab</span><span class="p">:</span><span class="n">TestFilter</span><span class="o">.</span><span class="n">factory</span>
+<span class="c1"># end add</span>
+
+<span class="p">[</span><span class="n">app</span><span class="p">:</span><span class="n">showversion</span><span class="p">]</span>
+<span class="n">version</span> <span class="o">=</span> <span class="mf">1.0</span><span class="o">.</span><span class="mi">0</span>
+<span class="n">paste</span><span class="o">.</span><span class="n">app_factory</span> <span class="o">=</span> <span class="n">pastedeploylab</span><span class="p">:</span><span class="n">ShowVersion</span><span class="o">.</span><span class="n">factory</span>
+
+<span class="p">[</span><span class="n">app</span><span class="p">:</span><span class="n">calculator</span><span class="p">]</span>
+<span class="n">description</span> <span class="o">=</span> <span class="n">This</span> <span class="ow">is</span> <span class="n">an</span> <span class="s2">&quot;+-*/&quot;</span> <span class="n">Calculator</span>
+<span class="n">paste</span><span class="o">.</span><span class="n">app_factory</span> <span class="o">=</span> <span class="n">pastedeploylab</span><span class="p">:</span><span class="n">Calculator</span><span class="o">.</span><span class="n">factory</span>
+</pre></div>
+</td></tr></table></div>
+<p>使用paste.ini生成服务端程序：</p>
+<div class="highlight-default"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>  1
+  2
+  3
+  4
+  5
+  6
+  7
+  8
+  9
+ 10
+ 11
+ 12
+ 13
+ 14
+ 15
+ 16
+ 17
+ 18
+ 19
+ 20
+ 21
+ 22
+ 23
+ 24
+ 25
+ 26
+ 27
+ 28
+ 29
+ 30
+ 31
+ 32
+ 33
+ 34
+ 35
+ 36
+ 37
+ 38
+ 39
+ 40
+ 41
+ 42
+ 43
+ 44
+ 45
+ 46
+ 47
+ 48
+ 49
+ 50
+ 51
+ 52
+ 53
+ 54
+ 55
+ 56
+ 57
+ 58
+ 59
+ 60
+ 61
+ 62
+ 63
+ 64
+ 65
+ 66
+ 67
+ 68
+ 69
+ 70
+ 71
+ 72
+ 73
+ 74
+ 75
+ 76
+ 77
+ 78
+ 79
+ 80
+ 81
+ 82
+ 83
+ 84
+ 85
+ 86
+ 87
+ 88
+ 89
+ 90
+ 91
+ 92
+ 93
+ 94
+ 95
+ 96
+ 97
+ 98
+ 99
+100
+101
+102
+103
+104
+105
+106
+107
+108</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="c1">#coding: utf-8</span>
+
+<span class="sd">&#39;&#39;&#39;&#39;&#39;</span>
+<span class="sd">Created on 2011-6-12</span>
+<span class="sd">@author: Sonic</span>
+<span class="sd">&#39;&#39;&#39;</span>
+
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">webob</span>
+<span class="kn">from</span> <span class="nn">webob</span> <span class="k">import</span> <span class="n">Request</span>
+<span class="kn">from</span> <span class="nn">webob</span> <span class="k">import</span> <span class="n">Response</span>
+<span class="kn">from</span> <span class="nn">paste.deploy</span> <span class="k">import</span> <span class="n">loadapp</span>
+<span class="kn">from</span> <span class="nn">wsgiref.simple_server</span> <span class="k">import</span> <span class="n">make_server</span>
+<span class="kn">from</span> <span class="nn">time</span> <span class="k">import</span> <span class="n">sleep</span>
+
+<span class="c1">#Filter</span>
+
+<span class="k">class</span> <span class="nc">TestFilter</span><span class="p">():</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">app</span><span class="p">):</span>
+        <span class="nb">print</span> <span class="s2">&quot;call test_filter init</span><span class="se">\n</span><span class="s2">&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">app</span> <span class="o">=</span> <span class="n">app</span>
+
+    <span class="k">def</span> <span class="nf">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">environ</span><span class="p">,</span><span class="n">start_response</span><span class="p">):</span>
+        <span class="nb">print</span> <span class="s2">&quot;filter: call Test_Filter.&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">app</span><span class="p">(</span><span class="n">environ</span><span class="p">,</span><span class="n">start_response</span><span class="p">)</span>
+
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">factory</span><span class="p">(</span><span class="n">cls</span><span class="p">,</span> <span class="n">global_conf</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="nb">print</span> <span class="s2">&quot;in Test_Filter.factory&quot;</span><span class="p">,</span> <span class="n">global_conf</span><span class="p">,</span> <span class="n">kwargs</span>
+        <span class="k">return</span> <span class="n">TestFilter</span>
+
+<span class="k">class</span> <span class="nc">LogFilter</span><span class="p">():</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">app</span><span class="p">):</span>
+        <span class="nb">print</span> <span class="s2">&quot;call log filter init</span><span class="se">\n</span><span class="s2">&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">app</span> <span class="o">=</span> <span class="n">app</span>
+
+    <span class="k">def</span> <span class="nf">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">environ</span><span class="p">,</span><span class="n">start_response</span><span class="p">):</span>
+        <span class="nb">print</span> <span class="s2">&quot;filter:LogFilter is called.&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">app</span><span class="p">(</span><span class="n">environ</span><span class="p">,</span><span class="n">start_response</span><span class="p">)</span>
+
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">factory</span><span class="p">(</span><span class="n">cls</span><span class="p">,</span> <span class="n">global_conf</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="nb">print</span> <span class="s2">&quot;in LogFilter.factory&quot;</span><span class="p">,</span> <span class="n">global_conf</span><span class="p">,</span> <span class="n">kwargs</span>
+        <span class="k">return</span> <span class="n">LogFilter</span>
+
+<span class="k">class</span> <span class="nc">ShowVersion</span><span class="p">():</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="nb">print</span> <span class="s2">&quot;call showversion init</span><span class="se">\n</span><span class="s2">&quot;</span>
+
+    <span class="k">def</span> <span class="nf">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">environ</span><span class="p">,</span><span class="n">start_response</span><span class="p">):</span>
+        <span class="nb">print</span> <span class="s2">&quot;showversion call&quot;</span>
+        <span class="n">start_response</span><span class="p">(</span><span class="s2">&quot;200 OK&quot;</span><span class="p">,[(</span><span class="s2">&quot;Content-type&quot;</span><span class="p">,</span> <span class="s2">&quot;text/plain&quot;</span><span class="p">)])</span>
+        <span class="k">return</span> <span class="p">[</span><span class="s2">&quot;Paste Deploy LAB: Version = 1.0.0</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,]</span>
+
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">factory</span><span class="p">(</span><span class="n">cls</span><span class="p">,</span><span class="n">global_conf</span><span class="p">,</span><span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="nb">print</span> <span class="s2">&quot;in ShowVersion.factory&quot;</span><span class="p">,</span> <span class="n">global_conf</span><span class="p">,</span> <span class="n">kwargs</span>
+        <span class="k">return</span> <span class="n">ShowVersion</span><span class="p">()</span>
+
+
+
+<span class="k">class</span> <span class="nc">Calculator</span><span class="p">():</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="nb">print</span> <span class="s2">&quot;call calc init</span><span class="se">\n</span><span class="s2">&quot;</span>
+
+    <span class="k">def</span> <span class="nf">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">environ</span><span class="p">,</span> <span class="n">start_response</span><span class="p">):</span>
+        <span class="c1">#print environ</span>
+        <span class="nb">print</span> <span class="s2">&quot;calculator call&quot;</span>
+        <span class="n">req</span> <span class="o">=</span> <span class="n">Request</span><span class="p">(</span><span class="n">environ</span><span class="p">)</span>
+        <span class="n">res</span> <span class="o">=</span> <span class="n">Response</span><span class="p">()</span>
+        <span class="n">res</span><span class="o">.</span><span class="n">status</span> <span class="o">=</span> <span class="s2">&quot;200 OK&quot;</span>
+        <span class="n">res</span><span class="o">.</span><span class="n">content_type</span> <span class="o">=</span> <span class="s2">&quot;text/plain&quot;</span>
+        <span class="c1"># get operands</span>
+        <span class="n">operator</span> <span class="o">=</span> <span class="n">req</span><span class="o">.</span><span class="n">GET</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;oper&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+        <span class="n">operand1</span> <span class="o">=</span> <span class="n">req</span><span class="o">.</span><span class="n">GET</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;op1&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+        <span class="n">operand2</span> <span class="o">=</span> <span class="n">req</span><span class="o">.</span><span class="n">GET</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;op2&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+        <span class="nb">print</span> <span class="n">req</span><span class="o">.</span><span class="n">GET</span>
+        <span class="c1">#print operand1, operand2</span>
+        <span class="c1">#sleep(10)</span>
+        <span class="n">opnd1</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">operand1</span><span class="p">)</span>
+        <span class="n">opnd2</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">operand2</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">operator</span> <span class="o">==</span> <span class="s1">u&#39;plus&#39;</span><span class="p">:</span>
+            <span class="n">opnd1</span> <span class="o">=</span> <span class="n">opnd1</span> <span class="o">+</span> <span class="n">opnd2</span>
+        <span class="k">elif</span> <span class="n">operator</span> <span class="o">==</span> <span class="s1">u&#39;minus&#39;</span><span class="p">:</span>
+            <span class="n">opnd1</span> <span class="o">=</span> <span class="n">opnd1</span> <span class="o">-</span> <span class="n">opnd2</span>
+        <span class="k">elif</span> <span class="n">operator</span> <span class="o">==</span> <span class="s1">u&#39;star&#39;</span><span class="p">:</span>
+            <span class="n">opnd1</span> <span class="o">=</span> <span class="n">opnd1</span> <span class="o">*</span> <span class="n">opnd2</span>
+        <span class="k">elif</span> <span class="n">operator</span> <span class="o">==</span> <span class="s1">u&#39;slash&#39;</span><span class="p">:</span>
+            <span class="n">opnd1</span> <span class="o">=</span> <span class="n">opnd1</span> <span class="o">/</span> <span class="n">opnd2</span>
+        <span class="n">res</span><span class="o">.</span><span class="n">body</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="si">%s</span><span class="s2"> </span><span class="se">\n</span><span class="s2">RESULT = </span><span class="si">%d</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">req</span><span class="o">.</span><span class="n">GET</span><span class="p">)</span> <span class="p">,</span> <span class="n">opnd1</span><span class="p">)</span>
+        <span class="c1">#return [res.body]</span>
+        <span class="k">return</span> <span class="n">res</span><span class="p">(</span><span class="n">environ</span><span class="p">,</span><span class="n">start_response</span><span class="p">)</span>
+        <span class="c1">#start_response(&quot;200 OK&quot;,[(&quot;Content-type&quot;, &quot;text/plain&quot;)])</span>
+        <span class="c1">#return [&quot;call calc\n&quot;]</span>
+
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">factory</span><span class="p">(</span><span class="n">cls</span><span class="p">,</span><span class="n">global_conf</span><span class="p">,</span><span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="nb">print</span> <span class="s2">&quot;in Calculator.factory&quot;</span><span class="p">,</span> <span class="n">global_conf</span><span class="p">,</span> <span class="n">kwargs</span>
+        <span class="k">return</span> <span class="n">Calculator</span><span class="p">()</span>
+
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="n">configfile</span><span class="o">=</span><span class="s2">&quot;pastedeploylab.ini&quot;</span>
+    <span class="n">appname</span><span class="o">=</span><span class="s2">&quot;pdl&quot;</span>
+    <span class="c1">#wsgi_app = loadapp(&quot;config:%s&quot; % os.path.abspath(configfile), appname)</span>
+    <span class="n">wsgi_app</span> <span class="o">=</span> <span class="n">loadapp</span><span class="p">(</span><span class="s2">&quot;config:</span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="n">configfile</span><span class="p">),</span> <span class="s2">&quot;test_paste&quot;</span><span class="p">)</span>
+    <span class="n">server</span> <span class="o">=</span> <span class="n">make_server</span><span class="p">(</span><span class="s1">&#39;localhost&#39;</span><span class="p">,</span> <span class="mi">9999</span><span class="p">,</span> <span class="n">wsgi_app</span><span class="p">)</span>
+    <span class="n">server</span><span class="o">.</span><span class="n">serve_forever</span><span class="p">()</span>
+    <span class="k">pass</span>
+</pre></div>
+</td></tr></table></div>
+<p>运行服务端程序：</p>
+<div class="figure align-center" id="id9">
+<a class="reference internal image-reference" href="../_images/run_paste_test.png"><img alt="../_images/run_paste_test.png" src="../_images/run_paste_test.png" style="width: 1417.0px; height: 615.0px;" /></a>
+<p class="caption"><span class="caption-text">运行程序：服务端</span></p>
+</div>
+<div class="figure align-center" id="id10">
+<a class="reference internal image-reference" href="../_images/curl_paste.png"><img alt="../_images/curl_paste.png" src="../_images/curl_paste.png" style="width: 1011.0px; height: 180.0px;" /></a>
+<p class="caption"><span class="caption-text">curl客户端测试</span></p>
+</div>
+</div>
+<div class="section" id="id3">
+<h3><a class="toc-backref" href="#id17">14.1.2. paste配置讲解</a><a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h3>
+<p>使用Paste和PasteDeploy模块来实现WSGI服务时，都需要一个paste.ini文件。
+这个文件也是Paste框架的精髓，这里需要重点说明一下这个文件如何阅读。</p>
+<p>paste.ini文件的格式类似于INI格式，每个section的格式为[type:name]。
+这里重要的是理解几种不同type的section的作用。</p>
+<dl class="attribute">
+<dt id="composite">
+<code class="descname">composite</code><a class="headerlink" href="#composite" title="Permalink to this definition">¶</a></dt>
+<dd><p>这种section用于将HTTP请求分发到指定的app。</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="app">
+<code class="descname">app</code><a class="headerlink" href="#app" title="Permalink to this definition">¶</a></dt>
+<dd><p>这种section表示具体的app。</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="filter">
+<code class="descname">filter</code><a class="headerlink" href="#filter" title="Permalink to this definition">¶</a></dt>
+<dd><p>实现一个过滤器中间件。关于wsgi中间件的知识可以参考 <a class="reference internal" href="../py_doc/wsgi.html#wsgi-basic"><span class="std std-ref">wsgi 基础</span></a></p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pipeline">
+<code class="descname">pipeline</code><a class="headerlink" href="#pipeline" title="Permalink to this definition">¶</a></dt>
+<dd><p>用来把把一系列的filter串起来。</p>
+</dd></dl>
+
+<p>然后对照程序，来挨个分析每个section。</p>
+<div class="section" id="section-composite">
+<h4><a class="toc-backref" href="#id18">section composite</a><a class="headerlink" href="#section-composite" title="Permalink to this headline">¶</a></h4>
+<p>这种section用来决定如何分发HTTP请求。路由的对象其实就是paste.ini中其他secion的名字，类型必须是app或者pipeline。</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">composite</span><span class="p">:</span><span class="n">pdl</span><span class="p">]</span>
+<span class="n">use</span><span class="o">=</span><span class="n">egg</span><span class="p">:</span><span class="n">Paste</span><span class="c1">#urlmap            # use 为关键字</span>
+<span class="o">/</span><span class="p">:</span><span class="n">root</span>                                          <span class="c1"># &quot;/&quot; 开头的请求路由给root(对应pipeline:root)处理</span>
+<span class="o">/</span><span class="n">calc</span><span class="p">:</span><span class="n">calc</span>                                      <span class="c1"># &quot;/calc&quot; 开头的请求路由给calc处理</span>
+<span class="c1">#/v1:api_v1</span>
+
+<span class="c1">#[app:api_v1]</span>
+<span class="c1">#paste.app_factory = v1.router:MyRouterApp.factory</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="section-pipeline">
+<h4><a class="toc-backref" href="#id19">section pipeline</a><a class="headerlink" href="#section-pipeline" title="Permalink to this headline">¶</a></h4>
+<p>pipeline是把filter和app串起来的一种section。它只有一个关键字就是pipeline。</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">pipeline</span><span class="p">:</span><span class="n">root</span><span class="p">]</span>
+<span class="n">pipeline</span> <span class="o">=</span> <span class="n">logrequest</span> <span class="n">showversion</span>
+
+<span class="p">[</span><span class="n">pipeline</span><span class="p">:</span><span class="n">calc</span><span class="p">]</span>
+<span class="n">pipeline</span> <span class="o">=</span> <span class="n">test_filter</span> <span class="n">calculator</span>
+</pre></div>
+</div>
+<p>pipeline指定的section有如下要求：</p>
+<ul class="simple">
+<li>最后一个名字对应的section一定要是一个app；</li>
+<li>除最后一个名字外其他名字对应的section一定要是一个filter；</li>
+</ul>
+<p>pipeline关键字指定了很多个名字，这些名字也是paste.ini文件中其他section的名字。
+请求会从最前面的section开始处理，一直向后传递。</p>
+<div class="figure align-center" id="id11">
+<a class="reference internal image-reference" href="../_images/call_filter_first.png"><img alt="../_images/call_filter_first.png" src="../_images/call_filter_first.png" style="width: 881.0px; height: 149.0px;" /></a>
+<p class="caption"><span class="caption-text">filter定义在前，因此先调用filter,再调用app</span></p>
+</div>
+</div>
+<div class="section" id="section-filter">
+<h4><a class="toc-backref" href="#id20">section filter</a><a class="headerlink" href="#section-filter" title="Permalink to this headline">¶</a></h4>
+<p>filter是用来过滤请求和响应的，以WSGI中间件的方式实现。
+其中的paste.filter_factory表示调用哪个函数来获得这个filter中间件。</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="p">[</span><span class="nb">filter</span><span class="p">:</span><span class="n">logrequest</span><span class="p">]</span>
+<span class="n">username</span> <span class="o">=</span> <span class="n">root</span>
+<span class="n">password</span> <span class="o">=</span> <span class="n">root123</span>
+<span class="n">paste</span><span class="o">.</span><span class="n">filter_factory</span> <span class="o">=</span> <span class="n">pastedeploylab</span><span class="p">:</span><span class="n">LogFilter</span><span class="o">.</span><span class="n">factory</span>
+<span class="c1"># 调用pastedeploylab 的LogFilter 类的factory函数获得 logrequest中间件！</span>
+<span class="c1"># username 和 password是定义的变量。</span>
+
+
+<span class="c1"># add by chenshiqiang for test</span>
+<span class="p">[</span><span class="nb">filter</span><span class="p">:</span><span class="n">test_filter</span><span class="p">]</span>
+<span class="n">k1</span> <span class="o">=</span> <span class="n">m1</span>
+<span class="n">k2</span> <span class="o">=</span> <span class="n">m2</span>
+<span class="n">paste</span><span class="o">.</span><span class="n">filter_factory</span> <span class="o">=</span> <span class="n">pastedeploylab</span><span class="p">:</span><span class="n">TestFilter</span><span class="o">.</span><span class="n">factory</span>
+<span class="c1"># 调用pastedeploylab 的TestFilter 的factory 函数获取 test_filter中间件！</span>
+<span class="c1"># end add</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="section-app">
+<h4><a class="toc-backref" href="#id21">section app</a><a class="headerlink" href="#section-app" title="Permalink to this headline">¶</a></h4>
+<p>app表示实现主要功能的应用，是一个标准的WSGI application。
+paste.app_factory表示调用哪个函数来获得这个app。</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">app</span><span class="p">:</span><span class="n">showversion</span><span class="p">]</span>
+<span class="n">version</span> <span class="o">=</span> <span class="mf">1.0</span><span class="o">.</span><span class="mi">0</span>
+<span class="n">paste</span><span class="o">.</span><span class="n">app_factory</span> <span class="o">=</span> <span class="n">pastedeploylab</span><span class="p">:</span><span class="n">ShowVersion</span><span class="o">.</span><span class="n">factory</span>
+
+<span class="p">[</span><span class="n">app</span><span class="p">:</span><span class="n">calculator</span><span class="p">]</span>
+<span class="n">description</span> <span class="o">=</span> <span class="n">This</span> <span class="ow">is</span> <span class="n">an</span> <span class="s2">&quot;+-*/&quot;</span> <span class="n">Calculator</span>
+<span class="n">paste</span><span class="o">.</span><span class="n">app_factory</span> <span class="o">=</span> <span class="n">pastedeploylab</span><span class="p">:</span><span class="n">Calculator</span><span class="o">.</span><span class="n">factory</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="loadapp-name">
+<h3><a class="toc-backref" href="#id22">14.1.3. loadapp() name参数</a><a class="headerlink" href="#loadapp-name" title="Permalink to this headline">¶</a></h3>
+<p>loadapp 函数的name很关键，必须和配置文件的某个 composite对应上，否则出错。
+实际上，name变量表示paste.ini中一个section的名字，指定这个section作为HTTP请求处理的第一站。</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span>    <span class="c1">#wsgi_app = loadapp(&quot;config:%s&quot; % os.path.abspath(configfile), appname)</span>
+<span class="n">wsgi_app</span> <span class="o">=</span> <span class="n">loadapp</span><span class="p">(</span><span class="s2">&quot;config:</span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="n">configfile</span><span class="p">),</span> <span class="s2">&quot;test_paste&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="figure align-center" id="id12">
+<a class="reference internal image-reference" href="../_images/modify_app_name_error.png"><img alt="../_images/modify_app_name_error.png" src="../_images/modify_app_name_error.png" style="width: 1040.0px; height: 395.0px;" /></a>
+<p class="caption"><span class="caption-text">更改name 参数程序报错</span></p>
+</div>
+</div>
+<div class="section" id="url">
+<h3><a class="toc-backref" href="#id23">14.1.4. URL匹配</a><a class="headerlink" href="#url" title="Permalink to this headline">¶</a></h3>
+<p>路径不是绝对匹配，只要开头匹配就可以，但是假如有更精确的匹配，那就采用更精确的。(有点类似于IP路由的最长最佳路由匹配)</p>
+<div class="figure align-center" id="id13">
+<a class="reference internal image-reference" href="../_images/paste_head_match.png"><img alt="../_images/paste_head_match.png" src="../_images/paste_head_match.png" style="width: 1070.0px; height: 275.0px;" /></a>
+<p class="caption"><span class="caption-text">开头匹配和最长精确匹配</span></p>
+</div>
+<table class="docutils footnote" frame="void" id="id4" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label">[1]</td><td><a class="reference external" href="https://www.ustack.com/blog/demoapi2/">https://www.ustack.com/blog/demoapi2/</a></td></tr>
+</tbody>
+</table>
+<table class="docutils footnote" frame="void" id="id5" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label">[2]</td><td><a class="reference external" href="http://blog.csdn.net/sonicatnoc/article/details/6539716">http://blog.csdn.net/sonicatnoc/article/details/6539716</a></td></tr>
+</tbody>
+</table>
+</div>
+</div>
+<hr class="docutils" />
+<div class="section" id="id6">
+<h2><a class="toc-backref" href="#id24">14.2. 参考</a><a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h2>
+<table class="docutils footnote" frame="void" id="id7" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label">[3]</td><td><a class="reference external" href="http://f.dataguru.cn/thread-127360-1-1.html">http://f.dataguru.cn/thread-127360-1-1.html</a></td></tr>
+</tbody>
+</table>
+<table class="docutils footnote" frame="void" id="id8" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label">[4]</td><td><a class="reference external" href="http://askubuntu.com/questions/140360/kvm-kernel-module-error">http://askubuntu.com/questions/140360/kvm-kernel-module-error</a></td></tr>
+</tbody>
+</table>
+</div>
+</div>
+
+
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../web/index.html" class="btn btn-neutral float-right" title="web开发" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="cloud_check.html" class="btn btn-neutral" title="13. 云平台服务器重启注意事项" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2016, chenshiqiang.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'0.1',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

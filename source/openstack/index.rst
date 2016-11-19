@@ -25,6 +25,7 @@ OpenStack Note
     horizon_launch_instance
     django-generic_view
     cloud_check
+    paste_webob_routes
 
 
 ..  sphinx_doc
