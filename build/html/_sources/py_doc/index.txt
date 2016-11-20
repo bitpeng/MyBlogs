@@ -24,3 +24,4 @@ Hack Python
     python_descriptor
     python_notebook
     django_note
+    python_coding
