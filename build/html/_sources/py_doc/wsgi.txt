@@ -1,16 +1,12 @@
 .. _wsgi_basic:
 
 
-========
-wsgi基础
-========
 
-tags： Python wsgi
-
---------------
+WSGI基础
+#########
 
 
-.. contents:: 索引
+.. contents:: 目录
    :depth: 3
 
 --------------
@@ -20,7 +16,7 @@ tags： Python wsgi
     参考： http://agiliq.com/blog/2013/07/basics-wsgi/
 
 一系列术语
------------
+==========
 
 .. attribute:: web server
 
@@ -104,7 +100,7 @@ web app代码的更多细节:
 
 
 wsgi 中间件
------------
+============
 
 wsgi 中间件也是一个可调用的app，它接受另一个app为参数，并返回包装后的app对象，从而实现
 其他额外的功能。
@@ -134,7 +130,7 @@ wsgi 中间件也是一个可调用的app，它接受另一个app为参数，并
 	httpd.serve_forever()
 
 特别注意
----------
+=========
 
 .. important::
 
@@ -146,10 +142,35 @@ wsgi 中间件也是一个可调用的app，它接受另一个app为参数，并
 	就是通过配置文件定义实现，在openstack等项目中使用！
 
 
+Unicode问题
+===========
+
+请看pep-3333 wsgi规范关于unicode 的描述：
+
+HTTP协议不直接支持unicode，它的接口也不支持。因此app需要处理encoding/decoding：
+所有的strings(server传来的和传递给server的)都只能是str类型或者bytes类型，决不能
+是unicode。在需要string对象而返回unicode对象的地方，结果是未定义的！
+
+同样需要指出：传递给 start_response 回调函数的strings(作为HTTP 响应状态码和
+头部)需要服从RFC-2616的编码规定。因此：他们只可能是ISO-8859-1字符集或者RFC-2047多媒体编码！
+
+在python平台上，str和StringType类型都是基于unicode的(如：Jython, IronPython, Python3);
+该规范里涉及到的所有strings只能包含 ISO-8859-1 编码规则列出的码点。
+wsgi app 提供包含任意其他unicode字符集或者码点的strings都是严重错误。
+类似的，servers或者gateway也不应该给一个app提供包含其他unicode字符集的strings
 
 
-其他：wsgi导论
---------------
+再次强调：该规范里涉及的所有string对象只能是str或者StringType，而不能是unicode 或者UnicodeType；
+即使有些平台str或者StringType对象支持超过 8bits/每字符，也可能只有低8
+位字符可用。
+
+如果该规范里涉及到的值为”bytestrings“(如：wsgi.input, 传递给write(),或者由app yield产生)，
+他们的类型只能是bytes(在Python3中)，或者str(以前的Python版本！) 
+
+
+参考
+========
+
 
 .. note::
 

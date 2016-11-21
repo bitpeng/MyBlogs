@@ -27,11 +27,14 @@ webob 测试程序一：
 并返回`webob.Response`类型的对象。我们就可以通过`wsgify`装饰器进行
 包装，使之成为标准的wsgi app(接收environ, start_response参数的app)
 """
+
 @webob.dec.wsgify
 def myfunc(req):
     print req
     print type(req)
     return webob.Response('hey there\n')
+    #return 'hey there\n'
+    #return u"1900"
 
 #myfunc = webob.dec.wsgify(myfunc)
 
@@ -67,4 +70,5 @@ from wsgiref.simple_server import make_server
 #httpd = make_server('127.0.0.1', 9999, myfunc)
 #httpd = make_server('127.0.0.1', 9999, myfunc2)
 httpd = make_server('0.0.0.0', 9999, myfunc2)
+#httpd = make_server('0.0.0.0', 9999, myfunc)
 httpd.serve_forever()

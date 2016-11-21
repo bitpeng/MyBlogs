@@ -83,7 +83,7 @@
             
             
                 <ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="../py_doc/index.html">Hack Python</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../py_doc/index.html">Python Note</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../linux_tools/index.html">Hack Linux</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="index.html">OpenStack Note</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="horizon_develop.html">1. Horizon 二次开发指南</a></li>
@@ -108,7 +108,9 @@
 <li class="toctree-l4"><a class="reference internal" href="#id4">14.1.5. 总结</a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="#id7">14.2. 参考</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#webob">14.2. webob库</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#routes">14.3. routes库</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id7">14.4. 参考</a></li>
 </ul>
 </li>
 </ul>
@@ -187,7 +189,9 @@
 <li><a class="reference internal" href="#id4" id="id25">总结</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#id7" id="id26">参考</a></li>
+<li><a class="reference internal" href="#webob" id="id26">webob库</a></li>
+<li><a class="reference internal" href="#routes" id="id27">routes库</a></li>
+<li><a class="reference internal" href="#id7" id="id28">参考</a></li>
 </ul>
 </li>
 </ul>
@@ -199,7 +203,303 @@
 <h3><a class="toc-backref" href="#id17">14.1.1. 程序示例</a><a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h3>
 <p>paste的核心是paste配置文件，因此看懂paste.ini配置文件是关键，先来看一个例子。</p>
 <p>paste配置文件：</p>
+<div class="highlight-default"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">DEFAULT</span><span class="p">]</span>
+<span class="n">key1</span><span class="o">=</span><span class="n">value1</span>
+<span class="n">key2</span><span class="o">=</span><span class="n">value2</span>
+<span class="n">key3</span><span class="o">=</span><span class="n">values</span>
+
+<span class="p">[</span><span class="n">composite</span><span class="p">:</span><span class="n">pdl</span><span class="p">]</span>
+<span class="n">use</span><span class="o">=</span><span class="n">egg</span><span class="p">:</span><span class="n">Paste</span><span class="c1">#urlmap</span>
+<span class="o">/</span><span class="p">:</span><span class="n">root</span>
+<span class="o">/</span><span class="n">calc</span><span class="p">:</span><span class="n">calc</span>
+<span class="c1">#/v1:api_v1</span>
+
+<span class="c1">#[app:api_v1]</span>
+<span class="c1">#paste.app_factory = v1.router:MyRouterApp.factory</span>
+
+<span class="p">[</span><span class="n">pipeline</span><span class="p">:</span><span class="n">root</span><span class="p">]</span>
+<span class="n">pipeline</span> <span class="o">=</span> <span class="n">logrequest</span> <span class="n">showversion</span>
+
+<span class="p">[</span><span class="n">pipeline</span><span class="p">:</span><span class="n">calc</span><span class="p">]</span>
+<span class="n">pipeline</span> <span class="o">=</span> <span class="n">test_filter</span> <span class="n">calculator</span>
+
+<span class="p">[</span><span class="nb">filter</span><span class="p">:</span><span class="n">logrequest</span><span class="p">]</span>
+<span class="n">username</span> <span class="o">=</span> <span class="n">root</span>
+<span class="n">password</span> <span class="o">=</span> <span class="n">root123</span>
+<span class="n">paste</span><span class="o">.</span><span class="n">filter_factory</span> <span class="o">=</span> <span class="n">pastedeploylab</span><span class="p">:</span><span class="n">LogFilter</span><span class="o">.</span><span class="n">factory</span>
+
+<span class="c1"># add by chenshiqiang for test</span>
+<span class="p">[</span><span class="nb">filter</span><span class="p">:</span><span class="n">test_filter</span><span class="p">]</span>
+<span class="n">k1</span> <span class="o">=</span> <span class="n">m1</span>
+<span class="n">k2</span> <span class="o">=</span> <span class="n">m2</span>
+<span class="n">paste</span><span class="o">.</span><span class="n">filter_factory</span> <span class="o">=</span> <span class="n">pastedeploylab</span><span class="p">:</span><span class="n">TestFilter</span><span class="o">.</span><span class="n">factory</span>
+<span class="c1"># end add</span>
+
+<span class="p">[</span><span class="n">app</span><span class="p">:</span><span class="n">showversion</span><span class="p">]</span>
+<span class="n">version</span> <span class="o">=</span> <span class="mf">1.0</span><span class="o">.</span><span class="mi">0</span>
+<span class="n">paste</span><span class="o">.</span><span class="n">app_factory</span> <span class="o">=</span> <span class="n">pastedeploylab</span><span class="p">:</span><span class="n">ShowVersion</span><span class="o">.</span><span class="n">factory</span>
+
+<span class="p">[</span><span class="n">app</span><span class="p">:</span><span class="n">calculator</span><span class="p">]</span>
+<span class="n">description</span> <span class="o">=</span> <span class="n">This</span> <span class="ow">is</span> <span class="n">an</span> <span class="s2">&quot;+-*/&quot;</span> <span class="n">Calculator</span>
+<span class="n">paste</span><span class="o">.</span><span class="n">app_factory</span> <span class="o">=</span> <span class="n">pastedeploylab</span><span class="p">:</span><span class="n">Calculator</span><span class="o">.</span><span class="n">factory</span>
+</pre></div>
+</td></tr></table></div>
 <p>使用paste.ini生成服务端程序：</p>
+<div class="highlight-default"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>  1
+  2
+  3
+  4
+  5
+  6
+  7
+  8
+  9
+ 10
+ 11
+ 12
+ 13
+ 14
+ 15
+ 16
+ 17
+ 18
+ 19
+ 20
+ 21
+ 22
+ 23
+ 24
+ 25
+ 26
+ 27
+ 28
+ 29
+ 30
+ 31
+ 32
+ 33
+ 34
+ 35
+ 36
+ 37
+ 38
+ 39
+ 40
+ 41
+ 42
+ 43
+ 44
+ 45
+ 46
+ 47
+ 48
+ 49
+ 50
+ 51
+ 52
+ 53
+ 54
+ 55
+ 56
+ 57
+ 58
+ 59
+ 60
+ 61
+ 62
+ 63
+ 64
+ 65
+ 66
+ 67
+ 68
+ 69
+ 70
+ 71
+ 72
+ 73
+ 74
+ 75
+ 76
+ 77
+ 78
+ 79
+ 80
+ 81
+ 82
+ 83
+ 84
+ 85
+ 86
+ 87
+ 88
+ 89
+ 90
+ 91
+ 92
+ 93
+ 94
+ 95
+ 96
+ 97
+ 98
+ 99
+100
+101
+102
+103
+104
+105
+106
+107
+108</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="c1">#coding: utf-8</span>
+
+<span class="sd">&#39;&#39;&#39;&#39;&#39;</span>
+<span class="sd">Created on 2011-6-12</span>
+<span class="sd">@author: Sonic</span>
+<span class="sd">&#39;&#39;&#39;</span>
+
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">webob</span>
+<span class="kn">from</span> <span class="nn">webob</span> <span class="k">import</span> <span class="n">Request</span>
+<span class="kn">from</span> <span class="nn">webob</span> <span class="k">import</span> <span class="n">Response</span>
+<span class="kn">from</span> <span class="nn">paste.deploy</span> <span class="k">import</span> <span class="n">loadapp</span>
+<span class="kn">from</span> <span class="nn">wsgiref.simple_server</span> <span class="k">import</span> <span class="n">make_server</span>
+<span class="kn">from</span> <span class="nn">time</span> <span class="k">import</span> <span class="n">sleep</span>
+
+<span class="c1">#Filter</span>
+
+<span class="k">class</span> <span class="nc">TestFilter</span><span class="p">():</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">app</span><span class="p">):</span>
+        <span class="nb">print</span> <span class="s2">&quot;call test_filter init</span><span class="se">\n</span><span class="s2">&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">app</span> <span class="o">=</span> <span class="n">app</span>
+
+    <span class="k">def</span> <span class="nf">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">environ</span><span class="p">,</span><span class="n">start_response</span><span class="p">):</span>
+        <span class="nb">print</span> <span class="s2">&quot;filter: call Test_Filter.&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">app</span><span class="p">(</span><span class="n">environ</span><span class="p">,</span><span class="n">start_response</span><span class="p">)</span>
+
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">factory</span><span class="p">(</span><span class="n">cls</span><span class="p">,</span> <span class="n">global_conf</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="nb">print</span> <span class="s2">&quot;in Test_Filter.factory&quot;</span><span class="p">,</span> <span class="n">global_conf</span><span class="p">,</span> <span class="n">kwargs</span>
+        <span class="k">return</span> <span class="n">TestFilter</span>
+
+<span class="k">class</span> <span class="nc">LogFilter</span><span class="p">():</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">app</span><span class="p">):</span>
+        <span class="nb">print</span> <span class="s2">&quot;call log filter init</span><span class="se">\n</span><span class="s2">&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">app</span> <span class="o">=</span> <span class="n">app</span>
+
+    <span class="k">def</span> <span class="nf">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">environ</span><span class="p">,</span><span class="n">start_response</span><span class="p">):</span>
+        <span class="nb">print</span> <span class="s2">&quot;filter:LogFilter is called.&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">app</span><span class="p">(</span><span class="n">environ</span><span class="p">,</span><span class="n">start_response</span><span class="p">)</span>
+
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">factory</span><span class="p">(</span><span class="n">cls</span><span class="p">,</span> <span class="n">global_conf</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="nb">print</span> <span class="s2">&quot;in LogFilter.factory&quot;</span><span class="p">,</span> <span class="n">global_conf</span><span class="p">,</span> <span class="n">kwargs</span>
+        <span class="k">return</span> <span class="n">LogFilter</span>
+
+<span class="k">class</span> <span class="nc">ShowVersion</span><span class="p">():</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="nb">print</span> <span class="s2">&quot;call showversion init</span><span class="se">\n</span><span class="s2">&quot;</span>
+
+    <span class="k">def</span> <span class="nf">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">environ</span><span class="p">,</span><span class="n">start_response</span><span class="p">):</span>
+        <span class="nb">print</span> <span class="s2">&quot;showversion call&quot;</span>
+        <span class="n">start_response</span><span class="p">(</span><span class="s2">&quot;200 OK&quot;</span><span class="p">,[(</span><span class="s2">&quot;Content-type&quot;</span><span class="p">,</span> <span class="s2">&quot;text/plain&quot;</span><span class="p">)])</span>
+        <span class="k">return</span> <span class="p">[</span><span class="s2">&quot;Paste Deploy LAB: Version = 1.0.0</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,]</span>
+
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">factory</span><span class="p">(</span><span class="n">cls</span><span class="p">,</span><span class="n">global_conf</span><span class="p">,</span><span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="nb">print</span> <span class="s2">&quot;in ShowVersion.factory&quot;</span><span class="p">,</span> <span class="n">global_conf</span><span class="p">,</span> <span class="n">kwargs</span>
+        <span class="k">return</span> <span class="n">ShowVersion</span><span class="p">()</span>
+
+
+
+<span class="k">class</span> <span class="nc">Calculator</span><span class="p">():</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="nb">print</span> <span class="s2">&quot;call calc init</span><span class="se">\n</span><span class="s2">&quot;</span>
+
+    <span class="k">def</span> <span class="nf">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">environ</span><span class="p">,</span> <span class="n">start_response</span><span class="p">):</span>
+        <span class="c1">#print environ</span>
+        <span class="nb">print</span> <span class="s2">&quot;calculator call&quot;</span>
+        <span class="n">req</span> <span class="o">=</span> <span class="n">Request</span><span class="p">(</span><span class="n">environ</span><span class="p">)</span>
+        <span class="n">res</span> <span class="o">=</span> <span class="n">Response</span><span class="p">()</span>
+        <span class="n">res</span><span class="o">.</span><span class="n">status</span> <span class="o">=</span> <span class="s2">&quot;200 OK&quot;</span>
+        <span class="n">res</span><span class="o">.</span><span class="n">content_type</span> <span class="o">=</span> <span class="s2">&quot;text/plain&quot;</span>
+        <span class="c1"># get operands</span>
+        <span class="n">operator</span> <span class="o">=</span> <span class="n">req</span><span class="o">.</span><span class="n">GET</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;oper&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+        <span class="n">operand1</span> <span class="o">=</span> <span class="n">req</span><span class="o">.</span><span class="n">GET</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;op1&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+        <span class="n">operand2</span> <span class="o">=</span> <span class="n">req</span><span class="o">.</span><span class="n">GET</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;op2&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+        <span class="nb">print</span> <span class="n">req</span><span class="o">.</span><span class="n">GET</span>
+        <span class="c1">#print operand1, operand2</span>
+        <span class="c1">#sleep(10)</span>
+        <span class="n">opnd1</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">operand1</span><span class="p">)</span>
+        <span class="n">opnd2</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">operand2</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">operator</span> <span class="o">==</span> <span class="s1">u&#39;plus&#39;</span><span class="p">:</span>
+            <span class="n">opnd1</span> <span class="o">=</span> <span class="n">opnd1</span> <span class="o">+</span> <span class="n">opnd2</span>
+        <span class="k">elif</span> <span class="n">operator</span> <span class="o">==</span> <span class="s1">u&#39;minus&#39;</span><span class="p">:</span>
+            <span class="n">opnd1</span> <span class="o">=</span> <span class="n">opnd1</span> <span class="o">-</span> <span class="n">opnd2</span>
+        <span class="k">elif</span> <span class="n">operator</span> <span class="o">==</span> <span class="s1">u&#39;star&#39;</span><span class="p">:</span>
+            <span class="n">opnd1</span> <span class="o">=</span> <span class="n">opnd1</span> <span class="o">*</span> <span class="n">opnd2</span>
+        <span class="k">elif</span> <span class="n">operator</span> <span class="o">==</span> <span class="s1">u&#39;slash&#39;</span><span class="p">:</span>
+            <span class="n">opnd1</span> <span class="o">=</span> <span class="n">opnd1</span> <span class="o">/</span> <span class="n">opnd2</span>
+        <span class="n">res</span><span class="o">.</span><span class="n">body</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="si">%s</span><span class="s2"> </span><span class="se">\n</span><span class="s2">RESULT = </span><span class="si">%d</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">req</span><span class="o">.</span><span class="n">GET</span><span class="p">)</span> <span class="p">,</span> <span class="n">opnd1</span><span class="p">)</span>
+        <span class="c1">#return [res.body]</span>
+        <span class="k">return</span> <span class="n">res</span><span class="p">(</span><span class="n">environ</span><span class="p">,</span><span class="n">start_response</span><span class="p">)</span>
+        <span class="c1">#start_response(&quot;200 OK&quot;,[(&quot;Content-type&quot;, &quot;text/plain&quot;)])</span>
+        <span class="c1">#return [&quot;call calc\n&quot;]</span>
+
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">factory</span><span class="p">(</span><span class="n">cls</span><span class="p">,</span><span class="n">global_conf</span><span class="p">,</span><span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="nb">print</span> <span class="s2">&quot;in Calculator.factory&quot;</span><span class="p">,</span> <span class="n">global_conf</span><span class="p">,</span> <span class="n">kwargs</span>
+        <span class="k">return</span> <span class="n">Calculator</span><span class="p">()</span>
+
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="n">configfile</span><span class="o">=</span><span class="s2">&quot;pastedeploylab.ini&quot;</span>
+    <span class="n">appname</span><span class="o">=</span><span class="s2">&quot;pdl&quot;</span>
+    <span class="c1">#wsgi_app = loadapp(&quot;config:%s&quot; % os.path.abspath(configfile), appname)</span>
+    <span class="n">wsgi_app</span> <span class="o">=</span> <span class="n">loadapp</span><span class="p">(</span><span class="s2">&quot;config:</span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="n">configfile</span><span class="p">),</span> <span class="s2">&quot;test_paste&quot;</span><span class="p">)</span>
+    <span class="n">server</span> <span class="o">=</span> <span class="n">make_server</span><span class="p">(</span><span class="s1">&#39;localhost&#39;</span><span class="p">,</span> <span class="mi">9999</span><span class="p">,</span> <span class="n">wsgi_app</span><span class="p">)</span>
+    <span class="n">server</span><span class="o">.</span><span class="n">serve_forever</span><span class="p">()</span>
+    <span class="k">pass</span>
+</pre></div>
+</td></tr></table></div>
 <p>运行服务端程序：</p>
 <div class="figure align-center" id="id10">
 <a class="reference internal image-reference" href="../_images/run_paste_test.png"><img alt="../_images/run_paste_test.png" src="../_images/run_paste_test.png" style="width: 1417.0px; height: 615.0px;" /></a>
@@ -245,9 +545,9 @@
 <h4><a class="toc-backref" href="#id19">section composite</a><a class="headerlink" href="#section-composite" title="Permalink to this headline">¶</a></h4>
 <p>这种section用来决定如何分发HTTP请求。路由的对象其实就是paste.ini中其他secion的名字，类型必须是app或者pipeline。</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">composite</span><span class="p">:</span><span class="n">pdl</span><span class="p">]</span>
-<span class="n">use</span><span class="o">=</span><span class="n">egg</span><span class="p">:</span><span class="n">Paste</span><span class="c1">#urlmap            # use 为关键字</span>
-<span class="o">/</span><span class="p">:</span><span class="n">root</span>                                          <span class="c1"># &quot;/&quot; 开头的请求路由给root(对应pipeline:root)处理</span>
-<span class="o">/</span><span class="n">calc</span><span class="p">:</span><span class="n">calc</span>                                      <span class="c1"># &quot;/calc&quot; 开头的请求路由给calc处理</span>
+<span class="n">use</span><span class="o">=</span><span class="n">egg</span><span class="p">:</span><span class="n">Paste</span><span class="c1">#urlmap        # use 为关键字</span>
+<span class="o">/</span><span class="p">:</span><span class="n">root</span>                      <span class="c1"># &quot;/&quot; 开头的请求路由给root(对应pipeline:root)处理</span>
+<span class="o">/</span><span class="n">calc</span><span class="p">:</span><span class="n">calc</span>                  <span class="c1"># &quot;/calc&quot; 开头的请求路由给calc处理</span>
 <span class="c1">#/v1:api_v1</span>
 
 <span class="c1">#[app:api_v1]</span>
@@ -318,7 +618,7 @@ paste.app_factory表示调用哪个函数来获得这个app。</p>
 <h3><a class="toc-backref" href="#id23">14.1.3. loadapp() name参数</a><a class="headerlink" href="#loadapp-name" title="Permalink to this headline">¶</a></h3>
 <p>loadapp 函数的name很关键，必须和配置文件的某个 composite对应上，否则出错。
 实际上，name变量表示paste.ini中一个section的名字，指定这个section作为HTTP请求处理的第一站。</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span>    <span class="c1">#wsgi_app = loadapp(&quot;config:%s&quot; % os.path.abspath(configfile), appname)</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="c1">#wsgi_app = loadapp(&quot;config:%s&quot; % os.path.abspath(configfile), appname)</span>
 <span class="n">wsgi_app</span> <span class="o">=</span> <span class="n">loadapp</span><span class="p">(</span><span class="s2">&quot;config:</span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="n">configfile</span><span class="p">),</span> <span class="s2">&quot;test_paste&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -358,9 +658,430 @@ paste.app_factory表示调用哪个函数来获得这个app。</p>
 </table>
 </div>
 </div>
+<div class="section" id="webob">
+<h2><a class="toc-backref" href="#id26">14.2. webob库</a><a class="headerlink" href="#webob" title="Permalink to this headline">¶</a></h2>
+<p>WebOb is a Python library that provides wrappers around the WSGI request environment, and an object to help create WSGI responses. The objects map much of the specified behavior of HTTP, including header parsing, content negotiation and correct handling of conditional and range requests.</p>
+<p>来看例子：</p>
+<div class="highlight-default"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="c1">#coding:utf-8</span>
+
+<span class="kn">import</span> <span class="nn">webob</span>
+<span class="kn">import</span> <span class="nn">webob.dec</span>
+<span class="kn">import</span> <span class="nn">webob.exc</span>
+
+<span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">我们知道，wsgi规定了web server和web app之间的接口。</span>
+<span class="sd">但是通过environ 传递http request信息，有点不太直观，并且</span>
+<span class="sd">使用start_response 回调函数，逻辑也显得比较难以理解。</span>
+
+<span class="sd">一般而言，web app的正常调用逻辑是：</span>
+
+<span class="sd">res = func(req)</span>
+
+<span class="sd">即func接收HTTP req请求，并返回HTTP response。但是func的接口，</span>
+<span class="sd">并不符合wsgi的规定。因此webob就派上用场了，该库的任务</span>
+<span class="sd">之一就是把普通的函数(后面的例子可以看到，函数参数和返回类型</span>
+<span class="sd">有限制)通过装饰器包装，转化成标准的wsgi app。</span>
+<span class="sd">&#39;&#39;&#39;</span>
+
+<span class="c1">#==================================================#</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">webob 测试程序一：</span>
+<span class="sd">从这里可以看到，我们只要定义函数，接收 `webob.Request`类型的参数，</span>
+<span class="sd">并返回`webob.Response`类型的对象。我们就可以通过`wsgify`装饰器进行</span>
+<span class="sd">包装，使之成为标准的wsgi app(接收environ, start_response参数的app)</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="nd">@webob</span><span class="o">.</span><span class="n">dec</span><span class="o">.</span><span class="n">wsgify</span>
+<span class="k">def</span> <span class="nf">myfunc</span><span class="p">(</span><span class="n">req</span><span class="p">):</span>
+    <span class="nb">print</span> <span class="n">req</span>
+    <span class="nb">print</span> <span class="nb">type</span><span class="p">(</span><span class="n">req</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">webob</span><span class="o">.</span><span class="n">Response</span><span class="p">(</span><span class="s1">&#39;hey there</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+    <span class="c1">#return &#39;hey there\n&#39;</span>
+    <span class="c1">#return u&quot;1900&quot;</span>
+
+<span class="c1">#myfunc = webob.dec.wsgify(myfunc)</span>
+
+<span class="c1">#==================================================#</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">webob 测试程序二：</span>
+
+<span class="sd">程序一中req是&lt;class &#39;webob.request.Request&#39;&gt; 类型的(可以通过</span>
+<span class="sd">print type查看)。此外，req参数也可以是Request class的子类。</span>
+
+<span class="sd">这里，我们自定义MyRequest 继承自Request，然后传给装饰器参数，</span>
+<span class="sd">因此myfun2 的req类型是MyRequest.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="k">class</span> <span class="nc">MyRequest</span><span class="p">(</span><span class="n">webob</span><span class="o">.</span><span class="n">Request</span><span class="p">):</span>
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">is_local</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">remote_addr</span> <span class="o">==</span> <span class="s1">&#39;127.0.0.1&#39;</span>
+
+<span class="nd">@webob</span><span class="o">.</span><span class="n">dec</span><span class="o">.</span><span class="n">wsgify</span><span class="p">(</span><span class="n">RequestClass</span><span class="o">=</span><span class="n">MyRequest</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">myfunc2</span><span class="p">(</span><span class="n">req</span><span class="p">):</span>
+    <span class="nb">print</span> <span class="nb">type</span><span class="p">(</span><span class="n">req</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">req</span><span class="o">.</span><span class="n">is_local</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">webob</span><span class="o">.</span><span class="n">Response</span><span class="p">(</span><span class="s1">&#39;hi!</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="n">webob</span><span class="o">.</span><span class="n">exc</span><span class="o">.</span><span class="n">HTTPForbidden</span>
+
+<span class="c1">#==================================================#</span>
+
+<span class="kn">from</span> <span class="nn">wsgiref.simple_server</span> <span class="k">import</span> <span class="n">make_server</span>
+
+<span class="c1">#httpd = make_server(&#39;127.0.0.1&#39;, 9999, myfunc)</span>
+<span class="c1">#httpd = make_server(&#39;127.0.0.1&#39;, 9999, myfunc2)</span>
+<span class="n">httpd</span> <span class="o">=</span> <span class="n">make_server</span><span class="p">(</span><span class="s1">&#39;0.0.0.0&#39;</span><span class="p">,</span> <span class="mi">9999</span><span class="p">,</span> <span class="n">myfunc2</span><span class="p">)</span>
+<span class="c1">#httpd = make_server(&#39;0.0.0.0&#39;, 9999, myfunc)</span>
+<span class="n">httpd</span><span class="o">.</span><span class="n">serve_forever</span><span class="p">()</span>
+</pre></div>
+</td></tr></table></div>
+<p>可以看到，myfunc,myfunc2的接口不是wsgi规范定义的。但是，通过wsgify包装后，他们
+已经是wsgi app，并可启动、响应http请求！</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span>root@juno-controller:/smbshare/paste_test# curl   http://localhost:9999/dumm
+hi!
+root@juno-controller:/smbshare/paste_test# curl   http://192.168.60.254:9999/dumm
+&lt;html&gt;
+ &lt;head&gt;
+  &lt;title&gt;403 Forbidden&lt;/title&gt;
+ &lt;/head&gt;
+ &lt;body&gt;
+  &lt;h1&gt;403 Forbidden&lt;/h1&gt;
+  Access was denied to this resource.&lt;br /&gt;&lt;br /&gt;
+ &lt;/body&gt;
+</pre></div>
+</div>
+<p>先了解webob的简单用法，等分析openstack源码遇到更高级用法时再近些分析！</p>
+</div>
+<div class="section" id="routes">
+<h2><a class="toc-backref" href="#id27">14.3. routes库</a><a class="headerlink" href="#routes" title="Permalink to this headline">¶</a></h2>
+<p>restful程序的一大特点是url和app对应起来，但是wsgi规范和webob并没有
+解决这个问题。这就是routes库解决的问题，来看官网说明：</p>
+<p>Routes is a Python re-implementation of the Rails routes system for mapping URL’s
+to Controllers/Actions and generating URL’s. Routes makes it easy to create pretty
+and concise URL’s that are RESTful with little effort.</p>
+<p>来一个例子：</p>
+<div class="highlight-default"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>  1
+  2
+  3
+  4
+  5
+  6
+  7
+  8
+  9
+ 10
+ 11
+ 12
+ 13
+ 14
+ 15
+ 16
+ 17
+ 18
+ 19
+ 20
+ 21
+ 22
+ 23
+ 24
+ 25
+ 26
+ 27
+ 28
+ 29
+ 30
+ 31
+ 32
+ 33
+ 34
+ 35
+ 36
+ 37
+ 38
+ 39
+ 40
+ 41
+ 42
+ 43
+ 44
+ 45
+ 46
+ 47
+ 48
+ 49
+ 50
+ 51
+ 52
+ 53
+ 54
+ 55
+ 56
+ 57
+ 58
+ 59
+ 60
+ 61
+ 62
+ 63
+ 64
+ 65
+ 66
+ 67
+ 68
+ 69
+ 70
+ 71
+ 72
+ 73
+ 74
+ 75
+ 76
+ 77
+ 78
+ 79
+ 80
+ 81
+ 82
+ 83
+ 84
+ 85
+ 86
+ 87
+ 88
+ 89
+ 90
+ 91
+ 92
+ 93
+ 94
+ 95
+ 96
+ 97
+ 98
+ 99
+100
+101
+102
+103
+104
+105
+106
+107
+108
+109
+110
+111
+112
+113
+114
+115
+116
+117</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="c1">#coding:utf-8</span>
+
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="k">import</span> <span class="n">print_function</span>
+<span class="kn">from</span> <span class="nn">routes</span> <span class="k">import</span> <span class="n">Mapper</span>
+<span class="kn">import</span> <span class="nn">webob.dec</span>
+<span class="kn">import</span> <span class="nn">webob.exc</span>
+<span class="kn">import</span> <span class="nn">routes.middleware</span>
+<span class="kn">import</span> <span class="nn">testtools</span>
+
+<span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">该程序如如下目的：</span>
+
+<span class="sd">1. 测试OpenStack rest服务的处理逻辑，顺序为:</span>
+
+<span class="sd">   Python Delopy -- &gt; MyRouter --&gt; routes.middleware.RoutesMiddleware </span>
+<span class="sd">   --&gt; MyApplication --&gt; MyController</span>
+
+<span class="sd">2. 测试wsgi app返回Unicode字符串问题。curl请求会报错！</span>
+<span class="sd">   所以需要判断，假如是Unicode对象，需要手动转换成str</span>
+
+<span class="sd">&#39;&#39;&#39;</span>
+
+<span class="k">class</span> <span class="nc">MyController</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">getlist</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">mykey</span><span class="p">):</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;step 4: MyController&#39;s getlist(self, mykey) is invoked&quot;</span><span class="p">)</span>
+        <span class="c1">#return &quot;getlist(), mykey=&quot; + mykey</span>
+        <span class="nb">print</span> <span class="p">(</span><span class="s1">&#39;mykey:</span><span class="si">%s</span><span class="s1">&#39;</span><span class="o">%</span><span class="nb">type</span><span class="p">(</span><span class="n">mykey</span><span class="p">))</span>
+        <span class="n">ret</span> <span class="o">=</span> <span class="s2">&quot;getlist(), mykey=</span><span class="si">%s</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">%</span><span class="n">mykey</span>
+        <span class="nb">print</span> <span class="p">(</span><span class="s1">&#39;ret:</span><span class="si">%s</span><span class="s1">&#39;</span><span class="o">%</span><span class="nb">type</span><span class="p">(</span><span class="n">ret</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">ret</span>
+
+<span class="k">class</span> <span class="nc">MyApplication</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Test application to call from router.&quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">controller</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_controller</span> <span class="o">=</span> <span class="n">controller</span>
+
+    <span class="k">def</span> <span class="nf">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">environ</span><span class="p">,</span> <span class="n">start_response</span><span class="p">):</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;step 3: MyApplication is invoked&quot;</span><span class="p">)</span>
+
+        <span class="n">action_args</span> <span class="o">=</span> <span class="n">environ</span><span class="p">[</span><span class="s1">&#39;wsgiorg.routing_args&#39;</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">del</span> <span class="n">action_args</span><span class="p">[</span><span class="s1">&#39;controller&#39;</span><span class="p">]</span>
+        <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
+            <span class="k">pass</span>
+
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">del</span> <span class="n">action_args</span><span class="p">[</span><span class="s1">&#39;format&#39;</span><span class="p">]</span>
+        <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
+            <span class="k">pass</span>
+
+        <span class="n">action</span> <span class="o">=</span> <span class="n">action_args</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;action&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+        <span class="n">controller_method</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_controller</span><span class="p">,</span> <span class="n">action</span><span class="p">)</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="n">controller_method</span><span class="p">(</span><span class="o">**</span><span class="n">action_args</span><span class="p">)</span>
+
+        <span class="n">start_response</span><span class="p">(</span><span class="s1">&#39;200 OK&#39;</span><span class="p">,</span> <span class="p">[(</span><span class="s1">&#39;Content-Type&#39;</span><span class="p">,</span> <span class="s1">&#39;text/plain&#39;</span><span class="p">)])</span>
+        <span class="c1"># wsgi app 不能返回Unicode对象！所以需要转换成字节串.</span>
+        <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">result</span><span class="p">)</span> <span class="o">==</span> <span class="nb">type</span><span class="p">(</span><span class="s1">u&#39;o&#39;</span><span class="p">):</span>
+            <span class="n">result</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
+        <span class="k">return</span> <span class="p">[</span><span class="n">result</span><span class="p">]</span>
+
+        <span class="c1"># 不能用改行，否则会提示Response 对象不可以迭代错误！</span>
+        <span class="c1">#return webob.Response(result)</span>
+
+<span class="k">class</span> <span class="nc">MyRouter</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Test router.&quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">route_name</span> <span class="o">=</span> <span class="s2">&quot;dummy_route&quot;</span>
+        <span class="n">route_path</span> <span class="o">=</span> <span class="s2">&quot;/dum&quot;</span>
+
+        <span class="n">my_application</span> <span class="o">=</span> <span class="n">MyApplication</span><span class="p">(</span><span class="n">MyController</span><span class="p">())</span>
+        <span class="c1">#my_application = MyApp2(MyController())</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">mapper</span> <span class="o">=</span> <span class="n">Mapper</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">mapper</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">route_name</span><span class="p">,</span> <span class="n">route_path</span><span class="p">,</span>
+                        <span class="n">controller</span><span class="o">=</span><span class="n">my_application</span><span class="p">,</span>
+                        <span class="c1">#action=&quot;getlist-2&quot;,</span>
+                        <span class="n">action</span><span class="o">=</span><span class="s2">&quot;getlist&quot;</span><span class="p">,</span>
+                        <span class="n">mykey</span><span class="o">=</span><span class="s2">&quot;myvalue&quot;</span><span class="p">,</span>
+                        <span class="n">conditions</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;method&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;GET&#39;</span><span class="p">]})</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_router</span> <span class="o">=</span> <span class="n">routes</span><span class="o">.</span><span class="n">middleware</span><span class="o">.</span><span class="n">RoutesMiddleware</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_dispatch</span><span class="p">,</span>
+                                                          <span class="bp">self</span><span class="o">.</span><span class="n">mapper</span><span class="p">)</span>
+
+    <span class="nd">@webob</span><span class="o">.</span><span class="n">dec</span><span class="o">.</span><span class="n">wsgify</span><span class="p">(</span><span class="n">RequestClass</span><span class="o">=</span><span class="n">webob</span><span class="o">.</span><span class="n">Request</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">req</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Route the incoming request to a controller based on self.map.</span>
+
+<span class="sd">        If no match, return a 404.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;step 1: MyRouter is invoked&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_router</span>
+
+    <span class="nd">@staticmethod</span>
+    <span class="nd">@webob</span><span class="o">.</span><span class="n">dec</span><span class="o">.</span><span class="n">wsgify</span><span class="p">(</span><span class="n">RequestClass</span><span class="o">=</span><span class="n">webob</span><span class="o">.</span><span class="n">Request</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">_dispatch</span><span class="p">(</span><span class="n">req</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Dispatch the request to the appropriate controller.</span>
+
+<span class="sd">        Called by self._router after matching the incoming request to a route</span>
+<span class="sd">        and putting the information into req.environ.  Either returns 404</span>
+<span class="sd">        or the routed WSGI app&#39;s response.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;step 2: RoutesMiddleware is invoked, calling our _dispatch back&quot;</span><span class="p">)</span>
+
+        <span class="n">match_dict</span> <span class="o">=</span> <span class="n">req</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s1">&#39;wsgiorg.routing_args&#39;</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">match_dict</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">webob</span><span class="o">.</span><span class="n">exc</span><span class="o">.</span><span class="n">HTTPNotFound</span><span class="p">()</span>
+        <span class="n">app</span> <span class="o">=</span> <span class="n">match_dict</span><span class="p">[</span><span class="s1">&#39;controller&#39;</span><span class="p">]</span>
+        <span class="k">return</span> <span class="n">app</span>
+
+<span class="kn">from</span> <span class="nn">wsgiref.simple_server</span> <span class="k">import</span> <span class="n">make_server</span>
+
+<span class="n">httpd</span> <span class="o">=</span> <span class="n">make_server</span><span class="p">(</span><span class="s1">&#39;0.0.0.0&#39;</span><span class="p">,</span> <span class="mi">9999</span><span class="p">,</span> <span class="n">MyRouter</span><span class="p">())</span>
+<span class="n">httpd</span><span class="o">.</span><span class="n">serve_forever</span><span class="p">()</span>
+</pre></div>
+</td></tr></table></div>
+<div class="admonition important">
+<p class="first admonition-title">Important</p>
+<p class="last">Each route in <cite>mapper</cite> must specify a &#8216;controller&#8217;, which is a
+WSGI app to call.  You&#8217;ll probably want to specify an &#8216;action&#8217; as
+well and have your controller be an object that can route
+the request to the action-specific method.</p>
+</div>
+</div>
 <hr class="docutils" />
 <div class="section" id="id7">
-<h2><a class="toc-backref" href="#id26">14.2. 参考</a><a class="headerlink" href="#id7" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id28">14.4. 参考</a><a class="headerlink" href="#id7" title="Permalink to this headline">¶</a></h2>
 <table class="docutils footnote" frame="void" id="id8" rules="none">
 <colgroup><col class="label" /><col /></colgroup>
 <tbody valign="top">
