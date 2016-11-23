@@ -26,6 +26,7 @@ OpenStack Note
     django-generic_view
     cloud_check
     paste_webob_routes
+    opengrok_xp
 
 
 ..  sphinx_doc

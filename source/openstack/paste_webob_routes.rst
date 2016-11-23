@@ -263,6 +263,9 @@ and concise URL’s that are RESTful with little effort.
 	WSGI app to call.  You'll probably want to specify an 'action' as
 	well and have your controller be an object that can route
 	the request to the action-specific method.
+	
+	通过这段文字，我们mapper.connect()的controller参数就是和url关联的，
+	WSGI app。如果指定了action参数，那么请求会路由到该特定的方法！
   
 
 ---------------------

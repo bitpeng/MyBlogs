@@ -59,7 +59,10 @@ def print_debug(*a, **ka):
     co_filename = f.f_code.co_filename
     co_filename = os.path.abspath(co_filename)
     #return (__file__, f.f_code.co_filename, f.f_code.co_name, f.f_lineno)
-    print "+++===+++: `%s`,  <+ %s +>,  <=+ %s +=>"%((co_filename, f.f_code.co_name, f.f_lineno), a, ka)
+    if ka:
+        print "+++===+++: %s,  <+ %s +>,  <=+ %s +=>"%((co_filename, f.f_code.co_name, f.f_lineno), a, ka)
+    else:
+        print "+++===+++: %s,  <+ %s +>"%((co_filename, f.f_code.co_name, f.f_lineno), a)
 
 class ChenLog(object):
     def __init__(self, fn):
@@ -106,5 +109,6 @@ def log_debug(*a, **ka):
 
 if __name__ == "__main__":
     print_debug(1,2,3)
-    log_debug("a", 1, 2)
-    log_debug(1, 2, 3, a=4, d=5)
+    print_debug(1, 2, 3, a=4, d=5)
+    #log_debug("a", 1, 2)
+    #log_debug(1, 2, 3, a=4, d=5)

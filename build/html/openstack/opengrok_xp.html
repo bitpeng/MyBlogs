@@ -1,0 +1,272 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>15. OpenGrok代码浏览环境搭建 &mdash; Welcome to Sitian&#39;s Blog 0.1 documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+    <link rel="top" title="Welcome to Sitian&#39;s Blog 0.1 documentation" href="../index.html"/>
+        <link rel="up" title="OpenStack Note" href="index.html"/>
+        <link rel="next" title="web开发" href="../web/index.html"/>
+        <link rel="prev" title="14. OpenStack REST-API基础：paste/webob/routes库" href="paste_webob_routes.html"/> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> Welcome to Sitian's Blog
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.1
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../py_doc/index.html">Python Note</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../linux_tools/index.html">Hack Linux</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">OpenStack Note</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="horizon_develop.html">1. Horizon 二次开发指南</a></li>
+<li class="toctree-l2"><a class="reference internal" href="image-create-guide.html">2. OpenStack镜像制作</a></li>
+<li class="toctree-l2"><a class="reference internal" href="deploy_synopsis.html">3. openstack 实践指南</a></li>
+<li class="toctree-l2"><a class="reference internal" href="centos_vm_netconf.html">4. Centos虚拟机联网配置</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lanch_instance_failure.html">5. OpenStack 启动虚拟机失败分析</a></li>
+<li class="toctree-l2"><a class="reference internal" href="rabbitmq_doc.html">6. rabbitmq教程</a></li>
+<li class="toctree-l2"><a class="reference internal" href="os_cmd.html">7. openstack命令汇总</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kvm_error.html">8. KVM错误问题</a></li>
+<li class="toctree-l2"><a class="reference internal" href="django_middleware.html">9. django中间件和openstack用户重登录分析</a></li>
+<li class="toctree-l2"><a class="reference internal" href="horizon_workflows_analysis.html">10. horizon workflows分析</a></li>
+<li class="toctree-l2"><a class="reference internal" href="horizon_launch_instance.html">11. horizon启动虚拟机分析</a></li>
+<li class="toctree-l2"><a class="reference internal" href="django-generic_view.html">12. django通用视图：一个小问题引发的思考</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cloud_check.html">13. 云平台服务器重启注意事项</a></li>
+<li class="toctree-l2"><a class="reference internal" href="paste_webob_routes.html">14. OpenStack REST-API基础：paste/webob/routes库</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">15. OpenGrok代码浏览环境搭建</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#tomcat">15.1. tomcat 安装</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id2">15.2. OpenGrok 部署</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../web/index.html">web开发</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../others/index.html">附录</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../index.html">Welcome to Sitian's Blog</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+ 
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../index.html">Docs</a> &raquo;</li>
+      
+          <li><a href="index.html">OpenStack Note</a> &raquo;</li>
+      
+    <li>15. OpenGrok代码浏览环境搭建</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="../_sources/openstack/opengrok_xp.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="opengrok">
+<span id="opengrok-xp"></span><h1><a class="toc-backref" href="#id4">15. OpenGrok代码浏览环境搭建</a><a class="headerlink" href="#opengrok" title="Permalink to this headline">¶</a></h1>
+<p>最近在分析nova-api 服务启动流程，为了能方便的浏览Python代码，尝试过了很多工具。
+比如：Pycharm, Sublime Text, Notepad++, Source Insight + Python.CLF, 结果发现
+这样那样的问题。最后在知乎上经过 韦一笑的推荐，尝试 OpenGrok, 今天体验了一番，
+感觉不错。于是记录下来！</p>
+<div class="contents topic" id="id1">
+<p class="topic-title first">目录</p>
+<ul class="simple">
+<li><a class="reference internal" href="#opengrok" id="id4">OpenGrok代码浏览环境搭建</a><ul>
+<li><a class="reference internal" href="#tomcat" id="id5">tomcat 安装</a></li>
+<li><a class="reference internal" href="#id2" id="id6">OpenGrok 部署</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<hr class="docutils" />
+<div class="section" id="tomcat">
+<h2><a class="toc-backref" href="#id5">15.1. tomcat 安装</a><a class="headerlink" href="#tomcat" title="Permalink to this headline">¶</a></h2>
+<p>由于公司的云环境已经安装了tomcat 服务器，因此这一步可以直接略过！</p>
+</div>
+<div class="section" id="id2">
+<h2><a class="toc-backref" href="#id6">15.2. OpenGrok 部署</a><a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
+<p>以下部署OpenGrok过程:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">cd</span> <span class="o">/</span><span class="n">smbshare</span>
+<span class="c1"># 下载opengrok</span>
+<span class="n">wget</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">github</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">OpenGrok</span><span class="o">/</span><span class="n">OpenGrok</span><span class="o">/</span><span class="n">files</span><span class="o">/</span><span class="mi">213268</span><span class="o">/</span><span class="n">opengrok</span><span class="o">-</span><span class="mf">0.12</span><span class="o">.</span><span class="mf">1.5</span><span class="o">.</span><span class="n">tar</span><span class="o">.</span><span class="n">gz</span>
+<span class="n">tar</span> <span class="o">-</span><span class="n">xvzf</span> <span class="n">opengrok</span><span class="o">-</span><span class="mf">0.12</span><span class="o">.</span><span class="mf">1.5</span><span class="o">.</span><span class="n">tar</span><span class="o">.</span><span class="n">gz</span>
+<span class="c1"># 拷贝web app源文件</span>
+<span class="n">cp</span> <span class="n">opengrok</span><span class="o">-</span><span class="mf">0.12</span><span class="o">.</span><span class="mf">1.5</span><span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">source</span><span class="o">.</span><span class="n">war</span> <span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">apache</span><span class="o">-</span><span class="n">tomcat</span><span class="o">-</span><span class="mf">7.0</span><span class="o">.</span><span class="mi">50</span><span class="o">/</span><span class="n">webapps</span><span class="o">/</span>
+<span class="c1"># 安装CTags</span>
+<span class="n">dpkg</span> <span class="o">-</span><span class="n">i</span> <span class="n">exuberant</span><span class="o">-</span><span class="n">ctags_1</span><span class="o">%</span><span class="mi">3</span><span class="n">a5</span><span class="o">.</span><span class="mi">9</span><span class="o">~</span><span class="n">svn20110310</span><span class="o">-</span><span class="mi">7</span><span class="n">ubuntu0</span><span class="o">.</span><span class="mi">1</span><span class="n">_amd64</span><span class="o">.</span><span class="n">deb</span>
+<span class="c1"># 或者apt-get install ctags</span>
+<span class="c1"># 生成代码索引</span>
+<span class="n">cd</span> <span class="n">opengrok</span><span class="o">-</span><span class="mf">0.12</span><span class="o">.</span><span class="mf">1.5</span><span class="o">/</span><span class="nb">bin</span>
+<span class="o">./</span><span class="n">OpenGrok</span> <span class="n">index</span> <span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">cecgw</span><span class="o">/</span><span class="n">csmp</span><span class="o">/</span><span class="n">nova</span>
+</pre></div>
+</div>
+<p>生成代码索引后，就可以打开网页，进行代码浏览了。</p>
+<div class="figure align-center" id="id3">
+<a class="reference internal image-reference" href="../_images/opengrok_access.png"><img alt="../_images/opengrok_access.png" src="../_images/opengrok_access.png" style="width: 578.0px; height: 519.0px;" /></a>
+<p class="caption"><span class="caption-text">打开网址浏览代码</span></p>
+</div>
+</div>
+</div>
+
+
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../web/index.html" class="btn btn-neutral float-right" title="web开发" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="paste_webob_routes.html" class="btn btn-neutral" title="14. OpenStack REST-API基础：paste/webob/routes库" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2016, chenshiqiang.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'0.1',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

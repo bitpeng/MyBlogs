@@ -18,3 +18,4 @@ Hack Linux
     ubuntu_lvm_extend
     dell_server_manual
     curl_param_cut
+    hack_vim

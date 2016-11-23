@@ -1073,10 +1073,12 @@ and concise URL’s that are RESTful with little effort.</p>
 </td></tr></table></div>
 <div class="admonition important">
 <p class="first admonition-title">Important</p>
-<p class="last">Each route in <cite>mapper</cite> must specify a &#8216;controller&#8217;, which is a
+<p>Each route in <cite>mapper</cite> must specify a &#8216;controller&#8217;, which is a
 WSGI app to call.  You&#8217;ll probably want to specify an &#8216;action&#8217; as
 well and have your controller be an object that can route
 the request to the action-specific method.</p>
+<p class="last">通过这段文字，我们mapper.connect()的controller参数就是和url关联的，
+WSGI app。如果指定了action参数，那么请求会路由到该特定的方法！</p>
 </div>
 </div>
 <hr class="docutils" />
