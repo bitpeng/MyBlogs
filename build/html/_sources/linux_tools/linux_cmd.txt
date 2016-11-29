@@ -6,70 +6,100 @@ Linux命令和shell
 
 -------------------
 
+bash快捷键
+==========
 
-get
-======
+::
 
-下载整个网站
-+++++++++++++
+	ctrl + a;   定位光标到命令行首
+	ctrl + e;   命令行尾
+	!!:1        上一条命令第一个参数。
+	!$          上一条命令最后一个参数。
 
-下载网站的整个目录，以供离线浏览
+bash编程
+========
 
-.. code:: shell
+::
 
-    wget -c -r -np -k -L -p http://docs.ceph.org.cn
+	cd /usr/bin
+	# 判断变量是否不包含bak字符
+	for i in nova-*; do [[ ! $i =~ "bak" ]] && echo $i ;done
+
+性能调优
+=========
+
+释放缓存：
+
+::
+
+    echo 3 > /proc/sys/vm/drop_caches
+
+查看内存使用：
+
+::
+
+    free -hl
 
 
 nc
-====
+==
 
-传输目录
-++++++++
+-	传输目录
 
-server端：
+	server端：
 
-::
+	::
 
-    tar -cvf - allinone-v2.5-install-script | nc -l 12345
+		tar -cvf - allinone-v2.5-install-script | nc -l 12345
 
-client端：
+	client端：
 
-::
+	::
 
-    nc -n 192.168.159.146 12345 | tar -xvf -
+		nc -n 192.168.159.146 12345 | tar -xvf -
 
-传输文件
-++++++++
-
-server端：
-
-::
-
-    nc -l 12345 < file.txt
+-	传输文件
 
 
-client端：
+	server端：
 
-::
+	::
 
-    nc -n 172.31.100.7 1567 > file.txt
+		nc -l 12345 < file.txt
+
+
+	client端：
+
+	::
+
+		nc -n 172.31.100.7 1567 > file.txt
 
 然后两端分别使用md5sum命令核对文件传输是否出错.
 
-scp
-===
 
-- 远程拷贝文件
+apt-get
+=======
+只获取包，不安装：
 
-  ::
+::
 
-      scp root@10.11.113.198:/smbshare/win7.raw .
+	# 如果软件包没有安装
+	apt-get -d install git
+	# 如果已经安装
+	apt-get -d install git --reinstall
 
-- 远程拷贝目录
 
-  ::
+awk
+====
 
-      scp -r root@10.11.113.198:/smbshare/ .
+::
+
+	# 打印某一行, 自设定分隔符
+	awk -F: '{print $1}'
+	# 打印除第一行之外的所有行
+	awk '{$1="";print $0}'
+	# 循环把前N列都赋值为空，从第n+1列开始打印所有的列！
+	awk '{ for(i=1; i<=n; i++){ $i="" }; print $0 }' urfile
 
 
 cut
@@ -91,56 +121,85 @@ cut
 .. [#] http://www.jb51.net/article/41872.htm
 
 
-性能调优
-=========
+dpkg
+====
 
-释放缓存
-++++++++
-
-::
-
-    echo 3 > /proc/sys/vm/drop_caches
-
-查看内存使用
-++++++++++++++++
+查看某软件包是否安装，这两条都可以：
 
 ::
 
-    free -hl
+	dpkg -s lvm2    
+	dpkg-query -l lvm
+
+列出所有安装软件包：
+
+::
+
+	dpkg --get-selections    
+	dpkg -l
+
+列出软件包中所有文件位置：
+
+::
+	 
+	dpkg -L lvm2
 
 
+get
+===
 
+下载网站的整个目录，以供离线浏览：
 
-apt-get
-=======
-只获取包，不安装：
+.. code:: shell
 
-apt-get -d install git
-apt-get -d install git --reinstall
+	wget -c -r -np -k -L -p http://docs.ceph.org.cn
+
+	
+scp
+===
+
+::
+
+	# 远程拷贝文件
+	scp root@10.11.113.198:/smbshare/win7.raw .
+	# 远程拷贝目录
+	scp -r root@10.11.113.198:/smbshare/ .
+
+sed
+====
+
+修改文件某一行：
+
+::
+
+	# 终端显示修改后的结果
+	sed "s/'metering',/'metering','instances_monitor'/g" txt
+	# 直接修改原文件
+	sed -i "26s/'metering',/'metering','instances_monitor'/g" dashboard.py
 
 
 route
-========
+=====
 
 添加路由：
-route add -net 224.0.0.0 netmask 240.0.0.0 dev eth0
+
+::
+
+	route add -net 224.0.0.0 netmask 240.0.0.0 dev eth0
 
 
 删除路由：
 
-route del -net 224.0.0.0 netmask 240.0.0.0
-route del -net 224.0.0.0 netmask 240.0.0.0 reject
+::
 
+	route del -net 224.0.0.0 netmask 240.0.0.0
+	route del -net 224.0.0.0 netmask 240.0.0.0 reject
 
-awk
-====
+ps
+==
+
+批量杀死进程：
 
 ::
 
-# 打印某一行, 自设定分隔符
-awk -F: '{print $1}'
-# 打印除第一行之外的所有行
-awk '{$1="";print $0}'
-# 循环把前N列都赋值为空，从第n+1列开始打印所有的列！
-awk '{ for(i=1; i<=n; i++){ $i="" }; print $0 }' urfile
-
+	ps -aux|grep name|grep -v grep|cut -c 9-15|xargs kill -9

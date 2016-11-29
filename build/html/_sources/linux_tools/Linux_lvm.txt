@@ -77,12 +77,6 @@ Lvm 介绍
 
 
 
-
-
-
-
-
-
 ---------------------
 
 参考
@@ -92,4 +86,11 @@ Lvm 介绍
 .. [#] https://lzw.me/a/linux-lvm.html
 .. [#] https://wsgzao.github.io/post/lvm/
 .. [#] https://linux.cn/article-3218-1.html
-
+.. [#] https://wsgzao.github.io/post/lvm/
+.. [#] https://linux.cn/article-3218-1.html
+.. [#] http://dreamfire.blog.51cto.com/418026/1084729
+.. [#] http://www.cnblogs.com/chengxuyuancc/articles/3433824.html
+.. [#] https://www.ibm.com/developerworks/cn/linux/l-lvm2/
+.. [#] http://ju.outofmemory.cn/entry/244598
+.. [#] http://www.chinaunix.net/old_jh/4/258443.html
+.. [#] https://lzw.me/a/linux-lvm.html
