@@ -19,3 +19,4 @@ Hack Linux
     dell_server_manual
     curl_param_cut
     hack_vim
+    centos_net_sum

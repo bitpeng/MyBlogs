@@ -25,6 +25,15 @@ bash编程
 	# 判断变量是否不包含bak字符
 	for i in nova-*; do [[ ! $i =~ "bak" ]] && echo $i ;done
 
+其他
+++++
+
+删除文件名包含特殊字符的文件：
+
+::
+
+	mv ./-hl hl.txt
+
 性能调优
 =========
 
@@ -203,3 +212,21 @@ ps
 ::
 
 	ps -aux|grep name|grep -v grep|cut -c 9-15|xargs kill -9
+
+df/du
+=====
+
+::
+
+	df -hl
+	du -hd1
+
+find/xargs
+==========
+
+::
+
+	find . -type f -name "*.py" | xargs egrep "xxx"
+	
+	
+.. [#] http://yansu.org/2014/01/15/general-shell-resources.html
