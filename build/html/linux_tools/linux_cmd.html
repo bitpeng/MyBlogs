@@ -83,7 +83,7 @@
             
             
                 <ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="../py_doc/index.html">Hack Python</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../py_doc/index.html">Python Note</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="index.html">Hack Linux</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="git_cmd.html">1. git 版本控制</a></li>
 <li class="toctree-l2"><a class="reference internal" href="samba_config.html">2. Samba共享访问配置</a></li>
@@ -106,11 +106,16 @@
 <li class="toctree-l4"><a class="reference internal" href="#id8">5.5.2. 查看内存使用</a></li>
 </ul>
 </li>
+<li class="toctree-l3"><a class="reference internal" href="#apt-get">5.6. apt-get</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#route">5.7. route</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#awk">5.8. awk</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="disk_note.html">6. Linux 磁盘和分区</a></li>
 <li class="toctree-l2"><a class="reference internal" href="ubuntu_lvm_extend.html">7. Ubuntu根分区使用Lvm扩容</a></li>
 <li class="toctree-l2"><a class="reference internal" href="dell_server_manual.html">8. DELL 服务器操作手册</a></li>
+<li class="toctree-l2"><a class="reference internal" href="curl_param_cut.html">9. shell 元字符问题</a></li>
+<li class="toctree-l2"><a class="reference internal" href="hack_vim.html">10. vim技巧</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../openstack/index.html">OpenStack Note</a></li>
@@ -184,6 +189,9 @@
 <li><a class="reference internal" href="#id8" id="id19">查看内存使用</a></li>
 </ul>
 </li>
+<li><a class="reference internal" href="#apt-get" id="id20">apt-get</a></li>
+<li><a class="reference internal" href="#route" id="id21">route</a></li>
+<li><a class="reference internal" href="#awk" id="id22">awk</a></li>
 </ul>
 </li>
 </ul>
@@ -275,6 +283,31 @@
 </pre></div>
 </div>
 </div>
+</div>
+<div class="section" id="apt-get">
+<h2><a class="toc-backref" href="#id20">5.6. apt-get</a><a class="headerlink" href="#apt-get" title="Permalink to this headline">¶</a></h2>
+<p>只获取包，不安装：</p>
+<p>apt-get -d install git
+apt-get -d install git &#8211;reinstall</p>
+</div>
+<div class="section" id="route">
+<h2><a class="toc-backref" href="#id21">5.7. route</a><a class="headerlink" href="#route" title="Permalink to this headline">¶</a></h2>
+<p>添加路由：
+route add -net 224.0.0.0 netmask 240.0.0.0 dev eth0</p>
+<p>删除路由：</p>
+<p>route del -net 224.0.0.0 netmask 240.0.0.0
+route del -net 224.0.0.0 netmask 240.0.0.0 reject</p>
+</div>
+<div class="section" id="awk">
+<h2><a class="toc-backref" href="#id22">5.8. awk</a><a class="headerlink" href="#awk" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="c1"># 打印某一行, 自设定分隔符</span>
+</pre></div>
+</div>
+<p>awk -F: &#8216;{print $1}&#8217;
+# 打印除第一行之外的所有行
+awk &#8216;{$1=&#8221;&#8221;;print $0}&#8217;
+# 循环把前N列都赋值为空，从第n+1列开始打印所有的列！
+awk &#8216;{ for(i=1; i&lt;=n; i++){ $i=&#8221;&#8221; }; print $0 }&#8217; urfile</p>
 </div>
 </div>
 

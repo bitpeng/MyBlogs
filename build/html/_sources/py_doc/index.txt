@@ -24,3 +24,4 @@ Python Note
     python_notebook
     django_note
     python_coding
+    dec_logic

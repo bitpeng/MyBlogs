@@ -32,7 +32,7 @@
   
     <link rel="top" title="Welcome to Sitian&#39;s Blog 0.1 documentation" href="../index.html"/>
         <link rel="up" title="Hack Linux" href="index.html"/>
-        <link rel="next" title="OpenStack Note" href="../openstack/index.html"/>
+        <link rel="next" title="9. shell 元字符问题" href="curl_param_cut.html"/>
         <link rel="prev" title="7. Ubuntu根分区使用Lvm扩容" href="ubuntu_lvm_extend.html"/> 
 
   
@@ -83,7 +83,7 @@
             
             
                 <ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="../py_doc/index.html">Hack Python</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../py_doc/index.html">Python Note</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="index.html">Hack Linux</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="git_cmd.html">1. git 版本控制</a></li>
 <li class="toctree-l2"><a class="reference internal" href="samba_config.html">2. Samba共享访问配置</a></li>
@@ -111,6 +111,8 @@
 <li class="toctree-l3"><a class="reference internal" href="#id12">8.5. 参考</a></li>
 </ul>
 </li>
+<li class="toctree-l2"><a class="reference internal" href="curl_param_cut.html">9. shell 元字符问题</a></li>
+<li class="toctree-l2"><a class="reference internal" href="hack_vim.html">10. vim技巧</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../openstack/index.html">OpenStack Note</a></li>
@@ -399,7 +401,7 @@ n块可以同时写，速度提升很快，但由于没有备份，可靠性很�
 </div>
 <p>另外，在硬盘rebuilding时，硬盘所在的raid状态会提示为degraded，这是由于该raid某一块
 硬盘由于故障，正在进行重建恢复数据，数据raid级别会降级。当故障硬盘数据恢复后，raid
-状态会变成raid。</p>
+状态会变成ready。</p>
 <div class="figure align-center" id="id19">
 <a class="reference internal image-reference" href="../_images/raid_degraded.png"><img alt="../_images/raid_degraded.png" src="../_images/raid_degraded.png" style="width: 667.0px; height: 316.0px;" /></a>
 <p class="caption"><span class="caption-text">raid重建故障恢复时级别降级</span></p>
@@ -516,7 +518,7 @@ raid自检，所以启动速度比较快。但是，这种方式也会造成用�
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="../openstack/index.html" class="btn btn-neutral float-right" title="OpenStack Note" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="curl_param_cut.html" class="btn btn-neutral float-right" title="9. shell 元字符问题" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
         <a href="ubuntu_lvm_extend.html" class="btn btn-neutral" title="7. Ubuntu根分区使用Lvm扩容" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>

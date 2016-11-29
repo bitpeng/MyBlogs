@@ -190,7 +190,7 @@ raid 比较
 	
 	另外，在硬盘rebuilding时，硬盘所在的raid状态会提示为degraded，这是由于该raid某一块
 	硬盘由于故障，正在进行重建恢复数据，数据raid级别会降级。当故障硬盘数据恢复后，raid
-	状态会变成raid。
+	状态会变成ready。
 	
 	.. figure:: /_static/images/raid_degraded.png
 	   :scale: 100

@@ -107,3 +107,40 @@ cut
 ::
 
     free -hl
+
+
+
+
+apt-get
+=======
+只获取包，不安装：
+
+apt-get -d install git
+apt-get -d install git --reinstall
+
+
+route
+========
+
+添加路由：
+route add -net 224.0.0.0 netmask 240.0.0.0 dev eth0
+
+
+删除路由：
+
+route del -net 224.0.0.0 netmask 240.0.0.0
+route del -net 224.0.0.0 netmask 240.0.0.0 reject
+
+
+awk
+====
+
+::
+
+# 打印某一行, 自设定分隔符
+awk -F: '{print $1}'
+# 打印除第一行之外的所有行
+awk '{$1="";print $0}'
+# 循环把前N列都赋值为空，从第n+1列开始打印所有的列！
+awk '{ for(i=1; i<=n; i++){ $i="" }; print $0 }' urfile
+

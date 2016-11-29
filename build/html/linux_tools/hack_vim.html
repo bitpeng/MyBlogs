@@ -154,6 +154,7 @@
 <p>陆续收集中......</p>
 <div class="section" id="id1">
 <h2>10.1. 末行命令<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
+<p>删除行末所有空格：</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span>:%s/\s\+$//
 </pre></div>
 </div>
@@ -161,6 +162,12 @@
 s 代表匹配空格字符，即空格符（Space）和制表符（Tab）
 + 用于匹配一个及多个。故 s+ 代表匹配一个或多个空格字符。
 $ 代表匹配行末。</p>
+<p>TAB替换为空格:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span>:set ts=4
+:set expandtab
+:%retab!
+</pre></div>
+</div>
 </div>
 </div>
 
