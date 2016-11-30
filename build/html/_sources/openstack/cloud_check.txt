@@ -39,7 +39,7 @@ neutron服务
    :scale: 100
    :align: center
 
-   neutron 服务状态正常
+   neutron 服务状态异常
 
 nova服务
 +++++++++++
@@ -48,7 +48,7 @@ nova服务
    :scale: 100
    :align: center
 
-   nova 服务状态正常
+   nova 服务状态异常
    
 glance 服务
 +++++++++++

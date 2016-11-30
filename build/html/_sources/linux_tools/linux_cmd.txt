@@ -237,3 +237,10 @@ find/xargs
 	
 	
 .. [#] http://yansu.org/2014/01/15/general-shell-resources.html
+
+lsof
+++++
+
+::
+
+	lsof -i :5000

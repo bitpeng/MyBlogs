@@ -32,7 +32,7 @@
   
     <link rel="top" title="Welcome to Sitian&#39;s Blog 0.1 documentation" href="../index.html"/>
         <link rel="up" title="OpenStack Note" href="index.html"/>
-        <link rel="next" title="web开发" href="../web/index.html"/>
+        <link rel="next" title="14. OpenStack REST-API基础：paste/webob/routes库" href="paste_webob_routes.html"/>
         <link rel="prev" title="12. django通用视图：一个小问题引发的思考" href="django-generic_view.html"/> 
 
   
@@ -83,7 +83,7 @@
             
             
                 <ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="../py_doc/index.html">Hack Python</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../py_doc/index.html">Python Note</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../linux_tools/index.html">Hack Linux</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="index.html">OpenStack Note</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="horizon_develop.html">1. Horizon 二次开发指南</a></li>
@@ -116,6 +116,8 @@
 <li class="toctree-l3"><a class="reference internal" href="#id8">13.3. 启动虚拟机测试</a></li>
 </ul>
 </li>
+<li class="toctree-l2"><a class="reference internal" href="paste_webob_routes.html">14. OpenStack REST-API基础：paste/webob/routes库</a></li>
+<li class="toctree-l2"><a class="reference internal" href="opengrok_xp.html">15. OpenGrok代码浏览环境搭建</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../web/index.html">web开发</a></li>
@@ -206,14 +208,14 @@
 <h3><a class="toc-backref" href="#id18">13.1.2. neutron服务</a><a class="headerlink" href="#neutron" title="Permalink to this headline">¶</a></h3>
 <div class="figure align-center" id="id10">
 <a class="reference internal image-reference" href="../_images/neutron_status.png"><img alt="../_images/neutron_status.png" src="../_images/neutron_status.png" style="width: 796.0px; height: 106.0px;" /></a>
-<p class="caption"><span class="caption-text">neutron 服务状态正常</span></p>
+<p class="caption"><span class="caption-text">neutron 服务状态异常</span></p>
 </div>
 </div>
 <div class="section" id="nova">
 <h3><a class="toc-backref" href="#id19">13.1.3. nova服务</a><a class="headerlink" href="#nova" title="Permalink to this headline">¶</a></h3>
 <div class="figure align-center" id="id11">
 <a class="reference internal image-reference" href="../_images/nova_bad_status.png"><img alt="../_images/nova_bad_status.png" src="../_images/nova_bad_status.png" style="width: 1161.0px; height: 247.0px;" /></a>
-<p class="caption"><span class="caption-text">nova 服务状态正常</span></p>
+<p class="caption"><span class="caption-text">nova 服务状态异常</span></p>
 </div>
 </div>
 <div class="section" id="glance">
@@ -325,7 +327,7 @@ for i in nova*; do service $i restart; done
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="../web/index.html" class="btn btn-neutral float-right" title="web开发" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="paste_webob_routes.html" class="btn btn-neutral float-right" title="14. OpenStack REST-API基础：paste/webob/routes库" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
         <a href="django-generic_view.html" class="btn btn-neutral" title="12. django通用视图：一个小问题引发的思考" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
