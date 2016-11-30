@@ -102,7 +102,7 @@
 <li class="toctree-l4"><a class="reference internal" href="#awk">5.4.3. awk</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#cut">5.4.4. cut</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#dpkg">5.4.5. dpkg</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#get">5.4.6. get</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#wget">5.4.6. wget</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#scp">5.4.7. scp</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#sed">5.4.8. sed</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#route">5.4.9. route</a></li>
@@ -189,7 +189,7 @@
 <li><a class="reference internal" href="#awk" id="id16">awk</a></li>
 <li><a class="reference internal" href="#cut" id="id17">cut</a></li>
 <li><a class="reference internal" href="#dpkg" id="id18">dpkg</a></li>
-<li><a class="reference internal" href="#get" id="id19">get</a></li>
+<li><a class="reference internal" href="#wget" id="id19">wget</a></li>
 <li><a class="reference internal" href="#scp" id="id20">scp</a></li>
 <li><a class="reference internal" href="#sed" id="id21">sed</a></li>
 <li><a class="reference internal" href="#route" id="id22">route</a></li>
@@ -327,8 +327,8 @@ for i in nova-*; do [[ ! $i =~ &quot;bak&quot; ]] &amp;&amp; echo $i ;done
 </pre></div>
 </div>
 </div>
-<div class="section" id="get">
-<h3><a class="toc-backref" href="#id19">5.4.6. get</a><a class="headerlink" href="#get" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="wget">
+<h3><a class="toc-backref" href="#id19">5.4.6. wget</a><a class="headerlink" href="#wget" title="Permalink to this headline">¶</a></h3>
 <p>下载网站的整个目录，以供离线浏览：</p>
 <div class="code shell highlight-default"><div class="highlight"><pre><span></span><span class="n">wget</span> <span class="o">-</span><span class="n">c</span> <span class="o">-</span><span class="n">r</span> <span class="o">-</span><span class="n">np</span> <span class="o">-</span><span class="n">k</span> <span class="o">-</span><span class="n">L</span> <span class="o">-</span><span class="n">p</span> <span class="n">http</span><span class="p">:</span><span class="o">//</span><span class="n">docs</span><span class="o">.</span><span class="n">ceph</span><span class="o">.</span><span class="n">org</span><span class="o">.</span><span class="n">cn</span>
 </pre></div>
