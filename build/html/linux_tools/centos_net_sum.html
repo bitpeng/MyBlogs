@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>11. Centos 联网问题汇总 &mdash; Welcome to Sitian&#39;s Blog 0.1 documentation</title>
+  <title>11. Linux 联网问题汇总 &mdash; Welcome to Sitian&#39;s Blog 0.1 documentation</title>
   
 
   
@@ -95,9 +95,10 @@
 <li class="toctree-l2"><a class="reference internal" href="dell_server_manual.html">8. DELL 服务器操作手册</a></li>
 <li class="toctree-l2"><a class="reference internal" href="curl_param_cut.html">9. shell 元字符问题</a></li>
 <li class="toctree-l2"><a class="reference internal" href="hack_vim.html">10. vim技巧</a></li>
-<li class="toctree-l2 current"><a class="current reference internal" href="#">11. Centos 联网问题汇总</a><ul>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">11. Linux 联网问题汇总</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#centos-vmware">11.1. centos VMware复制后无法上网</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#openstack-centosip">11.2. openstack centos镜像自动获取IP</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#vmware">11.3. VMware 联网问题</a></li>
 </ul>
 </li>
 </ul>
@@ -137,7 +138,7 @@
       
           <li><a href="index.html">Hack Linux</a> &raquo;</li>
       
-    <li>11. Centos 联网问题汇总</li>
+    <li>11. Linux 联网问题汇总</li>
       <li class="wy-breadcrumbs-aside">
         
           
@@ -151,20 +152,21 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="centos">
-<span id="centos-net-sum"></span><h1><a class="toc-backref" href="#id2">11. Centos 联网问题汇总</a><a class="headerlink" href="#centos" title="Permalink to this headline">¶</a></h1>
+  <div class="section" id="linux">
+<span id="centos-net-sum"></span><h1><a class="toc-backref" href="#id2">11. Linux 联网问题汇总</a><a class="headerlink" href="#linux" title="Permalink to this headline">¶</a></h1>
 <div class="admonition tip">
 <p class="first admonition-title">Tip</p>
 <p class="last">发现centos联网支持及配置没有ubuntu友好，当然也可能是不熟悉
 centos的原因。之前已经写过一篇 openstack centos实例联网配置的问题，
-这里，再把自己遇到的centos网络问题坐下总结！</p>
+这里，再把自己遇到的centos网络问题以及有关linux发行版联网问题作下总结！</p>
 </div>
 <div class="contents topic" id="id1">
 <p class="topic-title first">目录</p>
 <ul class="simple">
-<li><a class="reference internal" href="#centos" id="id2">Centos 联网问题汇总</a><ul>
+<li><a class="reference internal" href="#linux" id="id2">Linux 联网问题汇总</a><ul>
 <li><a class="reference internal" href="#centos-vmware" id="id3">centos VMware复制后无法上网</a></li>
 <li><a class="reference internal" href="#openstack-centosip" id="id4">openstack centos镜像自动获取IP</a></li>
+<li><a class="reference internal" href="#vmware" id="id5">VMware 联网问题</a></li>
 </ul>
 </li>
 </ul>
@@ -196,6 +198,47 @@ centos的原因。之前已经写过一篇 openstack centos实例联网配置的
 </div>
 <p>然后，清除 /etc/udev/rules.d文件的网络设备命名规则，因为这些规则将从实例的网卡获得。
 sudo rm -rf /etc/udev/rules.d/70-persistent-net.rules</p>
+</div>
+<div class="section" id="vmware">
+<h2><a class="toc-backref" href="#id5">11.3. VMware 联网问题</a><a class="headerlink" href="#vmware" title="Permalink to this headline">¶</a></h2>
+<p>在vmware安装好openstack juno，使用ceph作为统一后端存储，可以
+正常上传镜像，可以正常启动虚拟机，但是却无法连接互联网。
+由于在vmware中安装了其他的虚拟机，都可以联网，因此初步猜测，
+可能是路由的问题！</p>
+<p>正常可以联网的虚拟机route信息！</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="c1"># 正常可以联网的虚拟机route信息！</span>
+<span class="n">root</span><span class="nd">@ubuntu</span><span class="p">:</span><span class="o">~</span><span class="c1"># route</span>
+<span class="n">Kernel</span> <span class="n">IP</span> <span class="n">routing</span> <span class="n">table</span>
+<span class="n">Destination</span>     <span class="n">Gateway</span>         <span class="n">Genmask</span>         <span class="n">Flags</span> <span class="n">Metric</span> <span class="n">Ref</span>    <span class="n">Use</span> <span class="n">Iface</span>
+<span class="n">default</span>         <span class="mf">192.168</span><span class="o">.</span><span class="mf">159.2</span>   <span class="mf">0.0</span><span class="o">.</span><span class="mf">0.0</span>         <span class="n">UG</span>    <span class="mi">0</span>      <span class="mi">0</span>        <span class="mi">0</span> <span class="n">br</span><span class="o">-</span><span class="n">ex</span>
+<span class="mf">20.20</span><span class="o">.</span><span class="mf">20.0</span>      <span class="o">*</span>               <span class="mf">255.255</span><span class="o">.</span><span class="mf">255.0</span>   <span class="n">U</span>     <span class="mi">0</span>      <span class="mi">0</span>        <span class="mi">0</span> <span class="n">eth2</span>
+<span class="mf">101.101</span><span class="o">.</span><span class="mf">101.0</span>   <span class="o">*</span>               <span class="mf">255.255</span><span class="o">.</span><span class="mf">255.0</span>   <span class="n">U</span>     <span class="mi">0</span>      <span class="mi">0</span>        <span class="mi">0</span> <span class="n">eth1</span>
+<span class="mf">192.168</span><span class="o">.</span><span class="mf">159.0</span>   <span class="o">*</span>               <span class="mf">255.255</span><span class="o">.</span><span class="mf">255.0</span>   <span class="n">U</span>     <span class="mi">0</span>      <span class="mi">0</span>        <span class="mi">0</span> <span class="n">br</span><span class="o">-</span><span class="n">ex</span>
+</pre></div>
+</div>
+<p>以下是无法联网的虚机路由信息：</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="c1"># 无法联网的虚拟机路由信息</span>
+<span class="n">root</span><span class="nd">@ubuntu</span><span class="p">:</span><span class="o">/</span><span class="n">smbshare</span><span class="c1"># route</span>
+<span class="n">Kernel</span> <span class="n">IP</span> <span class="n">routing</span> <span class="n">table</span>
+<span class="n">Destination</span>     <span class="n">Gateway</span>         <span class="n">Genmask</span>         <span class="n">Flags</span> <span class="n">Metric</span> <span class="n">Ref</span>    <span class="n">Use</span> <span class="n">Iface</span>
+<span class="n">default</span>         <span class="mf">192.168</span><span class="o">.</span><span class="mf">159.1</span>   <span class="mf">0.0</span><span class="o">.</span><span class="mf">0.0</span>         <span class="n">UG</span>    <span class="mi">0</span>      <span class="mi">0</span>        <span class="mi">0</span> <span class="n">br</span><span class="o">-</span><span class="n">ex</span>
+<span class="mf">10.10</span><span class="o">.</span><span class="mf">10.0</span>      <span class="o">*</span>               <span class="mf">255.255</span><span class="o">.</span><span class="mf">255.0</span>   <span class="n">U</span>     <span class="mi">0</span>      <span class="mi">0</span>        <span class="mi">0</span> <span class="n">eth1</span>
+<span class="mf">20.20</span><span class="o">.</span><span class="mf">20.0</span>      <span class="o">*</span>               <span class="mf">255.255</span><span class="o">.</span><span class="mf">255.0</span>   <span class="n">U</span>     <span class="mi">0</span>      <span class="mi">0</span>        <span class="mi">0</span> <span class="n">eth2</span>
+<span class="mf">192.168</span><span class="o">.</span><span class="mf">159.0</span>   <span class="o">*</span>               <span class="mf">255.255</span><span class="o">.</span><span class="mf">255.0</span>   <span class="n">U</span>     <span class="mi">0</span>      <span class="mi">0</span>        <span class="mi">0</span> <span class="n">br</span><span class="o">-</span><span class="n">ex</span>
+</pre></div>
+</div>
+<p>果然，路由网关不一样，由于可以联网的虚拟机IP地址是DHCP方式的，而OpenStack juno
+使用的是静态地址！因此，只需要:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">vi</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">network</span><span class="o">/</span><span class="n">interfaces</span>
+<span class="n">auto</span> <span class="n">br</span><span class="o">-</span><span class="n">ex</span>
+<span class="n">iface</span> <span class="n">br</span><span class="o">-</span><span class="n">ex</span> <span class="n">inet</span> <span class="n">static</span>
+        <span class="n">address</span> <span class="mf">192.168</span><span class="o">.</span><span class="mf">159.155</span>
+        <span class="n">gateway</span> <span class="mf">192.168</span><span class="o">.</span><span class="mf">159.2</span>
+        <span class="n">netmask</span> <span class="mf">255.255</span><span class="o">.</span><span class="mf">255.0</span>
+        <span class="n">dns</span><span class="o">-</span><span class="n">nameservers</span> <span class="mf">8.8</span><span class="o">.</span><span class="mf">8.8</span>
+</pre></div>
+</div>
+<p>把网关改成 192.168.159.2即可！</p>
 </div>
 </div>
 

@@ -1,3 +1,4 @@
+# ubuntu系列机器 man高亮显示
 # 复制以下几行到/etc/bash.bashrc末尾，man即可以高亮显示
 # man高亮显示
 export LESS_TERMCAP_mb=$'\E[01;31m'

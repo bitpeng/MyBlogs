@@ -103,6 +103,17 @@ apt-get
 	# 如果已经安装
 	apt-get -d install git --reinstall
 
+更新安装包索引：
+
+::
+
+	apt-get update
+
+升级已经安装的所有软件包：
+
+::
+
+	apt-get upgrade
 
 awk
 +++

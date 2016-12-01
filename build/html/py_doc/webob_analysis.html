@@ -1,0 +1,598 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>11. webob库简单分析 &mdash; Welcome to Sitian&#39;s Blog 0.1 documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+    <link rel="top" title="Welcome to Sitian&#39;s Blog 0.1 documentation" href="../index.html"/>
+        <link rel="up" title="Python Note" href="index.html"/>
+        <link rel="next" title="Hack Linux" href="../linux_tools/index.html"/>
+        <link rel="prev" title="10. Python 装饰器逻辑" href="dec_logic.html"/> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> Welcome to Sitian's Blog
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.1
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Python Note</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="pysnmp_doc.html">1. PySNMP教程</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pysnmp_doc_example.html">2. PySNMP获取设备信息</a></li>
+<li class="toctree-l2"><a class="reference internal" href="re_doc.html">3. Python正则表达式</a></li>
+<li class="toctree-l2"><a class="reference internal" href="wsgi.html">4. WSGI基础</a></li>
+<li class="toctree-l2"><a class="reference internal" href="re_analysis.html">5. Python正则表达式分析利器</a></li>
+<li class="toctree-l2"><a class="reference internal" href="python_descriptor.html">6. Python描述器</a></li>
+<li class="toctree-l2"><a class="reference internal" href="python_notebook.html">7. Python学习总结</a></li>
+<li class="toctree-l2"><a class="reference internal" href="django_note.html">8. django笔记</a></li>
+<li class="toctree-l2"><a class="reference internal" href="python_coding.html">9. Python 编码问题总结</a></li>
+<li class="toctree-l2"><a class="reference internal" href="dec_logic.html">10. Python 装饰器逻辑</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">11. webob库简单分析</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../linux_tools/index.html">Hack Linux</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../openstack/index.html">OpenStack Note</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../web/index.html">web开发</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../others/index.html">附录</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../index.html">Welcome to Sitian's Blog</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+ 
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../index.html">Docs</a> &raquo;</li>
+      
+          <li><a href="index.html">Python Note</a> &raquo;</li>
+      
+    <li>11. webob库简单分析</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="../_sources/py_doc/webob_analysis.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="webob">
+<span id="webob-analysis"></span><h1>11. webob库简单分析<a class="headerlink" href="#webob" title="Permalink to this headline">¶</a></h1>
+<p>首先来看一个例子。</p>
+<div class="highlight-python"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="c1">#coding:utf-8</span>
+<span class="kn">from</span> <span class="nn">webob</span> <span class="kn">import</span> <span class="n">Request</span>
+<span class="kn">from</span> <span class="nn">webob</span> <span class="kn">import</span> <span class="n">Response</span>
+<span class="kn">import</span> <span class="nn">webob.dec</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">经测试，使用wsgify包装的wsgi app, 可以返回另一个wsgi app，</span>
+<span class="sd">然后req请求交给返回的app处理！返回的wsgi app可以是通过原</span>
+<span class="sd">始的方式定义的(接收env, start_response参数)。也可以是使用</span>
+<span class="sd">wsgify包装的！</span>
+
+<span class="sd">如该例子中，test_app 通过wsgify包装，成为一个wsgi app，然后他</span>
+<span class="sd">返回另一个wsgi app：simple_app_2，webob库保证接下来会调用</span>
+<span class="sd">simple_app_2，并把它返回的结果发送给web server！这样的好处</span>
+<span class="sd">是对于一个请求，能通过链式的方式一次让每一个app依次处理。</span>
+
+<span class="sd">这种链式处理的方式，在OpenStack REST-API中使用得非常频繁。</span>
+
+<span class="sd">通过(env, start_response)参数定义的wsgi app不具备该功能。</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="nd">@webob.dec.wsgify</span>
+<span class="k">def</span> <span class="nf">test_app</span><span class="p">(</span><span class="n">req</span><span class="p">):</span>
+    <span class="k">print</span> <span class="s2">&quot;call test_app&quot;</span>
+    <span class="k">print</span> <span class="s2">&quot;----:</span><span class="si">%s</span><span class="s2">&quot;</span><span class="o">%</span><span class="n">simple_app_2</span>
+    <span class="k">return</span> <span class="n">simple_app_2</span>
+    <span class="c1"># 返回simple_app也是可以的。webob会把simple_app的结果发送给web_server!</span>
+    <span class="c1">#return simple_app</span>
+
+<span class="c1">#test_app = wsgify(test_app)</span>
+<span class="c1">#test_app(evn, start_response)</span>
+
+<span class="nd">@webob.dec.wsgify</span>
+<span class="k">def</span> <span class="nf">simple_app_2</span><span class="p">(</span><span class="n">req</span><span class="p">):</span>
+    <span class="k">print</span> <span class="s2">&quot;call app2&quot;</span>
+    <span class="k">return</span> <span class="n">webob</span><span class="o">.</span><span class="n">Response</span><span class="p">(</span><span class="s2">&quot;hello, app2!</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="c1">#simple_app_2 = wsgify(simple_app_2)</span>
+
+<span class="c1"># 通过标准方式定义的wsgi app</span>
+<span class="k">def</span> <span class="nf">simple_app</span><span class="p">(</span><span class="n">environ</span><span class="p">,</span> <span class="n">start_response</span><span class="p">):</span>
+    <span class="n">status</span> <span class="o">=</span> <span class="s1">&#39;200 OK&#39;</span>
+    <span class="n">response_headers</span> <span class="o">=</span> <span class="p">[(</span><span class="s1">&#39;Content-type&#39;</span><span class="p">,</span><span class="s1">&#39;text/plain&#39;</span><span class="p">)]</span>
+    <span class="n">start_response</span><span class="p">(</span><span class="n">status</span><span class="p">,</span> <span class="n">response_headers</span><span class="p">)</span>
+    <span class="k">return</span> <span class="p">[</span><span class="s1">&#39;Hello world!</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">,</span> <span class="s2">&quot;return test</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">]</span>
+
+<span class="n">httpd</span> <span class="o">=</span> <span class="n">make_server</span><span class="p">(</span><span class="s1">&#39;0.0.0.0&#39;</span><span class="p">,</span> <span class="mi">9999</span><span class="p">,</span> <span class="n">test_app</span><span class="p">)</span>
+<span class="n">httpd</span><span class="o">.</span><span class="n">serve_forever</span><span class="p">()</span>
+</pre></div>
+</td></tr></table></div>
+<p>利用wsgiref作为web server, test_app 作为wsgi app启动服务。
+服务器会收到请求后，会调用test_app.</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">res</span> <span class="o">=</span> <span class="n">test_app</span><span class="p">(</span><span class="n">evn</span><span class="p">,</span> <span class="n">start_response</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>test_app实际上此时是一个wsgify对象，因此会执行wsgify.__call__函数，现在来分析
+该核心函数！</p>
+<p>wsgify核心代码分析：</p>
+<div class="highlight-python"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>  1
+  2
+  3
+  4
+  5
+  6
+  7
+  8
+  9
+ 10
+ 11
+ 12
+ 13
+ 14
+ 15
+ 16
+ 17
+ 18
+ 19
+ 20
+ 21
+ 22
+ 23
+ 24
+ 25
+ 26
+ 27
+ 28
+ 29
+ 30
+ 31
+ 32
+ 33
+ 34
+ 35
+ 36
+ 37
+ 38
+ 39
+ 40
+ 41
+ 42
+ 43
+ 44
+ 45
+ 46
+ 47
+ 48
+ 49
+ 50
+ 51
+ 52
+ 53
+ 54
+ 55
+ 56
+ 57
+ 58
+ 59
+ 60
+ 61
+ 62
+ 63
+ 64
+ 65
+ 66
+ 67
+ 68
+ 69
+ 70
+ 71
+ 72
+ 73
+ 74
+ 75
+ 76
+ 77
+ 78
+ 79
+ 80
+ 81
+ 82
+ 83
+ 84
+ 85
+ 86
+ 87
+ 88
+ 89
+ 90
+ 91
+ 92
+ 93
+ 94
+ 95
+ 96
+ 97
+ 98
+ 99
+100
+101
+102
+103
+104
+105
+106
+107
+108
+109
+110
+111
+112
+113
+114
+115
+116
+117
+118
+119
+120
+121
+122
+123
+124
+125
+126
+127
+128</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">wsgify</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Turns a request-taking, response-returning function into a WSGI</span>
+<span class="sd">    app</span>
+<span class="sd">    You can use this like::</span>
+<span class="sd">        @wsgify</span>
+<span class="sd">        def myfunc(req):</span>
+<span class="sd">            return webob.Response(&#39;hey there&#39;)</span>
+<span class="sd">    With that ``myfunc`` will be a WSGI application, callable like</span>
+<span class="sd">    ``app_iter = myfunc(environ, start_response)``.  You can also call</span>
+<span class="sd">    it like normal, e.g., ``resp = myfunc(req)``.  (You can also wrap</span>
+<span class="sd">    methods, like ``def myfunc(self, req)``.)</span>
+<span class="sd">    If you raise exceptions from :mod:`webob.exc` they will be turned</span>
+<span class="sd">    into WSGI responses.</span>
+<span class="sd">    There are also several parameters you can use to customize the</span>
+<span class="sd">    decorator.  Most notably, you can use a :class:`webob.Request`</span>
+<span class="sd">    subclass, like::</span>
+<span class="sd">        class MyRequest(webob.Request):</span>
+<span class="sd">            @property</span>
+<span class="sd">            def is_local(self):</span>
+<span class="sd">                return self.remote_addr == &#39;127.0.0.1&#39;</span>
+<span class="sd">        @wsgify(RequestClass=MyRequest)</span>
+<span class="sd">        def myfunc(req):</span>
+<span class="sd">            if req.is_local:</span>
+<span class="sd">                return Response(&#39;hi!&#39;)</span>
+<span class="sd">            else:</span>
+<span class="sd">                raise webob.exc.HTTPForbidden</span>
+<span class="sd">    Another customization you can add is to add `args` (positional</span>
+<span class="sd">    arguments) or `kwargs` (of course, keyword arguments).  While</span>
+<span class="sd">    generally not that useful, you can use this to create multiple</span>
+<span class="sd">    WSGI apps from one function, like::</span>
+<span class="sd">        import simplejson</span>
+<span class="sd">        def serve_json(req, json_obj):</span>
+<span class="sd">            return Response(json.dumps(json_obj),</span>
+<span class="sd">                            content_type=&#39;application/json&#39;)</span>
+<span class="sd">        serve_ob1 = wsgify(serve_json, args=(ob1,))</span>
+<span class="sd">        serve_ob2 = wsgify(serve_json, args=(ob2,))</span>
+<span class="sd">    You can return several things from a function:</span>
+<span class="sd">    * A :class:`webob.Response` object (or subclass)</span>
+<span class="sd">    * *Any* WSGI application</span>
+<span class="sd">    * None, and then ``req.response`` will be used (a pre-instantiated</span>
+<span class="sd">      Response object)</span>
+<span class="sd">    * A string, which will be written to ``req.response`` and then that</span>
+<span class="sd">      response will be used.</span>
+<span class="sd">    * Raise an exception from :mod:`webob.exc`</span>
+<span class="sd">    Also see :func:`wsgify.middleware` for a way to make middleware.</span>
+<span class="sd">    You can also subclass this decorator; the most useful things to do</span>
+<span class="sd">    in a subclass would be to change `RequestClass` or override</span>
+<span class="sd">    `call_func` (e.g., to add ``req.urlvars`` as keyword arguments to</span>
+<span class="sd">    the function).</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">RequestClass</span> <span class="o">=</span> <span class="n">Request</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">func</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">RequestClass</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span>
+                 <span class="n">args</span><span class="o">=</span><span class="p">(),</span> <span class="n">kwargs</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">middleware_wraps</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+        <span class="c1"># self.func 赋值为 test_app</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">func</span> <span class="o">=</span> <span class="n">func</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">RequestClass</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span>
+            <span class="ow">and</span> <span class="n">RequestClass</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">RequestClass</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">RequestClass</span> <span class="o">=</span> <span class="n">RequestClass</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">args</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">args</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">kwargs</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="n">kwargs</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">kwargs</span> <span class="o">=</span> <span class="n">kwargs</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">middleware_wraps</span> <span class="o">=</span> <span class="n">middleware_wraps</span>
+
+    <span class="k">def</span> <span class="nf">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="s1">&#39;&lt;</span><span class="si">%s</span><span class="s1"> at </span><span class="si">%s</span><span class="s1"> wrapping </span><span class="si">%r</span><span class="s1">&gt;&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__class__</span><span class="o">.</span><span class="n">__name__</span><span class="p">,</span>
+                                           <span class="nb">id</span><span class="p">(</span><span class="bp">self</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">func</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">__get__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">obj</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+        <span class="c1"># This handles wrapping methods</span>
+        <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">func</span><span class="p">,</span> <span class="s1">&#39;__get__&#39;</span><span class="p">):</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">clone</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">func</span><span class="o">.</span><span class="n">__get__</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="nb">type</span><span class="p">))</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span>
+
+    <span class="k">def</span> <span class="nf">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">req</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kw</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Call this as a WSGI application or with a request&quot;&quot;&quot;</span>
+        <span class="c1"># test_app(evn, start_response)</span>
+        <span class="c1"># 因此req = env, args = (start_response, ), kw = {}</span>
+        <span class="n">func</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">func</span>
+        <span class="k">if</span> <span class="n">func</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">args</span> <span class="ow">or</span> <span class="n">kw</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span>
+                    <span class="s2">&quot;Unbound </span><span class="si">%s</span><span class="s2"> can only be called with the function it &quot;</span>
+                    <span class="s2">&quot;will wrap&quot;</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">__class__</span><span class="o">.</span><span class="n">__name__</span><span class="p">)</span>
+            <span class="n">func</span> <span class="o">=</span> <span class="n">req</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">clone</span><span class="p">(</span><span class="n">func</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">req</span><span class="p">,</span> <span class="nb">dict</span><span class="p">):</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">args</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">1</span> <span class="ow">or</span> <span class="n">kw</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span>
+                    <span class="s2">&quot;Calling </span><span class="si">%r</span><span class="s2"> as a WSGI app with the wrong signature&quot;</span> <span class="o">%</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">func</span><span class="p">)</span>
+            <span class="n">environ</span> <span class="o">=</span> <span class="n">req</span>
+            <span class="n">start_response</span> <span class="o">=</span> <span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+            <span class="c1"># 根据env 生产req 对象</span>
+            <span class="n">req</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">RequestClass</span><span class="p">(</span><span class="n">environ</span><span class="p">)</span>
+            <span class="n">req</span><span class="o">.</span><span class="n">response</span> <span class="o">=</span> <span class="n">req</span><span class="o">.</span><span class="n">ResponseClass</span><span class="p">()</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">args</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">args</span>
+                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">middleware_wraps</span><span class="p">:</span>
+                    <span class="n">args</span> <span class="o">=</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">middleware_wraps</span><span class="p">,)</span> <span class="o">+</span> <span class="n">args</span>
+                <span class="c1"># 调用实际的包装函数，这里为test_app</span>
+                <span class="c1"># test_app(req, *(), **{})</span>
+                <span class="c1"># 返回simple_app_2, resp 为simple_app_2</span>
+                <span class="n">resp</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">call_func</span><span class="p">(</span><span class="n">req</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">kwargs</span><span class="p">)</span>
+            <span class="k">except</span> <span class="n">HTTPException</span> <span class="k">as</span> <span class="n">exc</span><span class="p">:</span>
+                <span class="n">resp</span> <span class="o">=</span> <span class="n">exc</span>
+            <span class="k">if</span> <span class="n">resp</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+                <span class="c1">## FIXME: I&#39;m not sure what this should be?</span>
+                <span class="n">resp</span> <span class="o">=</span> <span class="n">req</span><span class="o">.</span><span class="n">response</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">resp</span><span class="p">,</span> <span class="n">text_type</span><span class="p">):</span>
+                <span class="n">resp</span> <span class="o">=</span> <span class="n">bytes_</span><span class="p">(</span><span class="n">resp</span><span class="p">,</span> <span class="n">req</span><span class="o">.</span><span class="n">charset</span><span class="p">)</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">resp</span><span class="p">,</span> <span class="nb">bytes</span><span class="p">):</span>
+                <span class="n">body</span> <span class="o">=</span> <span class="n">resp</span>
+                <span class="n">resp</span> <span class="o">=</span> <span class="n">req</span><span class="o">.</span><span class="n">response</span>
+                <span class="n">resp</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">body</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">resp</span> <span class="ow">is</span> <span class="ow">not</span> <span class="n">req</span><span class="o">.</span><span class="n">response</span><span class="p">:</span>
+                <span class="n">resp</span> <span class="o">=</span> <span class="n">req</span><span class="o">.</span><span class="n">response</span><span class="o">.</span><span class="n">merge_cookies</span><span class="p">(</span><span class="n">resp</span><span class="p">)</span>
+            <span class="c1"># 调用simple_app_2(environ, start_response)；</span>
+            <span class="c1"># simple_app_2也是一个wsgify 对象，从而引起simple_app_2.__call__函数调用。</span>
+            <span class="c1"># 从而实现链式处理！</span>
+            <span class="k">return</span> <span class="n">resp</span><span class="p">(</span><span class="n">environ</span><span class="p">,</span> <span class="n">start_response</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">middleware_wraps</span><span class="p">:</span>
+                <span class="n">args</span> <span class="o">=</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">middleware_wraps</span><span class="p">,)</span> <span class="o">+</span> <span class="n">args</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">func</span><span class="p">(</span><span class="n">req</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kw</span><span class="p">)</span>
+</pre></div>
+</td></tr></table></div>
+<p>web server将http请求转发给test_app(evn, start_response),
+会引起test_app.__call__函数调用。</p>
+<ul class="simple">
+<li>82行：记录包装的函数；</li>
+<li>90行：初次请求，req 实际上env, 是一个dict；</li>
+<li>96行：获取web server 提供的start_response 参数；</li>
+<li>107行：调用包装的函数，就是原始的test_app，执行完成后，resp = simple_app_2;</li>
+<li>124行：继续调用simple_app_2 对象！又会引起下一轮simple_app_2.__call__调用。</li>
+</ul>
+<p>在simple_app_2.__call__调用中：
+在107行处获取最终的结果：webob.Response 对象。
+最后还是会执行第24行，Response class定义了__call__函数！
+待后面分析。</p>
+</div>
+
+
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../linux_tools/index.html" class="btn btn-neutral float-right" title="Hack Linux" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="dec_logic.html" class="btn btn-neutral" title="10. Python 装饰器逻辑" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2016, chenshiqiang.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'0.1',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

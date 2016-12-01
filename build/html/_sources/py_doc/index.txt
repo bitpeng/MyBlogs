@@ -25,3 +25,4 @@ Python Note
     django_note
     python_coding
     dec_logic
+    webob_analysis

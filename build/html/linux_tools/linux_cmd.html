@@ -119,7 +119,7 @@
 <li class="toctree-l2"><a class="reference internal" href="dell_server_manual.html">8. DELL 服务器操作手册</a></li>
 <li class="toctree-l2"><a class="reference internal" href="curl_param_cut.html">9. shell 元字符问题</a></li>
 <li class="toctree-l2"><a class="reference internal" href="hack_vim.html">10. vim技巧</a></li>
-<li class="toctree-l2"><a class="reference internal" href="centos_net_sum.html">11. Centos 联网问题汇总</a></li>
+<li class="toctree-l2"><a class="reference internal" href="centos_net_sum.html">11. Linux 联网问题汇总</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../openstack/index.html">OpenStack Note</a></li>
@@ -275,6 +275,14 @@ for i in nova-*; do [[ ! $i =~ &quot;bak&quot; ]] &amp;&amp; echo $i ;done
 <span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="o">-</span><span class="n">d</span> <span class="n">install</span> <span class="n">git</span>
 <span class="c1"># 如果已经安装</span>
 <span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="o">-</span><span class="n">d</span> <span class="n">install</span> <span class="n">git</span> <span class="o">--</span><span class="n">reinstall</span>
+</pre></div>
+</div>
+<p>更新安装包索引：</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="n">update</span>
+</pre></div>
+</div>
+<p>升级已经安装的所有软件包：</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="n">upgrade</span>
 </pre></div>
 </div>
 </div>
