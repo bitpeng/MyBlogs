@@ -255,3 +255,29 @@ lsof
 ::
 
 	lsof -i :5000
+	
+
+ln
+++
+
+::
+
+	# 建立硬链接
+	ln srcfile dstfile
+	# 建立软连接
+	ln -s srcfile dstfile
+	
+	# 显示软硬连接文件详情和区别、inode节点数！	
+	ll tf-* -i
+	# 663182 -rw-r--r-- 2 root root  0 Dec  1 06:59 tf-hl
+	# 663237 lrwxrwxrwx 1 root root 13 Dec  1 07:01 tf-sl -> tmp/test-file
+	ll -i tmp/test-file 
+	# 663182 -rw-r--r-- 2 root root 0 Dec  1 06:59 tmp/test-file
+
+
+	
+ln命令需要特别注意如下几点：
+
+- ln 命令用法有点不符合常识，一般都是源文件、目的文件顺序，该命令恰好相反。
+- 建立硬链接时拷贝inode节点。硬链接文件是普通文件(文件类型位为 ``-`` )，永远不要建立目录的硬链接。
+- 软连接可以连接文件、目录，inode节点数没有增加，文件类型位为 ``l`` 。
