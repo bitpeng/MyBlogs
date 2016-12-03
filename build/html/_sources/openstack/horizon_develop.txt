@@ -161,6 +161,18 @@ horizon 项目基于apache部署时，假如开发过程horizon代码发生
 	python manage.py runserver 0.0.0.0:80 &> /smbshare/horizon.log
 	tail -f /smbshare/horizon.log | fgrep "+++===+++"
 
+.. figure:: /_static/images/manage_runserver.png
+   :scale: 100
+   :align: center
+
+   运行开发模式服务器
+
+.. figure:: /_static/images/filter_args.png
+   :scale: 100
+   :align: center
+
+   过滤，查看变量信息
+
 
 ---------------------
 
