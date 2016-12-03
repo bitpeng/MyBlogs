@@ -11,19 +11,19 @@ bash快捷键
 
 ::
 
-	ctrl + a;   定位光标到命令行首
-	ctrl + e;   命令行尾
-	!!:1        上一条命令第一个参数。
-	!$          上一条命令最后一个参数。
+    ctrl + a;   定位光标到命令行首
+    ctrl + e;   命令行尾
+    !!:1        上一条命令第一个参数。
+    !$          上一条命令最后一个参数。
 
 bash编程
 ========
 
 ::
 
-	cd /usr/bin
-	# 判断变量是否不包含bak字符
-	for i in nova-*; do [[ ! $i =~ "bak" ]] && echo $i ;done
+    cd /usr/bin
+    # 判断变量是否不包含bak字符
+    for i in nova-*; do [[ ! $i =~ "bak" ]] && echo $i ;done
 
 其他
 ====
@@ -32,17 +32,17 @@ bash编程
 
 ::
 
-	mv ./-hl hl.txt
+    mv ./-hl hl.txt
 
 shell输入输出重定向：
 
 ::
 
-	ls > log
-	ls 1> log
-	ls 2> log
-	ls &> log
-	ls 1> log 2> /dev/null
+    ls > log
+    ls 1> log
+    ls 2> log
+    ls &> log
+    ls 1> log 2> /dev/null
 
 性能调优
 ========
@@ -63,40 +63,40 @@ shell输入输出重定向：
 常用命令
 ========
 
-常用命令重用用法参考!
+常用命令常用用法参考!
 
 nc
 ++
 
--	传输目录
+    传输目录
 
-	server端：
+    server端：
 
-	::
+    ::
 
-		tar -cvf - allinone-v2.5-install-script | nc -l 12345
+        tar -cvf - allinone-v2.5-install-script | nc -l 12345
 
-	client端：
+    client端：
 
-	::
+    ::
 
-		nc -n 192.168.159.146 12345 | tar -xvf -
+        nc -n 192.168.159.146 12345 | tar -xvf -
 
--	传输文件
-
-
-	server端：
-
-	::
-
-		nc -l 12345 < file.txt
+    传输文件
 
 
-	client端：
+    server端：
 
-	::
+    ::
 
-		nc -n 172.31.100.7 1567 > file.txt
+        nc -l 12345 < file.txt
+
+
+    client端：
+
+    ::
+
+        nc -n 172.31.100.7 1567 > file.txt
 
 然后两端分别使用md5sum命令核对文件传输是否出错.
 
@@ -108,34 +108,34 @@ apt-get
 
 ::
 
-	# 如果软件包没有安装
-	apt-get -d install git
-	# 如果已经安装
-	apt-get -d install git --reinstall
+    # 如果软件包没有安装
+    apt-get -d install git
+    # 如果已经安装
+    apt-get -d install git --reinstall
 
 更新安装包索引：
 
 ::
 
-	apt-get update
+    apt-get update
 
 升级已经安装的所有软件包：
 
 ::
 
-	apt-get upgrade
+    apt-get upgrade
 
 awk
 +++
 
 ::
 
-	# 打印某一行, 自设定分隔符
-	awk -F: '{print $1}'
-	# 打印除第一行之外的所有行
-	awk '{$1="";print $0}'
-	# 循环把前N列都赋值为空，从第n+1列开始打印所有的列！
-	awk '{ for(i=1; i<=n; i++){ $i="" }; print $0 }' urfile
+    # 打印某一行, 自设定分隔符
+    awk -F: '{print $1}'
+    # 打印除第一行之外的所有行
+    awk '{$1="";print $0}'
+    # 循环把前N列都赋值为空，从第n+1列开始打印所有的列！
+    awk '{ for(i=1; i<=n; i++){ $i="" }; print $0 }' urfile
 
 
 cut
@@ -164,21 +164,21 @@ dpkg
 
 ::
 
-	dpkg -s lvm2    
-	dpkg-query -l lvm
+    dpkg -s lvm2
+    dpkg-query -l lvm
 
 列出所有安装软件包：
 
 ::
 
-	dpkg --get-selections    
-	dpkg -l
+    dpkg --get-selections
+    dpkg -l
 
 列出软件包中所有文件位置：
 
 ::
-	 
-	dpkg -L lvm2
+
+    dpkg -L lvm2
 
 
 wget
@@ -188,18 +188,18 @@ wget
 
 .. code:: shell
 
-	wget -c -r -np -k -L -p http://docs.ceph.org.cn
+    wget -c -r -np -k -L -p http://docs.ceph.org.cn
 
-	
+
 scp
 +++
 
 ::
 
-	# 远程拷贝文件
-	scp root@10.11.113.198:/smbshare/win7.raw .
-	# 远程拷贝目录
-	scp -r root@10.11.113.198:/smbshare/ .
+    # 远程拷贝文件
+    scp root@10.11.113.198:/smbshare/win7.raw .
+    # 远程拷贝目录
+    scp -r root@10.11.113.198:/smbshare/ .
 
 sed
 +++
@@ -208,10 +208,10 @@ sed
 
 ::
 
-	# 终端显示修改后的结果
-	sed "s/'metering',/'metering','instances_monitor'/g" txt
-	# 直接修改原文件
-	sed -i "26s/'metering',/'metering','instances_monitor'/g" dashboard.py
+    # 终端显示修改后的结果
+    sed "s/'metering',/'metering','instances_monitor'/g" txt
+    # 直接修改原文件
+    sed -i "26s/'metering',/'metering','instances_monitor'/g" dashboard.py
 
 
 route
@@ -221,15 +221,15 @@ route
 
 ::
 
-	route add -net 224.0.0.0 netmask 240.0.0.0 dev eth0
+    route add -net 224.0.0.0 netmask 240.0.0.0 dev eth0
 
 
 删除路由：
 
 ::
 
-	route del -net 224.0.0.0 netmask 240.0.0.0
-	route del -net 224.0.0.0 netmask 240.0.0.0 reject
+    route del -net 224.0.0.0 netmask 240.0.0.0
+    route del -net 224.0.0.0 netmask 240.0.0.0 reject
 
 ps
 ++
@@ -238,25 +238,25 @@ ps
 
 ::
 
-	ps -aux|grep name|grep -v grep|cut -c 9-15|xargs kill -9
-	ps afx -o pid,cmd | grep nova
+    ps -aux|grep name|grep -v grep|cut -c 9-15|xargs kill -9
+    ps afx -o pid,cmd | grep nova
 
 df/du
 +++++
 
 ::
 
-	df -hl
-	du -hd1
+    df -hl
+    du -hd1
 
 find/xargs
 +++++++++++
 
 ::
 
-	find . -type f -name "*.py" | xargs egrep "xxx"
-	
-	
+    find . -type f -name "*.py" | xargs egrep "xxx"
+
+
 .. [#] http://yansu.org/2014/01/15/general-shell-resources.html
 
 lsof
@@ -264,31 +264,48 @@ lsof
 
 ::
 
-	lsof -i :5000
-	
+    lsof -i :5000
+
 
 ln
 ++
 
 ::
 
-	# 建立硬链接
-	ln srcfile dstfile
-	# 建立软连接
-	ln -s srcfile dstfile
-	
-	# 显示软硬连接文件详情和区别、inode节点数！	
-	ll tf-* -i
-	# 663182 -rw-r--r-- 2 root root  0 Dec  1 06:59 tf-hl
-	# 663237 lrwxrwxrwx 1 root root 13 Dec  1 07:01 tf-sl -> tmp/test-file
-	ll -i tmp/test-file 
-	# 663182 -rw-r--r-- 2 root root 0 Dec  1 06:59 tmp/test-file
+    # 建立硬链接
+    ln srcfile dstfile
+    # 建立软连接
+    ln -s srcfile dstfile
+
+    # 显示软硬连接文件详情和区别、inode节点数！
+    ll tf-* -i
+    # 663182 -rw-r--r-- 2 root root  0 Dec  1 06:59 tf-hl
+    # 663237 lrwxrwxrwx 1 root root 13 Dec  1 07:01 tf-sl -> tmp/test-file
+    ll -i tmp/test-file
+    # 663182 -rw-r--r-- 2 root root 0 Dec  1 06:59 tmp/test-file
 
 
-	
+
 ln命令需要特别注意如下几点：
 
 .. - ln 命令用法有点不符合常识，一般都是源文件、目的文件顺序，该命令恰好相反。
 
 - 建立硬链接时拷贝inode节点。硬链接文件是普通文件(文件类型位为 ``-`` )，永远不要建立目录的硬链接。
 - 软连接可以连接文件、目录，inode节点数没有增加，文件类型位为 ``l`` 。
+
+
+grep
+++++
+
+::
+
+    # -P: 使用 pcre 模式搜索
+    # -v: 表示搜索不匹配的！
+    git status | grep -Pv '\.pyc$'
+
+    # 搜索固定字符串
+    fgrep '+++===+++' /var/log/apache2/error.log
+
+    # 递归搜索
+    # -r: 递归搜索，不跟从符合链接！
+    fgrep -rn '+++===+++' .
