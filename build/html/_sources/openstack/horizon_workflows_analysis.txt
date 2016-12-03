@@ -1,8 +1,8 @@
 .. _horizon_workflows:
 
 
-horizon workflows分析
-######################
+[翻译] horizon workflows分析
+############################
 
 
 .. tip::
@@ -152,9 +152,6 @@ workflows是复杂的包括多tab的表单。每一个workflow包括一系列继
                 # data["resources_class_id"] are available here.
 
 
-
-
-
 ---------------------
 
 参考
@@ -162,4 +159,3 @@ workflows是复杂的包括多tab的表单。每一个workflow包括一系列继
 
 .. [#] http://docs.openstack.org/developer/horizon/topics/workflows.html
 .. [#] http://docs.openstack.org/developer/horizon/ref/workflows.html
-.. [#] 

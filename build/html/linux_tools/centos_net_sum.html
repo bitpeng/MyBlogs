@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>11. Linux 联网问题汇总 &mdash; Welcome to Sitian&#39;s Blog 0.1 documentation</title>
+  <title>10. Linux 联网问题汇总 &mdash; Welcome to Sitian&#39;s Blog 0.1 documentation</title>
   
 
   
@@ -33,7 +33,7 @@
     <link rel="top" title="Welcome to Sitian&#39;s Blog 0.1 documentation" href="../index.html"/>
         <link rel="up" title="Hack Linux" href="index.html"/>
         <link rel="next" title="OpenStack Note" href="../openstack/index.html"/>
-        <link rel="prev" title="10. vim技巧" href="hack_vim.html"/> 
+        <link rel="prev" title="9. vim技巧" href="hack_vim.html"/> 
 
   
   <script src="../_static/js/modernizr.min.js"></script>
@@ -88,17 +88,16 @@
 <li class="toctree-l2"><a class="reference internal" href="git_cmd.html">1. git 版本控制</a></li>
 <li class="toctree-l2"><a class="reference internal" href="samba_config.html">2. Samba共享访问配置</a></li>
 <li class="toctree-l2"><a class="reference internal" href="use_man_page.html">3. 善用Linux man page</a></li>
-<li class="toctree-l2"><a class="reference internal" href="Linux_lvm.html">4. Linux逻辑卷和lvm</a></li>
-<li class="toctree-l2"><a class="reference internal" href="linux_cmd.html">5. Linux命令和shell</a></li>
-<li class="toctree-l2"><a class="reference internal" href="disk_note.html">6. Linux 磁盘和分区</a></li>
-<li class="toctree-l2"><a class="reference internal" href="ubuntu_lvm_extend.html">7. Ubuntu根分区使用Lvm扩容</a></li>
-<li class="toctree-l2"><a class="reference internal" href="dell_server_manual.html">8. DELL 服务器操作手册</a></li>
-<li class="toctree-l2"><a class="reference internal" href="curl_param_cut.html">9. shell 元字符问题</a></li>
-<li class="toctree-l2"><a class="reference internal" href="hack_vim.html">10. vim技巧</a></li>
-<li class="toctree-l2 current"><a class="current reference internal" href="#">11. Linux 联网问题汇总</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#centos-vmware">11.1. centos VMware复制后无法上网</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#openstack-centosip">11.2. openstack centos镜像自动获取IP</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#vmware">11.3. VMware 联网问题</a></li>
+<li class="toctree-l2"><a class="reference internal" href="linux_cmd.html">4. Linux命令和shell</a></li>
+<li class="toctree-l2"><a class="reference internal" href="disk_note.html">5. Linux 磁盘和分区</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ubuntu_lvm_extend.html">6. Ubuntu根分区使用Lvm扩容</a></li>
+<li class="toctree-l2"><a class="reference internal" href="dell_server_manual.html">7. DELL 服务器操作手册</a></li>
+<li class="toctree-l2"><a class="reference internal" href="curl_param_cut.html">8. shell 元字符问题</a></li>
+<li class="toctree-l2"><a class="reference internal" href="hack_vim.html">9. vim技巧</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">10. Linux 联网问题汇总</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#centos-vmware">10.1. centos VMware复制后无法上网</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#openstack-centosip">10.2. openstack centos镜像自动获取IP</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#vmware">10.3. VMware 联网问题</a></li>
 </ul>
 </li>
 </ul>
@@ -138,7 +137,7 @@
       
           <li><a href="index.html">Hack Linux</a> &raquo;</li>
       
-    <li>11. Linux 联网问题汇总</li>
+    <li>10. Linux 联网问题汇总</li>
       <li class="wy-breadcrumbs-aside">
         
           
@@ -153,7 +152,7 @@
            <div itemprop="articleBody">
             
   <div class="section" id="linux">
-<span id="centos-net-sum"></span><h1><a class="toc-backref" href="#id2">11. Linux 联网问题汇总</a><a class="headerlink" href="#linux" title="Permalink to this headline">¶</a></h1>
+<span id="centos-net-sum"></span><h1><a class="toc-backref" href="#id2">10. Linux 联网问题汇总</a><a class="headerlink" href="#linux" title="Permalink to this headline">¶</a></h1>
 <div class="admonition tip">
 <p class="first admonition-title">Tip</p>
 <p class="last">发现centos联网支持及配置没有ubuntu友好，当然也可能是不熟悉
@@ -173,7 +172,7 @@ centos的原因。之前已经写过一篇 openstack centos实例联网配置的
 </div>
 <hr class="docutils" />
 <div class="section" id="centos-vmware">
-<h2><a class="toc-backref" href="#id3">11.1. centos VMware复制后无法上网</a><a class="headerlink" href="#centos-vmware" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id3">10.1. centos VMware复制后无法上网</a><a class="headerlink" href="#centos-vmware" title="Permalink to this headline">¶</a></h2>
 <p>vmware支持虚拟机复制功能，这样能极大的方便我们的使用。
 可是自己复制一台centos虚拟机后，发现无法联网(ubuntu虚拟机
 复制启动后，不用配置是可以直接联网的。)，可以使用如下方法解决：</p>
@@ -186,7 +185,7 @@ centos的原因。之前已经写过一篇 openstack centos实例联网配置的
 </div>
 </div>
 <div class="section" id="openstack-centosip">
-<h2><a class="toc-backref" href="#id4">11.2. openstack centos镜像自动获取IP</a><a class="headerlink" href="#openstack-centosip" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id4">10.2. openstack centos镜像自动获取IP</a><a class="headerlink" href="#openstack-centosip" title="Permalink to this headline">¶</a></h2>
 <p>原来自己制作的openstack centos镜像，开启虚拟机实例后，都无法自动获取IP地址，
 需要手动配置，非常麻烦。可以在镜像模板中，进行如下配置，亲测有效.</p>
 <p>首先，编辑 /etc/sysconfig/network-scripts/ifcfg-eth0文件如下所示：</p>
@@ -200,7 +199,7 @@ centos的原因。之前已经写过一篇 openstack centos实例联网配置的
 sudo rm -rf /etc/udev/rules.d/70-persistent-net.rules</p>
 </div>
 <div class="section" id="vmware">
-<h2><a class="toc-backref" href="#id5">11.3. VMware 联网问题</a><a class="headerlink" href="#vmware" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id5">10.3. VMware 联网问题</a><a class="headerlink" href="#vmware" title="Permalink to this headline">¶</a></h2>
 <p>在vmware安装好openstack juno，使用ceph作为统一后端存储，可以
 正常上传镜像，可以正常启动虚拟机，但是却无法连接互联网。
 由于在vmware中安装了其他的虚拟机，都可以联网，因此初步猜测，
@@ -252,7 +251,7 @@ sudo rm -rf /etc/udev/rules.d/70-persistent-net.rules</p>
         <a href="../openstack/index.html" class="btn btn-neutral float-right" title="OpenStack Note" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="hack_vim.html" class="btn btn-neutral" title="10. vim技巧" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="hack_vim.html" class="btn btn-neutral" title="9. vim技巧" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   

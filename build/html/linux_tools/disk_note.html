@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>6. Linux 磁盘和分区 &mdash; Welcome to Sitian&#39;s Blog 0.1 documentation</title>
+  <title>5. Linux 磁盘和分区 &mdash; Welcome to Sitian&#39;s Blog 0.1 documentation</title>
   
 
   
@@ -32,8 +32,8 @@
   
     <link rel="top" title="Welcome to Sitian&#39;s Blog 0.1 documentation" href="../index.html"/>
         <link rel="up" title="Hack Linux" href="index.html"/>
-        <link rel="next" title="7. Ubuntu根分区使用Lvm扩容" href="ubuntu_lvm_extend.html"/>
-        <link rel="prev" title="5. Linux命令和shell" href="linux_cmd.html"/> 
+        <link rel="next" title="6. Ubuntu根分区使用Lvm扩容" href="ubuntu_lvm_extend.html"/>
+        <link rel="prev" title="4. Linux命令和shell" href="linux_cmd.html"/> 
 
   
   <script src="../_static/js/modernizr.min.js"></script>
@@ -83,31 +83,33 @@
             
             
                 <ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="../py_doc/index.html">Hack Python</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../py_doc/index.html">Python Note</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="index.html">Hack Linux</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="git_cmd.html">1. git 版本控制</a></li>
 <li class="toctree-l2"><a class="reference internal" href="samba_config.html">2. Samba共享访问配置</a></li>
 <li class="toctree-l2"><a class="reference internal" href="use_man_page.html">3. 善用Linux man page</a></li>
-<li class="toctree-l2"><a class="reference internal" href="Linux_lvm.html">4. Linux逻辑卷和lvm</a></li>
-<li class="toctree-l2"><a class="reference internal" href="linux_cmd.html">5. Linux命令和shell</a></li>
-<li class="toctree-l2 current"><a class="current reference internal" href="#">6. Linux 磁盘和分区</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#id2">6.1. 系统分区</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#id3">6.1.1. 入门</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#mbr">6.1.2. MBR、扩展分区、逻辑分区的概念</a></li>
+<li class="toctree-l2"><a class="reference internal" href="linux_cmd.html">4. Linux命令和shell</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">5. Linux 磁盘和分区</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id2">5.1. 系统分区</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#id3">5.1.1. 入门</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#mbr">5.1.2. MBR、扩展分区、逻辑分区的概念</a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="#windowslinux">6.2. Windows和Linux分区区别</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#id4">6.3. 磁盘相关命令</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#df">6.3.1. df</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#du">6.3.2. du</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#fdisk">6.3.3. fdisk</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#windowslinux">5.2. Windows和Linux分区区别</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id4">5.3. 磁盘相关命令</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#df">5.3.1. df</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#du">5.3.2. du</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#fdisk">5.3.3. fdisk</a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="#id5">6.4. 参考</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id5">5.4. 参考</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="ubuntu_lvm_extend.html">7. Ubuntu根分区使用Lvm扩容</a></li>
-<li class="toctree-l2"><a class="reference internal" href="dell_server_manual.html">8. DELL 服务器操作手册</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ubuntu_lvm_extend.html">6. Ubuntu根分区使用Lvm扩容</a></li>
+<li class="toctree-l2"><a class="reference internal" href="dell_server_manual.html">7. DELL 服务器操作手册</a></li>
+<li class="toctree-l2"><a class="reference internal" href="curl_param_cut.html">8. shell 元字符问题</a></li>
+<li class="toctree-l2"><a class="reference internal" href="hack_vim.html">9. vim技巧</a></li>
+<li class="toctree-l2"><a class="reference internal" href="centos_net_sum.html">10. Linux 联网问题汇总</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../openstack/index.html">OpenStack Note</a></li>
@@ -145,7 +147,7 @@
       
           <li><a href="index.html">Hack Linux</a> &raquo;</li>
       
-    <li>6. Linux 磁盘和分区</li>
+    <li>5. Linux 磁盘和分区</li>
       <li class="wy-breadcrumbs-aside">
         
           
@@ -160,7 +162,7 @@
            <div itemprop="articleBody">
             
   <div class="section" id="linux">
-<h1><a class="toc-backref" href="#id13">6. Linux 磁盘和分区</a><a class="headerlink" href="#linux" title="Permalink to this headline">¶</a></h1>
+<h1><a class="toc-backref" href="#id13">5. Linux 磁盘和分区</a><a class="headerlink" href="#linux" title="Permalink to this headline">¶</a></h1>
 <div class="contents topic" id="id1">
 <p class="topic-title first">目录</p>
 <ul class="simple">
@@ -184,9 +186,9 @@
 </div>
 <hr class="docutils" />
 <div class="section" id="id2">
-<h2><a class="toc-backref" href="#id14">6.1. 系统分区</a><a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id14">5.1. 系统分区</a><a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="id3">
-<h3><a class="toc-backref" href="#id15">6.1.1. 入门</a><a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id15">5.1.1. 入门</a><a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h3>
 <p>首先先普及一下有关系统分区的一些知识：</p>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
@@ -208,7 +210,7 @@
 </div>
 </div>
 <div class="section" id="mbr">
-<h3><a class="toc-backref" href="#id16">6.1.2. MBR、扩展分区、逻辑分区的概念</a><a class="headerlink" href="#mbr" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id16">5.1.2. MBR、扩展分区、逻辑分区的概念</a><a class="headerlink" href="#mbr" title="Permalink to this headline">¶</a></h3>
 <p>一个是放置该硬盘的信息区，称之为主引导分区(master boot recorder,MBR)，
 一个是实际文件数据放置的地方.其中，MBR是整个硬盘最重要的区域.一旦MBR物理实体损坏时，
 则该硬盘就差不多报废了.一般来说，MBR有512个字节，且可以分为两个部分.</p>
@@ -254,7 +256,7 @@ x个柱面到第y个柱面&#8221;.因此，当系统要读取第n个磁盘块时
 </div>
 </div>
 <div class="section" id="windowslinux">
-<h2><a class="toc-backref" href="#id17">6.2. Windows和Linux分区区别</a><a class="headerlink" href="#windowslinux" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id17">5.2. Windows和Linux分区区别</a><a class="headerlink" href="#windowslinux" title="Permalink to this headline">¶</a></h2>
 <p>在Windows操作系统中，是先将物理地址分开(分出主分区和逻辑分区)，再在分区上建立目录。
 在Windows操作系统中，所有路径都是从盘符开始，如C://Program Files.</p>
 <p>Linux正好相反，是先有目录，再将物理地址(分区)映射到目录中.在Linux操作系统中，
@@ -276,24 +278,24 @@ Linux的驱动器是如何标识的。</p>
 一样。如，sda1表示第一个SCSI硬盘上的第一个主分区或者扩展分区。</p>
 </div>
 <div class="section" id="id4">
-<h2><a class="toc-backref" href="#id18">6.3. 磁盘相关命令</a><a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id18">5.3. 磁盘相关命令</a><a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="df">
-<h3><a class="toc-backref" href="#id19">6.3.1. df</a><a class="headerlink" href="#df" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id19">5.3.1. df</a><a class="headerlink" href="#df" title="Permalink to this headline">¶</a></h3>
 </div>
 <div class="section" id="du">
-<h3><a class="toc-backref" href="#id20">6.3.2. du</a><a class="headerlink" href="#du" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id20">5.3.2. du</a><a class="headerlink" href="#du" title="Permalink to this headline">¶</a></h3>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">du</span> <span class="o">-</span><span class="n">hd1</span>
 </pre></div>
 </div>
 </div>
 <div class="section" id="fdisk">
-<h3><a class="toc-backref" href="#id21">6.3.3. fdisk</a><a class="headerlink" href="#fdisk" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id21">5.3.3. fdisk</a><a class="headerlink" href="#fdisk" title="Permalink to this headline">¶</a></h3>
 <p>磁盘分区命令</p>
 </div>
 </div>
 <hr class="docutils" />
 <div class="section" id="id5">
-<h2><a class="toc-backref" href="#id22">6.4. 参考</a><a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id22">5.4. 参考</a><a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h2>
 <table class="docutils footnote" frame="void" id="id6" rules="none">
 <colgroup><col class="label" /><col /></colgroup>
 <tbody valign="top">
@@ -340,10 +342,10 @@ Linux的驱动器是如何标识的。</p>
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="ubuntu_lvm_extend.html" class="btn btn-neutral float-right" title="7. Ubuntu根分区使用Lvm扩容" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="ubuntu_lvm_extend.html" class="btn btn-neutral float-right" title="6. Ubuntu根分区使用Lvm扩容" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="linux_cmd.html" class="btn btn-neutral" title="5. Linux命令和shell" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="linux_cmd.html" class="btn btn-neutral" title="4. Linux命令和shell" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   

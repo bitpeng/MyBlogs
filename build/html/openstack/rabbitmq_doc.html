@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>6. rabbitmq教程 &mdash; Welcome to Sitian&#39;s Blog 0.1 documentation</title>
+  <title>6. [翻译] rabbitmq教程 &mdash; Welcome to Sitian&#39;s Blog 0.1 documentation</title>
   
 
   
@@ -32,7 +32,7 @@
   
     <link rel="top" title="Welcome to Sitian&#39;s Blog 0.1 documentation" href="../index.html"/>
         <link rel="up" title="OpenStack Note" href="index.html"/>
-        <link rel="next" title="附录" href="../others/index.html"/>
+        <link rel="next" title="7. openstack命令汇总" href="os_cmd.html"/>
         <link rel="prev" title="5. OpenStack 启动虚拟机失败分析" href="lanch_instance_failure.html"/> 
 
   
@@ -83,7 +83,7 @@
             
             
                 <ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="../py_doc/index.html">Hack Python</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../py_doc/index.html">Python Note</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../linux_tools/index.html">Hack Linux</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="index.html">OpenStack Note</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="horizon_develop.html">1. Horizon 二次开发指南</a></li>
@@ -91,7 +91,7 @@
 <li class="toctree-l2"><a class="reference internal" href="deploy_synopsis.html">3. openstack 实践指南</a></li>
 <li class="toctree-l2"><a class="reference internal" href="centos_vm_netconf.html">4. Centos虚拟机联网配置</a></li>
 <li class="toctree-l2"><a class="reference internal" href="lanch_instance_failure.html">5. OpenStack 启动虚拟机失败分析</a></li>
-<li class="toctree-l2 current"><a class="current reference internal" href="#">6. rabbitmq教程</a><ul>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">6. [翻译] rabbitmq教程</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#id2">6.1. 先决条件</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#id3">6.2. 获取帮助</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#hello-world">6.3. Hello, world</a><ul>
@@ -142,8 +142,18 @@
 <li class="toctree-l3"><a class="reference internal" href="#id13">6.9. 参考</a></li>
 </ul>
 </li>
+<li class="toctree-l2"><a class="reference internal" href="os_cmd.html">7. openstack命令汇总</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kvm_error.html">8. KVM错误问题</a></li>
+<li class="toctree-l2"><a class="reference internal" href="django_middleware.html">9. django中间件和openstack用户重登录分析</a></li>
+<li class="toctree-l2"><a class="reference internal" href="horizon_workflows_analysis.html">10. horizon workflows分析</a></li>
+<li class="toctree-l2"><a class="reference internal" href="horizon_launch_instance.html">11. horizon启动虚拟机分析</a></li>
+<li class="toctree-l2"><a class="reference internal" href="django-generic_view.html">12. django通用视图：一个小问题引发的思考</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cloud_check.html">13. 云平台服务器重启注意事项</a></li>
+<li class="toctree-l2"><a class="reference internal" href="paste_webob_routes.html">14. OpenStack REST-API基础：paste/webob/routes库</a></li>
+<li class="toctree-l2"><a class="reference internal" href="opengrok_xp.html">15. OpenGrok代码浏览环境搭建</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="../web/index.html">web开发</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../others/index.html">附录</a></li>
 </ul>
 
@@ -177,7 +187,7 @@
       
           <li><a href="index.html">OpenStack Note</a> &raquo;</li>
       
-    <li>6. rabbitmq教程</li>
+    <li>6. [翻译] rabbitmq教程</li>
       <li class="wy-breadcrumbs-aside">
         
           
@@ -192,7 +202,7 @@
            <div itemprop="articleBody">
             
   <div class="section" id="rabbitmq">
-<span id="rabbitmq-doc"></span><h1><a class="toc-backref" href="#id15">6. rabbitmq教程</a><a class="headerlink" href="#rabbitmq" title="Permalink to this headline">¶</a></h1>
+<span id="rabbitmq-doc"></span><h1><a class="toc-backref" href="#id15">6. [翻译] rabbitmq教程</a><a class="headerlink" href="#rabbitmq" title="Permalink to this headline">¶</a></h1>
 <div class="admonition tip">
 <p class="first admonition-title">Tip</p>
 <p>本文档整理翻译自rabbitmq官方文档，通过六个例子阐述消息队列的相关概念，以及它的Python pika库接口。另外：对于一些不好直译的表达，本文均给出它的原始词汇。一些专有名词或者技术术语，一般都不予以翻译！</p>
@@ -201,7 +211,7 @@
 <div class="contents topic" id="id1">
 <p class="topic-title first">目录</p>
 <ul class="simple">
-<li><a class="reference internal" href="#rabbitmq" id="id15">rabbitmq教程</a><ul>
+<li><a class="reference internal" href="#rabbitmq" id="id15">[翻译] rabbitmq教程</a><ul>
 <li><a class="reference internal" href="#id2" id="id16">先决条件</a></li>
 <li><a class="reference internal" href="#id3" id="id17">获取帮助</a></li>
 <li><a class="reference internal" href="#hello-world" id="id18">Hello, world</a><ul>
@@ -1559,7 +1569,7 @@ amq.headers     headers
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="../others/index.html" class="btn btn-neutral float-right" title="附录" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="os_cmd.html" class="btn btn-neutral float-right" title="7. openstack命令汇总" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
         <a href="lanch_instance_failure.html" class="btn btn-neutral" title="5. OpenStack 启动虚拟机失败分析" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>

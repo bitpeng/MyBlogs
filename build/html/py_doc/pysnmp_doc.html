@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>1. PySNMP教程 &mdash; Welcome to Sitian&#39;s Blog 0.1 documentation</title>
+  <title>1. [翻译] PySNMP教程 &mdash; Welcome to Sitian&#39;s Blog 0.1 documentation</title>
   
 
   
@@ -31,9 +31,9 @@
 
   
     <link rel="top" title="Welcome to Sitian&#39;s Blog 0.1 documentation" href="../index.html"/>
-        <link rel="up" title="Hack Python" href="index.html"/>
+        <link rel="up" title="Python Note" href="index.html"/>
         <link rel="next" title="2. PySNMP获取设备信息" href="pysnmp_doc_example.html"/>
-        <link rel="prev" title="Hack Python" href="index.html"/> 
+        <link rel="prev" title="Python Note" href="index.html"/> 
 
   
   <script src="../_static/js/modernizr.min.js"></script>
@@ -83,8 +83,8 @@
             
             
                 <ul class="current">
-<li class="toctree-l1 current"><a class="reference internal" href="index.html">Hack Python</a><ul class="current">
-<li class="toctree-l2 current"><a class="current reference internal" href="#">1. PySNMP教程</a><ul>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Python Note</a><ul class="current">
+<li class="toctree-l2 current"><a class="current reference internal" href="#">1. [翻译] PySNMP教程</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#id2">1.1. 快速入门</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#snmp">1.1.1. 获取SNMP变量</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#snmp-trap">1.1.2. 发送<strong>SNMP TRAP</strong></a></li>
@@ -101,15 +101,20 @@
 </li>
 <li class="toctree-l2"><a class="reference internal" href="pysnmp_doc_example.html">2. PySNMP获取设备信息</a></li>
 <li class="toctree-l2"><a class="reference internal" href="re_doc.html">3. Python正则表达式</a></li>
-<li class="toctree-l2"><a class="reference internal" href="wsgi.html">4. wsgi基础</a></li>
+<li class="toctree-l2"><a class="reference internal" href="wsgi.html">4. WSGI基础</a></li>
 <li class="toctree-l2"><a class="reference internal" href="re_analysis.html">5. Python正则表达式分析利器</a></li>
 <li class="toctree-l2"><a class="reference internal" href="python_descriptor.html">6. Python描述器</a></li>
 <li class="toctree-l2"><a class="reference internal" href="python_notebook.html">7. Python学习总结</a></li>
+<li class="toctree-l2"><a class="reference internal" href="django_note.html">8. django笔记</a></li>
+<li class="toctree-l2"><a class="reference internal" href="python_coding.html">9. Python 编码问题总结</a></li>
+<li class="toctree-l2"><a class="reference internal" href="dec_logic.html">10. Python 装饰器逻辑</a></li>
+<li class="toctree-l2"><a class="reference internal" href="webob_analysis.html">11. webob库简单分析</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../linux_tools/index.html">Hack Linux</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../openstack/index.html">Hack OpenStack</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../others/index.html">其他杂项</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../openstack/index.html">OpenStack Note</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../web/index.html">web开发</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../others/index.html">附录</a></li>
 </ul>
 
             
@@ -140,9 +145,9 @@
   <ul class="wy-breadcrumbs">
     <li><a href="../index.html">Docs</a> &raquo;</li>
       
-          <li><a href="index.html">Hack Python</a> &raquo;</li>
+          <li><a href="index.html">Python Note</a> &raquo;</li>
       
-    <li>1. PySNMP教程</li>
+    <li>1. [翻译] PySNMP教程</li>
       <li class="wy-breadcrumbs-aside">
         
           
@@ -157,11 +162,11 @@
            <div itemprop="articleBody">
             
   <div class="section" id="pysnmp">
-<h1><a class="toc-backref" href="#id27">1. PySNMP教程</a><a class="headerlink" href="#pysnmp" title="Permalink to this headline">¶</a></h1>
+<h1><a class="toc-backref" href="#id27">1. [翻译] PySNMP教程</a><a class="headerlink" href="#pysnmp" title="Permalink to this headline">¶</a></h1>
 <div class="contents topic" id="id1">
 <p class="topic-title first">目录</p>
 <ul class="simple">
-<li><a class="reference internal" href="#pysnmp" id="id27">PySNMP教程</a><ul>
+<li><a class="reference internal" href="#pysnmp" id="id27">[翻译] PySNMP教程</a><ul>
 <li><a class="reference internal" href="#id2" id="id28">快速入门</a><ul>
 <li><a class="reference internal" href="#snmp" id="id29">获取SNMP变量</a></li>
 <li><a class="reference internal" href="#snmp-trap" id="id30">发送<strong>SNMP TRAP</strong></a></li>
@@ -966,7 +971,7 @@ ifOperStatus)。为了通过索引处理SNMP表对象特定的行，可以用<co
         <a href="pysnmp_doc_example.html" class="btn btn-neutral float-right" title="2. PySNMP获取设备信息" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="index.html" class="btn btn-neutral" title="Hack Python" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="index.html" class="btn btn-neutral" title="Python Note" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   

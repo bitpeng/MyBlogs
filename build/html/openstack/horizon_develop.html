@@ -83,7 +83,7 @@
             
             
                 <ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="../py_doc/index.html">Hack Python</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../py_doc/index.html">Python Note</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../linux_tools/index.html">Hack Linux</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="index.html">OpenStack Note</a><ul class="current">
 <li class="toctree-l2 current"><a class="current reference internal" href="#">1. Horizon 二次开发指南</a><ul>
@@ -94,6 +94,7 @@
 <li class="toctree-l3"><a class="reference internal" href="#id3">1.5. 调试</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#id4">1.5.1. 前端调试</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#id5">1.5.2. 后端调试</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id6">1.5.3. 使用manage.py调试</a></li>
 </ul>
 </li>
 </ul>
@@ -102,8 +103,19 @@
 <li class="toctree-l2"><a class="reference internal" href="deploy_synopsis.html">3. openstack 实践指南</a></li>
 <li class="toctree-l2"><a class="reference internal" href="centos_vm_netconf.html">4. Centos虚拟机联网配置</a></li>
 <li class="toctree-l2"><a class="reference internal" href="lanch_instance_failure.html">5. OpenStack 启动虚拟机失败分析</a></li>
+<li class="toctree-l2"><a class="reference internal" href="rabbitmq_doc.html">6. [翻译] rabbitmq教程</a></li>
+<li class="toctree-l2"><a class="reference internal" href="os_cmd.html">7. openstack命令汇总</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kvm_error.html">8. KVM错误问题</a></li>
+<li class="toctree-l2"><a class="reference internal" href="django_middleware.html">9. django中间件和openstack用户重登录分析</a></li>
+<li class="toctree-l2"><a class="reference internal" href="horizon_workflows_analysis.html">10. horizon workflows分析</a></li>
+<li class="toctree-l2"><a class="reference internal" href="horizon_launch_instance.html">11. horizon启动虚拟机分析</a></li>
+<li class="toctree-l2"><a class="reference internal" href="django-generic_view.html">12. django通用视图：一个小问题引发的思考</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cloud_check.html">13. 云平台服务器重启注意事项</a></li>
+<li class="toctree-l2"><a class="reference internal" href="paste_webob_routes.html">14. OpenStack REST-API基础：paste/webob/routes库</a></li>
+<li class="toctree-l2"><a class="reference internal" href="opengrok_xp.html">15. OpenGrok代码浏览环境搭建</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="../web/index.html">web开发</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../others/index.html">附录</a></li>
 </ul>
 
@@ -152,7 +164,7 @@
            <div itemprop="articleBody">
             
   <div class="section" id="horizon">
-<span id="horizon-develop"></span><h1><a class="toc-backref" href="#id10">1. Horizon 二次开发指南</a><a class="headerlink" href="#horizon" title="Permalink to this headline">¶</a></h1>
+<span id="horizon-develop"></span><h1><a class="toc-backref" href="#id12">1. Horizon 二次开发指南</a><a class="headerlink" href="#horizon" title="Permalink to this headline">¶</a></h1>
 <div class="admonition tip">
 <p class="first admonition-title">Tip</p>
 <p class="last">在OpenStack云平台中,horizon是一个相对比较简单的项目，是入门OpenStack开发的一个比较好的切入点，
@@ -161,14 +173,15 @@
 <div class="contents topic" id="id1">
 <p class="topic-title first">目录</p>
 <ul class="simple">
-<li><a class="reference internal" href="#horizon" id="id10">Horizon 二次开发指南</a><ul>
-<li><a class="reference internal" href="#id2" id="id11">Horizon结构</a></li>
-<li><a class="reference internal" href="#panel" id="id12">快速生成panel</a></li>
-<li><a class="reference internal" href="#dashboard" id="id13">dashboard汉化</a></li>
-<li><a class="reference internal" href="#manage-py" id="id14">manage.py文件</a></li>
-<li><a class="reference internal" href="#id3" id="id15">调试</a><ul>
-<li><a class="reference internal" href="#id4" id="id16">前端调试</a></li>
-<li><a class="reference internal" href="#id5" id="id17">后端调试</a></li>
+<li><a class="reference internal" href="#horizon" id="id12">Horizon 二次开发指南</a><ul>
+<li><a class="reference internal" href="#id2" id="id13">Horizon结构</a></li>
+<li><a class="reference internal" href="#panel" id="id14">快速生成panel</a></li>
+<li><a class="reference internal" href="#dashboard" id="id15">dashboard汉化</a></li>
+<li><a class="reference internal" href="#manage-py" id="id16">manage.py文件</a></li>
+<li><a class="reference internal" href="#id3" id="id17">调试</a><ul>
+<li><a class="reference internal" href="#id4" id="id18">前端调试</a></li>
+<li><a class="reference internal" href="#id5" id="id19">后端调试</a></li>
+<li><a class="reference internal" href="#id6" id="id20">使用manage.py调试</a></li>
 </ul>
 </li>
 </ul>
@@ -177,16 +190,16 @@
 </div>
 <hr class="docutils" />
 <div class="section" id="id2">
-<h2><a class="toc-backref" href="#id11">1.1. Horizon结构</a><a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id13">1.1. Horizon结构</a><a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
 <p>如图1所示的仪表盘结构，最上的导航栏为dashboard元素，左侧为panel，中间为tab和tabgroup。
 因此，我们第一步尝试自己创建一个panel。</p>
-<div class="figure align-center" id="id7">
+<div class="figure align-center" id="id9">
 <a class="reference internal image-reference" href="../_images/dashboard.PNG"><img alt="../_images/dashboard.PNG" src="../_images/dashboard.PNG" style="width: 1037.0px; height: 566.0px;" /></a>
 <p class="caption"><span class="caption-text">图1：dashboard结构</span></p>
 </div>
 </div>
 <div class="section" id="panel">
-<h2><a class="toc-backref" href="#id12">1.2. 快速生成panel</a><a class="headerlink" href="#panel" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id14">1.2. 快速生成panel</a><a class="headerlink" href="#panel" title="Permalink to this headline">¶</a></h2>
 <p>OpenStak horizon为我们提供两个命令startpanel和startdash，供我们快速生产panel和dashboard。我自己试了很多次startdash命令，
 新添加的dashboard命令无法显示，可能还需要修改某些地方的配置文件。而startpanel命令，测试成功。</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">cd</span> <span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">cecgw</span><span class="o">/</span><span class="n">csmp</span><span class="o">/</span><span class="n">openstack_dashboard</span><span class="o">/</span><span class="n">dashboards</span><span class="o">/</span><span class="n">admin_traffic_monitor</span>
@@ -201,13 +214,13 @@
 中的Admin_Traffic_Monitor更改成和dashboard.py中类名一致。</li>
 <li>重启apache2，刷新页面，就可以看到效果。</li>
 </ul>
-<div class="figure align-center" id="id8">
+<div class="figure align-center" id="id10">
 <img alt="../_images/start_panel.png" src="../_images/start_panel.png" />
 <p class="caption"><span class="caption-text">图：添加panel效果</span></p>
 </div>
 </div>
 <div class="section" id="dashboard">
-<h2><a class="toc-backref" href="#id13">1.3. dashboard汉化</a><a class="headerlink" href="#dashboard" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id15">1.3. dashboard汉化</a><a class="headerlink" href="#dashboard" title="Permalink to this headline">¶</a></h2>
 <p>如效果图可以看到，新添加的panel是英文显示的，可以通过如下步骤进行汉化：</p>
 <ul class="simple">
 <li>编辑dango.po文件；</li>
@@ -219,33 +232,73 @@
 <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">init</span><span class="o">.</span><span class="n">d</span><span class="o">/</span><span class="n">apache2</span> <span class="n">restart</span>
 </pre></div>
 </div>
-<div class="figure align-center" id="id9">
+<div class="figure align-center" id="id11">
 <img alt="../_images/translation.png" src="../_images/translation.png" />
 <p class="caption"><span class="caption-text">图：dashboard元素汉化</span></p>
 </div>
 </div>
 <div class="section" id="manage-py">
-<h2><a class="toc-backref" href="#id14">1.4. manage.py文件</a><a class="headerlink" href="#manage-py" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id16">1.4. manage.py文件</a><a class="headerlink" href="#manage-py" title="Permalink to this headline">¶</a></h2>
 <p>horizon项目是基于django的，而manage.py文件是django项目的一个重要文件，可以用来生成模型，自省模型，
 还可以用来开启django环境的命令行。</p>
+<p>基于ubuntu部署openstack时，manage.py文件位于： <code class="docutils literal"><span class="pre">/usr/share/openstack-dashboard</span></code></p>
+<p>同步模型和自省模型：</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">cd</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">share</span><span class="o">/</span><span class="n">openstack</span><span class="o">-</span><span class="n">dashboard</span>
+<span class="n">python</span> <span class="n">manage</span><span class="o">.</span><span class="n">py</span> <span class="n">syncdb</span>
+</pre></div>
+</div>
+<p>manage.py 文件还有一个重要作用是用来调试，是最近才发现的一个新功能！后调试一节中讲解。</p>
 </div>
 <div class="section" id="id3">
-<h2><a class="toc-backref" href="#id15">1.5. 调试</a><a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id17">1.5. 调试</a><a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="id4">
-<h3><a class="toc-backref" href="#id16">1.5.1. 前端调试</a><a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id18">1.5.1. 前端调试</a><a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h3>
 <p>对前端开发不是太熟，在dashboard开发中，我使用的是firebug插件，配合在js文件中使用console打印信息，
 用来跟踪变量，查看变量状态等。</p>
 </div>
 <div class="section" id="id5">
-<h3><a class="toc-backref" href="#id17">1.5.2. 后端调试</a><a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id19">1.5.2. 后端调试</a><a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h3>
 <p>horizon项目中，对于前端发起的http请求，有时要跟踪跟踪后端的处理流，查看变量值等。由于horizon项目
 使用apache2进行部署，apache会把后端的操作记录在相关的日志中，因此我们可以使用log库，配合以下命令，
 跟踪变量状态；但是对于处理流程分析，我目前还没有发现好的方法，都是根据代码逻辑进行分析。</p>
+<p>horizon项目中，前端展示基于django模板系统，业务逻辑由python编写。因此在业务逻辑中，假如想查看变量的
+某些信息，可以使用 <code class="docutils literal"><span class="pre">print</span> <span class="pre">&quot;+++===+++:</span> <span class="pre">%s&quot;%args</span></code> (之所以加上 <code class="docutils literal"><span class="pre">+++===+++</span></code> 是为了从Apache2 error.log
+中快速过滤出自己添加的print信息)。然后在apache2的错误日志中，查看变量信息！</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">cd</span> <span class="o">/</span><span class="n">var</span><span class="o">/</span><span class="n">log</span><span class="o">/</span><span class="n">apache2</span>
+<span class="n">tail</span> <span class="o">-</span><span class="n">f</span> <span class="n">error</span><span class="o">.</span><span class="n">log</span> <span class="o">|</span> <span class="n">fgrep</span> <span class="s2">&quot;+++===+++&quot;</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="id6">
+<h3><a class="toc-backref" href="#id20">1.5.3. 使用manage.py调试</a><a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h3>
+<p>horizon 项目基于apache部署时，假如开发过程horizon代码发生
+改动，需要重启apache2服务器，然后刷新页面，不太方便也比较麻烦！</p>
+<p>其实django 框架的manage.py 文件也具有一定的调试功能。
+我们只需要利用 manage.py启动web 服务即可！</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">service</span> <span class="n">apache2</span> <span class="n">stop</span>
+<span class="n">cd</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">share</span><span class="o">/</span><span class="n">openstack_dashboard</span>
+<span class="n">python</span> <span class="n">manage</span><span class="o">.</span><span class="n">py</span> <span class="n">runserver</span> <span class="mf">0.0</span><span class="o">.</span><span class="mf">0.0</span><span class="p">:</span><span class="mi">80</span>
+</pre></div>
+</div>
+<p>通过``python manage.py runserver 0.0.0.0:80``启动服务，
+终端会输出很多的信息。不方便查看，因此，我们可以把所以
+输出重定向到一个文件，然后进行过滤查看即可！(个人开发时
+使用该功能，可很方便的查看horizon项目变量信息。)</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">python</span> <span class="n">manage</span><span class="o">.</span><span class="n">py</span> <span class="n">runserver</span> <span class="mf">0.0</span><span class="o">.</span><span class="mf">0.0</span><span class="p">:</span><span class="mi">80</span> <span class="o">&amp;&gt;</span> <span class="o">/</span><span class="n">smbshare</span><span class="o">/</span><span class="n">horizon</span><span class="o">.</span><span class="n">log</span>
+<span class="n">tail</span> <span class="o">-</span><span class="n">f</span> <span class="o">/</span><span class="n">smbshare</span><span class="o">/</span><span class="n">horizon</span><span class="o">.</span><span class="n">log</span> <span class="o">|</span> <span class="n">fgrep</span> <span class="s2">&quot;+++===+++&quot;</span>
+</pre></div>
+</div>
 <hr class="docutils" />
-<table class="docutils footnote" frame="void" id="id6" rules="none">
+<table class="docutils footnote" frame="void" id="id7" rules="none">
 <colgroup><col class="label" /><col /></colgroup>
 <tbody valign="top">
 <tr><td class="label">[1]</td><td><a class="reference external" href="http://www.360doc.com/content/13/1114/19/8504707_329234716.shtml">http://www.360doc.com/content/13/1114/19/8504707_329234716.shtml</a></td></tr>
+</tbody>
+</table>
+<table class="docutils footnote" frame="void" id="id8" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label">[2]</td><td><a class="reference external" href="http://blog.csdn.net/bpingchang/article/details/37728415">http://blog.csdn.net/bpingchang/article/details/37728415</a></td></tr>
 </tbody>
 </table>
 </div>

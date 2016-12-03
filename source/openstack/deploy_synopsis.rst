@@ -33,12 +33,23 @@ raid 管理
 保存重启，然后开始安装。
 
 
+假如使用虚拟机安装ubuntu时, 特别注意：
+
+1. 安装ubuntu，记得使用自定义方式，并且稍后安装。
+
+2. 配置root，允许permitrootlogin
+
+3. 添加三块网卡，四块硬盘。
+
+
 
 allinone方式部署
 =================
 
 .. note::
     下面以v2.5版本的juno install allinone脚本为例，说明部署方法和需要注意的细节.
+
+
 
 
 安装allinone

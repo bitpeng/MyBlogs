@@ -174,3 +174,14 @@ Ceph集群状态
 
 
 从最后一张图可以看到，虚拟机创建成功。至此，云平台核心服务正常。
+
+
+脚本
+=====
+
+另外，自己写了一个简单的脚本，检查OpenStack相关
+核心组件的服务状态。该脚本基于Ubuntu部署的OpenStack！
+
+.. literalinclude:: /_static/common/check_os_status.sh
+   :language: bash
+   :linenos:

@@ -33,7 +33,7 @@
     <link rel="top" title="Welcome to Sitian&#39;s Blog 0.1 documentation" href="../index.html"/>
         <link rel="up" title="OpenStack Note" href="index.html"/>
         <link rel="next" title="12. django通用视图：一个小问题引发的思考" href="django-generic_view.html"/>
-        <link rel="prev" title="10. horizon workflows????" href="horizon_workflows_analysis.html"/> 
+        <link rel="prev" title="10. horizon workflows分析" href="horizon_workflows_analysis.html"/> 
 
   
   <script src="../_static/js/modernizr.min.js"></script>
@@ -83,7 +83,7 @@
             
             
                 <ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="../py_doc/index.html">Hack Python</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../py_doc/index.html">Python Note</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../linux_tools/index.html">Hack Linux</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="index.html">OpenStack Note</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="horizon_develop.html">1. Horizon 二次开发指南</a></li>
@@ -91,11 +91,11 @@
 <li class="toctree-l2"><a class="reference internal" href="deploy_synopsis.html">3. openstack 实践指南</a></li>
 <li class="toctree-l2"><a class="reference internal" href="centos_vm_netconf.html">4. Centos虚拟机联网配置</a></li>
 <li class="toctree-l2"><a class="reference internal" href="lanch_instance_failure.html">5. OpenStack 启动虚拟机失败分析</a></li>
-<li class="toctree-l2"><a class="reference internal" href="rabbitmq_doc.html">6. rabbitmq教程</a></li>
+<li class="toctree-l2"><a class="reference internal" href="rabbitmq_doc.html">6. [翻译] rabbitmq教程</a></li>
 <li class="toctree-l2"><a class="reference internal" href="os_cmd.html">7. openstack命令汇总</a></li>
 <li class="toctree-l2"><a class="reference internal" href="kvm_error.html">8. KVM错误问题</a></li>
 <li class="toctree-l2"><a class="reference internal" href="django_middleware.html">9. django中间件和openstack用户重登录分析</a></li>
-<li class="toctree-l2"><a class="reference internal" href="horizon_workflows_analysis.html">10. horizon workflows????</a></li>
+<li class="toctree-l2"><a class="reference internal" href="horizon_workflows_analysis.html">10. horizon workflows分析</a></li>
 <li class="toctree-l2 current"><a class="current reference internal" href="#">11. horizon启动虚拟机分析</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#id2">11.1. 步骤</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#workflow">11.1.1. 启动虚拟机workflow</a></li>
@@ -105,6 +105,9 @@
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="django-generic_view.html">12. django通用视图：一个小问题引发的思考</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cloud_check.html">13. 云平台服务器重启注意事项</a></li>
+<li class="toctree-l2"><a class="reference internal" href="paste_webob_routes.html">14. OpenStack REST-API基础：paste/webob/routes库</a></li>
+<li class="toctree-l2"><a class="reference internal" href="opengrok_xp.html">15. OpenGrok代码浏览环境搭建</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../web/index.html">web开发</a></li>
@@ -211,7 +214,8 @@
 </li>
 <li><p class="first">每一个step都可以贡献数据(贡献的数据对workflow的handle函数可见。)。其中，从action表单中定义的
 字段自动可见，但是其他字段，需要通过contribulte函数手动添加到context 字典中。</p>
-<p>如：SetInstanceDetails步骤贡献了source_type字段，但是该字段在SetInstanceDetails Step的action类SetInstanceDetailsAction中并没有定义，需要在contribute函数中手动更新。</p>
+<p>如：SetInstanceDetails步骤贡献了source_type字段，但是该字段在SetInstanceDetails Step
+的action类SetInstanceDetailsAction中并没有定义，需要在contribute函数中手动更新。</p>
 <div class="figure align-center" id="id7">
 <a class="reference internal image-reference" href="../_images/step_contribute.png"><img alt="../_images/step_contribute.png" src="../_images/step_contribute.png" style="width: 715.0px; height: 585.0px;" /></a>
 <p class="caption"><span class="caption-text">contribute函数手动添加非在action中定义的contributions</span></p>
@@ -273,7 +277,7 @@
         <a href="django-generic_view.html" class="btn btn-neutral float-right" title="12. django通用视图：一个小问题引发的思考" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="horizon_workflows_analysis.html" class="btn btn-neutral" title="10. horizon workflows????" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="horizon_workflows_analysis.html" class="btn btn-neutral" title="10. horizon workflows分析" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   

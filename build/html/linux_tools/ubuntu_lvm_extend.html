@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>7. Ubuntu根分区使用Lvm扩容 &mdash; Welcome to Sitian&#39;s Blog 0.1 documentation</title>
+  <title>6. Ubuntu根分区使用Lvm扩容 &mdash; Welcome to Sitian&#39;s Blog 0.1 documentation</title>
   
 
   
@@ -32,8 +32,8 @@
   
     <link rel="top" title="Welcome to Sitian&#39;s Blog 0.1 documentation" href="../index.html"/>
         <link rel="up" title="Hack Linux" href="index.html"/>
-        <link rel="next" title="8. DELL 服务器操作手册" href="dell_server_manual.html"/>
-        <link rel="prev" title="6. Linux 磁盘和分区" href="disk_note.html"/> 
+        <link rel="next" title="7. DELL 服务器操作手册" href="dell_server_manual.html"/>
+        <link rel="prev" title="5. Linux 磁盘和分区" href="disk_note.html"/> 
 
   
   <script src="../_static/js/modernizr.min.js"></script>
@@ -83,21 +83,23 @@
             
             
                 <ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="../py_doc/index.html">Hack Python</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../py_doc/index.html">Python Note</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="index.html">Hack Linux</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="git_cmd.html">1. git 版本控制</a></li>
 <li class="toctree-l2"><a class="reference internal" href="samba_config.html">2. Samba共享访问配置</a></li>
 <li class="toctree-l2"><a class="reference internal" href="use_man_page.html">3. 善用Linux man page</a></li>
-<li class="toctree-l2"><a class="reference internal" href="Linux_lvm.html">4. Linux逻辑卷和lvm</a></li>
-<li class="toctree-l2"><a class="reference internal" href="linux_cmd.html">5. Linux命令和shell</a></li>
-<li class="toctree-l2"><a class="reference internal" href="disk_note.html">6. Linux 磁盘和分区</a></li>
-<li class="toctree-l2 current"><a class="current reference internal" href="#">7. Ubuntu根分区使用Lvm扩容</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#id2">7.1. 使用新硬盘扩展根文件系统</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#id3">7.2. 用未完全使用硬盘扩展根文件系统</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#id4">7.3. 命令参考和自动化脚本</a></li>
+<li class="toctree-l2"><a class="reference internal" href="linux_cmd.html">4. Linux命令和shell</a></li>
+<li class="toctree-l2"><a class="reference internal" href="disk_note.html">5. Linux 磁盘和分区</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">6. Ubuntu根分区使用Lvm扩容</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id2">6.1. 使用新硬盘扩展根文件系统</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id3">6.2. 用未完全使用硬盘扩展根文件系统</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id4">6.3. 命令参考和自动化脚本</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="dell_server_manual.html">8. DELL 服务器操作手册</a></li>
+<li class="toctree-l2"><a class="reference internal" href="dell_server_manual.html">7. DELL 服务器操作手册</a></li>
+<li class="toctree-l2"><a class="reference internal" href="curl_param_cut.html">8. shell 元字符问题</a></li>
+<li class="toctree-l2"><a class="reference internal" href="hack_vim.html">9. vim技巧</a></li>
+<li class="toctree-l2"><a class="reference internal" href="centos_net_sum.html">10. Linux 联网问题汇总</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../openstack/index.html">OpenStack Note</a></li>
@@ -135,7 +137,7 @@
       
           <li><a href="index.html">Hack Linux</a> &raquo;</li>
       
-    <li>7. Ubuntu根分区使用Lvm扩容</li>
+    <li>6. Ubuntu根分区使用Lvm扩容</li>
       <li class="wy-breadcrumbs-aside">
         
           
@@ -150,7 +152,7 @@
            <div itemprop="articleBody">
             
   <div class="section" id="ubuntulvm">
-<span id="ubuntu-lvm-extend"></span><h1><a class="toc-backref" href="#id14">7. Ubuntu根分区使用Lvm扩容</a><a class="headerlink" href="#ubuntulvm" title="Permalink to this headline">¶</a></h1>
+<span id="ubuntu-lvm-extend"></span><h1><a class="toc-backref" href="#id14">6. Ubuntu根分区使用Lvm扩容</a><a class="headerlink" href="#ubuntulvm" title="Permalink to this headline">¶</a></h1>
 <div class="contents topic" id="id1">
 <p class="topic-title first">目录</p>
 <ul class="simple">
@@ -169,7 +171,7 @@
 <p class="last">系统版本：ubuntu-14.04 LTS</p>
 </div>
 <div class="section" id="id2">
-<h2><a class="toc-backref" href="#id15">7.1. 使用新硬盘扩展根文件系统</a><a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id15">6.1. 使用新硬盘扩展根文件系统</a><a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
 <ul>
 <li><p class="first">新建一块硬盘并进行分区：</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">fdisk</span> <span class="o">/</span><span class="n">dev</span><span class="o">/</span><span class="n">sde</span>
@@ -238,7 +240,7 @@
 </div>
 <hr class="docutils" />
 <div class="section" id="id3">
-<h2><a class="toc-backref" href="#id16">7.2. 用未完全使用硬盘扩展根文件系统</a><a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id16">6.2. 用未完全使用硬盘扩展根文件系统</a><a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h2>
 <p>假如没有新硬盘可用，并且系统挂载的硬盘有空闲扇区。那么可以通过空闲扇区新建分区来进行扩展。</p>
 <div class="highlight-bash"><div class="highlight"><pre><span></span><span class="c1"># 对已经使用但是没有完全使用的分区进行lvm扩容。</span>
 <span class="c1"># 比如，有vda,总容量为500G，但是只有两个分区:vda1和vda2且只用了10G。</span>
@@ -331,7 +333,7 @@ Syncing disks.
 </div>
 </div>
 <div class="section" id="id4">
-<h2><a class="toc-backref" href="#id17">7.3. 命令参考和自动化脚本</a><a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id17">6.3. 命令参考和自动化脚本</a><a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h2>
 <p>fdisk 命令新建好分区后，扩展根文件系统的相关命令以及自动化脚本。</p>
 <div class="highlight-bash"><div class="highlight"><pre><span></span>fdisk /dev/sde
 <span class="c1"># 新建分区完成后，需要重读分区表。</span>
@@ -370,10 +372,10 @@ resize2fs /dev/mapper/VolGroup-lv_root
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="dell_server_manual.html" class="btn btn-neutral float-right" title="8. DELL 服务器操作手册" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="dell_server_manual.html" class="btn btn-neutral float-right" title="7. DELL 服务器操作手册" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="disk_note.html" class="btn btn-neutral" title="6. Linux 磁盘和分区" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="disk_note.html" class="btn btn-neutral" title="5. Linux 磁盘和分区" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   

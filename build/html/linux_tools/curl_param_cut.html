@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>9. shell 元字符问题 &mdash; Welcome to Sitian&#39;s Blog 0.1 documentation</title>
+  <title>8. shell 元字符问题 &mdash; Welcome to Sitian&#39;s Blog 0.1 documentation</title>
   
 
   
@@ -32,8 +32,8 @@
   
     <link rel="top" title="Welcome to Sitian&#39;s Blog 0.1 documentation" href="../index.html"/>
         <link rel="up" title="Hack Linux" href="index.html"/>
-        <link rel="next" title="OpenStack Note" href="../openstack/index.html"/>
-        <link rel="prev" title="8. DELL 服务器操作手册" href="dell_server_manual.html"/> 
+        <link rel="next" title="9. vim技巧" href="hack_vim.html"/>
+        <link rel="prev" title="7. DELL 服务器操作手册" href="dell_server_manual.html"/> 
 
   
   <script src="../_static/js/modernizr.min.js"></script>
@@ -83,21 +83,22 @@
             
             
                 <ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="../py_doc/index.html">Hack Python</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../py_doc/index.html">Python Note</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="index.html">Hack Linux</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="git_cmd.html">1. git 版本控制</a></li>
 <li class="toctree-l2"><a class="reference internal" href="samba_config.html">2. Samba共享访问配置</a></li>
 <li class="toctree-l2"><a class="reference internal" href="use_man_page.html">3. 善用Linux man page</a></li>
-<li class="toctree-l2"><a class="reference internal" href="Linux_lvm.html">4. Linux逻辑卷和lvm</a></li>
-<li class="toctree-l2"><a class="reference internal" href="linux_cmd.html">5. Linux命令和shell</a></li>
-<li class="toctree-l2"><a class="reference internal" href="disk_note.html">6. Linux 磁盘和分区</a></li>
-<li class="toctree-l2"><a class="reference internal" href="ubuntu_lvm_extend.html">7. Ubuntu根分区使用Lvm扩容</a></li>
-<li class="toctree-l2"><a class="reference internal" href="dell_server_manual.html">8. DELL 服务器操作手册</a></li>
-<li class="toctree-l2 current"><a class="current reference internal" href="#">9. shell 元字符问题</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#curl">9.1. curl 命令行参数截断问题</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#id1">9.2. 引号</a></li>
+<li class="toctree-l2"><a class="reference internal" href="linux_cmd.html">4. Linux命令和shell</a></li>
+<li class="toctree-l2"><a class="reference internal" href="disk_note.html">5. Linux 磁盘和分区</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ubuntu_lvm_extend.html">6. Ubuntu根分区使用Lvm扩容</a></li>
+<li class="toctree-l2"><a class="reference internal" href="dell_server_manual.html">7. DELL 服务器操作手册</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">8. shell 元字符问题</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#curl">8.1. curl 命令行参数截断问题</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id1">8.2. 引号</a></li>
 </ul>
 </li>
+<li class="toctree-l2"><a class="reference internal" href="hack_vim.html">9. vim技巧</a></li>
+<li class="toctree-l2"><a class="reference internal" href="centos_net_sum.html">10. Linux 联网问题汇总</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../openstack/index.html">OpenStack Note</a></li>
@@ -135,7 +136,7 @@
       
           <li><a href="index.html">Hack Linux</a> &raquo;</li>
       
-    <li>9. shell 元字符问题</li>
+    <li>8. shell 元字符问题</li>
       <li class="wy-breadcrumbs-aside">
         
           
@@ -150,10 +151,10 @@
            <div itemprop="articleBody">
             
   <div class="section" id="shell">
-<span id="curl-param-cut"></span><h1>9. shell 元字符问题<a class="headerlink" href="#shell" title="Permalink to this headline">¶</a></h1>
+<span id="curl-param-cut"></span><h1>8. shell 元字符问题<a class="headerlink" href="#shell" title="Permalink to this headline">¶</a></h1>
 <hr class="docutils" />
 <div class="section" id="curl">
-<h2>9.1. curl 命令行参数截断问题<a class="headerlink" href="#curl" title="Permalink to this headline">¶</a></h2>
+<h2>8.1. curl 命令行参数截断问题<a class="headerlink" href="#curl" title="Permalink to this headline">¶</a></h2>
 <p>在使用curl 测试paste库的过程中，发现总是出现错误：</p>
 <p>curl 请求及输出如下：</p>
 <div class="code sh highlight-default"><div class="highlight"><pre><span></span>root@juno-controller:/# curl http://localhost:9999/calc?oper=plus&amp;op1=20&amp;op2=30
@@ -181,7 +182,7 @@ root@juno-controller:/# A server error occurred.  Please contact the administrat
 </div>
 </div>
 <div class="section" id="id1">
-<h2>9.2. 引号<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
+<h2>8.2. 引号<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
 <p>先来看看原来编写lvm自动化脚本遇到的问题：</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">vgdisplay</span><span class="o">|</span> <span class="n">grep</span> <span class="s2">&quot;VG Name&quot;</span> <span class="o">|</span> <span class="n">awk</span> <span class="s2">&quot;{print $3}&quot;</span>
 <span class="c1">#  VG Name               juno-controller-vg</span>
@@ -277,10 +278,10 @@ linux如果echo要让转义字符发生作用,就要使用-e选项,且转义字�
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="../openstack/index.html" class="btn btn-neutral float-right" title="OpenStack Note" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="hack_vim.html" class="btn btn-neutral float-right" title="9. vim技巧" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="dell_server_manual.html" class="btn btn-neutral" title="8. DELL 服务器操作手册" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="dell_server_manual.html" class="btn btn-neutral" title="7. DELL 服务器操作手册" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   

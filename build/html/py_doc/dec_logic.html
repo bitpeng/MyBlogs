@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>10. Python 装饰器逻辑 &mdash; Welcome to Sitian&#39;s Blog 0.1 documentation</title>
+  <title>9. Python 装饰器逻辑 &mdash; Welcome to Sitian&#39;s Blog 0.1 documentation</title>
   
 
   
@@ -32,8 +32,8 @@
   
     <link rel="top" title="Welcome to Sitian&#39;s Blog 0.1 documentation" href="../index.html"/>
         <link rel="up" title="Python Note" href="index.html"/>
-        <link rel="next" title="Hack Linux" href="../linux_tools/index.html"/>
-        <link rel="prev" title="9. Python 编码问题总结" href="python_coding.html"/> 
+        <link rel="next" title="10. webob库简单分析" href="webob_analysis.html"/>
+        <link rel="prev" title="8. Python 编码问题总结" href="python_coding.html"/> 
 
   
   <script src="../_static/js/modernizr.min.js"></script>
@@ -84,21 +84,21 @@
             
                 <ul class="current">
 <li class="toctree-l1 current"><a class="reference internal" href="index.html">Python Note</a><ul class="current">
-<li class="toctree-l2"><a class="reference internal" href="pysnmp_doc.html">1. PySNMP教程</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pysnmp_doc.html">1. [翻译] PySNMP教程</a></li>
 <li class="toctree-l2"><a class="reference internal" href="pysnmp_doc_example.html">2. PySNMP获取设备信息</a></li>
-<li class="toctree-l2"><a class="reference internal" href="re_doc.html">3. Python正则表达式</a></li>
+<li class="toctree-l2"><a class="reference internal" href="re_doc.html">3. [翻译] Python正则表达式</a></li>
 <li class="toctree-l2"><a class="reference internal" href="wsgi.html">4. WSGI基础</a></li>
 <li class="toctree-l2"><a class="reference internal" href="re_analysis.html">5. Python正则表达式分析利器</a></li>
 <li class="toctree-l2"><a class="reference internal" href="python_descriptor.html">6. Python描述器</a></li>
 <li class="toctree-l2"><a class="reference internal" href="python_notebook.html">7. Python学习总结</a></li>
-<li class="toctree-l2"><a class="reference internal" href="django_note.html">8. django笔记</a></li>
-<li class="toctree-l2"><a class="reference internal" href="python_coding.html">9. Python 编码问题总结</a></li>
-<li class="toctree-l2 current"><a class="current reference internal" href="#">10. Python 装饰器逻辑</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#id2">10.1. 类装饰器</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#id3">10.2. 函数装饰器</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#id4">10.3. 类装饰器带参数</a></li>
+<li class="toctree-l2"><a class="reference internal" href="python_coding.html">8. Python 编码问题总结</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">9. Python 装饰器逻辑</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id2">9.1. 类装饰器</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id3">9.2. 函数装饰器</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id4">9.3. 类装饰器带参数</a></li>
 </ul>
 </li>
+<li class="toctree-l2"><a class="reference internal" href="webob_analysis.html">10. webob库简单分析</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../linux_tools/index.html">Hack Linux</a></li>
@@ -137,7 +137,7 @@
       
           <li><a href="index.html">Python Note</a> &raquo;</li>
       
-    <li>10. Python 装饰器逻辑</li>
+    <li>9. Python 装饰器逻辑</li>
       <li class="wy-breadcrumbs-aside">
         
           
@@ -152,7 +152,7 @@
            <div itemprop="articleBody">
             
   <div class="section" id="python">
-<span id="dec-logic"></span><h1><a class="toc-backref" href="#id5">10. Python 装饰器逻辑</a><a class="headerlink" href="#python" title="Permalink to this headline">¶</a></h1>
+<span id="dec-logic"></span><h1><a class="toc-backref" href="#id5">9. Python 装饰器逻辑</a><a class="headerlink" href="#python" title="Permalink to this headline">¶</a></h1>
 <p>Python装饰器可以理解，可是每次阅读代码时，都要使用转换过的方法才能顺着看。
 因此这里作以下总结。以方便快速阅读代码</p>
 <div class="contents topic" id="id1">
@@ -168,7 +168,7 @@
 </div>
 <hr class="docutils" />
 <div class="section" id="id2">
-<h2><a class="toc-backref" href="#id6">10.1. 类装饰器</a><a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id6">9.1. 类装饰器</a><a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="c1"># 类装饰器</span>
 <span class="nd">@webob</span><span class="o">.</span><span class="n">dec</span><span class="o">.</span><span class="n">wsgify</span>
 <span class="k">def</span> <span class="nf">app1</span><span class="p">(</span><span class="n">req</span><span class="p">):</span>
@@ -185,7 +185,7 @@ app1_obj, 包装后，app1为类对象，因此wsgify 类一定定义了__call__
 __call__方法中再次调用原始的函数(app1函数)！</p>
 </div>
 <div class="section" id="id3">
-<h2><a class="toc-backref" href="#id7">10.2. 函数装饰器</a><a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id7">9.2. 函数装饰器</a><a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h2>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="c1"># 函数装饰器</span>
 <span class="k">def</span> <span class="nf">dec_func1</span><span class="p">(</span><span class="n">path</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39;</span>
@@ -215,7 +215,7 @@ app2_func实际上是内层闭包函数(这里是_decorator函数)，因此调�
 app2_func(……)相当于执行内层闭包函数！</p>
 </div>
 <div class="section" id="id4">
-<h2><a class="toc-backref" href="#id8">10.3. 类装饰器带参数</a><a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id8">9.3. 类装饰器带参数</a><a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h2>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="c1"># 类装饰器</span>
 <span class="nd">@webob</span><span class="o">.</span><span class="n">dec</span><span class="o">.</span><span class="n">wsgify</span><span class="p">(</span><span class="n">RequestClass</span><span class="o">=</span><span class="n">webob</span><span class="o">.</span><span class="n">Request</span><span class="p">)</span>
 <span class="k">def</span> <span class="nf">app3</span><span class="p">(</span><span class="n">req</span><span class="p">):</span>
@@ -243,10 +243,10 @@ app2_func(……)相当于执行内层闭包函数！</p>
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="../linux_tools/index.html" class="btn btn-neutral float-right" title="Hack Linux" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="webob_analysis.html" class="btn btn-neutral float-right" title="10. webob库简单分析" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="python_coding.html" class="btn btn-neutral" title="9. Python 编码问题总结" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="python_coding.html" class="btn btn-neutral" title="8. Python 编码问题总结" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   

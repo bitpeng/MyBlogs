@@ -12,7 +12,6 @@ Hack Linux
     git_cmd
     samba_config
     use_man_page
-    Linux_lvm
     linux_cmd
     disk_note
     ubuntu_lvm_extend
@@ -20,3 +19,4 @@ Hack Linux
     curl_param_cut
     hack_vim
     centos_net_sum
+..    Linux_lvm

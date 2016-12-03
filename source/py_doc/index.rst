@@ -22,7 +22,8 @@ Python Note
     re_analysis
     python_descriptor
     python_notebook
-    django_note
     python_coding
     dec_logic
     webob_analysis
+
+..    django_note
