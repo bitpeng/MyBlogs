@@ -95,6 +95,7 @@
 <li class="toctree-l2"><a class="reference internal" href="curl_param_cut.html">8. shell 元字符问题</a></li>
 <li class="toctree-l2 current"><a class="current reference internal" href="#">9. vim技巧</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#id1">9.1. 末行命令</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id2">9.2. 光标移动</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="centos_net_sum.html">10. Linux 联网问题汇总</a></li>
@@ -166,6 +167,25 @@ $ 代表匹配行末。</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span>:set ts=4
 :set expandtab
 :%retab!
+</pre></div>
+</div>
+</div>
+<div class="section" id="id2">
+<h2>9.2. 光标移动<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
+<p>翻页:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">ctrl</span> <span class="o">+</span> <span class="n">u</span><span class="o">/</span><span class="n">d</span><span class="p">;</span> <span class="n">向上</span><span class="o">/</span><span class="n">下滚动半屏</span>
+<span class="n">ctrl</span> <span class="o">+</span> <span class="n">b</span><span class="o">/</span><span class="n">f</span><span class="p">;</span> <span class="n">向上</span><span class="o">/</span><span class="n">下滚动半屏</span>
+</pre></div>
+</div>
+<p>当前页:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">H</span> <span class="p">;</span> <span class="n">当前屏首行</span>
+<span class="n">L</span> <span class="p">;</span> <span class="n">当前屏末行</span>
+<span class="n">M</span> <span class="p">;</span> <span class="n">当前屏中间行</span>
+</pre></div>
+</div>
+<p>光标回退</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span>ctrl + O ; 光标回退到较老位置！
+ctrl + i ; 光标回退到较新位置！
 </pre></div>
 </div>
 </div>

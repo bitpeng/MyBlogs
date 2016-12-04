@@ -24,7 +24,29 @@ TAB替换为空格:
 
 ::
 
-	:set ts=4
-	:set expandtab
-	:%retab!
-	
+    :set ts=4
+    :set expandtab
+    :%retab!
+
+
+光标移动
+========
+
+翻页::
+
+    ctrl + u/d; 向上/下滚动半屏
+    ctrl + b/f; 向上/下滚动半屏
+
+当前页::
+
+    H ; 当前屏首行
+    L ; 当前屏末行
+    M ; 当前屏中间行
+
+
+光标回退
+
+::
+
+    ctrl + O ; 光标回退到较老位置！
+    ctrl + i ; 光标回退到较新位置！
