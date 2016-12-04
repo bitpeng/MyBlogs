@@ -36,19 +36,24 @@ OpenGrok 部署
 
 ::
 
-	cd /smbshare
-	# 下载opengrok
-	wget https://github.com/OpenGrok/OpenGrok/files/213268/opengrok-0.12.1.5.tar.gz
-	tar -xvzf opengrok-0.12.1.5.tar.gz
-	# 拷贝web app源文件
-	cp opengrok-0.12.1.5/lib/source.war /opt/apache-tomcat-7.0.50/webapps/
-	# 安装CTags
-	dpkg -i exuberant-ctags_1%3a5.9~svn20110310-7ubuntu0.1_amd64.deb
-	# 或者apt-get install ctags
-	# 生成代码索引
-	cd opengrok-0.12.1.5/bin
-	./OpenGrok index /opt/cecgw/csmp/nova
-	
+    cd /smbshare
+    # 下载opengrok
+    wget https://github.com/OpenGrok/OpenGrok/files/213268/opengrok-0.12.1.5.tar.gz
+    tar -xvzf opengrok-0.12.1.5.tar.gz
+    # 拷贝web app源文件
+    cp opengrok-0.12.1.5/lib/source.war /opt/apache-tomcat-7.0.50/webapps/
+    # 安装CTags
+    dpkg -i exuberant-ctags_1%3a5.9~svn20110310-7ubuntu0.1_amd64.deb
+    # 或者apt-get install ctags
+    # 生成代码索引
+    cd opengrok-0.12.1.5/bin
+    ./OpenGrok index /opt/cecgw/csmp/nova
+
+    # 重新生成新代码索引
+    # 删除原索引，然后再生成！
+    rm -rf /var/opengrok
+    ./OpenGrok index /opt/cecgw/csmp/nova
+
 生成代码索引后，就可以打开网页，进行代码浏览了。
 
 .. figure:: /_static/images/opengrok_access.png

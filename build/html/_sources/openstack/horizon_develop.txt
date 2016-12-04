@@ -16,7 +16,7 @@ Horizon 二次开发指南
 
 
 .. tip::
-    在OpenStack云平台中,horizon是一个相对比较简单的项目，是入门OpenStack开发的一个比较好的切入点，
+    在OpenStack云平台中，horizon是一个相对比较简单的项目，是入门OpenStack开发的一个比较好的切入点，
     本文档是自己对OpenStack dashboard进行二次开发过程的总结。
 
 
@@ -32,7 +32,7 @@ Horizon 二次开发指南
 Horizon结构
 ===========
 
-如图1所示的仪表盘结构，最上的导航栏为dashboard元素，左侧为panel，中间为tab和tabgroup。
+如图1所示的仪表盘结构，最上的导航栏为 :class:`dashboard` 元素，左侧为panel，中间为tab和tabgroup。
 因此，我们第一步尝试自己创建一个panel。
 
 .. figure:: /_static/images/dashboard.PNG
@@ -132,8 +132,8 @@ horizon项目中，前端展示基于django模板系统，业务逻辑由python�
 
 ::
 
-	cd /var/log/apache2
-	tail -f error.log | fgrep "+++===+++"
+    cd /var/log/apache2
+    tail -f error.log | fgrep "+++===+++"
 
 使用manage.py调试
 +++++++++++++++++
@@ -146,11 +146,11 @@ horizon 项目基于apache部署时，假如开发过程horizon代码发生
 
 ::
 
-	service apache2 stop
-	cd /usr/share/openstack_dashboard
-	python manage.py runserver 0.0.0.0:80
+    service apache2 stop
+    cd /usr/share/openstack_dashboard
+    python manage.py runserver 0.0.0.0:80
 
-通过``python manage.py runserver 0.0.0.0:80``启动服务，
+通过 ``python manage.py runserver 0.0.0.0:80`` 启动服务，
 终端会输出很多的信息。不方便查看，因此，我们可以把所以
 输出重定向到一个文件，然后进行过滤查看即可！(个人开发时
 使用该功能，可很方便的查看horizon项目变量信息。)
@@ -158,8 +158,8 @@ horizon 项目基于apache部署时，假如开发过程horizon代码发生
 
 ::
 
-	python manage.py runserver 0.0.0.0:80 &> /smbshare/horizon.log
-	tail -f /smbshare/horizon.log | fgrep "+++===+++"
+    python manage.py runserver 0.0.0.0:80 &> /smbshare/horizon.log
+    tail -f /smbshare/horizon.log | fgrep "+++===+++"
 
 .. figure:: /_static/images/manage_runserver.png
    :scale: 100
