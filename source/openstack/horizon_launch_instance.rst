@@ -19,6 +19,8 @@ horizon启动虚拟机分析
 
     本篇文章分析OpenStack通过horizon启动虚拟机的流程。
 
+    基于OpenStack Juno版本!
+
 
 .. contents:: 目录
 
@@ -38,18 +40,23 @@ horizon启动虚拟机分析
 
 -   启动虚拟机workflow
 
-    ::
+    .. figure:: /_static/images/LaunchInstanceView.png
+       :scale: 100
+       :align: center
 
-        class LaunchInstanceView(workflows.WorkflowView):
-            # 启动虚拟机的workflow
-            workflow_class = project_workflows.LaunchInstance
+       View给workflow传递初始值
 
-            # 传递给LaunchInstance workflow 的初始值
-            def get_initial(self):
-                initial = super(LaunchInstanceView, self).get_initial()
-                initial['project_id'] = self.request.user.tenant_id
-                initial['user_id'] = self.request.user.id
-                return initial
+
+    根据 :class:`horizon.workflow` 知识，:func:`get_initial` 函数为 :class:`LaunchInstance`
+    提供初始数据 ``user_id`` 和 ``project_id`` . 那么只要后 :class:`LaunchInstance` 的
+    :class:`Action` 类 depends_on 这两个字段，该两个字段就可以直接使用！
+    :class:`LaunchInstance` 的每一个 ``Step`` 都 depends_on 了这两个字段！
+
+    .. figure:: /_static/images/depends_on.png
+       :scale: 100
+       :align: center
+
+       depends_on 字段
 
 -   接下来，在workflow中，一共有五个steps，其中，第一个步骤设置permissions
     而进行隐藏。它的主要作用是贡献两个字段让后面的步骤进行依赖，从而对后面的steps进行校验。
@@ -112,6 +119,10 @@ horizon启动虚拟机分析
 
        调用api创建虚拟机
 
+    经过这一步之后， novaclient 把创建虚拟机的一系列参数，封装成一个 HTTP 请求。
+    然后向 :class:`nova-api` 发起请求！
+
+
 
 未完待续……
 
@@ -125,6 +136,4 @@ horizon启动虚拟机分析
 参考
 =====
 
-.. [#] http://f.dataguru.cn/thread-127360-1-1.html
-.. [#] http://askubuntu.com/questions/140360/kvm-kernel-module-error
-
+待续

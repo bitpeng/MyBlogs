@@ -33,7 +33,7 @@
     <link rel="top" title="Welcome to Sitian&#39;s Blog 0.1 documentation" href="../index.html"/>
         <link rel="up" title="OpenStack Note" href="index.html"/>
         <link rel="next" title="12. django通用视图：一个小问题引发的思考" href="django-generic_view.html"/>
-        <link rel="prev" title="10. horizon workflows分析" href="horizon_workflows_analysis.html"/> 
+        <link rel="prev" title="10. [翻译] horizon workflows分析" href="horizon_workflows_analysis.html"/> 
 
   
   <script src="../_static/js/modernizr.min.js"></script>
@@ -95,7 +95,7 @@
 <li class="toctree-l2"><a class="reference internal" href="os_cmd.html">7. openstack命令汇总</a></li>
 <li class="toctree-l2"><a class="reference internal" href="kvm_error.html">8. KVM错误问题</a></li>
 <li class="toctree-l2"><a class="reference internal" href="django_middleware.html">9. django中间件和openstack用户重登录分析</a></li>
-<li class="toctree-l2"><a class="reference internal" href="horizon_workflows_analysis.html">10. horizon workflows分析</a></li>
+<li class="toctree-l2"><a class="reference internal" href="horizon_workflows_analysis.html">10. [翻译] horizon workflows分析</a></li>
 <li class="toctree-l2 current"><a class="current reference internal" href="#">11. horizon启动虚拟机分析</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#id2">11.1. 步骤</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#workflow">11.1.1. 启动虚拟机workflow</a></li>
@@ -162,7 +162,8 @@
 <span id="horizon-launch-instance"></span><h1><a class="toc-backref" href="#id12">11. horizon启动虚拟机分析</a><a class="headerlink" href="#horizon" title="Permalink to this headline">¶</a></h1>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
-<p class="last">本篇文章分析OpenStack通过horizon启动虚拟机的流程。</p>
+<p>本篇文章分析OpenStack通过horizon启动虚拟机的流程。</p>
+<p class="last">基于OpenStack Juno版本!</p>
 </div>
 <div class="contents topic" id="id1">
 <p class="topic-title first">目录</p>
@@ -182,23 +183,23 @@
 <h2><a class="toc-backref" href="#id13">11.1. 步骤</a><a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
 <ul>
 <li><p class="first">URLs.py URL映射</p>
-<div class="figure align-center" id="id6">
+<div class="figure align-center" id="id4">
 <a class="reference internal image-reference" href="../_images/Launch_instance_url.png"><img alt="../_images/Launch_instance_url.png" src="../_images/Launch_instance_url.png" style="width: 790.0px; height: 76.0px;" /></a>
 <p class="caption"><span class="caption-text">启动虚拟机URL映射</span></p>
 </div>
 </li>
 <li><p class="first">启动虚拟机workflow</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">LaunchInstanceView</span><span class="p">(</span><span class="n">workflows</span><span class="o">.</span><span class="n">WorkflowView</span><span class="p">):</span>
-    <span class="c1"># 启动虚拟机的workflow</span>
-    <span class="n">workflow_class</span> <span class="o">=</span> <span class="n">project_workflows</span><span class="o">.</span><span class="n">LaunchInstance</span>
-
-    <span class="c1"># 传递给LaunchInstance workflow 的初始值</span>
-    <span class="k">def</span> <span class="nf">get_initial</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="n">initial</span> <span class="o">=</span> <span class="nb">super</span><span class="p">(</span><span class="n">LaunchInstanceView</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">get_initial</span><span class="p">()</span>
-        <span class="n">initial</span><span class="p">[</span><span class="s1">&#39;project_id&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">user</span><span class="o">.</span><span class="n">tenant_id</span>
-        <span class="n">initial</span><span class="p">[</span><span class="s1">&#39;user_id&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">user</span><span class="o">.</span><span class="n">id</span>
-        <span class="k">return</span> <span class="n">initial</span>
-</pre></div>
+<div class="figure align-center" id="id5">
+<a class="reference internal image-reference" href="../_images/LaunchInstanceView.png"><img alt="../_images/LaunchInstanceView.png" src="../_images/LaunchInstanceView.png" style="width: 701.0px; height: 216.0px;" /></a>
+<p class="caption"><span class="caption-text">View给workflow传递初始值</span></p>
+</div>
+<p>根据 <code class="xref py py-class docutils literal"><span class="pre">horizon.workflow</span></code> 知识，<code class="xref py py-func docutils literal"><span class="pre">get_initial()</span></code> 函数为 <code class="xref py py-class docutils literal"><span class="pre">LaunchInstance</span></code>
+提供初始数据 <code class="docutils literal"><span class="pre">user_id</span></code> 和 <code class="docutils literal"><span class="pre">project_id</span></code> . 那么只要后 <code class="xref py py-class docutils literal"><span class="pre">LaunchInstance</span></code> 的
+<code class="xref py py-class docutils literal"><span class="pre">Action</span></code> 类 depends_on 这两个字段，该两个字段就可以直接使用！
+<code class="xref py py-class docutils literal"><span class="pre">LaunchInstance</span></code> 的每一个 <code class="docutils literal"><span class="pre">Step</span></code> 都 depends_on 了这两个字段！</p>
+<div class="figure align-center" id="id6">
+<a class="reference internal image-reference" href="../_images/depends_on.png"><img alt="../_images/depends_on.png" src="../_images/depends_on.png" style="width: 791.0px; height: 141.0px;" /></a>
+<p class="caption"><span class="caption-text">depends_on 字段</span></p>
 </div>
 </li>
 <li><p class="first">接下来，在workflow中，一共有五个steps，其中，第一个步骤设置permissions
@@ -244,6 +245,8 @@
 <a class="reference internal image-reference" href="../_images/call-server_create.png"><img alt="../_images/call-server_create.png" src="../_images/call-server_create.png" style="width: 1018.0px; height: 345.0px;" /></a>
 <p class="caption"><span class="caption-text">调用api创建虚拟机</span></p>
 </div>
+<p>经过这一步之后， novaclient 把创建虚拟机的一系列参数，封装成一个 HTTP 请求。
+然后向 <code class="xref py py-class docutils literal"><span class="pre">nova-api</span></code> 发起请求！</p>
 </li>
 </ol>
 <p>未完待续……</p>
@@ -252,18 +255,7 @@
 <hr class="docutils" />
 <div class="section" id="id3">
 <h2><a class="toc-backref" href="#id15">11.2. 参考</a><a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h2>
-<table class="docutils footnote" frame="void" id="id4" rules="none">
-<colgroup><col class="label" /><col /></colgroup>
-<tbody valign="top">
-<tr><td class="label">[1]</td><td><a class="reference external" href="http://f.dataguru.cn/thread-127360-1-1.html">http://f.dataguru.cn/thread-127360-1-1.html</a></td></tr>
-</tbody>
-</table>
-<table class="docutils footnote" frame="void" id="id5" rules="none">
-<colgroup><col class="label" /><col /></colgroup>
-<tbody valign="top">
-<tr><td class="label">[2]</td><td><a class="reference external" href="http://askubuntu.com/questions/140360/kvm-kernel-module-error">http://askubuntu.com/questions/140360/kvm-kernel-module-error</a></td></tr>
-</tbody>
-</table>
+<p>待续</p>
 </div>
 </div>
 
@@ -277,7 +269,7 @@
         <a href="django-generic_view.html" class="btn btn-neutral float-right" title="12. django通用视图：一个小问题引发的思考" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="horizon_workflows_analysis.html" class="btn btn-neutral" title="10. horizon workflows分析" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="horizon_workflows_analysis.html" class="btn btn-neutral" title="10. [翻译] horizon workflows分析" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   
