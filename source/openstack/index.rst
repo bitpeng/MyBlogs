@@ -28,6 +28,7 @@ OpenStack Note
     paste_webob_routes
     opengrok_xp
     nova_api
+    nova_smd
 
 
 ..  sphinx_doc

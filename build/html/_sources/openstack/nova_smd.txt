@@ -1,0 +1,69 @@
+.. _nova_SMD:
+
+[翻译] nova:Services, Managers and Drivers
+##########################################
+
+参考链接：http://docs.openstack.org/developer/nova/services.html
+
+
+对于初次接触nova的新手来说，Services/Managers/Drivers的作用可能让人
+很困惑。该文档就试图概括他们之间的区别，使得理解系统更容易！
+
+
+当前，Managers 和 Drivers 通过标志指定，并使用utils.load_object() 加载，
+该函数允许他们(指Managers和Drivers)通过单态、类、模块或者对象来实现。
+只要(通过标志指定的)路径指向一个(响应getattr的)对象(或者返回一个对象的callable)，
+它就应该是manager或dirver！
+
+nova.service 模块
+=================
+
+所有运行在hosts工作进程的通用节点基类！
+
+
+nova.manager 模块
+=================
+
+Manager 基类。
+
+Manager 负责系统的某个特定方面。它是关系系统某一部分的一组逻辑代码。
+一般来说，其他组件应该使用Managers对它负责的组件进行更改。
+
+例如，其他组件需要以某种方式处理卷，那它应该使用 VolumeManager的方法，而不是直接
+更改数据库域。这允许我们把所有与卷相关的代码放在同一个地方！
+
+
+我们采用了智能managers和呀数据的基本策略，这意味着不是把方法附加给
+数据对象，而是组件需要调用manager的(作用于数据的)方法
+
+
+managers的方法能在本机运行的应该直接调用。如果某些特殊的方法需要在
+远程host上执行，这应该通过发送RPC调用给(包装了manager的)service。
+
+
+Managers负责绝大部分的数据访问，但是不实现特定的数据。需要特定实现的任何东西(不能通用化的)
+都应该由Driver去做！
+
+
+通常，我们倾向使用一个Manager对应不同的Drivers实现，但有时有很多Managers是必要的。
+你可以这样想：在manager层抽象不同的所有策略(如FlatNetwork和VlanNetwork)，在Drivers
+层做不同的实现(LinuxNetDriver 和 CiscoNetDriver)。
+
+
+Managers 通常提供方法，用来进行主机初始化设置或者包装了服务的周期性任务初始化设置！
+
+
+该模块提供 Manager， managers的基类。
+
+Drivers:特定实现
+================
+
+一个manager为它的任务加载driver。driver 负责特定实现细节。任何一个主机上运行shell命令，或处理其他非Python代码都应该在一个driver发生。
+
+Drivers应该尽可能少的操作数据库，尽管当前允许实现操作特定数据。这可能在以后会重新考虑！
+
+通常为特定的driver定义一个抽象基类是必要的，并在抽象基类中定义不同driver需要实现的方法。
+
+.. [#] http://www.aboutyun.com/thread-9264-1-1.html
+
+

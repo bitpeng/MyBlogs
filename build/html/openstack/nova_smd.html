@@ -1,0 +1,275 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>17. [翻译] nova:Services, Managers and Drivers &mdash; Welcome to Sitian&#39;s Blog 0.1 documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+    <link rel="top" title="Welcome to Sitian&#39;s Blog 0.1 documentation" href="../index.html"/>
+        <link rel="up" title="OpenStack Note" href="index.html"/>
+        <link rel="next" title="web开发" href="../web/index.html"/>
+        <link rel="prev" title="16. nova-api分析" href="nova_api.html"/> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> Welcome to Sitian's Blog
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.1
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../py_doc/index.html">Python Note</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../linux_tools/index.html">Hack Linux</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">OpenStack Note</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="horizon_develop.html">1. Horizon 二次开发指南</a></li>
+<li class="toctree-l2"><a class="reference internal" href="image-create-guide.html">2. OpenStack镜像制作</a></li>
+<li class="toctree-l2"><a class="reference internal" href="deploy_synopsis.html">3. openstack 实践指南</a></li>
+<li class="toctree-l2"><a class="reference internal" href="centos_vm_netconf.html">4. Centos虚拟机联网配置</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lanch_instance_failure.html">5. OpenStack 启动虚拟机失败分析</a></li>
+<li class="toctree-l2"><a class="reference internal" href="rabbitmq_doc.html">6. [翻译] rabbitmq教程</a></li>
+<li class="toctree-l2"><a class="reference internal" href="os_cmd.html">7. openstack命令汇总</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kvm_error.html">8. KVM错误问题</a></li>
+<li class="toctree-l2"><a class="reference internal" href="django_middleware.html">9. django中间件和openstack用户重登录分析</a></li>
+<li class="toctree-l2"><a class="reference internal" href="horizon_workflows_analysis.html">10. [翻译] horizon workflows分析</a></li>
+<li class="toctree-l2"><a class="reference internal" href="horizon_launch_instance.html">11. horizon启动虚拟机分析</a></li>
+<li class="toctree-l2"><a class="reference internal" href="django-generic_view.html">12. django通用视图：一个小问题引发的思考</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cloud_check.html">13. 云平台服务器重启注意事项</a></li>
+<li class="toctree-l2"><a class="reference internal" href="paste_webob_routes.html">14. OpenStack REST-API基础：paste/webob/routes库</a></li>
+<li class="toctree-l2"><a class="reference internal" href="opengrok_xp.html">15. OpenGrok代码浏览环境搭建</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nova_api.html">16. nova-api分析</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">17. [翻译] nova:Services, Managers and Drivers</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#nova-service">17.1. nova.service 模块</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#nova-manager">17.2. nova.manager 模块</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#drivers">17.3. Drivers:特定实现</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../web/index.html">web开发</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../others/index.html">附录</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../index.html">Welcome to Sitian's Blog</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+ 
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../index.html">Docs</a> &raquo;</li>
+      
+          <li><a href="index.html">OpenStack Note</a> &raquo;</li>
+      
+    <li>17. [翻译] nova:Services, Managers and Drivers</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="../_sources/openstack/nova_smd.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="nova-services-managers-and-drivers">
+<span id="nova-smd"></span><h1>17. [翻译] nova:Services, Managers and Drivers<a class="headerlink" href="#nova-services-managers-and-drivers" title="Permalink to this headline">¶</a></h1>
+<p>参考链接：<a class="reference external" href="http://docs.openstack.org/developer/nova/services.html">http://docs.openstack.org/developer/nova/services.html</a></p>
+<p>对于初次接触nova的新手来说，Services/Managers/Drivers的作用可能让人
+很困惑。该文档就试图概括他们之间的区别，使得理解系统更容易！</p>
+<p>当前，Managers 和 Drivers 通过标志指定，并使用utils.load_object() 加载，
+该函数允许他们(指Managers和Drivers)通过单态、类、模块或者对象来实现。
+只要(通过标志指定的)路径指向一个(响应getattr的)对象(或者返回一个对象的callable)，
+它就应该是manager或dirver！</p>
+<div class="section" id="nova-service">
+<h2>17.1. nova.service 模块<a class="headerlink" href="#nova-service" title="Permalink to this headline">¶</a></h2>
+<p>所有运行在hosts工作进程的通用节点基类！</p>
+</div>
+<div class="section" id="nova-manager">
+<h2>17.2. nova.manager 模块<a class="headerlink" href="#nova-manager" title="Permalink to this headline">¶</a></h2>
+<p>Manager 基类。</p>
+<p>Manager 负责系统的某个特定方面。它是关系系统某一部分的一组逻辑代码。
+一般来说，其他组件应该使用Managers对它负责的组件进行更改。</p>
+<p>例如，其他组件需要以某种方式处理卷，那它应该使用 VolumeManager的方法，而不是直接
+更改数据库域。这允许我们把所有与卷相关的代码放在同一个地方！</p>
+<p>我们采用了智能managers和呀数据的基本策略，这意味着不是把方法附加给
+数据对象，而是组件需要调用manager的(作用于数据的)方法</p>
+<p>managers的方法能在本机运行的应该直接调用。如果某些特殊的方法需要在
+远程host上执行，这应该通过发送RPC调用给(包装了manager的)service。</p>
+<p>Managers负责绝大部分的数据访问，但是不实现特定的数据。需要特定实现的任何东西(不能通用化的)
+都应该由Driver去做！</p>
+<p>通常，我们倾向使用一个Manager对应不同的Drivers实现，但有时有很多Managers是必要的。
+你可以这样想：在manager层抽象不同的所有策略(如FlatNetwork和VlanNetwork)，在Drivers
+层做不同的实现(LinuxNetDriver 和 CiscoNetDriver)。</p>
+<p>Managers 通常提供方法，用来进行主机初始化设置或者包装了服务的周期性任务初始化设置！</p>
+<p>该模块提供 Manager， managers的基类。</p>
+</div>
+<div class="section" id="drivers">
+<h2>17.3. Drivers:特定实现<a class="headerlink" href="#drivers" title="Permalink to this headline">¶</a></h2>
+<p>一个manager为它的任务加载driver。driver 负责特定实现细节。任何一个主机上运行shell命令，或处理其他非Python代码都应该在一个driver发生。</p>
+<p>Drivers应该尽可能少的操作数据库，尽管当前允许实现操作特定数据。这可能在以后会重新考虑！</p>
+<p>通常为特定的driver定义一个抽象基类是必要的，并在抽象基类中定义不同driver需要实现的方法。</p>
+<table class="docutils footnote" frame="void" id="id1" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label">[1]</td><td><a class="reference external" href="http://www.aboutyun.com/thread-9264-1-1.html">http://www.aboutyun.com/thread-9264-1-1.html</a></td></tr>
+</tbody>
+</table>
+</div>
+</div>
+
+
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../web/index.html" class="btn btn-neutral float-right" title="web开发" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="nova_api.html" class="btn btn-neutral" title="16. nova-api分析" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2016, chenshiqiang.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'0.1',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>
