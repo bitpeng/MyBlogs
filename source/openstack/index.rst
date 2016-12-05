@@ -27,6 +27,7 @@ OpenStack Note
     cloud_check
     paste_webob_routes
     opengrok_xp
+    nova_api
 
 
 ..  sphinx_doc

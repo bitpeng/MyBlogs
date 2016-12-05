@@ -1,0 +1,378 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>16. nova-api分析 &mdash; Welcome to Sitian&#39;s Blog 0.1 documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+    <link rel="top" title="Welcome to Sitian&#39;s Blog 0.1 documentation" href="../index.html"/>
+        <link rel="up" title="OpenStack Note" href="index.html"/>
+        <link rel="next" title="web开发" href="../web/index.html"/>
+        <link rel="prev" title="15. OpenGrok代码浏览环境搭建" href="opengrok_xp.html"/> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> Welcome to Sitian's Blog
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.1
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../py_doc/index.html">Python Note</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../linux_tools/index.html">Hack Linux</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">OpenStack Note</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="horizon_develop.html">1. Horizon 二次开发指南</a></li>
+<li class="toctree-l2"><a class="reference internal" href="image-create-guide.html">2. OpenStack镜像制作</a></li>
+<li class="toctree-l2"><a class="reference internal" href="deploy_synopsis.html">3. openstack 实践指南</a></li>
+<li class="toctree-l2"><a class="reference internal" href="centos_vm_netconf.html">4. Centos虚拟机联网配置</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lanch_instance_failure.html">5. OpenStack 启动虚拟机失败分析</a></li>
+<li class="toctree-l2"><a class="reference internal" href="rabbitmq_doc.html">6. [翻译] rabbitmq教程</a></li>
+<li class="toctree-l2"><a class="reference internal" href="os_cmd.html">7. openstack命令汇总</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kvm_error.html">8. KVM错误问题</a></li>
+<li class="toctree-l2"><a class="reference internal" href="django_middleware.html">9. django中间件和openstack用户重登录分析</a></li>
+<li class="toctree-l2"><a class="reference internal" href="horizon_workflows_analysis.html">10. [翻译] horizon workflows分析</a></li>
+<li class="toctree-l2"><a class="reference internal" href="horizon_launch_instance.html">11. horizon启动虚拟机分析</a></li>
+<li class="toctree-l2"><a class="reference internal" href="django-generic_view.html">12. django通用视图：一个小问题引发的思考</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cloud_check.html">13. 云平台服务器重启注意事项</a></li>
+<li class="toctree-l2"><a class="reference internal" href="paste_webob_routes.html">14. OpenStack REST-API基础：paste/webob/routes库</a></li>
+<li class="toctree-l2"><a class="reference internal" href="opengrok_xp.html">15. OpenGrok代码浏览环境搭建</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">16. nova-api分析</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../web/index.html">web开发</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../others/index.html">附录</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../index.html">Welcome to Sitian's Blog</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+ 
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../index.html">Docs</a> &raquo;</li>
+      
+          <li><a href="index.html">OpenStack Note</a> &raquo;</li>
+      
+    <li>16. nova-api分析</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="../_sources/openstack/nova_api.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="nova-api">
+<span id="id1"></span><h1>16. nova-api分析<a class="headerlink" href="#nova-api" title="Permalink to this headline">¶</a></h1>
+<p>下面从 <code class="docutils literal"><span class="pre">nova</span> <span class="pre">--debug</span> <span class="pre">list</span></code> 着手分析 <code class="docutils literal"><span class="pre">nova-api</span></code> 的处理流程！</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span>root@juno-controller:/smbshare/paste_test# nova --debug list
+REQ: curl -i &#39;http://100.100.100.254:5000/v2.0/tokens&#39; -X POST -H &quot;Accept: application/json&quot; -H &quot;Content-Type: application/json&quot; -H &quot;User-Agent: python-novaclient&quot; -d &#39;{&quot;auth&quot;: {&quot;tenantName&quot;: &quot;csq&quot;, &quot;passwordCredentials&quot;: {&quot;username&quot;: &quot;chensq&quot;, &quot;password&quot;: &quot;{SHA1}c60f964054e2080b1c827fae07ef0e5d92d2d285&quot;}}}&#39;
+…………
+
+REQ: curl -i &#39;http://100.100.100.254:8774/v2/a0e0c1b46fe94e1c90bd15e358d39486/servers/detail&#39; -X GET -H &quot;Accept: application/json&quot; -H &quot;User-Agent: python-novaclient&quot; -H &quot;X-Auth-Project-Id: csq&quot; -H &quot;X-Auth-Token: {SHA1}69c17566ddec8dc5488593dd36e6484c82242d71&quot;
+…………
+</pre></div>
+</div>
+<p>可以看到，获取租户虚机列表命令 <code class="docutils literal"><span class="pre">nova</span> <span class="pre">--debug</span> <span class="pre">list</span></code> 先要向 <code class="docutils literal"><span class="pre">keystone</span></code> 发起请求，获取用户token。这一步分析省略！</p>
+<p>然后获取token后，然后利用该token，向 <code class="docutils literal"><span class="pre">nova-api</span></code> 发起请求，获取虚机列表。</p>
+<p>首先，我们需要定位到该url: <code class="docutils literal"><span class="pre">v2/a0e0c1b46fe94e1c90bd15e358d39486/servers/detail</span></code> 对应的处理程序。</p>
+<div class="highlight-shell"><div class="highlight"><pre><span></span><span class="c1"># vi /etc/nova/api-paste.ini</span>
+<span class="o">[</span>composite:osapi_compute<span class="o">]</span>
+<span class="nv">use</span> <span class="o">=</span> call:nova.api.openstack.urlmap:urlmap_factory
+/: oscomputeversions
+/v1.1: openstack_compute_api_v2
+/v2: openstack_compute_api_v2
+/v2.1: openstack_compute_api_v21
+/v3: openstack_compute_api_v3
+
+<span class="o">[</span>composite:openstack_compute_api_v2<span class="o">]</span>
+<span class="nv">use</span> <span class="o">=</span> call:nova.api.auth:pipeline_factory
+<span class="nv">noauth</span> <span class="o">=</span> compute_req_id faultwrap sizelimit noauth ratelimit osapi_compute_app_v2
+<span class="nv">keystone</span> <span class="o">=</span> compute_req_id faultwrap sizelimit authtoken keystonecontext ratelimit osapi_compute_app_v2
+<span class="nv">keystone_nolimit</span> <span class="o">=</span> compute_req_id faultwrap sizelimit authtoken keystonecontext osapi_compute_app_v2
+
+<span class="o">[</span>app:osapi_compute_app_v2<span class="o">]</span>
+paste.app_factory <span class="o">=</span> nova.api.openstack.compute:APIRouter.factory
+</pre></div>
+</div>
+<p>这里只选取了 <code class="docutils literal"><span class="pre">api-paste.ini</span></code> 文件的部分配置项！可以看到，
+URL以/v2开头的请求，最终由 <code class="docutils literal"><span class="pre">osapi_compute_app_v2</span></code> 处理！</p>
+<p><code class="docutils literal"><span class="pre">/nova/api/openstack/compute/__init__.py</span></code> 中定义的 <code class="xref py py-class docutils literal"><span class="pre">APIRouter</span></code> 作为
+<code class="docutils literal"><span class="pre">os_api_compute_app_v2</span></code> 的入口!</p>
+<p>继承体系：</p>
+<p><code class="xref py py-class docutils literal"><span class="pre">nova.api.openstack.compute:APIRouter</span></code> &#8211;&gt; <code class="xref py py-class docutils literal"><span class="pre">nova.api.openstack.APIRouter</span></code></p>
+<p><code class="xref py py-class docutils literal"><span class="pre">nova.api.openstack.APIRouter</span></code> 定义了 <code class="xref py py-meth docutils literal"><span class="pre">factory()</span></code> 类方法：</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">APIRouter</span><span class="p">(</span><span class="n">base_wsgi</span><span class="o">.</span><span class="n">Router</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Routes requests on the OpenStack API to the appropriate controller</span>
+<span class="sd">    and method.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">ExtensionManager</span> <span class="o">=</span> <span class="kc">None</span>  <span class="c1"># override in subclasses</span>
+
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">factory</span><span class="p">(</span><span class="n">cls</span><span class="p">,</span> <span class="n">global_config</span><span class="p">,</span> <span class="o">**</span><span class="n">local_config</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Simple paste factory, :class:`nova.wsgi.Router` doesn&#39;t have one.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">cls</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>该方法返回的app对象作为以/v2开头的http请求的入口：即当有req请求到来，并且req.path 以/v2开头，
+<code class="docutils literal"><span class="pre">paste.deploy</span></code> 包装会把该请求转发给 <code class="xref py py-class docutils literal"><span class="pre">APIRouter</span></code> 对象处理，因此会调用 <code class="xref py py-meth docutils literal"><span class="pre">APIRouter.__call__()</span></code> 函数！</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Router</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;WSGI middleware that maps incoming requests to WSGI apps.&quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">mapper</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Create a router for the given routes.Mapper.</span>
+
+<span class="sd">        Each route in `mapper` must specify a &#39;controller&#39;, which is a</span>
+<span class="sd">        WSGI app to call.  You&#39;ll probably want to specify an &#39;action&#39; as</span>
+<span class="sd">        well and have your controller be an object that can route</span>
+<span class="sd">        the request to the action-specific method.</span>
+
+<span class="sd">        Examples:</span>
+<span class="sd">          mapper = routes.Mapper()</span>
+<span class="sd">          sc = ServerController()</span>
+
+<span class="sd">          # Explicit mapping of one route to a controller+action</span>
+<span class="sd">          mapper.connect(None, &#39;/svrlist&#39;, controller=sc, action=&#39;list&#39;)</span>
+
+<span class="sd">          # Actions are all implicitly defined</span>
+<span class="sd">          mapper.resource(&#39;server&#39;, &#39;servers&#39;, controller=sc)</span>
+
+<span class="sd">          # Pointing to an arbitrary WSGI app.  You can specify the</span>
+<span class="sd">          # {path_info:.*} parameter so the target app can be handed just that</span>
+<span class="sd">          # section of the URL.</span>
+<span class="sd">          mapper.connect(None, &#39;/v1.0/{path_info:.*}&#39;, controller=BlogApp())</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">map</span> <span class="o">=</span> <span class="n">mapper</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_router</span> <span class="o">=</span> <span class="n">routes</span><span class="o">.</span><span class="n">middleware</span><span class="o">.</span><span class="n">RoutesMiddleware</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_dispatch</span><span class="p">,</span>
+                                                          <span class="bp">self</span><span class="o">.</span><span class="n">map</span><span class="p">)</span>
+
+    <span class="nd">@webob</span><span class="o">.</span><span class="n">dec</span><span class="o">.</span><span class="n">wsgify</span><span class="p">(</span><span class="n">RequestClass</span><span class="o">=</span><span class="n">Request</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">req</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Route the incoming request to a controller based on self.map.</span>
+
+<span class="sd">        If no match, return a 404.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_router</span>
+
+    <span class="nd">@staticmethod</span>
+    <span class="nd">@webob</span><span class="o">.</span><span class="n">dec</span><span class="o">.</span><span class="n">wsgify</span><span class="p">(</span><span class="n">RequestClass</span><span class="o">=</span><span class="n">Request</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">_dispatch</span><span class="p">(</span><span class="n">req</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Dispatch the request to the appropriate controller.</span>
+
+<span class="sd">        Called by self._router after matching the incoming request to a route</span>
+<span class="sd">        and putting the information into req.environ.  Either returns 404</span>
+<span class="sd">        or the routed WSGI app&#39;s response.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">match</span> <span class="o">=</span> <span class="n">req</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s1">&#39;wsgiorg.routing_args&#39;</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">match</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">webob</span><span class="o">.</span><span class="n">exc</span><span class="o">.</span><span class="n">HTTPNotFound</span><span class="p">()</span>
+        <span class="n">app</span> <span class="o">=</span> <span class="n">match</span><span class="p">[</span><span class="s1">&#39;controller&#39;</span><span class="p">]</span>
+        <span class="k">return</span> <span class="n">app</span>
+</pre></div>
+</div>
+<p>这一步的处理流程是：<code class="xref py py-meth docutils literal"><span class="pre">APIRouter.__call__()</span></code> &#8211;&gt; <code class="xref py py-meth docutils literal"><span class="pre">APIRouter._dispatch()</span></code> ，
+由于这两个函数返回的都是 <code class="docutils literal"><span class="pre">wsgi</span> <span class="pre">app</span></code> 对象，因此会继续调用该对象。
+最后 <code class="xref py py-meth docutils literal"><span class="pre">APIRouter._dispatch()</span></code> 返回app, 实际上该app的值是在 <code class="xref py py-meth docutils literal"><span class="pre">mapper.connect()</span></code> 或者
+<code class="xref py py-meth docutils literal"><span class="pre">mapper.resource()</span></code> 时定义的 <code class="docutils literal"><span class="pre">controller</span></code> 实参对象！</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="c1"># /nova/api/openstack/compute/__init__.py</span>
+<span class="k">class</span> <span class="nc">APIRouter</span><span class="p">(</span><span class="n">nova</span><span class="o">.</span><span class="n">api</span><span class="o">.</span><span class="n">openstack</span><span class="o">.</span><span class="n">APIRouter</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Routes requests on the OpenStack API to the appropriate controller</span>
+<span class="sd">    and method.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">ExtensionManager</span> <span class="o">=</span> <span class="n">extensions</span><span class="o">.</span><span class="n">ExtensionManager</span>
+
+    <span class="k">def</span> <span class="nf">_setup_routes</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">mapper</span><span class="p">,</span> <span class="n">ext_mgr</span><span class="p">,</span> <span class="n">init_only</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">init_only</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="s1">&#39;versions&#39;</span> <span class="ow">in</span> <span class="n">init_only</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">resources</span><span class="p">[</span><span class="s1">&#39;versions&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">versions</span><span class="o">.</span><span class="n">create_resource</span><span class="p">()</span>
+            <span class="n">mapper</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="s2">&quot;versions&quot;</span><span class="p">,</span> <span class="s2">&quot;/&quot;</span><span class="p">,</span>
+                        <span class="n">controller</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">resources</span><span class="p">[</span><span class="s1">&#39;versions&#39;</span><span class="p">],</span>
+                        <span class="n">action</span><span class="o">=</span><span class="s1">&#39;show&#39;</span><span class="p">,</span>
+                        <span class="n">conditions</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;method&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;GET&#39;</span><span class="p">]})</span>
+
+        <span class="n">mapper</span><span class="o">.</span><span class="n">redirect</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="s2">&quot;/&quot;</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">init_only</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="s1">&#39;consoles&#39;</span> <span class="ow">in</span> <span class="n">init_only</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">resources</span><span class="p">[</span><span class="s1">&#39;consoles&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">consoles</span><span class="o">.</span><span class="n">create_resource</span><span class="p">()</span>
+            <span class="n">mapper</span><span class="o">.</span><span class="n">resource</span><span class="p">(</span><span class="s2">&quot;console&quot;</span><span class="p">,</span> <span class="s2">&quot;consoles&quot;</span><span class="p">,</span>
+                        <span class="n">controller</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">resources</span><span class="p">[</span><span class="s1">&#39;consoles&#39;</span><span class="p">],</span>
+                        <span class="n">parent_resource</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="n">member_name</span><span class="o">=</span><span class="s1">&#39;server&#39;</span><span class="p">,</span>
+                        <span class="n">collection_name</span><span class="o">=</span><span class="s1">&#39;servers&#39;</span><span class="p">))</span>
+
+        <span class="k">if</span> <span class="n">init_only</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="s1">&#39;consoles&#39;</span> <span class="ow">in</span> <span class="n">init_only</span> <span class="ow">or</span> \
+                <span class="s1">&#39;servers&#39;</span> <span class="ow">in</span> <span class="n">init_only</span> <span class="ow">or</span> <span class="s1">&#39;ips&#39;</span> <span class="ow">in</span> <span class="n">init_only</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">resources</span><span class="p">[</span><span class="s1">&#39;servers&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">servers</span><span class="o">.</span><span class="n">create_resource</span><span class="p">(</span><span class="n">ext_mgr</span><span class="p">)</span>
+            <span class="n">mapper</span><span class="o">.</span><span class="n">resource</span><span class="p">(</span><span class="s2">&quot;server&quot;</span><span class="p">,</span> <span class="s2">&quot;servers&quot;</span><span class="p">,</span>
+                            <span class="n">controller</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">resources</span><span class="p">[</span><span class="s1">&#39;servers&#39;</span><span class="p">],</span>
+                            <span class="n">collection</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;detail&#39;</span><span class="p">:</span> <span class="s1">&#39;GET&#39;</span><span class="p">},</span>
+                            <span class="n">member</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;action&#39;</span><span class="p">:</span> <span class="s1">&#39;POST&#39;</span><span class="p">})</span>
+</pre></div>
+</div>
+<p>根据这里可以看到，<code class="xref py py-meth docutils literal"><span class="pre">Router._dispatch()</span></code> 返回的app实际上是
+<code class="xref py py-class docutils literal"><span class="pre">/nova/api/openstack/wsgi:Resource</span></code> 对象， 因此会继续调用它的 <code class="xref py py-meth docutils literal"><span class="pre">__call__()</span></code> 方法，
+实际上，我们根据 <code class="xref py py-func docutils literal"><span class="pre">mapper.resource()</span></code> 的 <code class="docutils literal"><span class="pre">controller</span></code> 参数可以知道。最终会调用
+<code class="xref py py-meth docutils literal"><span class="pre">/nova/api/openstack/compute/servers:Controller.detail()</span></code> 方法！然后可以进入该方法，进行具体分析。
+由于我这里只分析 <code class="docutils literal"><span class="pre">nova-api</span></code> 的处理流程，因此代码细节分析略！</p>
+</div>
+
+
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../web/index.html" class="btn btn-neutral float-right" title="web开发" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="opengrok_xp.html" class="btn btn-neutral" title="15. OpenGrok代码浏览环境搭建" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2016, chenshiqiang.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'0.1',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>
