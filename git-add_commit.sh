@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 
+set -ex
 git status
 sleep 5
 if [ ! "$1x" = "x" ]; then
