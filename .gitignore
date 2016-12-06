@@ -1,2 +1,4 @@
 .source/py_doc/con.md
 git-push.sh
+git-add_commit.sh
+.gitignore
