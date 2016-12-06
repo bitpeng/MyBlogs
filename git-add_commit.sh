@@ -2,10 +2,9 @@
 
 set -ex
 git status
-sleep 5
 if [ ! "$1x" = "x" ]; then
+    sleep 5
     git add --all
     git status
-    sleep 5
     git commit -m "$1"
 fi

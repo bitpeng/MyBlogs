@@ -19,20 +19,26 @@ bash快捷键
 bash编程
 ========
 
+正则匹配
++++++++++
+
 ::
 
     cd /usr/bin
     # 判断变量是否不包含bak字符
     for i in nova-*; do [[ ! $i =~ "bak" ]] && echo $i ;done
 
-其他
-====
+特殊字符处理
++++++++++++++
 
 删除文件名包含特殊字符的文件：
 
 ::
 
     mv ./-hl hl.txt
+
+重定向
++++++++
 
 shell输入输出重定向：
 
@@ -43,6 +49,21 @@ shell输入输出重定向：
     ls 2> log
     ls &> log
     ls 1> log 2> /dev/null
+
+字符串截取
+++++++++++
+
+
+::
+
+    url='http://10.10.10.10:35357/v2.0'
+    # 从最左边开始删除
+    echo ${SERVICE_ENDPOINT#*//}
+    # 
+    echo ${SERVICE_ENDPOINT##*/}
+
+.. [#] http://www.linuxidc.com/Linux/2015-03/115198.htm
+
 
 性能调优
 ========
@@ -68,7 +89,7 @@ shell输入输出重定向：
 nc
 ++
 
-    传输目录
+-   传输目录
 
     server端：
 
@@ -82,7 +103,7 @@ nc
 
         nc -n 192.168.159.146 12345 | tar -xvf -
 
-    传输文件
+-   传输文件
 
 
     server端：
