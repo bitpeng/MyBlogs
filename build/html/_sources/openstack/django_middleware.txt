@@ -290,6 +290,17 @@ Horizon 用户登录流程分析
 
      setting.py 认证后端项
 
+流程图
+======
+
+这是自己根据上面的分析，绘制的一个简单流程图！
+
+.. figure:: /_static/images/openstack_login.png
+   :scale: 100
+   :align: center
+
+   处理逻辑和流程图
+
 ---------------------
 
 参考
