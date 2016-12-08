@@ -2,7 +2,7 @@
 
 
 ########################
-分布式存储入门
+ceph与分布式存储入门
 ########################
 
 
@@ -158,6 +158,78 @@ MDS控制Client与OSD对象的交互。
 
 .. [#] http://limu713.blog.163.com/blog/static/15086904201222024847744/
 
+
+OpenStack利用ceph备份还原虚拟机
+===============================
+
+-	首先启动一台虚拟机，利用ceph作为后端存储！
+
+-	获取该虚拟机对应ceph中的volume！有两种方式，一种方式直接在dashboard中查看虚拟机详情。
+
+	.. figure:: /_static/images/instance_volume.png
+	   :scale: 100
+	   :align: center
+
+	   获取虚拟机ceph卷
+	   
+	另外一种方式可以使用命令行：
+	
+	::
+	
+		nova show instance
+		
+-	查找ceph中对应的卷。::
+	
+		rbd ls volumes | grep 5b4df728-1968-4b59-b5c8-e6ce6198e007
+
+	.. figure:: /_static/images/find_volume.png
+	   :scale: 100
+	   :align: center
+
+	   获取虚拟机ceph卷
+
+-	导出卷。::
+
+		rbd export -p volumes volume-5b4df728-1968-4b59-b5c8-e6ce6198e007 cirros-volume.bk
+
+	.. figure:: /_static/images/export_volume.png
+	   :scale: 100
+	   :align: center
+
+	   ceph volume导出
+	   
+-	关闭该虚拟机，并删除原ceph volume。::
+
+		nova stop instance
+		rbd rm -p volumes volume-5b4df728-1968-4b59-b5c8-e6ce6198e007
+		
+-	导入备份ceph volume::
+
+		rbd import -p  volumes cirros-volume.bk volume-5b4df728-1968-4b59-b5c8-e6ce6198e007
+
+	注意：导入备份ceph volume 需要删除原来的镜像，否则会提示错误!
+
+	.. figure:: /_static/images/import_volume_file_exist.png
+	   :scale: 100
+	   :align: center
+
+	   删除原volume才可以导入备份volume
+	
+	然后尝试在dashboard重新打开虚拟机，成功！
+
+-	另外需要注意的是：我们通过 ``rbd export`` 导出的ceph volume镜像，可以通过kvm启动。
+
+	.. figure:: /_static/images/kvm_start_ceph_volume.png
+	   :scale: 100
+	   :align: center
+	   
+	.. figure:: /_static/images/kvm_start_ceph_volume2.png
+	   :scale: 100
+	   :align: center
+	   
+	   kvm启动导出的备份成功！
+
+.. [#] http://www.tuicool.com/articles/ee26FnI
 
 ---------------------
 

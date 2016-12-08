@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>3. 分布式存储入门 &mdash; Welcome to Sitian&#39;s Blog 0.1 documentation</title>
+  <title>3. ceph与分布式存储入门 &mdash; Welcome to Sitian&#39;s Blog 0.1 documentation</title>
   
 
   
@@ -32,7 +32,8 @@
   
     <link rel="top" title="Welcome to Sitian&#39;s Blog 0.1 documentation" href="../index.html"/>
         <link rel="up" title="附录" href="index.html"/>
-        <link rel="prev" title="2. rst ?÷??????ܽ?" href="rst_usage.html"/> 
+        <link rel="next" title="4. 附录：轻量级标记语言" href="mark_lan.html"/>
+        <link rel="prev" title="2. rst 用法自我总结" href="rst_usage.html"/> 
 
   
   <script src="../_static/js/modernizr.min.js"></script>
@@ -82,23 +83,25 @@
             
             
                 <ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="../py_doc/index.html">Hack Python</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../py_doc/index.html">Python Note</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../linux_tools/index.html">Hack Linux</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../openstack/index.html">OpenStack Note</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../web/index.html">web开发</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="index.html">附录</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="rst_template.html">1. reStructuredText简明教程</a></li>
-<li class="toctree-l2"><a class="reference internal" href="rst_usage.html">2. rst ?÷??????ܽ?</a></li>
-<li class="toctree-l2 current"><a class="current reference internal" href="#">3. 分布式存储入门</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#id3">3.1. 对象存储</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#id4">3.1.1. 概念</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#id9">3.1.2. 特点</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#id14">3.1.3. 对象存储系统组成</a></li>
+<li class="toctree-l2"><a class="reference internal" href="rst_usage.html">2. rst 用法自我总结</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">3. ceph与分布式存储入门</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id2">3.1. 对象存储</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#id3">3.1.1. 概念</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id8">3.1.2. 特点</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id13">3.1.3. 对象存储系统组成</a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="#id18">3.2. 参考</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#openstackceph">3.2. OpenStack利用ceph备份还原虚拟机</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id18">3.3. 参考</a></li>
 </ul>
 </li>
+<li class="toctree-l2"><a class="reference internal" href="mark_lan.html">4. 附录：轻量级标记语言</a></li>
 </ul>
 </li>
 </ul>
@@ -133,7 +136,7 @@
       
           <li><a href="index.html">附录</a> &raquo;</li>
       
-    <li>3. 分布式存储入门</li>
+    <li>3. ceph与分布式存储入门</li>
       <li class="wy-breadcrumbs-aside">
         
           
@@ -147,29 +150,30 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="storage-intro">
-<span id="id1"></span><h1><a class="toc-backref" href="#id19">3. 分布式存储入门</a><a class="headerlink" href="#storage-intro" title="Permalink to this headline">¶</a></h1>
-<div class="contents topic" id="id2">
+  <div class="section" id="ceph">
+<span id="storage-intro"></span><h1><a class="toc-backref" href="#id24">3. ceph与分布式存储入门</a><a class="headerlink" href="#ceph" title="Permalink to this headline">¶</a></h1>
+<div class="contents topic" id="id1">
 <p class="topic-title first">目录</p>
 <ul class="simple">
-<li><a class="reference internal" href="#storage-intro" id="id19">分布式存储入门</a><ul>
-<li><a class="reference internal" href="#id3" id="id20">对象存储</a><ul>
-<li><a class="reference internal" href="#id4" id="id21">概念</a></li>
-<li><a class="reference internal" href="#id9" id="id22">特点</a><ul>
-<li><a class="reference internal" href="#id10" id="id23">接口</a></li>
-<li><a class="reference internal" href="#id11" id="id24">扁平的数据组织结构</a></li>
+<li><a class="reference internal" href="#ceph" id="id24">ceph与分布式存储入门</a><ul>
+<li><a class="reference internal" href="#id2" id="id25">对象存储</a><ul>
+<li><a class="reference internal" href="#id3" id="id26">概念</a></li>
+<li><a class="reference internal" href="#id8" id="id27">特点</a><ul>
+<li><a class="reference internal" href="#id9" id="id28">接口</a></li>
+<li><a class="reference internal" href="#id10" id="id29">扁平的数据组织结构</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#id14" id="id25">对象存储系统组成</a><ul>
-<li><a class="reference internal" href="#id15" id="id26">对象</a></li>
-<li><a class="reference internal" href="#id16" id="id27">对象存储设备</a></li>
-<li><a class="reference internal" href="#metadata-server-mds" id="id28">元数据服务器（Metadata Server，MDS）</a></li>
-<li><a class="reference internal" href="#client" id="id29">对象存储系统的客户端Client</a></li>
+<li><a class="reference internal" href="#id13" id="id30">对象存储系统组成</a><ul>
+<li><a class="reference internal" href="#id14" id="id31">对象</a></li>
+<li><a class="reference internal" href="#id15" id="id32">对象存储设备</a></li>
+<li><a class="reference internal" href="#metadata-server-mds" id="id33">元数据服务器（Metadata Server，MDS）</a></li>
+<li><a class="reference internal" href="#client" id="id34">对象存储系统的客户端Client</a></li>
 </ul>
 </li>
 </ul>
 </li>
-<li><a class="reference internal" href="#id18" id="id30">参考</a></li>
+<li><a class="reference internal" href="#openstackceph" id="id35">OpenStack利用ceph备份还原虚拟机</a></li>
+<li><a class="reference internal" href="#id18" id="id36">参考</a></li>
 </ul>
 </li>
 </ul>
@@ -178,10 +182,10 @@
 <p>最近在学习Ceph存储和运维相关知识，可是在参考ceph官方文档时，发现一堆术语名词看的云里雾里。
 比如&#8221;Ceph 独一无二地用统一的系统提供了对象、块、和文件存储功能&#8221;，那么又什么是块存储、对象存储、文件
 存储呢？于是在网上找了很多资料进行学习总结，如有不当之处，请指正。</p>
+<div class="section" id="id2">
+<h2><a class="toc-backref" href="#id25">3.1. 对象存储</a><a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="id3">
-<h2><a class="toc-backref" href="#id20">3.1. 对象存储</a><a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h2>
-<div class="section" id="id4">
-<h3><a class="toc-backref" href="#id21">3.1.1. 概念</a><a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id26">3.1.1. 概念</a><a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h3>
 <p>对象存储的概念并没有一个准确的定义，可以简单的认为它是 <strong>分布式的key/value存储</strong> .</p>
 <p>通过查找相关文献，发现对对象存储阐述的比较好的有以下观点：</p>
 <ul>
@@ -209,7 +213,7 @@
 <p>另一方面，对象存储软件是有专门的文件系统的，所以OSD对外又相
 当于文件服务器，那么就不存在文件共享方面的困难了，也解决了文件共享方面的问题。
 所以对象存储的出现，很好地结合了块存储与文件存储的优点。</p>
-<table class="docutils footnote" frame="void" id="id5" rules="none">
+<table class="docutils footnote" frame="void" id="id4" rules="none">
 <colgroup><col class="label" /><col /></colgroup>
 <tbody valign="top">
 <tr><td class="label">[1]</td><td><p class="first last"><a class="reference external" href="https://www.zhihu.com/question/21536660">https://www.zhihu.com/question/21536660</a></p>
@@ -230,7 +234,7 @@
 <li>块存储（硬盘）：它的IO特点与传统的硬盘是一致的，一个硬盘应该是能面向通用需求的，即能应付大文件读写，也能处理好小文件读写。但是硬盘的特点是容量大，热点明显。因此块存储主要可以应付热点问题。另外，块存储要求的延迟是最低的。</li>
 <li>文件存储（文件系统）：支持文件存储的接口的系统设计跟传统本地文件系统如Ext4这种的特点和难点是一致的，它比块存储具有更丰富的接口，需要考虑目录、文件属性等支持，实现一个支持并行化的文件存储应该是最困难的。但像HDFS、GFS这种自己定义标准的系统，可以通过根据实现来定义接口，会容易一点。</li>
 </ul>
-<table class="docutils footnote" frame="void" id="id6" rules="none">
+<table class="docutils footnote" frame="void" id="id5" rules="none">
 <colgroup><col class="label" /><col /></colgroup>
 <tbody valign="top">
 <tr><td class="label">[2]</td><td><p class="first last"><a class="reference external" href="http://www.infoq.com/cn/articles/virtual-forum-three-basic-issues-about-distributed-storage">http://www.infoq.com/cn/articles/virtual-forum-three-basic-issues-about-distributed-storage</a></p>
@@ -240,14 +244,14 @@
 </li>
 <li><p class="first">类似标准化组织SNIA定义:</p>
 <p>OSD（object storage device）和MDS（Metadata Server）为基本组成部分的分布式存储，通常是分布式文件系统。我们经常听到的分布式存储Ceph的底层RADOS（Reliable Autonomous Distributed Object Store），即属于这类对象存储。</p>
-<table class="docutils footnote" frame="void" id="id7" rules="none">
+<table class="docutils footnote" frame="void" id="id6" rules="none">
 <colgroup><col class="label" /><col /></colgroup>
 <tbody valign="top">
 <tr><td class="label">[3]</td><td><p class="first last"><a class="reference external" href="http://www.testlab.com.cn/Index/article/id/1082.html">http://www.testlab.com.cn/Index/article/id/1082.html</a></p>
 </td></tr>
 </tbody>
 </table>
-<table class="docutils footnote" frame="void" id="id8" rules="none">
+<table class="docutils footnote" frame="void" id="id7" rules="none">
 <colgroup><col class="label" /><col /></colgroup>
 <tbody valign="top">
 <tr><td class="label">[4]</td><td><p class="first last"><a class="reference external" href="http://limu713.blog.163.com/blog/static/15086904201222024847744/">http://limu713.blog.163.com/blog/static/15086904201222024847744/</a></p>
@@ -257,27 +261,27 @@
 </li>
 </ul>
 </div>
-<div class="section" id="id9">
-<h3><a class="toc-backref" href="#id22">3.1.2. 特点</a><a class="headerlink" href="#id9" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id8">
+<h3><a class="toc-backref" href="#id27">3.1.2. 特点</a><a class="headerlink" href="#id8" title="Permalink to this headline">¶</a></h3>
 <p>下面从接口，结构等方面概述对象存储的特点。</p>
-<div class="section" id="id10">
-<h4><a class="toc-backref" href="#id23">接口</a><a class="headerlink" href="#id10" title="Permalink to this headline">¶</a></h4>
+<div class="section" id="id9">
+<h4><a class="toc-backref" href="#id28">接口</a><a class="headerlink" href="#id9" title="Permalink to this headline">¶</a></h4>
 <p>对于大多数文件系统来说，尤其是POSIX兼容的文件系统，提供open、close、read、write和lseek等接口。</p>
 <p>而对象存储的接口是REST风格的，通常是基于HTTP协议的RESTful Web API，通过HTTP请求中的PUT和GET等操作进行文件的上传即写入和下载即读取，通过DELETE操作删除文件。</p>
 <p>对象存储和文件系统在接口上的本质区别是对象存储不支持和fread和fwrite类似的随机位置读写操作，即一个文件PUT到对象存储里以后，如果要读取，只能GET整个文件，如果要修改一个对象，只能重新PUT一个新的到对象存储里，覆盖之前的对象或者形成一个新的版本。</p>
 <p>如果结合平时使用云盘的经验，就不难理解这个特点了，用户会上传文件到云盘或者从云盘下载文件。如果要修改一个文件，会把文件下载下来，修改以后重新上传，替换之前的版本。实际上几乎所有的互联网应用，都是用这种存储方式读写数据的，比如微信，在朋友圈里发照片是上传图像、收取别人发的照片是下载图像，也可以从朋友圈中删除以前发送的内容；微博也是如此，通过微博API我们可以了解到，微博客户端的每一张图片都是通过REST风格的HTTP请求从服务端获取的，而我们要发微博的话，也是通过HTTP请求将数据包括图片传上去的。在没有对象存储以前，开发者需要自己为客户端提供HTTP的数据读写接口，并通过程序代码转换为对文件系统的读写操作。</p>
 </div>
-<div class="section" id="id11">
-<h4><a class="toc-backref" href="#id24">扁平的数据组织结构</a><a class="headerlink" href="#id11" title="Permalink to this headline">¶</a></h4>
+<div class="section" id="id10">
+<h4><a class="toc-backref" href="#id29">扁平的数据组织结构</a><a class="headerlink" href="#id10" title="Permalink to this headline">¶</a></h4>
 <p>对比文件系统，对象存储的第二个特点是没有嵌套的文件夹，而是采用扁平的数据组织结构，往往是两层或者三层，例如AWS S3和华为的UDS，每个用户可以把它的存储空间划分为“容器”（Bucket），然后往每个容器里放对象，对象不能直接放到租户的根存储空间里，必须放到某个容器下面，而不能嵌套，也就是说，容器下面不能再放一层容器，只能放对象。OpenStack Swift也类似</p>
 <p>这就是所谓“扁平数据组织结构”，因为它和文件夹可以一级一级嵌套不同，层次关系是固定的，而且只有两到三级，是扁平的。每一级的每个元素，例如S3中的某个容器或者某个对象，在系统中都有唯一的标识，用户通过这个标识来访问容器或者对象，所以，对象存储提供的是一种K/V的访问方式。</p>
-<table class="docutils footnote" frame="void" id="id12" rules="none">
+<table class="docutils footnote" frame="void" id="id11" rules="none">
 <colgroup><col class="label" /><col /></colgroup>
 <tbody valign="top">
 <tr><td class="label">[5]</td><td><a class="reference external" href="http://www.testlab.com.cn/Index/article/id/1082.html">http://www.testlab.com.cn/Index/article/id/1082.html</a></td></tr>
 </tbody>
 </table>
-<table class="docutils footnote" frame="void" id="id13" rules="none">
+<table class="docutils footnote" frame="void" id="id12" rules="none">
 <colgroup><col class="label" /><col /></colgroup>
 <tbody valign="top">
 <tr><td class="label">[6]</td><td><a class="reference external" href="http://limu713.blog.163.com/blog/static/15086904201222024847744/">http://limu713.blog.163.com/blog/static/15086904201222024847744/</a></td></tr>
@@ -289,25 +293,25 @@
 </div>
 </div>
 </div>
-<div class="section" id="id14">
-<h3><a class="toc-backref" href="#id25">3.1.3. 对象存储系统组成</a><a class="headerlink" href="#id14" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id13">
+<h3><a class="toc-backref" href="#id30">3.1.3. 对象存储系统组成</a><a class="headerlink" href="#id13" title="Permalink to this headline">¶</a></h3>
 <p>对象存储结构组成部分包括：对象、对象存储设备、元数据服务器、对象存储系统的客户端。</p>
-<div class="section" id="id15">
-<h4><a class="toc-backref" href="#id26">对象</a><a class="headerlink" href="#id15" title="Permalink to this headline">¶</a></h4>
+<div class="section" id="id14">
+<h4><a class="toc-backref" href="#id31">对象</a><a class="headerlink" href="#id14" title="Permalink to this headline">¶</a></h4>
 <p>对象是系统中数据存储的基本单位，一个对象实际上就是文件的数据和一组属性信息（Meta Data）的组合，这些属性信息可以定义基于文件的RAID参数、数据分布和服务质量等，而传统的存储系统中用文件或块作为基本的存储单位，在块存储系统中还需要始终追踪系统中每个块的属性，对象通过与存储系统通信维护自己的属性。在存储设备中，所有对象都有一个对象标识，通过对象标识OSD命令访问该对象。通常有多种类型的对象，存储设备上的根对象标识存储设备和该设备的各种属性，组对象是存储设备上共享资源管理策略的对象集合等。</p>
 </div>
-<div class="section" id="id16">
-<h4><a class="toc-backref" href="#id27">对象存储设备</a><a class="headerlink" href="#id16" title="Permalink to this headline">¶</a></h4>
+<div class="section" id="id15">
+<h4><a class="toc-backref" href="#id32">对象存储设备</a><a class="headerlink" href="#id15" title="Permalink to this headline">¶</a></h4>
 <p>对象存储设备具有一定的智能，它有自己的CPU、内存、网络和磁盘系统，OSD同块设备的不同不在于存储介质，而在于两者提供的访问接口。OSD的主要功能包括数据存储和安全访问。</p>
 </div>
 <div class="section" id="metadata-server-mds">
-<h4><a class="toc-backref" href="#id28">元数据服务器（Metadata Server，MDS）</a><a class="headerlink" href="#metadata-server-mds" title="Permalink to this headline">¶</a></h4>
+<h4><a class="toc-backref" href="#id33">元数据服务器（Metadata Server，MDS）</a><a class="headerlink" href="#metadata-server-mds" title="Permalink to this headline">¶</a></h4>
 <p>MDS控制Client与OSD对象的交互。</p>
 </div>
 <div class="section" id="client">
-<h4><a class="toc-backref" href="#id29">对象存储系统的客户端Client</a><a class="headerlink" href="#client" title="Permalink to this headline">¶</a></h4>
+<h4><a class="toc-backref" href="#id34">对象存储系统的客户端Client</a><a class="headerlink" href="#client" title="Permalink to this headline">¶</a></h4>
 <p>为了有效支持Client支持访问OSD上的对象，需要在计算节点实现对象存储系统的Client，通常提供POSIX文件系统接口，允许应用程序像执行标准的文件系统操作一样。</p>
-<table class="docutils footnote" frame="void" id="id17" rules="none">
+<table class="docutils footnote" frame="void" id="id16" rules="none">
 <colgroup><col class="label" /><col /></colgroup>
 <tbody valign="top">
 <tr><td class="label">[7]</td><td><a class="reference external" href="http://limu713.blog.163.com/blog/static/15086904201222024847744/">http://limu713.blog.163.com/blog/static/15086904201222024847744/</a></td></tr>
@@ -316,9 +320,76 @@
 </div>
 </div>
 </div>
+<div class="section" id="openstackceph">
+<h2><a class="toc-backref" href="#id35">3.2. OpenStack利用ceph备份还原虚拟机</a><a class="headerlink" href="#openstackceph" title="Permalink to this headline">¶</a></h2>
+<ul>
+<li><p class="first">首先启动一台虚拟机，利用ceph作为后端存储！</p>
+</li>
+<li><p class="first">获取该虚拟机对应ceph中的volume！有两种方式，一种方式直接在dashboard中查看虚拟机详情。</p>
+<div class="figure align-center" id="id19">
+<a class="reference internal image-reference" href="../_images/instance_volume.png"><img alt="../_images/instance_volume.png" src="../_images/instance_volume.png" style="width: 602.0px; height: 263.0px;" /></a>
+<p class="caption"><span class="caption-text">获取虚拟机ceph卷</span></p>
+</div>
+<p>另外一种方式可以使用命令行：</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">nova</span> <span class="n">show</span> <span class="n">instance</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first">查找ceph中对应的卷。:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">rbd</span> <span class="n">ls</span> <span class="n">volumes</span> <span class="o">|</span> <span class="n">grep</span> <span class="mi">5</span><span class="n">b4df728</span><span class="o">-</span><span class="mi">1968</span><span class="o">-</span><span class="mi">4</span><span class="n">b59</span><span class="o">-</span><span class="n">b5c8</span><span class="o">-</span><span class="n">e6ce6198e007</span>
+</pre></div>
+</div>
+<div class="figure align-center" id="id20">
+<a class="reference internal image-reference" href="../_images/find_volume.png"><img alt="../_images/find_volume.png" src="../_images/find_volume.png" style="width: 881.0px; height: 95.0px;" /></a>
+<p class="caption"><span class="caption-text">获取虚拟机ceph卷</span></p>
+</div>
+</li>
+<li><p class="first">导出卷。:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">rbd</span> <span class="n">export</span> <span class="o">-</span><span class="n">p</span> <span class="n">volumes</span> <span class="n">volume</span><span class="o">-</span><span class="mi">5</span><span class="n">b4df728</span><span class="o">-</span><span class="mi">1968</span><span class="o">-</span><span class="mi">4</span><span class="n">b59</span><span class="o">-</span><span class="n">b5c8</span><span class="o">-</span><span class="n">e6ce6198e007</span> <span class="n">cirros</span><span class="o">-</span><span class="n">volume</span><span class="o">.</span><span class="n">bk</span>
+</pre></div>
+</div>
+<div class="figure align-center" id="id21">
+<a class="reference internal image-reference" href="../_images/export_volume.png"><img alt="../_images/export_volume.png" src="../_images/export_volume.png" style="width: 1117.0px; height: 94.0px;" /></a>
+<p class="caption"><span class="caption-text">ceph volume导出</span></p>
+</div>
+</li>
+<li><p class="first">关闭该虚拟机，并删除原ceph volume。:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">nova</span> <span class="n">stop</span> <span class="n">instance</span>
+<span class="n">rbd</span> <span class="n">rm</span> <span class="o">-</span><span class="n">p</span> <span class="n">volumes</span> <span class="n">volume</span><span class="o">-</span><span class="mi">5</span><span class="n">b4df728</span><span class="o">-</span><span class="mi">1968</span><span class="o">-</span><span class="mi">4</span><span class="n">b59</span><span class="o">-</span><span class="n">b5c8</span><span class="o">-</span><span class="n">e6ce6198e007</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first">导入备份ceph volume:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">rbd</span> <span class="kn">import</span> <span class="o">-</span><span class="n">p</span>  <span class="n">volumes</span> <span class="n">cirros</span><span class="o">-</span><span class="n">volume</span><span class="o">.</span><span class="n">bk</span> <span class="n">volume</span><span class="o">-</span><span class="mi">5</span><span class="n">b4df728</span><span class="o">-</span><span class="mi">1968</span><span class="o">-</span><span class="mi">4</span><span class="n">b59</span><span class="o">-</span><span class="n">b5c8</span><span class="o">-</span><span class="n">e6ce6198e007</span>
+</pre></div>
+</div>
+<p>注意：导入备份ceph volume 需要删除原来的镜像，否则会提示错误!</p>
+<div class="figure align-center" id="id22">
+<a class="reference internal image-reference" href="../_images/import_volume_file_exist.png"><img alt="../_images/import_volume_file_exist.png" src="../_images/import_volume_file_exist.png" style="width: 1212.0px; height: 150.0px;" /></a>
+<p class="caption"><span class="caption-text">删除原volume才可以导入备份volume</span></p>
+</div>
+<p>然后尝试在dashboard重新打开虚拟机，成功！</p>
+</li>
+<li><p class="first">另外需要注意的是：我们通过 <code class="docutils literal"><span class="pre">rbd</span> <span class="pre">export</span></code> 导出的ceph volume镜像，可以通过kvm启动。</p>
+<div class="figure align-center">
+<a class="reference internal image-reference" href="../_images/kvm_start_ceph_volume.png"><img alt="../_images/kvm_start_ceph_volume.png" src="../_images/kvm_start_ceph_volume.png" style="width: 1031.0px; height: 198.0px;" /></a>
+</div>
+<div class="figure align-center" id="id23">
+<a class="reference internal image-reference" href="../_images/kvm_start_ceph_volume2.png"><img alt="../_images/kvm_start_ceph_volume2.png" src="../_images/kvm_start_ceph_volume2.png" style="width: 791.0px; height: 328.0px;" /></a>
+<p class="caption"><span class="caption-text">kvm启动导出的备份成功！</span></p>
+</div>
+</li>
+</ul>
+<table class="docutils footnote" frame="void" id="id17" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label">[8]</td><td><a class="reference external" href="http://www.tuicool.com/articles/ee26FnI">http://www.tuicool.com/articles/ee26FnI</a></td></tr>
+</tbody>
+</table>
+</div>
 <hr class="docutils" />
 <div class="section" id="id18">
-<h2><a class="toc-backref" href="#id30">3.2. 参考</a><a class="headerlink" href="#id18" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id36">3.3. 参考</a><a class="headerlink" href="#id18" title="Permalink to this headline">¶</a></h2>
 </div>
 </div>
 
@@ -329,8 +400,10 @@
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
+        <a href="mark_lan.html" class="btn btn-neutral float-right" title="4. 附录：轻量级标记语言" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
       
-        <a href="rst_usage.html" class="btn btn-neutral" title="2. rst ?÷??????ܽ?" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+        <a href="rst_usage.html" class="btn btn-neutral" title="2. rst 用法自我总结" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   
