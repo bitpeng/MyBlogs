@@ -1,10 +1,12 @@
+.. os_deploy:
+
 ###################
-openstack 实践指南
+openstack 部署实践
 ###################
 
 .. tip::
 
-    利用部门服务器，自己准备搭建OpenStack来熟悉OpenStack的部署，运维等方面的知识；
+    利用部门服务器，自己搭建OpenStack来熟悉OpenStack的部署，运维等方面的知识；
 
     - 硬件： Dell e14s(PowerEdge R720)
     - 软件： Ubuntu 14.04 LTS
@@ -22,7 +24,7 @@ raid 管理
 
 
 - v2.3版本lvm作存储，raid1一块(操作系统安装盘)，其他的作raid5；
-- v2.5 ceph作存储，raid1一块，其他的raid0, 因为ceph本身有备份机制，不需要raid5；
+- v2.5 ceph作存储，raid1一块，其他的raid0，因为ceph本身有备份机制，不需要raid5；
 
 
 
@@ -63,8 +65,6 @@ allinone方式部署
     setup.sh
 
 
-
-
 安装ceph
 +++++++++
 
@@ -80,6 +80,7 @@ allinone方式部署
   ::
 
     ./ceph_initial.sh
+
 - ceph 验证：
   ::
 
@@ -115,18 +116,14 @@ nova设置secret
    :linenos:
 
 
-
-
 创建虚拟机流程
-====================
+===============
 
 镜像制作
 +++++++++
 
 OpenStack镜像制作，可以花一篇专门的笔记来介绍，请参考 :ref:`OpenStack镜像制作 <image-guide>`
 
-.. important::
-    v2.5 镜像格式只能使用raw格式，因为ceph作后端存储, 不支持qcow2格式;
 
 
 创建网络和路由
@@ -190,7 +187,7 @@ OpenStack镜像制作，可以花一篇专门的笔记来介绍，请参考 :ref
 ++++++++++
 
 .. important::
-    特别注意：在虚拟机中创建云平台，一定要开启CPU虚拟化。否则会如下错误：
+    不管基于vmware还是物理服务器部署OpenStack，计算节点都一定要开启CPU虚拟化。否则会如下错误：
 
     .. figure:: /_static/images/no_vcpu_error.png
        :align: center
@@ -213,8 +210,10 @@ OpenStack镜像制作，可以花一篇专门的笔记来介绍，请参考 :ref
     如果openstack有些虚拟机可以创建成功，而有些提示"no valid host found"，那么很可能是因为compute
     节点内存不够。
 
+
 .. important::
-    注意，以ceph作为后端存储时，不支持vmdk格式的镜像。启动虚拟机会出现"prepare block device" 的错误。
+    注意，以ceph作为后端存储时，只支持raw格式，不支持vmdk格式的镜像，
+    也不支持qcow2格式。启动虚拟机会出现"prepare block device" 的错误。
 
     可以使用 qemu-img 命令查看镜像格式，并进行转换：
 
@@ -228,19 +227,17 @@ OpenStack镜像制作，可以花一篇专门的笔记来介绍，请参考 :ref
 ==============
 
 .. note::
-    - 部署环境：在vmware虚拟机中分布式部署聚安云v2.5，openstack Juno版本。
+    - 分布式部署时，一般计算节点(compute)一个，网络节点(network)一个，
+      控制节点(controller)一个，消息队列节点(rabbitmq)一个(消息队列节点和控制节点共用一台设备)；
+      ceph存储节点可以单独部署，也可以安装在各个OpenStack节点上！
 
-    - 其中，计算节点(compute)一个，网络节点(network)一个，控制节点(controller)一个，消息队列节点(rabbitmq)一个；
+    - 各个ceph节点osd硬盘数量一致;
 
-    - ceph作为后端存储，部署ceph集群，集群节点为compute, network, controller.
+    - vmware中分布式部署，需要多台虚拟机，一定要直接安装，不要使用vmware的克隆虚拟机
+      功能(使用该功能，安装ceph集群会缺少部分组件，无法安装).
 
-.. important::
-    分布式部署，需要多台虚拟机，一定要直接安装，不要使用vmware的克隆虚拟机
-    功能(使用该功能，安装ceph集群会缺少部分组件，无法安装).
-
-.. tip::
-    分布式部署时，存在多个节点，脚本执行安装顺序为：
-    存储--> 控制 --> 网络 --> 计算
+    - 分布式部署时，存在多个节点，脚本执行安装顺序为：
+      存储--> 控制 --> 网络 --> 计算
 
 
 激活root并配置root ssh
@@ -459,17 +456,9 @@ OpenStack镜像制作，可以花一篇专门的笔记来介绍，请参考 :ref
 
 
 部署注意事项
-=================
+============
 
 .. note::
-
-    脚本部署要点：
-
-    前期：
-
-    ceph节点包装硬盘数量一致。
-
-    脚本安装完成后：
 
     mtu设置；
 
@@ -477,16 +466,10 @@ OpenStack镜像制作，可以花一篇专门的笔记来介绍，请参考 :ref
 
 
     vi /etc/neutron/dnsmasq-neutron.conf
-    修改1454为1450
+    
+    #修改1454为1450
 
 
-
-    操作系统安装raid一律为raid1.
-
-网段规划
-+++++++++
-
-略
 
 设备安装
 ++++++++++
@@ -496,10 +479,10 @@ OpenStack镜像制作，可以花一篇专门的笔记来介绍，请参考 :ref
 网卡配置
 ++++++++
 
-eth0一律为外网；eth1一律为管理网；eth2一律为数据网。
-其中，eth1和eth2不要求能够连接外网。(特定环境下)
+OpenStack云平台各个节点一般最少要求三个网口，其中外网接口可以联网最好，
+管理网口、数据网口不需要连接外网！
 
-另外，eth1和eth2一般为static；eth0一般为dhcp。如下：
+数据网口和管理网口一般为static；外网接口一般为dhcp。如:
 
 ::
 
