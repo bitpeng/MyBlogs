@@ -94,10 +94,16 @@
 <li class="toctree-l2"><a class="reference internal" href="python_coding.html">8. Python 编码问题总结</a></li>
 <li class="toctree-l2 current"><a class="current reference internal" href="#">9. Python 装饰器、闭包</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#id2">9.1. Python 闭包</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#id6">9.2. python装饰器逻辑</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#id7">9.2.1. 类装饰器</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#id8">9.2.2. 函数装饰器</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#id9">9.2.3. 类装饰器带参数</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id6">9.2. Python 装饰器</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#id7">9.2.1. 函数是对象</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id8">9.2.2. 函数引用</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id9">9.2.3. 手动装饰器</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#id11">9.3. 装饰器逻辑</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#id12">9.3.1. 类装饰器</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id13">9.3.2. 函数装饰器</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id14">9.3.3. 类装饰器带参数</a></li>
 </ul>
 </li>
 </ul>
@@ -156,16 +162,22 @@
            <div itemprop="articleBody">
             
   <div class="section" id="python">
-<span id="dec-logic"></span><h1><a class="toc-backref" href="#id10">9. Python 装饰器、闭包</a><a class="headerlink" href="#python" title="Permalink to this headline">¶</a></h1>
+<span id="dec-logic"></span><h1><a class="toc-backref" href="#id15">9. Python 装饰器、闭包</a><a class="headerlink" href="#python" title="Permalink to this headline">¶</a></h1>
 <div class="contents topic" id="id1">
 <p class="topic-title first">目录</p>
 <ul class="simple">
-<li><a class="reference internal" href="#python" id="id10">Python 装饰器、闭包</a><ul>
-<li><a class="reference internal" href="#id2" id="id11">Python 闭包</a></li>
-<li><a class="reference internal" href="#id6" id="id12">python装饰器逻辑</a><ul>
-<li><a class="reference internal" href="#id7" id="id13">类装饰器</a></li>
-<li><a class="reference internal" href="#id8" id="id14">函数装饰器</a></li>
-<li><a class="reference internal" href="#id9" id="id15">类装饰器带参数</a></li>
+<li><a class="reference internal" href="#python" id="id15">Python 装饰器、闭包</a><ul>
+<li><a class="reference internal" href="#id2" id="id16">Python 闭包</a></li>
+<li><a class="reference internal" href="#id6" id="id17">Python 装饰器</a><ul>
+<li><a class="reference internal" href="#id7" id="id18">函数是对象</a></li>
+<li><a class="reference internal" href="#id8" id="id19">函数引用</a></li>
+<li><a class="reference internal" href="#id9" id="id20">手动装饰器</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#id11" id="id21">装饰器逻辑</a><ul>
+<li><a class="reference internal" href="#id12" id="id22">类装饰器</a></li>
+<li><a class="reference internal" href="#id13" id="id23">函数装饰器</a></li>
+<li><a class="reference internal" href="#id14" id="id24">类装饰器带参数</a></li>
 </ul>
 </li>
 </ul>
@@ -174,7 +186,7 @@
 </div>
 <hr class="docutils" />
 <div class="section" id="id2">
-<h2><a class="toc-backref" href="#id11">9.1. Python 闭包</a><a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id16">9.1. Python 闭包</a><a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
 <p>首先来看看维基百科对闭包的定义：</p>
 <div class="admonition tip">
 <p class="first admonition-title">Tip</p>
@@ -237,11 +249,134 @@
 </table>
 </div>
 <div class="section" id="id6">
-<h2><a class="toc-backref" href="#id12">9.2. python装饰器逻辑</a><a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id17">9.2. Python 装饰器</a><a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id7">
+<h3><a class="toc-backref" href="#id18">9.2.1. 函数是对象</a><a class="headerlink" href="#id7" title="Permalink to this headline">¶</a></h3>
+<p>理解装饰器，你首先需要注意到，在Python中函数也是对象，这非常重要。</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">shout</span><span class="p">(</span><span class="n">word</span><span class="o">=</span><span class="s2">&quot;yes&quot;</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">word</span><span class="o">.</span><span class="n">capitalize</span><span class="p">()</span><span class="o">+</span><span class="s2">&quot;!&quot;</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">shout</span><span class="p">())</span>
+<span class="c1"># outputs : &#39;Yes!&#39;</span>
+
+<span class="c1"># As an object, you can assign the function to a variable like any other object</span>
+<span class="n">scream</span> <span class="o">=</span> <span class="n">shout</span>
+
+<span class="c1"># Notice we don&#39;t use parentheses: we are not calling the function, we are putting the function &quot;shout&quot; into the variable &quot;scream&quot;. It means you can then call &quot;shout&quot; from &quot;scream&quot;:</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">scream</span><span class="p">())</span>
+<span class="c1"># outputs : &#39;Yes!&#39;</span>
+
+<span class="c1"># More than that, it means you can remove the old name &#39;shout&#39;, and the function will still be accessible from &#39;scream&#39;</span>
+
+<span class="k">del</span> <span class="n">shout</span>
+<span class="k">try</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">shout</span><span class="p">())</span>
+<span class="k">except</span> <span class="ne">NameError</span><span class="p">,</span> <span class="n">e</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
+    <span class="c1">#outputs: &quot;name &#39;shout&#39; is not defined&quot;</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">scream</span><span class="p">())</span>
+<span class="c1"># outputs: &#39;Yes!&#39;</span>
+</pre></div>
+</div>
+<p>另外一个有趣特性是，可以在函数内部再定义函数：</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">talk</span><span class="p">():</span>
+
+    <span class="c1"># You can define a function on the fly in &quot;talk&quot; ...</span>
+    <span class="k">def</span> <span class="nf">whisper</span><span class="p">(</span><span class="n">word</span><span class="o">=</span><span class="s2">&quot;yes&quot;</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">word</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span><span class="o">+</span><span class="s2">&quot;...&quot;</span>
+
+    <span class="c1"># ... and use it right away!</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">whisper</span><span class="p">())</span>
+
+<span class="c1"># You call &quot;talk&quot;, that defines &quot;whisper&quot; EVERY TIME you call it, then</span>
+<span class="c1"># &quot;whisper&quot; is called in &quot;talk&quot;.</span>
+<span class="n">talk</span><span class="p">()</span>
+<span class="c1"># outputs:</span>
+<span class="c1"># &quot;yes...&quot;</span>
+
+<span class="c1"># But &quot;whisper&quot; DOES NOT EXIST outside &quot;talk&quot;:</span>
+
+<span class="k">try</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">whisper</span><span class="p">())</span>
+<span class="k">except</span> <span class="ne">NameError</span><span class="p">,</span> <span class="n">e</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
+    <span class="c1">#outputs : &quot;name &#39;whisper&#39; is not defined&quot;*</span>
+    <span class="c1">#Python&#39;s functions are objects</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="id8">
+<h3><a class="toc-backref" href="#id19">9.2.2. 函数引用</a><a class="headerlink" href="#id8" title="Permalink to this headline">¶</a></h3>
+<p>由于函数是对象，因此：</p>
+<ul class="simple">
+<li>函数可以赋值给另外一个变量；</li>
+<li>函数可以在另外一个函数内部中定义；</li>
+<li><strong>一个函数可以返回另外一个函数</strong>；</li>
+<li>把函数当做参数传递；</li>
+</ul>
+<p>好了，现在可以讲装饰器了，<strong>装饰器是一种“包装”，允许在被包装函数运行之前、运行之后
+执行代码，并且不更改被包装的函数！</strong></p>
+</div>
+<div class="section" id="id9">
+<h3><a class="toc-backref" href="#id20">9.2.3. 手动装饰器</a><a class="headerlink" href="#id9" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="c1"># A decorator is a function that expects ANOTHER function as parameter</span>
+<span class="k">def</span> <span class="nf">my_shiny_new_decorator</span><span class="p">(</span><span class="n">a_function_to_decorate</span><span class="p">):</span>
+
+    <span class="c1"># Inside, the decorator defines a function on the fly: the wrapper.</span>
+    <span class="c1"># This function is going to be wrapped around the original function</span>
+    <span class="c1"># so it can execute code before and after it.</span>
+    <span class="k">def</span> <span class="nf">the_wrapper_around_the_original_function</span><span class="p">():</span>
+
+        <span class="c1"># Put here the code you want to be executed BEFORE the original function is called</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Before the function runs&quot;</span><span class="p">)</span>
+
+        <span class="c1"># Call the function here (using parentheses)</span>
+        <span class="n">a_function_to_decorate</span><span class="p">()</span>
+
+        <span class="c1"># Put here the code you want to be executed AFTER the original function is called</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;After the function runs&quot;</span><span class="p">)</span>
+
+    <span class="c1"># At this point, &quot;a_function_to_decorate&quot; HAS NEVER BEEN EXECUTED.</span>
+    <span class="c1"># We return the wrapper function we have just created.</span>
+    <span class="c1"># The wrapper contains the function and the code to execute before and after. It’s ready to use!</span>
+    <span class="k">return</span> <span class="n">the_wrapper_around_the_original_function</span>
+
+<span class="c1"># Now imagine you create a function you don&#39;t want to ever touch again.</span>
+<span class="k">def</span> <span class="nf">a_stand_alone_function</span><span class="p">():</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;I am a stand alone function, don&#39;t you dare modify me&quot;</span><span class="p">)</span>
+
+<span class="n">a_stand_alone_function</span><span class="p">()</span>
+<span class="c1">#outputs: I am a stand alone function, don&#39;t you dare modify me</span>
+
+<span class="c1"># Well, you can decorate it to extend its behavior.</span>
+<span class="c1"># Just pass it to the decorator, it will wrap it dynamically in</span>
+<span class="c1"># any code you want and return you a new function ready to be used:</span>
+
+<span class="n">a_stand_alone_function_decorated</span> <span class="o">=</span> <span class="n">my_shiny_new_decorator</span><span class="p">(</span><span class="n">a_stand_alone_function</span><span class="p">)</span>
+<span class="n">a_stand_alone_function_decorated</span><span class="p">()</span>
+<span class="c1">#outputs:</span>
+<span class="c1">#Before the function runs</span>
+<span class="c1">#I am a stand alone function, don&#39;t you dare modify me</span>
+<span class="c1">#After the function runs</span>
+</pre></div>
+</div>
+<p>未完待续……</p>
+<table class="docutils footnote" frame="void" id="id10" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label">[4]</td><td><a class="reference external" href="http://stackoverflow.com/questions/739654/how-to-make-a-chain-of-function-decorators-in-python">http://stackoverflow.com/questions/739654/how-to-make-a-chain-of-function-decorators-in-python</a></td></tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="section" id="id11">
+<h2><a class="toc-backref" href="#id21">9.3. 装饰器逻辑</a><a class="headerlink" href="#id11" title="Permalink to this headline">¶</a></h2>
 <p>Python装饰器可以理解，可是每次阅读代码时，都要使用转换过的方法才能顺着看。
 因此这里作以下总结。以方便快速阅读代码</p>
-<div class="section" id="id7">
-<h3><a class="toc-backref" href="#id13">9.2.1. 类装饰器</a><a class="headerlink" href="#id7" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id12">
+<h3><a class="toc-backref" href="#id22">9.3.1. 类装饰器</a><a class="headerlink" href="#id12" title="Permalink to this headline">¶</a></h3>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="c1"># 类装饰器</span>
 <span class="nd">@webob</span><span class="o">.</span><span class="n">dec</span><span class="o">.</span><span class="n">wsgify</span>
 <span class="k">def</span> <span class="nf">app1</span><span class="p">(</span><span class="n">req</span><span class="p">):</span>
@@ -257,8 +392,8 @@ app1_obj, 包装后，app1为类对象，因此wsgify 类一定定义了__call__
 调用app1_obj(……)时，实际上是先调用__call__ 方法，然后一般在
 __call__方法中再次调用原始的函数(app1函数)！</p>
 </div>
-<div class="section" id="id8">
-<h3><a class="toc-backref" href="#id14">9.2.2. 函数装饰器</a><a class="headerlink" href="#id8" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id13">
+<h3><a class="toc-backref" href="#id23">9.3.2. 函数装饰器</a><a class="headerlink" href="#id13" title="Permalink to this headline">¶</a></h3>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="c1"># 函数装饰器</span>
 <span class="k">def</span> <span class="nf">dec_func1</span><span class="p">(</span><span class="n">path</span><span class="p">):</span>
     <span class="sd">&#39;&#39;&#39;</span>
@@ -287,8 +422,8 @@ __call__方法中再次调用原始的函数(app1函数)！</p>
 app2_func实际上是内层闭包函数(这里是_decorator函数)，因此调用
 app2_func(……)相当于执行内层闭包函数！</p>
 </div>
-<div class="section" id="id9">
-<h3><a class="toc-backref" href="#id15">9.2.3. 类装饰器带参数</a><a class="headerlink" href="#id9" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id14">
+<h3><a class="toc-backref" href="#id24">9.3.3. 类装饰器带参数</a><a class="headerlink" href="#id14" title="Permalink to this headline">¶</a></h3>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="c1"># 类装饰器</span>
 <span class="nd">@webob</span><span class="o">.</span><span class="n">dec</span><span class="o">.</span><span class="n">wsgify</span><span class="p">(</span><span class="n">RequestClass</span><span class="o">=</span><span class="n">webob</span><span class="o">.</span><span class="n">Request</span><span class="p">)</span>
 <span class="k">def</span> <span class="nf">app3</span><span class="p">(</span><span class="n">req</span><span class="p">):</span>

@@ -77,8 +77,136 @@ Python 闭包
 .. [#] https://www.programiz.com/python-programming/closure
 .. [#] http://python.jobbole.com/82624/
 
-python装饰器逻辑
-================
+
+Python 装饰器
+=============
+
+函数是对象
+++++++++++
+
+理解装饰器，你首先需要注意到，在Python中函数也是对象，这非常重要。
+
+::
+
+    def shout(word="yes"):
+        return word.capitalize()+"!"
+
+    print(shout())
+    # outputs : 'Yes!'
+
+    # As an object, you can assign the function to a variable like any other object 
+    scream = shout
+
+    # Notice we don't use parentheses: we are not calling the function, we are putting the function "shout" into the variable "scream". It means you can then call "shout" from "scream":
+
+    print(scream())
+    # outputs : 'Yes!'
+
+    # More than that, it means you can remove the old name 'shout', and the function will still be accessible from 'scream'
+
+    del shout
+    try:
+        print(shout())
+    except NameError, e:
+        print(e)
+        #outputs: "name 'shout' is not defined"
+
+    print(scream())
+    # outputs: 'Yes!'
+    
+另外一个有趣特性是，可以在函数内部再定义函数：
+
+::
+
+    def talk():
+
+        # You can define a function on the fly in "talk" ...
+        def whisper(word="yes"):
+            return word.lower()+"..."
+
+        # ... and use it right away!
+        print(whisper())
+
+    # You call "talk", that defines "whisper" EVERY TIME you call it, then
+    # "whisper" is called in "talk". 
+    talk()
+    # outputs: 
+    # "yes..."
+
+    # But "whisper" DOES NOT EXIST outside "talk":
+
+    try:
+        print(whisper())
+    except NameError, e:
+        print(e)
+        #outputs : "name 'whisper' is not defined"*
+        #Python's functions are objects
+
+函数引用
+++++++++
+
+由于函数是对象，因此：
+
+- 函数可以赋值给另外一个变量；
+- 函数可以在另外一个函数内部中定义；
+- **一个函数可以返回另外一个函数**；
+- 把函数当做参数传递；
+
+好了，现在可以讲装饰器了，**装饰器是一种“包装”，允许在被包装函数运行之前、运行之后
+执行代码，并且不更改被包装的函数！**
+
+手动装饰器
+++++++++++
+
+::
+
+    # A decorator is a function that expects ANOTHER function as parameter
+    def my_shiny_new_decorator(a_function_to_decorate):
+
+        # Inside, the decorator defines a function on the fly: the wrapper.
+        # This function is going to be wrapped around the original function
+        # so it can execute code before and after it.
+        def the_wrapper_around_the_original_function():
+
+            # Put here the code you want to be executed BEFORE the original function is called
+            print("Before the function runs")
+
+            # Call the function here (using parentheses)
+            a_function_to_decorate()
+
+            # Put here the code you want to be executed AFTER the original function is called
+            print("After the function runs")
+
+        # At this point, "a_function_to_decorate" HAS NEVER BEEN EXECUTED.
+        # We return the wrapper function we have just created.
+        # The wrapper contains the function and the code to execute before and after. It’s ready to use!
+        return the_wrapper_around_the_original_function
+
+    # Now imagine you create a function you don't want to ever touch again.
+    def a_stand_alone_function():
+        print("I am a stand alone function, don't you dare modify me")
+
+    a_stand_alone_function() 
+    #outputs: I am a stand alone function, don't you dare modify me
+
+    # Well, you can decorate it to extend its behavior.
+    # Just pass it to the decorator, it will wrap it dynamically in 
+    # any code you want and return you a new function ready to be used:
+
+    a_stand_alone_function_decorated = my_shiny_new_decorator(a_stand_alone_function)
+    a_stand_alone_function_decorated()
+    #outputs:
+    #Before the function runs
+    #I am a stand alone function, don't you dare modify me
+    #After the function runs
+
+未完待续……
+
+.. [#] http://stackoverflow.com/questions/739654/how-to-make-a-chain-of-function-decorators-in-python
+
+
+装饰器逻辑
+===========
 
 Python装饰器可以理解，可是每次阅读代码时，都要使用转换过的方法才能顺着看。
 因此这里作以下总结。以方便快速阅读代码
