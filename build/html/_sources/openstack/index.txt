@@ -29,6 +29,7 @@ OpenStack Note
     opengrok_xp
     nova_api
     nova_smd
+    oslo_cfg
 
 
 ..  sphinx_doc
