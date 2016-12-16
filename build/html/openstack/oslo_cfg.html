@@ -349,13 +349,26 @@
 <h2><a class="toc-backref" href="#id24">18.8. 从其他模块导入配置</a><a class="headerlink" href="#id9" title="Permalink to this headline">¶</a></h2>
 <p>由于OpenStack项目大，模块多。因此假如可以在部分模块中定义配置项，然后其他模块直接
 导入，就会很方便，也方便管理。</p>
-<p>oslo.config 支持直接从其他模块中导入配置！</p>
+<p>oslo.config 支持直接从其他模块中导入配置！可以使用 <a class="reference internal" href="#ConfigOpts.import_opt" title="ConfigOpts.import_opt"><code class="xref py py-meth docutils literal"><span class="pre">ConfigOpts.import_opt()</span></code></a> 实现。</p>
 <dl class="method">
 <dt id="ConfigOpts.import_opt">
 <code class="descclassname">ConfigOpts.</code><code class="descname">import_opt</code><span class="sig-paren">(</span><em>self</em>, <em>name</em>, <em>module_str</em>, <em>group=None</em><span class="sig-paren">)</span><a class="headerlink" href="#ConfigOpts.import_opt" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>name</strong> &#8211; 导入的参数选项名字；</li>
+<li><strong>module_str</strong> &#8211; 带导入配置项所在模块名字字符串；</li>
+<li><strong>group</strong> &#8211; name配置项所在分组；</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
 
-<p>其中，name参数是导入的选项，module_str 是模块名字字符串，group是name配置项所在分组！</p>
+<p>请看下面的例子：</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">oslo.config</span> <span class="k">import</span> <span class="n">cfg</span>
 
 <span class="n">CONF</span> <span class="o">=</span> <span class="n">cfg</span><span class="o">.</span><span class="n">CONF</span>
@@ -366,7 +379,7 @@
 <span class="nb">print</span> <span class="n">CONF</span><span class="o">.</span><span class="n">cli</span><span class="o">.</span><span class="n">host</span>
 </pre></div>
 </div>
-<p>导入配置项测试:</p>
+<p>导入配置项测试结果:</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">root</span><span class="nd">@allinone</span><span class="o">-</span><span class="n">v2</span><span class="p">:</span><span class="o">/</span><span class="n">smbshare</span><span class="c1"># python test_import_oslo.py</span>
 <span class="n">disk</span> <span class="n">volume</span><span class="p">:</span>  <span class="p">[</span><span class="s1">&#39;hda 100G&#39;</span><span class="p">,</span> <span class="s1">&#39;hdb 150G&#39;</span><span class="p">,</span> <span class="s1">&#39;hdc 200G&#39;</span><span class="p">]</span>
 <span class="n">disk</span> <span class="nb">type</span><span class="p">:</span>  <span class="n">ssd</span>

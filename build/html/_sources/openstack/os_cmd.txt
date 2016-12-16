@@ -95,6 +95,10 @@ nova 相关
 
     nova start/stop vm_id
 
+
+其他命令收集
+============
+
 ::
 
     # 使用admin 身份

@@ -157,9 +157,9 @@ oslo.config 库基于 OpenStack juno版！
 
 - 命令行参数，需要在命令行中通过 ``[分组名]-[参数名]`` 来指定；
 - 对于配置文件参数，分组可以通过下面的方式指定，其中分组名和配置文件section名字一致。
-  
+
   ::
-  
+
     [disk]
     volume=sda 100GB
     volume=sdb 200GB
@@ -203,31 +203,37 @@ oslo.config 库基于 OpenStack juno版！
 由于OpenStack项目大，模块多。因此假如可以在部分模块中定义配置项，然后其他模块直接
 导入，就会很方便，也方便管理。
 
-oslo.config 支持直接从其他模块中导入配置！
+oslo.config 支持直接从其他模块中导入配置！可以使用 :meth:`ConfigOpts.import_opt` 实现。
 
 .. method:: ConfigOpts.import_opt(self, name, module_str, group=None)
 
-其中，name参数是导入的选项，module_str 是模块名字字符串，group是name配置项所在分组！
+    :param name: 导入的参数选项名字；
+    :param module_str: 带导入配置项所在模块名字字符串；
+    :param group: name配置项所在分组；
+
+.. 其中，name参数是导入的选项，module_str 是模块名字字符串，group是name配置项所在分组！
+
+请看下面的例子：
 
 ::
 
-	from oslo.config import cfg 
+    from oslo.config import cfg 
 
-	CONF = cfg.CONF
-	CONF.import_opt('volume', 'test_cfg', group='disk')
+    CONF = cfg.CONF
+    CONF.import_opt('volume', 'test_cfg', group='disk')
 
-	print CONF.disk.volume
-	print CONF.disk.type
-	print CONF.cli.host
+    print CONF.disk.volume
+    print CONF.disk.type
+    print CONF.cli.host
 
-导入配置项测试:
+导入配置项测试结果:
 
 ::
 
-	root@allinone-v2:/smbshare# python test_import_oslo.py
-	disk volume:  ['hda 100G', 'hdb 150G', 'hdc 200G']
-	disk type:  ssd
-	cli host:  119.119.119.119
+    root@allinone-v2:/smbshare# python test_import_oslo.py
+    disk volume:  ['hda 100G', 'hdb 150G', 'hdc 200G']
+    disk type:  ssd
+    cli host:  119.119.119.119
 
 导入配置项结果测试在我意料之外，原来，**导入某模块中任意一项，
 该模块的所有配置项，都可以直接访问！**
