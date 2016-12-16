@@ -1,0 +1,437 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>19. kombu和消息队列总结 &mdash; Welcome to Sitian&#39;s Blog 0.1 documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+    <link rel="top" title="Welcome to Sitian&#39;s Blog 0.1 documentation" href="../index.html"/>
+        <link rel="up" title="OpenStack Note" href="index.html"/>
+        <link rel="next" title="web开发" href="../web/index.html"/>
+        <link rel="prev" title="18. oslo.config 库学习" href="oslo_cfg.html"/> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> Welcome to Sitian's Blog
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.1
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../py_doc/index.html">Python Note</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../linux_tools/index.html">Hack Linux</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">OpenStack Note</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="horizon_develop.html">1. Horizon 二次开发指南</a></li>
+<li class="toctree-l2"><a class="reference internal" href="image-create-guide.html">2. OpenStack镜像制作</a></li>
+<li class="toctree-l2"><a class="reference internal" href="deploy_synopsis.html">3. openstack 部署实践</a></li>
+<li class="toctree-l2"><a class="reference internal" href="centos_vm_netconf.html">4. Centos虚拟机联网配置</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lanch_instance_failure.html">5. OpenStack 启动虚拟机失败分析</a></li>
+<li class="toctree-l2"><a class="reference internal" href="rabbitmq_doc.html">6. [翻译] rabbitmq教程</a></li>
+<li class="toctree-l2"><a class="reference internal" href="os_cmd.html">7. openstack命令汇总</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kvm_error.html">8. KVM错误问题</a></li>
+<li class="toctree-l2"><a class="reference internal" href="django_middleware.html">9. django中间件和openstack用户重登录分析</a></li>
+<li class="toctree-l2"><a class="reference internal" href="horizon_workflows_analysis.html">10. [翻译] horizon workflows分析</a></li>
+<li class="toctree-l2"><a class="reference internal" href="horizon_launch_instance.html">11. horizon启动虚拟机分析</a></li>
+<li class="toctree-l2"><a class="reference internal" href="django-generic_view.html">12. django通用视图：一个小问题引发的思考</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cloud_check.html">13. 云平台服务器重启注意事项</a></li>
+<li class="toctree-l2"><a class="reference internal" href="paste_webob_routes.html">14. OpenStack REST-API基础：paste/webob/routes库</a></li>
+<li class="toctree-l2"><a class="reference internal" href="opengrok_xp.html">15. OpenGrok代码浏览环境搭建</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nova_api.html">16. nova-api分析</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nova_smd.html">17. [翻译] nova:Services, Managers and Drivers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="oslo_cfg.html">18. oslo.config 库学习</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">19. kombu和消息队列总结</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id3">19.1. 术语</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#amqp">19.2. 通过amqp收发消息模型</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id4">19.3. 其他要点</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id5">19.4. 代码示例</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id6">19.5. 参考</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../web/index.html">web开发</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../others/index.html">附录</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../index.html">Welcome to Sitian's Blog</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+ 
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../index.html">Docs</a> &raquo;</li>
+      
+          <li><a href="index.html">OpenStack Note</a> &raquo;</li>
+      
+    <li>19. kombu和消息队列总结</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="../_sources/openstack/kombu.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="kombu">
+<span id="id1"></span><h1><a class="toc-backref" href="#id10">19. kombu和消息队列总结</a><a class="headerlink" href="#kombu" title="Permalink to this headline">¶</a></h1>
+<div class="contents topic" id="id2">
+<p class="topic-title first">目录</p>
+<ul class="simple">
+<li><a class="reference internal" href="#kombu" id="id10">kombu和消息队列总结</a><ul>
+<li><a class="reference internal" href="#id3" id="id11">术语</a></li>
+<li><a class="reference internal" href="#amqp" id="id12">通过amqp收发消息模型</a></li>
+<li><a class="reference internal" href="#id4" id="id13">其他要点</a></li>
+<li><a class="reference internal" href="#id5" id="id14">代码示例</a></li>
+<li><a class="reference internal" href="#id6" id="id15">参考</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<hr class="docutils" />
+<p>消息队列是OpenStack的重要组成部分，自己之前翻译过一篇 <a class="reference internal" href="rabbitmq_doc.html#rabbitmq-doc"><span class="std std-ref">rabbitmq教程</span></a>，
+但是看nova代码时，依然很多地方云里雾里，感觉不太清晰；并且该教程基于pika库，而OpenStack 默认
+是使用kombu连接rabbitmq服务器，因此自己重新了解了下kombu库，并总结。</p>
+<p>该文档是结合文档、代码示例再加上自己的理解整理而成，可能存在不准确的地方，欢迎指正！</p>
+<div class="section" id="id3">
+<h2><a class="toc-backref" href="#id11">19.1. 术语</a><a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h2>
+<dl class="attribute">
+<dt id="Producers">
+<code class="descname">Producers</code><a class="headerlink" href="#Producers" title="Permalink to this definition">¶</a></dt>
+<dd><p>Producers给exchanges发送消息。</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="Exchanges">
+<code class="descname">Exchanges</code><a class="headerlink" href="#Exchanges" title="Permalink to this definition">¶</a></dt>
+<dd><p>消息发送给exchages。交换机可以被命名，可以通过路由算法进行配置(注：个人理解是，
+可以在声明交换机时，指定交换机名字和交换机类型，如 <code class="docutils literal"><span class="pre">topic</span></code>)。</p>
+<p><strong>交换机通过匹配消息的 routing_key 和 binding_key来转发消息，binding_key 是consumer
+声明队列时与交换机的绑定关系。</strong></p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="Consumers">
+<code class="descname">Consumers</code><a class="headerlink" href="#Consumers" title="Permalink to this definition">¶</a></dt>
+<dd><p>消费者声明一个队列、并和某个交换机绑定，然后从队列中接收消息！</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="Queues">
+<code class="descname">Queues</code><a class="headerlink" href="#Queues" title="Permalink to this definition">¶</a></dt>
+<dd><p>队列接收发往交换机的消息，<strong>它由消费者声明。</strong></p>
+<p><strong>注：在pika库中，队列可以重复声明，重复声明队列时，只有一个会被创建，
+但是，不能重复声明类型不同的队列！</strong></p>
+</dd></dl>
+
+<dl class="attribute">
+<dt>
+<code class="descname">Routing keys</code></dt>
+<dd><p>每个消息都有一个routing_key，对 routing_key 的解释取决于交换机类型。
+AMQP 标准定义了四种交换机类型(注：<code class="docutils literal"><span class="pre">topic</span></code>，<code class="docutils literal"><span class="pre">fanout</span></code>，<code class="docutils literal"><span class="pre">direct</span></code>，<code class="docutils literal"><span class="pre">header</span></code>)。
+还可以自定义类型。</p>
+<ul>
+<li><p class="first"><code class="docutils literal"><span class="pre">direct</span></code> : 消息的 routing_key 属性和消费者的 routing_key 相同才递交消息；</p>
+</li>
+<li><p class="first"><code class="docutils literal"><span class="pre">fanout</span></code> : 总是递交消息，即使队列和交换机banding没有 routing_key；</p>
+</li>
+<li><p class="first"><code class="docutils literal"><span class="pre">topic</span></code> : 通过某种语义匹配模式匹配消息的 routing_key；消息的 routing_key
+可以通过点号 <code class="docutils literal"><span class="pre">.</span></code> 分割，还可以包括两种特殊字符：<code class="xref py py-attr docutils literal"><span class="pre">*</span></code>, <code class="xref py py-attr docutils literal"><span class="pre">#</span></code> 。
+<code class="xref py py-attr docutils literal"><span class="pre">*</span></code> 可以匹配一个单词，<code class="xref py py-attr docutils literal"><span class="pre">#</span></code> 可以匹配0个或多个单词。</p>
+<p><strong>注：这段对topic交换机的描述来源于 kombu 官网，和 rabbitmq官网描述有一些出入。
+rabbitmq官网中，topic交换机，消息的 routing_key 是确切的，然后 交换机和
+和队列的 banding_key 可以包含该两个特殊字符。到底哪种描述是正确的，目前还不清楚。</strong></p>
+</li>
+</ul>
+</dd></dl>
+
+</div>
+<div class="section" id="amqp">
+<h2><a class="toc-backref" href="#id12">19.2. 通过amqp收发消息模型</a><a class="headerlink" href="#amqp" title="Permalink to this headline">¶</a></h2>
+<p>通过amqp 收发消息，上面的描述已经很清晰了。这里再简单重复下：</p>
+<ul class="simple">
+<li>消息从来不直接发送给队列，甚至 Producers 都可能不知道队列的存在。
+消息是发送给交换机，给交换机发送消息时，需要指定消息的 routing_key 属性！</li>
+<li>交换机收到消息后，根据 交换机的类型，或直接发送给队列 (fanout)，
+或匹配消息的 routing_key 和 队列与交换机之间的 banding_key ; 而topic类型
+交换机匹配时，具有一些额外的特性，可以根据一些特殊字符进行匹配。
+如果匹配，则递交消息给队列！</li>
+<li>Consumers 从队列取得消息；</li>
+</ul>
+<p><cite>即：消息发布者 Publisher 将 Message 发送给 Exchange 并且说明 Routing Key。
+Exchange 负责根据 Message 的 Routing Key 进行路由，将 Message 正确地
+转发给相应的 Message Queue。监听在 Message Queue 上的 Consumer 将会从 Queue 中
+读取消息。Routing Key 是 Exchange 转发信息的依据，因此每个消息都有一个 Routing Key
+表明可以接受消息的目的地址，而每个 Message Queue 都可以通过将自己想要接收的 Routing Key
+告诉 Exchange 进行 binding，这样 Exchange 就可以将消息正确地转发给相应的 Message Queue。</cite></p>
+</div>
+<div class="section" id="id4">
+<h2><a class="toc-backref" href="#id13">19.3. 其他要点</a><a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h2>
+<p>dd</p>
+</div>
+<div class="section" id="id5">
+<h2><a class="toc-backref" href="#id14">19.4. 代码示例</a><a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h2>
+<p>公共文件 <code class="file docutils literal"><span class="pre">kombu_entity.py</span></code></p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="ch">#!/usr/bin/env python</span>
+<span class="c1"># coding:utf-8</span>
+
+<span class="kn">from</span> <span class="nn">kombu</span> <span class="k">import</span> <span class="n">Exchange</span><span class="p">,</span> <span class="n">Queue</span>
+
+<span class="c1">#定义了一个exchange</span>
+<span class="c1">#task_exchange = Exchange(&#39;tasks&#39;, type=&#39;direct&#39;)</span>
+<span class="n">task_exchange</span> <span class="o">=</span> <span class="n">Exchange</span><span class="p">(</span><span class="s1">&#39;tasks_fanout&#39;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="s1">&#39;fanout&#39;</span><span class="p">)</span>
+
+<span class="c1">#在这里进行了exchange和queue的绑定，并且指定了这个queue的routing_key</span>
+<span class="n">task_queue</span> <span class="o">=</span> <span class="n">Queue</span><span class="p">(</span><span class="s1">&#39;piap&#39;</span><span class="p">,</span> <span class="n">task_exchange</span><span class="p">,</span> <span class="n">routing_key</span><span class="o">=</span><span class="s1">&#39;suo_piao&#39;</span><span class="p">)</span>
+<span class="c1">#task_queue = Queue(&#39;piap&#39;, task_exchange)</span>
+</pre></div>
+</div>
+<p>消息发送端 <code class="file docutils literal"><span class="pre">kombu_send.py</span></code></p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="ch">#!/usr/bin/env python</span>
+<span class="c1"># coding:utf-8</span>
+
+<span class="kn">from</span> <span class="nn">kombu</span> <span class="k">import</span> <span class="n">Exchange</span><span class="p">,</span> <span class="n">Queue</span>
+<span class="kn">from</span> <span class="nn">kombu</span> <span class="k">import</span> <span class="n">Connection</span>
+<span class="kn">from</span> <span class="nn">kombu.messaging</span> <span class="k">import</span> <span class="n">Producer</span>
+<span class="kn">from</span> <span class="nn">kombu.transport.base</span> <span class="k">import</span> <span class="n">Message</span>
+
+<span class="kn">from</span> <span class="nn">kombu_entity</span> <span class="k">import</span> <span class="n">task_exchange</span>
+<span class="c1">#task_queue = Queue(&#39;piap&#39;, task_exchange, routing_key=&#39;suo_piao&#39;)</span>
+
+
+<span class="n">connection</span> <span class="o">=</span> <span class="n">Connection</span><span class="p">(</span><span class="s1">&#39;amqp://guest:httc123@10.10.10.10:5672//&#39;</span><span class="p">)</span>
+<span class="n">channel</span> <span class="o">=</span> <span class="n">connection</span><span class="o">.</span><span class="n">channel</span><span class="p">()</span>
+
+<span class="n">message</span><span class="o">=</span><span class="n">Message</span><span class="p">(</span><span class="n">channel</span><span class="p">,</span> <span class="n">body</span><span class="o">=</span><span class="s1">&#39;Hello Kombu&#39;</span><span class="p">)</span>
+
+<span class="n">producer</span> <span class="o">=</span> <span class="n">Producer</span><span class="p">(</span><span class="n">channel</span><span class="p">,</span> <span class="n">exchange</span><span class="o">=</span><span class="n">task_exchange</span><span class="p">)</span>
+<span class="n">producer</span><span class="o">.</span><span class="n">publish</span><span class="p">(</span><span class="n">message</span><span class="o">.</span><span class="n">body</span><span class="p">,</span> <span class="n">routing_key</span><span class="o">=</span><span class="s1">&#39;suo_piao&#39;</span><span class="p">)</span>
+<span class="c1">#producer.publish(message.body)</span>
+</pre></div>
+</div>
+<p>消息接收端 <code class="file docutils literal"><span class="pre">kombu_recv.py</span></code></p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="ch">#!/usr/bin/env python</span>
+<span class="c1"># coding:utf-8</span>
+
+<span class="kn">from</span> <span class="nn">kombu</span> <span class="k">import</span> <span class="n">Connection</span>
+<span class="kn">from</span> <span class="nn">kombu.messaging</span> <span class="k">import</span> <span class="n">Consumer</span>
+<span class="kn">from</span> <span class="nn">kombu_entity</span> <span class="k">import</span> <span class="n">task_queue</span>
+
+<span class="kn">import</span> <span class="nn">logging</span>
+<span class="n">logging</span><span class="o">.</span><span class="n">basicConfig</span><span class="p">(</span><span class="n">level</span><span class="o">=</span><span class="n">logging</span><span class="o">.</span><span class="n">DEBUG</span><span class="p">)</span>
+
+<span class="c1">#connection = Connection(&quot;amqp://guest:httc123@10.10.10.10:5672/&quot;)</span>
+<span class="n">connection</span> <span class="o">=</span> <span class="n">Connection</span><span class="p">(</span><span class="s2">&quot;amqp://guest:httc123@localhost:5672/&quot;</span><span class="p">)</span>
+<span class="n">channel</span> <span class="o">=</span> <span class="n">connection</span><span class="o">.</span><span class="n">channel</span><span class="p">()</span>
+
+<span class="k">def</span> <span class="nf">process_media</span><span class="p">(</span><span class="n">body</span><span class="p">,</span> <span class="n">message</span><span class="p">):</span><span class="c1">#body是某种格式的数据，message是一个Message对象，这两个参数必须提供</span>
+    <span class="nb">print</span> <span class="s2">&quot;recv: </span><span class="si">%s</span><span class="s2">&quot;</span><span class="o">%</span><span class="n">body</span>
+    <span class="n">message</span><span class="o">.</span><span class="n">ack</span><span class="p">()</span>
+
+<span class="c1"># 定义回调函数的两种方式。</span>
+<span class="c1"># 定义消费者，并定义回调函数！</span>
+<span class="c1">#consumer = Consumer(channel, task_queue)</span>
+<span class="c1">#consumer.register_callback(process_media)</span>
+
+<span class="c1"># 也可以在定义消费者对象时直接传递回调参数。</span>
+<span class="n">consumer</span> <span class="o">=</span> <span class="n">Consumer</span><span class="p">(</span><span class="n">channel</span><span class="p">,</span> <span class="n">task_queue</span><span class="p">,</span> <span class="n">callbacks</span><span class="o">=</span><span class="p">[</span><span class="n">process_media</span><span class="p">])</span>
+<span class="n">consumer</span><span class="o">.</span><span class="n">consume</span><span class="p">()</span>
+
+<span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">connection</span><span class="o">.</span><span class="n">drain_events</span><span class="p">()</span>
+    <span class="k">except</span> <span class="ne">KeyboardInterrupt</span><span class="p">:</span>
+        <span class="c1">#connection.release()</span>
+        <span class="nb">print</span> <span class="s2">&quot;stopped&quot;</span>
+        <span class="k">break</span>
+</pre></div>
+</div>
+<div class="admonition error">
+<p class="first admonition-title">Error</p>
+<p class="last">这个示例程序有一点问题：在 kombu_entity.py 中定义了 fanout 交换机，然后开启
+两个 kombu_recv.py 进程，但是然后运行 kombu_send 发送消息。这里两个接收进程
+并没有都收到消息，而是使用轮转分发的方式。待解决！</p>
+</div>
+</div>
+<hr class="docutils" />
+<div class="section" id="id6">
+<h2><a class="toc-backref" href="#id15">19.5. 参考</a><a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h2>
+<table class="docutils footnote" frame="void" id="id7" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label">[1]</td><td><a class="reference external" href="https://kombu.readthedocs.io/en/latest/introduction.html">https://kombu.readthedocs.io/en/latest/introduction.html</a></td></tr>
+</tbody>
+</table>
+<table class="docutils footnote" frame="void" id="id8" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label">[2]</td><td><a class="reference external" href="http://blog.csdn.net/hackerain/article/details/7875614">http://blog.csdn.net/hackerain/article/details/7875614</a></td></tr>
+</tbody>
+</table>
+<table class="docutils footnote" frame="void" id="id9" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label">[3]</td><td><a class="reference external" href="http://blog.csdn.net/gaoxingnengjisuan/article/details/9623529">http://blog.csdn.net/gaoxingnengjisuan/article/details/9623529</a></td></tr>
+</tbody>
+</table>
+</div>
+</div>
+
+
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../web/index.html" class="btn btn-neutral float-right" title="web开发" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="oslo_cfg.html" class="btn btn-neutral" title="18. oslo.config 库学习" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2016, chenshiqiang.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'0.1',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>
