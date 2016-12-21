@@ -108,8 +108,12 @@
 <li class="toctree-l3"><a class="reference internal" href="#id3">19.1. 术语</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#amqp">19.2. 通过amqp收发消息模型</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#id4">19.3. 其他要点</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#id5">19.4. 代码示例</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#id6">19.5. 参考</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id5">19.4. 代码示例</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#id6">19.4.1. 示例一</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id7">19.4.2. 示例二</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#id8">19.5. 参考</a></li>
 </ul>
 </li>
 </ul>
@@ -163,27 +167,31 @@
            <div itemprop="articleBody">
             
   <div class="section" id="kombu">
-<span id="id1"></span><h1><a class="toc-backref" href="#id10">19. kombu和消息队列总结</a><a class="headerlink" href="#kombu" title="Permalink to this headline">¶</a></h1>
+<span id="id1"></span><h1><a class="toc-backref" href="#id13">19. kombu和消息队列总结</a><a class="headerlink" href="#kombu" title="Permalink to this headline">¶</a></h1>
 <div class="contents topic" id="id2">
 <p class="topic-title first">目录</p>
 <ul class="simple">
-<li><a class="reference internal" href="#kombu" id="id10">kombu和消息队列总结</a><ul>
-<li><a class="reference internal" href="#id3" id="id11">术语</a></li>
-<li><a class="reference internal" href="#amqp" id="id12">通过amqp收发消息模型</a></li>
-<li><a class="reference internal" href="#id4" id="id13">其他要点</a></li>
-<li><a class="reference internal" href="#id5" id="id14">代码示例</a></li>
-<li><a class="reference internal" href="#id6" id="id15">参考</a></li>
+<li><a class="reference internal" href="#kombu" id="id13">kombu和消息队列总结</a><ul>
+<li><a class="reference internal" href="#id3" id="id14">术语</a></li>
+<li><a class="reference internal" href="#amqp" id="id15">通过amqp收发消息模型</a></li>
+<li><a class="reference internal" href="#id4" id="id16">其他要点</a></li>
+<li><a class="reference internal" href="#id5" id="id17">代码示例</a><ul>
+<li><a class="reference internal" href="#id6" id="id18">示例一</a></li>
+<li><a class="reference internal" href="#id7" id="id19">示例二</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#id8" id="id20">参考</a></li>
 </ul>
 </li>
 </ul>
 </div>
 <hr class="docutils" />
-<p>消息队列是OpenStack的重要组成部分，自己之前翻译过一篇 <a class="reference internal" href="rabbitmq_doc.html#rabbitmq-doc"><span class="std std-ref">rabbitmq教程</span></a>，
+<p>消息队列是OpenStack的重要组成部分，自己之前翻译过一篇 <a class="reference internal" href="rabbitmq_doc.html#rabbitmq-doc"><span class="std std-ref">rabbitmq教程</span></a> ，
 但是看nova代码时，依然很多地方云里雾里，感觉不太清晰；并且该教程基于pika库，而OpenStack 默认
 是使用kombu连接rabbitmq服务器，因此自己重新了解了下kombu库，并总结。</p>
 <p>该文档是结合文档、代码示例再加上自己的理解整理而成，可能存在不准确的地方，欢迎指正！</p>
 <div class="section" id="id3">
-<h2><a class="toc-backref" href="#id11">19.1. 术语</a><a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id14">19.1. 术语</a><a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h2>
 <dl class="attribute">
 <dt id="Producers">
 <code class="descname">Producers</code><a class="headerlink" href="#Producers" title="Permalink to this definition">¶</a></dt>
@@ -236,7 +244,7 @@ rabbitmq官网中，topic交换机，消息的 routing_key 是确切的，然后
 
 </div>
 <div class="section" id="amqp">
-<h2><a class="toc-backref" href="#id12">19.2. 通过amqp收发消息模型</a><a class="headerlink" href="#amqp" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id15">19.2. 通过amqp收发消息模型</a><a class="headerlink" href="#amqp" title="Permalink to this headline">¶</a></h2>
 <p>通过amqp 收发消息，上面的描述已经很清晰了。这里再简单重复下：</p>
 <ul class="simple">
 <li>消息从来不直接发送给队列，甚至 Producers 都可能不知道队列的存在。
@@ -255,11 +263,13 @@ Exchange 负责根据 Message 的 Routing Key 进行路由，将 Message 正确�
 告诉 Exchange 进行 binding，这样 Exchange 就可以将消息正确地转发给相应的 Message Queue。</cite></p>
 </div>
 <div class="section" id="id4">
-<h2><a class="toc-backref" href="#id13">19.3. 其他要点</a><a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h2>
-<p>dd</p>
+<h2><a class="toc-backref" href="#id16">19.3. 其他要点</a><a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h2>
+<p>待补充...</p>
 </div>
 <div class="section" id="id5">
-<h2><a class="toc-backref" href="#id14">19.4. 代码示例</a><a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id17">19.4. 代码示例</a><a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id6">
+<h3><a class="toc-backref" href="#id18">19.4.1. 示例一</a><a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h3>
 <p>公共文件 <code class="file docutils literal"><span class="pre">kombu_entity.py</span></code></p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="ch">#!/usr/bin/env python</span>
 <span class="c1"># coding:utf-8</span>
@@ -342,22 +352,142 @@ Exchange 负责根据 Message 的 Routing Key 进行路由，将 Message 正确�
 并没有都收到消息，而是使用轮转分发的方式。待解决！</p>
 </div>
 </div>
+<div class="section" id="id7">
+<h3><a class="toc-backref" href="#id19">19.4.2. 示例二</a><a class="headerlink" href="#id7" title="Permalink to this headline">¶</a></h3>
+<p>该示例来源于 kombu 官网。可是，我在 ubuntu-14.04 Linux 下运行该示例代码，遇到一些小问题，
+经过修改，可用正确运行。主要更改地方如下：</p>
+<ul class="simple">
+<li>取消更改相对导入；</li>
+<li>client 端注释掉压缩参数；</li>
+</ul>
+<p>公共文件 <code class="file docutils literal"><span class="pre">queues.py</span></code></p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">kombu</span> <span class="k">import</span> <span class="n">Exchange</span><span class="p">,</span> <span class="n">Queue</span>
+
+<span class="n">task_exchange</span> <span class="o">=</span> <span class="n">Exchange</span><span class="p">(</span><span class="s1">&#39;tasks&#39;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="s1">&#39;direct&#39;</span><span class="p">)</span>
+<span class="n">task_queues</span> <span class="o">=</span> <span class="p">[</span><span class="n">Queue</span><span class="p">(</span><span class="s1">&#39;hipri&#39;</span><span class="p">,</span> <span class="n">task_exchange</span><span class="p">,</span> <span class="n">routing_key</span><span class="o">=</span><span class="s1">&#39;hipri&#39;</span><span class="p">),</span>
+               <span class="n">Queue</span><span class="p">(</span><span class="s1">&#39;midpri&#39;</span><span class="p">,</span> <span class="n">task_exchange</span><span class="p">,</span> <span class="n">routing_key</span><span class="o">=</span><span class="s1">&#39;midpri&#39;</span><span class="p">),</span>
+               <span class="n">Queue</span><span class="p">(</span><span class="s1">&#39;lopri&#39;</span><span class="p">,</span> <span class="n">task_exchange</span><span class="p">,</span> <span class="n">routing_key</span><span class="o">=</span><span class="s1">&#39;lopri&#39;</span><span class="p">)]</span>
+</pre></div>
+</div>
+<p>消息接收端 <code class="file docutils literal"><span class="pre">worker.py</span></code></p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="ch">#!/usr/bin/env python</span>
+<span class="kn">from</span> <span class="nn">kombu.mixins</span> <span class="k">import</span> <span class="n">ConsumerMixin</span>
+<span class="kn">from</span> <span class="nn">kombu.log</span> <span class="k">import</span> <span class="n">get_logger</span>
+<span class="kn">from</span> <span class="nn">kombu.utils</span> <span class="k">import</span> <span class="n">kwdict</span><span class="p">,</span> <span class="n">reprcall</span>
+
+<span class="c1">#from .queues import task_queues</span>
+<span class="kn">from</span> <span class="nn">queues</span> <span class="k">import</span> <span class="n">task_queues</span>
+
+<span class="n">logger</span> <span class="o">=</span> <span class="n">get_logger</span><span class="p">(</span><span class="n">__name__</span><span class="p">)</span>
+
+
+<span class="k">class</span> <span class="nc">Worker</span><span class="p">(</span><span class="n">ConsumerMixin</span><span class="p">):</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">connection</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">connection</span> <span class="o">=</span> <span class="n">connection</span>
+
+    <span class="k">def</span> <span class="nf">get_consumers</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">Consumer</span><span class="p">,</span> <span class="n">channel</span><span class="p">):</span>
+        <span class="k">return</span> <span class="p">[</span><span class="n">Consumer</span><span class="p">(</span><span class="n">queues</span><span class="o">=</span><span class="n">task_queues</span><span class="p">,</span>
+                         <span class="n">accept</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;pickle&#39;</span><span class="p">,</span> <span class="s1">&#39;json&#39;</span><span class="p">],</span>
+                         <span class="n">callbacks</span><span class="o">=</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">process_task</span><span class="p">])]</span>
+
+    <span class="k">def</span> <span class="nf">process_task</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">body</span><span class="p">,</span> <span class="n">message</span><span class="p">):</span>
+        <span class="n">fun</span> <span class="o">=</span> <span class="n">body</span><span class="p">[</span><span class="s1">&#39;fun&#39;</span><span class="p">]</span>
+        <span class="n">args</span> <span class="o">=</span> <span class="n">body</span><span class="p">[</span><span class="s1">&#39;args&#39;</span><span class="p">]</span>
+        <span class="n">kwargs</span> <span class="o">=</span> <span class="n">body</span><span class="p">[</span><span class="s1">&#39;kwargs&#39;</span><span class="p">]</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;Got task: </span><span class="si">%s</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">reprcall</span><span class="p">(</span><span class="n">fun</span><span class="o">.</span><span class="n">__name__</span><span class="p">,</span> <span class="n">args</span><span class="p">,</span> <span class="n">kwargs</span><span class="p">))</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">fun</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwdict</span><span class="p">(</span><span class="n">kwargs</span><span class="p">))</span>
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">exc</span><span class="p">:</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s1">&#39;task raised exception: </span><span class="si">%r</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">exc</span><span class="p">)</span>
+        <span class="n">message</span><span class="o">.</span><span class="n">ack</span><span class="p">()</span>
+
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="kn">from</span> <span class="nn">kombu</span> <span class="k">import</span> <span class="n">Connection</span>
+    <span class="kn">from</span> <span class="nn">kombu.utils.debug</span> <span class="k">import</span> <span class="n">setup_logging</span>
+    <span class="c1"># setup root logger</span>
+    <span class="n">setup_logging</span><span class="p">(</span><span class="n">loglevel</span><span class="o">=</span><span class="s1">&#39;INFO&#39;</span><span class="p">,</span> <span class="n">loggers</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;&#39;</span><span class="p">])</span>
+
+    <span class="k">with</span> <span class="n">Connection</span><span class="p">(</span><span class="s1">&#39;amqp://guest:httc123@localhost:5672//&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">conn</span><span class="p">:</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">worker</span> <span class="o">=</span> <span class="n">Worker</span><span class="p">(</span><span class="n">conn</span><span class="p">)</span>
+            <span class="n">worker</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
+        <span class="k">except</span> <span class="ne">KeyboardInterrupt</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;bye bye&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>消息发送端 <code class="file docutils literal"><span class="pre">client.py</span></code></p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="ch">#!/usr/bin/env python</span>
+
+<span class="kn">from</span> <span class="nn">kombu.pools</span> <span class="k">import</span> <span class="n">producers</span>
+
+<span class="c1">#from .queues import task_exchange</span>
+<span class="kn">from</span> <span class="nn">queues</span> <span class="k">import</span> <span class="n">task_exchange</span>
+
+<span class="n">priority_to_routing_key</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;high&#39;</span><span class="p">:</span> <span class="s1">&#39;hipri&#39;</span><span class="p">,</span>
+                           <span class="s1">&#39;mid&#39;</span><span class="p">:</span> <span class="s1">&#39;midpri&#39;</span><span class="p">,</span>
+                           <span class="s1">&#39;low&#39;</span><span class="p">:</span> <span class="s1">&#39;lopri&#39;</span><span class="p">}</span>
+
+
+<span class="k">def</span> <span class="nf">send_as_task</span><span class="p">(</span><span class="n">connection</span><span class="p">,</span> <span class="n">fun</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="p">(),</span> <span class="n">kwargs</span><span class="o">=</span><span class="p">{},</span> <span class="n">priority</span><span class="o">=</span><span class="s1">&#39;mid&#39;</span><span class="p">):</span>
+    <span class="n">payload</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;fun&#39;</span><span class="p">:</span> <span class="n">fun</span><span class="p">,</span> <span class="s1">&#39;args&#39;</span><span class="p">:</span> <span class="n">args</span><span class="p">,</span> <span class="s1">&#39;kwargs&#39;</span><span class="p">:</span> <span class="n">kwargs</span><span class="p">}</span>
+    <span class="n">routing_key</span> <span class="o">=</span> <span class="n">priority_to_routing_key</span><span class="p">[</span><span class="n">priority</span><span class="p">]</span>
+
+    <span class="k">with</span> <span class="n">producers</span><span class="p">[</span><span class="n">connection</span><span class="p">]</span><span class="o">.</span><span class="n">acquire</span><span class="p">(</span><span class="n">block</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span> <span class="k">as</span> <span class="n">producer</span><span class="p">:</span>
+        <span class="n">producer</span><span class="o">.</span><span class="n">publish</span><span class="p">(</span><span class="n">payload</span><span class="p">,</span>
+                         <span class="n">serializer</span><span class="o">=</span><span class="s1">&#39;pickle&#39;</span><span class="p">,</span>
+                         <span class="c1">#compression=&#39;bzip2&#39;,</span>
+                         <span class="n">exchange</span><span class="o">=</span><span class="n">task_exchange</span><span class="p">,</span>
+                         <span class="n">declare</span><span class="o">=</span><span class="p">[</span><span class="n">task_exchange</span><span class="p">],</span>
+                         <span class="n">routing_key</span><span class="o">=</span><span class="n">routing_key</span><span class="p">)</span>
+
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="kn">from</span> <span class="nn">kombu</span> <span class="k">import</span> <span class="n">Connection</span>
+    <span class="c1">#from .tasks import hello_task</span>
+    <span class="kn">from</span> <span class="nn">tasks</span> <span class="k">import</span> <span class="n">hello_task</span>
+
+    <span class="n">connection</span> <span class="o">=</span> <span class="n">Connection</span><span class="p">(</span><span class="s1">&#39;amqp://guest:httc123@localhost:5672//&#39;</span><span class="p">)</span>
+    <span class="n">send_as_task</span><span class="p">(</span><span class="n">connection</span><span class="p">,</span> <span class="n">fun</span><span class="o">=</span><span class="n">hello_task</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="s1">&#39;Kombu&#39;</span><span class="p">,</span> <span class="p">),</span> <span class="n">kwargs</span><span class="o">=</span><span class="p">{},</span>
+                 <span class="n">priority</span><span class="o">=</span><span class="s1">&#39;high&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><code class="file docutils literal"><span class="pre">tasks.py</span></code> 文件</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">hello_task</span><span class="p">(</span><span class="n">who</span><span class="o">=</span><span class="s2">&quot;world&quot;</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Hello </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">who</span><span class="p">,</span> <span class="p">))</span>
+</pre></div>
+</div>
+<p>以下是运行结果：</p>
+<div class="figure align-center" id="id12">
+<a class="reference internal image-reference" href="../_images/kombu_recv.png"><img alt="../_images/kombu_recv.png" src="../_images/kombu_recv.png" style="width: 613.0px; height: 186.0px;" /></a>
+<p class="caption"><span class="caption-text">kombu 运行结果</span></p>
+</div>
+<p>另外需要注意的是：我尝试把 hello_task 函数放在 client.py 文件中定义，结果
+运行时，总是提示如下错误。目前还不知道原因，待探讨。</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">root</span><span class="nd">@allinone</span><span class="o">-</span><span class="n">v2</span><span class="p">:</span><span class="o">/</span><span class="n">smbshare</span><span class="o">/</span><span class="n">oslo</span><span class="o">-</span><span class="n">test</span><span class="o">/</span><span class="n">msg</span><span class="c1"># ./worker.py</span>
+<span class="n">Connected</span> <span class="n">to</span> <span class="n">amqp</span><span class="p">:</span><span class="o">//</span><span class="n">guest</span><span class="nd">@localhost</span><span class="p">:</span><span class="mi">5672</span><span class="o">//</span>
+<span class="n">Can</span><span class="s1">&#39;t decode message body: AttributeError(&quot;&#39;</span><span class="n">module</span><span class="s1">&#39; object has no attribute &#39;</span><span class="n">hello_task</span><span class="s1">&#39;&quot;,) (type:&#39;</span><span class="n">application</span><span class="o">/</span><span class="n">x</span><span class="o">-</span><span class="n">python</span><span class="o">-</span><span class="n">serialize</span><span class="s1">&#39; encoding:&#39;</span><span class="n">binary</span><span class="s1">&#39; raw:&#39;</span><span class="o">&lt;</span><span class="n">read</span><span class="o">-</span><span class="n">only</span> <span class="n">buffer</span> <span class="n">ptr</span> <span class="mh">0x1bf3c9f</span><span class="p">,</span> <span class="n">size</span> <span class="mi">71</span> <span class="n">at</span> <span class="mh">0x7f5bcf2b02b0</span><span class="o">&gt;</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>在 kombu 的基础上，后续会继续熟悉 oslo.messaging。另外，Python导入问题遇到多次，也会
+抽空彻底熟悉下。</p>
+</div>
+</div>
 <hr class="docutils" />
-<div class="section" id="id6">
-<h2><a class="toc-backref" href="#id15">19.5. 参考</a><a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h2>
-<table class="docutils footnote" frame="void" id="id7" rules="none">
+<div class="section" id="id8">
+<h2><a class="toc-backref" href="#id20">19.5. 参考</a><a class="headerlink" href="#id8" title="Permalink to this headline">¶</a></h2>
+<table class="docutils footnote" frame="void" id="id9" rules="none">
 <colgroup><col class="label" /><col /></colgroup>
 <tbody valign="top">
 <tr><td class="label">[1]</td><td><a class="reference external" href="https://kombu.readthedocs.io/en/latest/introduction.html">https://kombu.readthedocs.io/en/latest/introduction.html</a></td></tr>
 </tbody>
 </table>
-<table class="docutils footnote" frame="void" id="id8" rules="none">
+<table class="docutils footnote" frame="void" id="id10" rules="none">
 <colgroup><col class="label" /><col /></colgroup>
 <tbody valign="top">
 <tr><td class="label">[2]</td><td><a class="reference external" href="http://blog.csdn.net/hackerain/article/details/7875614">http://blog.csdn.net/hackerain/article/details/7875614</a></td></tr>
 </tbody>
 </table>
-<table class="docutils footnote" frame="void" id="id9" rules="none">
+<table class="docutils footnote" frame="void" id="id11" rules="none">
 <colgroup><col class="label" /><col /></colgroup>
 <tbody valign="top">
 <tr><td class="label">[3]</td><td><a class="reference external" href="http://blog.csdn.net/gaoxingnengjisuan/article/details/9623529">http://blog.csdn.net/gaoxingnengjisuan/article/details/9623529</a></td></tr>

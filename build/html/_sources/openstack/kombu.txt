@@ -9,7 +9,7 @@ kombu和消息队列总结
 
 --------------------------
 
-消息队列是OpenStack的重要组成部分，自己之前翻译过一篇 :ref:`rabbitmq教程 <rabbitmq_doc>`，
+消息队列是OpenStack的重要组成部分，自己之前翻译过一篇 :ref:`rabbitmq教程 <rabbitmq_doc>` ，
 但是看nova代码时，依然很多地方云里雾里，感觉不太清晰；并且该教程基于pika库，而OpenStack 默认
 是使用kombu连接rabbitmq服务器，因此自己重新了解了下kombu库，并总结。
 
@@ -82,10 +82,13 @@ Exchange 负责根据 Message 的 Routing Key 进行路由，将 Message 正确�
 其他要点
 ========
 
-dd
+待补充...
 
 代码示例
 ========
+
+示例一
++++++++
 
 公共文件 :file:`kombu_entity.py`
 
@@ -174,6 +177,138 @@ dd
     两个 kombu_recv.py 进程，但是然后运行 kombu_send 发送消息。这里两个接收进程
     并没有都收到消息，而是使用轮转分发的方式。待解决！
 
+示例二
++++++++
+
+该示例来源于 kombu 官网。可是，我在 ubuntu-14.04 Linux 下运行该示例代码，遇到一些小问题，
+经过修改，可用正确运行。主要更改地方如下：
+
+- 取消更改相对导入；
+- client 端注释掉压缩参数；
+
+公共文件 :file:`queues.py`
+
+::
+
+    from kombu import Exchange, Queue
+
+    task_exchange = Exchange('tasks', type='direct')
+    task_queues = [Queue('hipri', task_exchange, routing_key='hipri'),
+                   Queue('midpri', task_exchange, routing_key='midpri'),
+                   Queue('lopri', task_exchange, routing_key='lopri')]
+
+消息接收端 :file:`worker.py`
+
+::
+
+    #!/usr/bin/env python
+    from kombu.mixins import ConsumerMixin
+    from kombu.log import get_logger
+    from kombu.utils import kwdict, reprcall
+
+    #from .queues import task_queues
+    from queues import task_queues
+
+    logger = get_logger(__name__)
+
+
+    class Worker(ConsumerMixin):
+
+        def __init__(self, connection):
+            self.connection = connection
+
+        def get_consumers(self, Consumer, channel):
+            return [Consumer(queues=task_queues,
+                             accept=['pickle', 'json'],
+                             callbacks=[self.process_task])]
+
+        def process_task(self, body, message):
+            fun = body['fun']
+            args = body['args']
+            kwargs = body['kwargs']
+            logger.info('Got task: %s', reprcall(fun.__name__, args, kwargs))
+            try:
+                fun(*args, **kwdict(kwargs))
+            except Exception as exc:
+                logger.error('task raised exception: %r', exc)
+            message.ack()
+
+    if __name__ == '__main__':
+        from kombu import Connection
+        from kombu.utils.debug import setup_logging
+        # setup root logger
+        setup_logging(loglevel='INFO', loggers=[''])
+
+        with Connection('amqp://guest:httc123@localhost:5672//') as conn:
+            try:
+                worker = Worker(conn)
+                worker.run()
+            except KeyboardInterrupt:
+                print('bye bye')
+
+消息发送端 :file:`client.py`
+
+::
+
+    #!/usr/bin/env python
+
+    from kombu.pools import producers
+
+    #from .queues import task_exchange
+    from queues import task_exchange
+
+    priority_to_routing_key = {'high': 'hipri',
+                               'mid': 'midpri',
+                               'low': 'lopri'}
+
+
+    def send_as_task(connection, fun, args=(), kwargs={}, priority='mid'):
+        payload = {'fun': fun, 'args': args, 'kwargs': kwargs}
+        routing_key = priority_to_routing_key[priority]
+
+        with producers[connection].acquire(block=True) as producer:
+            producer.publish(payload,
+                             serializer='pickle',
+                             #compression='bzip2',
+                             exchange=task_exchange,
+                             declare=[task_exchange],
+                             routing_key=routing_key)
+
+    if __name__ == '__main__':
+        from kombu import Connection
+        #from .tasks import hello_task
+        from tasks import hello_task
+
+        connection = Connection('amqp://guest:httc123@localhost:5672//')
+        send_as_task(connection, fun=hello_task, args=('Kombu', ), kwargs={},
+                     priority='high')
+
+:file:`tasks.py` 文件
+
+::
+
+    def hello_task(who="world"):
+        print("Hello %s" % (who, ))
+
+以下是运行结果：
+
+.. figure:: /_static/images/kombu_recv.png
+   :scale: 100
+   :align: center
+
+   kombu 运行结果
+
+另外需要注意的是：我尝试把 hello_task 函数放在 client.py 文件中定义，结果
+运行时，总是提示如下错误。目前还不知道原因，待探讨。
+
+::
+
+    root@allinone-v2:/smbshare/oslo-test/msg# ./worker.py 
+    Connected to amqp://guest@localhost:5672//
+    Can't decode message body: AttributeError("'module' object has no attribute 'hello_task'",) (type:'application/x-python-serialize' encoding:'binary' raw:'<read-only buffer ptr 0x1bf3c9f, size 71 at 0x7f5bcf2b02b0>'')
+
+在 kombu 的基础上，后续会继续熟悉 oslo.messaging。另外，Python导入问题遇到多次，也会
+抽空彻底熟悉下。
 
 ---------------------
 

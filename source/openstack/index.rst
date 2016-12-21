@@ -7,6 +7,11 @@ OpenStack Note
 
     OpenStack开发笔记与学习总结
 
+    在没有特别说明的情况下，该系列所有文档代码分析基于：
+
+    - OpenStack Juno 版本；
+    - 部署环境为：ubuntu-14.04 LTS
+
 
 .. toctree::
     :maxdepth: 3
