@@ -6,15 +6,6 @@ OpenStack 调试
 ########################
 
 
-..
-    标题 ####################
-    一号 ====================
-    二号 ++++++++++++++++++++
-    三号 --------------------
-    四号 ^^^^^^^^^^^^^^^^^^^^
-
-
-
 .. contents:: 目录
 
 --------------------------
@@ -43,6 +34,8 @@ OpenStack logging 模块提供了丰富的和日志相关的配置项，详情�
 nova组件的默认日志等级是 ``INFO`` ，我们可以开启 ``--debug`` 选项，然后重启服务，
 可以看到更详细的日志信息。
 
+有时间，得好好看看 nova.openstack.common.log.py 模块的源码，功能真的很强大!
+
 ::
 
     cd /usr/bin
@@ -60,7 +53,7 @@ nova组件的默认日志等级是 ``INFO`` ，我们可以开启 ``--debug`` �
 - 然后根据 +++===+++ 过滤：
 
   ::
-  
+
     cd /var/log/nova;
     fgrep "+++===+++" . -rn
     # 或者用这种方式
@@ -153,8 +146,8 @@ set_trace
    :align: center
 
    设置跨文件断点
-   
-   
+
+
 .. error::
     **更新1：**
 
@@ -162,9 +155,9 @@ set_trace
     看来跨文件调试，还是得使用 s 命令，或者使用 pdb.set_trace !`
 
     **更新2：**
-    
+
     跨文件设置断点，只能在直接 import 的模块设置断点，而不能是连接文件！
-    
+
     ::
 
         root@allinone-v2:/var/log/nova# ll /usr/lib/python2.7/dist-packages/nova -d
@@ -202,7 +195,7 @@ set_trace
        :align: center
 
        设置跨文件断点
-       
+
     可以看到，这里我设置了两个断点，两者实际是一个文件，其中：
     ``/usr/lib/python2.7/dist-packages/nova/cmd/conductor.py`` 是 
     ``/opt/cecgw/csmp/nova/cmd/conductor.py`` 的链接。可以看到，

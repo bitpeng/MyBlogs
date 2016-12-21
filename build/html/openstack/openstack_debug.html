@@ -198,6 +198,7 @@
 OpenStack logging 模块提供了丰富的和日志相关的配置项，详情请见 logging config options。</p>
 <p>nova组件的默认日志等级是 <code class="docutils literal"><span class="pre">INFO</span></code> ，我们可以开启 <code class="docutils literal"><span class="pre">--debug</span></code> 选项，然后重启服务，
 可以看到更详细的日志信息。</p>
+<p>有时间，得好好看看 nova.openstack.common.log.py 模块的源码，功能真的很强大!</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">cd</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="nb">bin</span>
 <span class="n">ps</span> <span class="o">-</span><span class="n">ef</span> <span class="o">|</span> <span class="n">grep</span> <span class="n">nova</span><span class="o">-</span><span class="n">conductor</span>
 <span class="c1"># 然后进程的参数信息，重启服务，开启--debug 选项！</span>
