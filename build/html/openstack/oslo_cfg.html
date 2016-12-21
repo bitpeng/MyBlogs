@@ -32,7 +32,7 @@
   
     <link rel="top" title="Welcome to Sitian&#39;s Blog 0.1 documentation" href="../index.html"/>
         <link rel="up" title="OpenStack Note" href="index.html"/>
-        <link rel="next" title="web开发" href="../web/index.html"/>
+        <link rel="next" title="19. kombu和消息队列总结" href="kombu.html"/>
         <link rel="prev" title="17. [翻译] nova:Services, Managers and Drivers" href="nova_smd.html"/> 
 
   
@@ -116,6 +116,7 @@
 <li class="toctree-l3"><a class="reference internal" href="#id11">18.10. 参考</a></li>
 </ul>
 </li>
+<li class="toctree-l2"><a class="reference internal" href="kombu.html">19. kombu和消息队列总结</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../web/index.html">web开发</a></li>
@@ -233,6 +234,13 @@
 </div>
 <p>通过命令行指定的参数，一定要通过 <code class="xref py py-func docutils literal"><span class="pre">CONF.register_cli_opts()</span></code> 指定！
 而非命令行参数，只能通过配置文件覆盖默认值。</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p>注意，之前代码的注释中，说注册的参数必须是可迭代的。</p>
+<p>这个说法有问题，注册参数，有两类方法，一类是 <code class="xref py py-func docutils literal"><span class="pre">register_opt()</span></code> 和 <code class="xref py py-func docutils literal"><span class="pre">register_cli_opt()</span></code> ；
+还有一类是 <code class="xref py py-func docutils literal"><span class="pre">register_opts()</span></code> 和 <code class="xref py py-func docutils literal"><span class="pre">register_cli_opts()</span></code> 。</p>
+<p class="last"><code class="xref py py-func docutils literal"><span class="pre">register_opt()</span></code> 和 <code class="xref py py-func docutils literal"><span class="pre">register_cli_opt()</span></code> 可以直接注册选项！</p>
+</div>
 </div>
 <div class="section" id="id5">
 <h2><a class="toc-backref" href="#id20">18.4. 参数解析</a><a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h2>
@@ -558,7 +566,7 @@ print <span class="s2">&quot;cli host: &quot;</span>, CONF.cli.host
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="../web/index.html" class="btn btn-neutral float-right" title="web开发" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="kombu.html" class="btn btn-neutral float-right" title="19. kombu和消息队列总结" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
         <a href="nova_smd.html" class="btn btn-neutral" title="17. [翻译] nova:Services, Managers and Drivers" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>

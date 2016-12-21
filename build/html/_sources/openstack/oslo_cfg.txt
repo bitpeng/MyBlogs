@@ -72,6 +72,16 @@ oslo.config 库基于 OpenStack juno版！
 通过命令行指定的参数，一定要通过 :func:`CONF.register_cli_opts` 指定！
 而非命令行参数，只能通过配置文件覆盖默认值。
 
+.. note::
+
+    注意，之前代码的注释中，说注册的参数必须是可迭代的。
+
+    这个说法有问题，注册参数，有两类方法，一类是 :func:`register_opt` 和 :func:`register_cli_opt` ；
+    还有一类是 :func:`register_opts` 和 :func:`register_cli_opts` 。
+
+    :func:`register_opt` 和 :func:`register_cli_opt` 可以直接注册选项！
+
+
 参数解析
 ========
 

@@ -36,6 +36,7 @@ OpenStack Note
     nova_smd
     oslo_cfg
     kombu
+    openstack_debug
 
 
 ..  sphinx_doc
