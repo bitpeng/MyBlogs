@@ -44,6 +44,13 @@ nova组件的默认日志等级是 ``INFO`` ，我们可以开启 ``--debug`` �
     ./nova-conductor --debug --config-file=/etc/nova/nova.conf
     tail -f /var/log/nova/nova-conductor.log
 
+此外还可以使用 ``nohup`` 命令，将日志输出到自己想要的文件：
+
+::
+
+	cd /usr/bin
+	nohup nova-conductor --debug --config-file=/etc/nova/nova.conf > /smbshare/nova-conductor.log 2>&1
+
 **自己添加 LOG 信息：**
 
 假如自己要查看某些变量的信息，可以使用如下方式：

@@ -37,6 +37,7 @@ OpenStack Note
     oslo_cfg
     kombu
     openstack_debug
+    nova_rpcserver_start
 
 
 ..  sphinx_doc

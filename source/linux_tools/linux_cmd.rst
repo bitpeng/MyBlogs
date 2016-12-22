@@ -269,6 +269,8 @@ df/du
 
     df -hl
     du -hd1
+    # 列出某个文件或目录占用的空间
+    du -sh dir
 
 find/xargs
 +++++++++++

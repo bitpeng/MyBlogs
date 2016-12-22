@@ -32,7 +32,7 @@
   
     <link rel="top" title="Welcome to Sitian&#39;s Blog 0.1 documentation" href="../index.html"/>
         <link rel="up" title="OpenStack Note" href="index.html"/>
-        <link rel="next" title="web开发" href="../web/index.html"/>
+        <link rel="next" title="18. oslo.config 库学习" href="oslo_cfg.html"/>
         <link rel="prev" title="16. nova-api分析" href="nova_api.html"/> 
 
   
@@ -88,7 +88,7 @@
 <li class="toctree-l1 current"><a class="reference internal" href="index.html">OpenStack Note</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="horizon_develop.html">1. Horizon 二次开发指南</a></li>
 <li class="toctree-l2"><a class="reference internal" href="image-create-guide.html">2. OpenStack镜像制作</a></li>
-<li class="toctree-l2"><a class="reference internal" href="deploy_synopsis.html">3. openstack 实践指南</a></li>
+<li class="toctree-l2"><a class="reference internal" href="deploy_synopsis.html">3. openstack 部署实践</a></li>
 <li class="toctree-l2"><a class="reference internal" href="centos_vm_netconf.html">4. Centos虚拟机联网配置</a></li>
 <li class="toctree-l2"><a class="reference internal" href="lanch_instance_failure.html">5. OpenStack 启动虚拟机失败分析</a></li>
 <li class="toctree-l2"><a class="reference internal" href="rabbitmq_doc.html">6. [翻译] rabbitmq教程</a></li>
@@ -108,6 +108,10 @@
 <li class="toctree-l3"><a class="reference internal" href="#drivers">17.3. Drivers:特定实现</a></li>
 </ul>
 </li>
+<li class="toctree-l2"><a class="reference internal" href="oslo_cfg.html">18. oslo.config 库学习</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kombu.html">19. kombu和消息队列总结</a></li>
+<li class="toctree-l2"><a class="reference internal" href="openstack_debug.html">20. OpenStack 调试</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nova_rpcserver_start.html">21. nova RPC服务启动分析</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../web/index.html">web开发</a></li>
@@ -170,6 +174,51 @@
 <div class="section" id="nova-service">
 <h2>17.1. nova.service 模块<a class="headerlink" href="#nova-service" title="Permalink to this headline">¶</a></h2>
 <p>所有运行在hosts工作进程的通用节点基类！</p>
+<p>每个 service 对象都有一个或多个manager对象，manager 对象是 rpcserver 的 endpoints，
+并通过topic监听消息队列。service对象也可以运行 manager 对象的周期性任务并报告
+它的状态给数据库状态服务表。</p>
+<p>Service 类定义如下：</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Service</span><span class="p">(</span><span class="n">host</span><span class="p">,</span> <span class="n">binary</span><span class="p">,</span> <span class="n">topic</span><span class="p">,</span> <span class="n">manager</span><span class="p">,</span> <span class="n">report_interval</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+              <span class="n">periodic_enable</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">periodic_fuzzy_delay</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+              <span class="n">periodic_interval_max</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+</pre></div>
+</div>
+<p>相关方法：</p>
+<dl class="method">
+<dt id="Service.basic_config_check">
+<code class="descclassname">Service.</code><code class="descname">basic_config_check</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#Service.basic_config_check" title="Permalink to this definition">¶</a></dt>
+<dd><p>服务运行前执行基本的检查；</p>
+</dd></dl>
+
+<dl class="classmethod">
+<dt id="Service.create">
+<em class="property">classmethod </em><code class="descclassname">Service.</code><code class="descname">create</code><span class="sig-paren">(</span><em>host=None</em>, <em>binary=None</em>, <em>topic=None</em>, <em>manager=None</em>, <em>report_interval=None</em>, <em>periodic_enable=None</em>, <em>periodic_fuzzy_delay=None</em>, <em>periodic_interval_max=None</em><span class="sig-paren">)</span><a class="headerlink" href="#Service.create" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>host</strong> &#8211; defaults to CONF.host；</li>
+<li><strong>binary</strong> &#8211; defaults to basename of executable;</li>
+<li><strong>topic</strong> &#8211; 默认是 bin_name - &#8216;nova-&#8216; (如： &#8220;nova-conductor&#8221; 减去 &#8220;nova-&#8221; 为 &#8220;conductor&#8221;)</li>
+<li><strong>manager</strong> &#8211; defaults to CONF.&lt;topic&gt;_manager</li>
+<li><strong>report_interval</strong> &#8211; defaults to CONF.report_interval</li>
+<li><strong>periodic_enable</strong> &#8211; defaults to CONF.periodic_enable</li>
+<li><strong>periodic_fuzzy_delay</strong> &#8211; defaults to CONF.periodic_fuzzy_delay</li>
+<li><strong>periodic_interval_max</strong> &#8211; 如果设置，周期性任务执行的最大间隔时间；</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="Service.periodic_tasks">
+<code class="descclassname">Service.</code><code class="descname">periodic_tasks</code><span class="sig-paren">(</span><em>raise_on_error=False</em><span class="sig-paren">)</span><a class="headerlink" href="#Service.periodic_tasks" title="Permalink to this definition">¶</a></dt>
+<dd><p>周期性运行的任务。</p>
+</dd></dl>
+
 </div>
 <div class="section" id="nova-manager">
 <h2>17.2. nova.manager 模块<a class="headerlink" href="#nova-manager" title="Permalink to this headline">¶</a></h2>
@@ -178,7 +227,7 @@
 一般来说，其他组件应该使用Managers对它负责的组件进行更改。</p>
 <p>例如，其他组件需要以某种方式处理卷，那它应该使用 VolumeManager的方法，而不是直接
 更改数据库域。这允许我们把所有与卷相关的代码放在同一个地方！</p>
-<p>我们采用了智能managers和呀数据的基本策略，这意味着不是把方法附加给
+<p>我们采用了智能managers和哑数据的基本策略，这意味着不是把方法附加给
 数据对象，而是组件需要调用manager的(作用于数据的)方法</p>
 <p>managers的方法能在本机运行的应该直接调用。如果某些特殊的方法需要在
 远程host上执行，这应该通过发送RPC调用给(包装了manager的)service。</p>
@@ -189,6 +238,52 @@
 层做不同的实现(LinuxNetDriver 和 CiscoNetDriver)。</p>
 <p>Managers 通常提供方法，用来进行主机初始化设置或者包装了服务的周期性任务初始化设置！</p>
 <p>该模块提供 Manager， managers的基类。</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Manager</span><span class="p">(</span><span class="n">host</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">db_driver</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">service_name</span><span class="o">=</span><span class="s1">&#39;undefined&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>相关方法：</p>
+<dl class="method">
+<dt id="cleanup_host">
+<code class="descname">cleanup_host</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#cleanup_host" title="Permalink to this definition">¶</a></dt>
+<dd><p>当服务停止时，清理工作的钩子函数，子类应该重写该方法</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="init_host">
+<code class="descname">init_host</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#init_host" title="Permalink to this definition">¶</a></dt>
+<dd><p>Hook to do additional manager initialization when one requests the service be started. This is called before any service record is created.</p>
+<p>子类也应该重写该类！</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="periodic_tasks">
+<code class="descname">periodic_tasks</code><span class="sig-paren">(</span><em>context</em>, <em>raise_on_error=False</em><span class="sig-paren">)</span><a class="headerlink" href="#periodic_tasks" title="Permalink to this definition">¶</a></dt>
+<dd><p>运行周期性任务</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="post_start_hook">
+<code class="descname">post_start_hook</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#post_start_hook" title="Permalink to this definition">¶</a></dt>
+<dd><p>Hook to provide the manager the ability to do additional start-up work immediately after a service creates RPC consumers and starts ‘running’.</p>
+<p>Child classes should override this method.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pre_start_hook">
+<code class="descname">pre_start_hook</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pre_start_hook" title="Permalink to this definition">¶</a></dt>
+<dd><p>Hook to provide the manager the ability to do additional start-up work before any RPC
+queues/consumers are created. This is called after other initialization
+has succeeded and a service record is created.</p>
+<p>Child classes should override this method.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="reset">
+<code class="descname">reset</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#reset" title="Permalink to this definition">¶</a></dt>
+<dd><p>Hook called on SIGHUP to signal the manager to re-read any dynamic
+configuration or do any reconfiguration tasks.</p>
+</dd></dl>
+
 </div>
 <div class="section" id="drivers">
 <h2>17.3. Drivers:特定实现<a class="headerlink" href="#drivers" title="Permalink to this headline">¶</a></h2>
@@ -211,7 +306,7 @@
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="../web/index.html" class="btn btn-neutral float-right" title="web开发" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="oslo_cfg.html" class="btn btn-neutral float-right" title="18. oslo.config 库学习" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
         <a href="nova_api.html" class="btn btn-neutral" title="16. nova-api分析" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>

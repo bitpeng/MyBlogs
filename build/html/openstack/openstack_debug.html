@@ -206,6 +206,11 @@ OpenStack logging 模块提供了丰富的和日志相关的配置项，详情�
 <span class="n">tail</span> <span class="o">-</span><span class="n">f</span> <span class="o">/</span><span class="n">var</span><span class="o">/</span><span class="n">log</span><span class="o">/</span><span class="n">nova</span><span class="o">/</span><span class="n">nova</span><span class="o">-</span><span class="n">conductor</span><span class="o">.</span><span class="n">log</span>
 </pre></div>
 </div>
+<p>此外还可以使用 <code class="docutils literal"><span class="pre">nohup</span></code> 命令，将日志输出到自己想要的文件：</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">cd</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="nb">bin</span>
+<span class="n">nohup</span> <span class="n">nova</span><span class="o">-</span><span class="n">conductor</span> <span class="o">--</span><span class="n">debug</span> <span class="o">--</span><span class="n">config</span><span class="o">-</span><span class="n">file</span><span class="o">=/</span><span class="n">etc</span><span class="o">/</span><span class="n">nova</span><span class="o">/</span><span class="n">nova</span><span class="o">.</span><span class="n">conf</span> <span class="o">&gt;</span> <span class="o">/</span><span class="n">smbshare</span><span class="o">/</span><span class="n">nova</span><span class="o">-</span><span class="n">conductor</span><span class="o">.</span><span class="n">log</span> <span class="mi">2</span><span class="o">&gt;&amp;</span><span class="mi">1</span>
+</pre></div>
+</div>
 <p><strong>自己添加 LOG 信息：</strong></p>
 <p>假如自己要查看某些变量的信息，可以使用如下方式：</p>
 <ul>

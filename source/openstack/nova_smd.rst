@@ -20,6 +20,39 @@ nova.service 模块
 
 所有运行在hosts工作进程的通用节点基类！
 
+每个 service 对象都有一个或多个manager对象，manager 对象是 rpcserver 的 endpoints，
+并通过topic监听消息队列。service对象也可以运行 manager 对象的周期性任务并报告
+它的状态给数据库状态服务表。
+
+Service 类定义如下：
+
+::
+
+    class Service(host, binary, topic, manager, report_interval=None, 
+                  periodic_enable=None, periodic_fuzzy_delay=None, 
+                  periodic_interval_max=None, *args, **kwargs):
+                  
+相关方法：
+
+.. method:: Service.basic_config_check()
+
+    服务运行前执行基本的检查；
+
+.. classmethod:: Service.create(host=None, binary=None, topic=None, manager=None, report_interval=None, periodic_enable=None, periodic_fuzzy_delay=None, periodic_interval_max=None)
+
+    :param host: defaults to CONF.host；
+    :param binary: defaults to basename of executable;
+    :param topic: 默认是 bin_name - 'nova-' (如： "nova-conductor" 减去 "nova-" 为 "conductor")
+    :param manager: defaults to CONF.<topic>_manager
+    :param report_interval: defaults to CONF.report_interval
+    :param periodic_enable: defaults to CONF.periodic_enable
+    :param periodic_fuzzy_delay: defaults to CONF.periodic_fuzzy_delay
+    :param periodic_interval_max:  如果设置，周期性任务执行的最大间隔时间；
+
+.. method:: Service.periodic_tasks(raise_on_error=False)
+
+    周期性运行的任务。
+
 
 nova.manager 模块
 =================
@@ -33,7 +66,7 @@ Manager 负责系统的某个特定方面。它是关系系统某一部分的一
 更改数据库域。这允许我们把所有与卷相关的代码放在同一个地方！
 
 
-我们采用了智能managers和呀数据的基本策略，这意味着不是把方法附加给
+我们采用了智能managers和哑数据的基本策略，这意味着不是把方法附加给
 数据对象，而是组件需要调用manager的(作用于数据的)方法
 
 
@@ -55,6 +88,45 @@ Managers 通常提供方法，用来进行主机初始化设置或者包装了�
 
 该模块提供 Manager， managers的基类。
 
+::
+
+    class Manager(host=None, db_driver=None, service_name='undefined')
+
+相关方法：
+
+.. method:: cleanup_host()
+
+    当服务停止时，清理工作的钩子函数，子类应该重写该方法
+    
+.. method:: init_host()
+
+    Hook to do additional manager initialization when one requests the service be started. This is called before any service record is created.
+    
+    子类也应该重写该类！
+    
+.. method:: periodic_tasks(context, raise_on_error=False)
+
+    运行周期性任务
+
+.. method:: post_start_hook()
+
+    Hook to provide the manager the ability to do additional start-up work immediately after a service creates RPC consumers and starts ‘running’.
+
+    Child classes should override this method.
+
+.. method:: pre_start_hook()
+
+    Hook to provide the manager the ability to do additional start-up work before any RPC
+    queues/consumers are created. This is called after other initialization 
+    has succeeded and a service record is created.
+    
+    Child classes should override this method.
+
+.. method:: reset()
+
+    Hook called on SIGHUP to signal the manager to re-read any dynamic
+    configuration or do any reconfiguration tasks.
+    
 Drivers:特定实现
 ================
 
