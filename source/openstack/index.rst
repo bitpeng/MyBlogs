@@ -38,6 +38,7 @@ OpenStack Note
     kombu
     openstack_debug
     nova_rpcserver_start
+    periodic_task_1
 
 
 ..  sphinx_doc
