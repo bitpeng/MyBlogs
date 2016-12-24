@@ -32,7 +32,7 @@
   
     <link rel="top" title="Welcome to Sitian&#39;s Blog 0.1 documentation" href="../index.html"/>
         <link rel="up" title="OpenStack Note" href="index.html"/>
-        <link rel="next" title="web开发" href="../web/index.html"/>
+        <link rel="next" title="21. nova RPC服务启动分析" href="nova_rpcserver_start.html"/>
         <link rel="prev" title="19. kombu和消息队列总结" href="kombu.html"/> 
 
   
@@ -115,6 +115,7 @@
 <li class="toctree-l3"><a class="reference internal" href="#id5">20.3. 参考</a></li>
 </ul>
 </li>
+<li class="toctree-l2"><a class="reference internal" href="nova_rpcserver_start.html">21. nova RPC服务启动分析</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../web/index.html">web开发</a></li>
@@ -183,8 +184,8 @@
 </ul>
 </div>
 <hr class="docutils" />
-<p>这里简要把自己分析、跟踪、调试OpenStack组件的所用到的方法记录下来。
-这里主要参考了网友博文 <cite>koala bear</cite> 的 <a class="reference external" href="http://wsfdl.com/openstack/2013/08/28/%E8%B0%83%E8%AF%95OpenStack.html">OpenStack调试</a> ，在此表示感谢！</p>
+<p>这里简要把自己分析、跟踪、调试OpenStack组件所用到的方法记录下来。
+主要参考了网友 <cite>koala bear</cite> 的博文 <a class="reference external" href="http://wsfdl.com/openstack/2013/08/28/%E8%B0%83%E8%AF%95OpenStack.html">OpenStack调试</a> ，在此表示感谢！</p>
 <div class="section" id="id3">
 <h2><a class="toc-backref" href="#id12">20.1. 日志</a><a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h2>
 <p><code class="docutils literal"><span class="pre">OpenStack</span> <span class="pre">logging</span></code> 模块是在 <code class="docutils literal"><span class="pre">python</span> <span class="pre">logging</span></code> 基础之上做了封装，使用简单，以 nova 为例，首先需要导入相关代码文件，获取日志句柄后，即可往该句柄写入日志信息。</p>
@@ -378,7 +379,7 @@ OpenStack logging 模块提供了丰富的和日志相关的配置项，详情�
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="../web/index.html" class="btn btn-neutral float-right" title="web开发" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="nova_rpcserver_start.html" class="btn btn-neutral float-right" title="21. nova RPC服务启动分析" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
         <a href="kombu.html" class="btn btn-neutral" title="19. kombu和消息队列总结" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>

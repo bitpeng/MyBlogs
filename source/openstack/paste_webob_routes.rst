@@ -16,7 +16,7 @@ OpenStack REST-API基础：paste/webob/routes库
 
 .. tip::
 
-    在分析openstack源码的过程中，对于每一类服务入口都是通过rest-API提供的。而python rest-api服务的发布涉及
+    在OpenStack 组件中，每一类组件服务入口都是通过rest-API提供的。而python rest-api服务的发布涉及
     到wsgi，路由分发等诸多问题。openstack使用的paste+webob+routes模块，使用起来比较复杂，自己因此也
     花费了很多时间也学习相关基础知识，渐有心得，因此记录下来，供参考。
 
@@ -264,7 +264,7 @@ and concise URL’s that are RESTful with little effort.
 	well and have your controller be an object that can route
 	the request to the action-specific method.
 	
-	通过这段文字，我们mapper.connect()的controller参数就是和url关联的，
+	通过这段文字可以知道，我们mapper.connect()的controller参数就是和url关联的
 	WSGI app。如果指定了action参数，那么请求会路由到该特定的方法！
   
 

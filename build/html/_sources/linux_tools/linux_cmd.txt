@@ -255,11 +255,11 @@ route
 ps
 ++
 
-批量杀死进程：
-
 ::
 
+    # 批量杀死进程：
     ps -aux|grep name|grep -v grep|cut -c 9-15|xargs kill -9
+    # 显示进程的父子关系
     ps afx -o pid,cmd | grep nova
 
 df/du

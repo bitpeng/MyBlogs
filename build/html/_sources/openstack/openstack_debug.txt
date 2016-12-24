@@ -10,8 +10,8 @@ OpenStack 调试
 
 --------------------------
 
-这里简要把自己分析、跟踪、调试OpenStack组件的所用到的方法记录下来。
-这里主要参考了网友博文 `koala bear` 的 `OpenStack调试`_ ，在此表示感谢！
+这里简要把自己分析、跟踪、调试OpenStack组件所用到的方法记录下来。
+主要参考了网友 `koala bear` 的博文 `OpenStack调试`_ ，在此表示感谢！
 
 .. _`OpenStack调试`: http://wsfdl.com/openstack/2013/08/28/%E8%B0%83%E8%AF%95OpenStack.html
 

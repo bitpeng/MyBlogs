@@ -32,7 +32,7 @@
   
     <link rel="top" title="Welcome to Sitian&#39;s Blog 0.1 documentation" href="../index.html"/>
         <link rel="up" title="OpenStack Note" href="index.html"/>
-        <link rel="next" title="web开发" href="../web/index.html"/>
+        <link rel="next" title="15. OpenGrok代码浏览环境搭建" href="opengrok_xp.html"/>
         <link rel="prev" title="13. 云平台服务器重启注意事项" href="cloud_check.html"/> 
 
   
@@ -88,14 +88,14 @@
 <li class="toctree-l1 current"><a class="reference internal" href="index.html">OpenStack Note</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="horizon_develop.html">1. Horizon 二次开发指南</a></li>
 <li class="toctree-l2"><a class="reference internal" href="image-create-guide.html">2. OpenStack镜像制作</a></li>
-<li class="toctree-l2"><a class="reference internal" href="deploy_synopsis.html">3. openstack 实践指南</a></li>
+<li class="toctree-l2"><a class="reference internal" href="deploy_synopsis.html">3. openstack 部署实践</a></li>
 <li class="toctree-l2"><a class="reference internal" href="centos_vm_netconf.html">4. Centos虚拟机联网配置</a></li>
 <li class="toctree-l2"><a class="reference internal" href="lanch_instance_failure.html">5. OpenStack 启动虚拟机失败分析</a></li>
-<li class="toctree-l2"><a class="reference internal" href="rabbitmq_doc.html">6. rabbitmq教程</a></li>
+<li class="toctree-l2"><a class="reference internal" href="rabbitmq_doc.html">6. [翻译] rabbitmq教程</a></li>
 <li class="toctree-l2"><a class="reference internal" href="os_cmd.html">7. openstack命令汇总</a></li>
 <li class="toctree-l2"><a class="reference internal" href="kvm_error.html">8. KVM错误问题</a></li>
 <li class="toctree-l2"><a class="reference internal" href="django_middleware.html">9. django中间件和openstack用户重登录分析</a></li>
-<li class="toctree-l2"><a class="reference internal" href="horizon_workflows_analysis.html">10. horizon workflows分析</a></li>
+<li class="toctree-l2"><a class="reference internal" href="horizon_workflows_analysis.html">10. [翻译] horizon workflows分析</a></li>
 <li class="toctree-l2"><a class="reference internal" href="horizon_launch_instance.html">11. horizon启动虚拟机分析</a></li>
 <li class="toctree-l2"><a class="reference internal" href="django-generic_view.html">12. django通用视图：一个小问题引发的思考</a></li>
 <li class="toctree-l2"><a class="reference internal" href="cloud_check.html">13. 云平台服务器重启注意事项</a></li>
@@ -113,6 +113,13 @@
 <li class="toctree-l3"><a class="reference internal" href="#id7">14.4. 参考</a></li>
 </ul>
 </li>
+<li class="toctree-l2"><a class="reference internal" href="opengrok_xp.html">15. OpenGrok代码浏览环境搭建</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nova_api.html">16. nova-api分析</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nova_smd.html">17. [翻译] nova:Services, Managers and Drivers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="oslo_cfg.html">18. oslo.config 库学习</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kombu.html">19. kombu和消息队列总结</a></li>
+<li class="toctree-l2"><a class="reference internal" href="openstack_debug.html">20. OpenStack 调试</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nova_rpcserver_start.html">21. nova RPC服务启动分析</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../web/index.html">web开发</a></li>
@@ -167,7 +174,7 @@
 <span id="paste-webob-routes"></span><h1><a class="toc-backref" href="#id15">14. OpenStack REST-API基础：paste/webob/routes库</a><a class="headerlink" href="#openstack-rest-api-paste-webob-routes" title="Permalink to this headline">¶</a></h1>
 <div class="admonition tip">
 <p class="first admonition-title">Tip</p>
-<p class="last">在分析openstack源码的过程中，对于每一类服务入口都是通过rest-API提供的。而python rest-api服务的发布涉及
+<p class="last">在OpenStack 组件中，每一类组件服务入口都是通过rest-API提供的。而python rest-api服务的发布涉及
 到wsgi，路由分发等诸多问题。openstack使用的paste+webob+routes模块，使用起来比较复杂，自己因此也
 花费了很多时间也学习相关基础知识，渐有心得，因此记录下来，供参考。</p>
 </div>
@@ -1077,7 +1084,7 @@ and concise URL’s that are RESTful with little effort.</p>
 WSGI app to call.  You&#8217;ll probably want to specify an &#8216;action&#8217; as
 well and have your controller be an object that can route
 the request to the action-specific method.</p>
-<p class="last">通过这段文字，我们mapper.connect()的controller参数就是和url关联的，
+<p class="last">通过这段文字可以知道，我们mapper.connect()的controller参数就是和url关联的
 WSGI app。如果指定了action参数，那么请求会路由到该特定的方法！</p>
 </div>
 </div>
@@ -1106,7 +1113,7 @@ WSGI app。如果指定了action参数，那么请求会路由到该特定的方
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="../web/index.html" class="btn btn-neutral float-right" title="web开发" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="opengrok_xp.html" class="btn btn-neutral float-right" title="15. OpenGrok代码浏览环境搭建" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
         <a href="cloud_check.html" class="btn btn-neutral" title="13. 云平台服务器重启注意事项" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>

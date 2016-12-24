@@ -414,8 +414,9 @@ echo ${SERVICE_ENDPOINT##*/}
 </div>
 <div class="section" id="ps">
 <h3><a class="toc-backref" href="#id30">4.4.10. ps</a><a class="headerlink" href="#ps" title="Permalink to this headline">¶</a></h3>
-<p>批量杀死进程：</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">ps</span> <span class="o">-</span><span class="n">aux</span><span class="o">|</span><span class="n">grep</span> <span class="n">name</span><span class="o">|</span><span class="n">grep</span> <span class="o">-</span><span class="n">v</span> <span class="n">grep</span><span class="o">|</span><span class="n">cut</span> <span class="o">-</span><span class="n">c</span> <span class="mi">9</span><span class="o">-</span><span class="mi">15</span><span class="o">|</span><span class="n">xargs</span> <span class="n">kill</span> <span class="o">-</span><span class="mi">9</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="c1"># 批量杀死进程：</span>
+<span class="n">ps</span> <span class="o">-</span><span class="n">aux</span><span class="o">|</span><span class="n">grep</span> <span class="n">name</span><span class="o">|</span><span class="n">grep</span> <span class="o">-</span><span class="n">v</span> <span class="n">grep</span><span class="o">|</span><span class="n">cut</span> <span class="o">-</span><span class="n">c</span> <span class="mi">9</span><span class="o">-</span><span class="mi">15</span><span class="o">|</span><span class="n">xargs</span> <span class="n">kill</span> <span class="o">-</span><span class="mi">9</span>
+<span class="c1"># 显示进程的父子关系</span>
 <span class="n">ps</span> <span class="n">afx</span> <span class="o">-</span><span class="n">o</span> <span class="n">pid</span><span class="p">,</span><span class="n">cmd</span> <span class="o">|</span> <span class="n">grep</span> <span class="n">nova</span>
 </pre></div>
 </div>
