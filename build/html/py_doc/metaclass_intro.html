@@ -1,0 +1,326 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>11. Python元类 &mdash; Welcome to Sitian&#39;s Blog 0.1 documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+    <link rel="top" title="Welcome to Sitian&#39;s Blog 0.1 documentation" href="../index.html"/>
+        <link rel="up" title="Python Note" href="index.html"/>
+        <link rel="next" title="Hack Linux" href="../linux_tools/index.html"/>
+        <link rel="prev" title="10. webob库简单分析" href="webob_analysis.html"/> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> Welcome to Sitian's Blog
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.1
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Python Note</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="pysnmp_doc.html">1. [翻译] PySNMP教程</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pysnmp_doc_example.html">2. PySNMP获取设备信息</a></li>
+<li class="toctree-l2"><a class="reference internal" href="re_doc.html">3. [翻译] Python正则表达式</a></li>
+<li class="toctree-l2"><a class="reference internal" href="wsgi.html">4. WSGI基础</a></li>
+<li class="toctree-l2"><a class="reference internal" href="re_analysis.html">5. Python正则表达式分析利器</a></li>
+<li class="toctree-l2"><a class="reference internal" href="python_descriptor.html">6. Python描述器</a></li>
+<li class="toctree-l2"><a class="reference internal" href="python_notebook.html">7. Python学习总结</a></li>
+<li class="toctree-l2"><a class="reference internal" href="python_coding.html">8. Python 编码问题总结</a></li>
+<li class="toctree-l2"><a class="reference internal" href="dec_logic.html">9. Python 装饰器、闭包</a></li>
+<li class="toctree-l2"><a class="reference internal" href="webob_analysis.html">10. webob库简单分析</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">11. Python元类</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../linux_tools/index.html">Hack Linux</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../openstack/index.html">OpenStack Note</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../web/index.html">web开发</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../others/index.html">附录</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../index.html">Welcome to Sitian's Blog</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+ 
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../index.html">Docs</a> &raquo;</li>
+      
+          <li><a href="index.html">Python Note</a> &raquo;</li>
+      
+    <li>11. Python元类</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="../_sources/py_doc/metaclass_intro.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="python">
+<span id="metaclass-intro"></span><h1>11. Python元类<a class="headerlink" href="#python" title="Permalink to this headline">¶</a></h1>
+<p>Python 元类在OpenStack中经常有看到，网络上也有很多很好的阐述，
+这里总结下Python元类的用法，作为个人学习笔记。</p>
+<p>更多请参考：</p>
+<table class="docutils footnote" frame="void" id="id1" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label">[1]</td><td><a class="reference external" href="http://blog.csdn.net/gzlaiyonghao/article/details/3048947">http://blog.csdn.net/gzlaiyonghao/article/details/3048947</a></td></tr>
+</tbody>
+</table>
+<table class="docutils footnote" frame="void" id="id2" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label">[2]</td><td><a class="reference external" href="http://stackoverflow.com/questions/100003/what-is-a-metaclass-in-python">http://stackoverflow.com/questions/100003/what-is-a-metaclass-in-python</a></td></tr>
+</tbody>
+</table>
+<p>根据上面的两篇文章，可以知道 <code class="docutils literal"><span class="pre">type</span></code> 两种函数的不同用法：</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="nb">type</span><span class="p">(</span><span class="n">obj</span><span class="p">)</span>  <span class="c1"># 返回 obj 的类型；</span>
+<span class="c1"># 动态的创建类！</span>
+<span class="nb">type</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">bases</span><span class="p">,</span> <span class="n">_dict</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Python <code class="docutils literal"><span class="pre">six.add_metaclass</span></code> 可以用来实现给类增加 __metaclass__ 属性的效果，这是一个函数装饰器，
+源码看起来也非常的简单。来看看这个例子：</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="ch">#!/usr/bin/env python</span>
+
+<span class="k">def</span> <span class="nf">metaclass</span><span class="p">(</span><span class="n">metaclass</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Class decorator for creating a class with a metaclass.&quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">wrapper</span><span class="p">(</span><span class="n">cls</span><span class="p">):</span>
+        <span class="n">orig_vars</span> <span class="o">=</span> <span class="n">cls</span><span class="o">.</span><span class="n">__dict__</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+        <span class="n">orig_vars</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;__dict__&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+        <span class="n">orig_vars</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;__weakref__&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+        <span class="n">slots</span> <span class="o">=</span> <span class="n">orig_vars</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;__slots__&#39;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">slots</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">slots</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+                <span class="n">slots</span> <span class="o">=</span> <span class="p">[</span><span class="n">slots</span><span class="p">]</span>
+            <span class="k">for</span> <span class="n">slots_var</span> <span class="ow">in</span> <span class="n">slots</span><span class="p">:</span>
+                <span class="n">orig_vars</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="n">slots_var</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">metaclass</span><span class="p">(</span><span class="n">cls</span><span class="o">.</span><span class="n">__name__</span><span class="p">,</span> <span class="n">cls</span><span class="o">.</span><span class="n">__bases__</span><span class="p">,</span> <span class="n">orig_vars</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">wrapper</span>
+
+<span class="k">class</span> <span class="nc">UpperAttrMetaclass</span><span class="p">(</span><span class="nb">type</span><span class="p">):</span>
+
+    <span class="k">def</span> <span class="nf">__new__</span><span class="p">(</span><span class="n">cls</span><span class="p">,</span> <span class="n">clsname</span><span class="p">,</span> <span class="n">bases</span><span class="p">,</span> <span class="n">dct</span><span class="p">):</span>
+
+        <span class="n">uppercase_attr</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">val</span> <span class="ow">in</span> <span class="n">dct</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">name</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">&#39;__&#39;</span><span class="p">):</span>
+                <span class="n">uppercase_attr</span><span class="p">[</span><span class="n">name</span><span class="o">.</span><span class="n">upper</span><span class="p">()]</span> <span class="o">=</span> <span class="n">val</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">uppercase_attr</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">val</span>
+
+        <span class="k">return</span> <span class="nb">super</span><span class="p">(</span><span class="n">UpperAttrMetaclass</span><span class="p">,</span> <span class="n">cls</span><span class="p">)</span><span class="o">.</span><span class="n">__new__</span><span class="p">(</span><span class="n">cls</span><span class="p">,</span> <span class="n">clsname</span><span class="p">,</span> <span class="n">bases</span><span class="p">,</span> <span class="n">uppercase_attr</span><span class="p">)</span>
+        <span class="c1">#return type(clsname, bases, uppercase_attr)</span>
+
+<span class="c1">#b = UpperAttrMetaclass()</span>
+<span class="k">class</span> <span class="nc">B1</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="n">__metaclass__</span> <span class="o">=</span> <span class="n">UpperAttrMetaclass</span>
+    <span class="n">bar</span> <span class="o">=</span> <span class="s1">&#39;bar&#39;</span>
+    <span class="n">foo</span> <span class="o">=</span> <span class="s1">&#39;foo&#39;</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="nb">super</span><span class="p">(</span><span class="n">B1</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">()</span>
+
+<span class="n">b1</span> <span class="o">=</span> <span class="n">B1</span><span class="p">();</span> <span class="nb">print</span> <span class="nb">dir</span><span class="p">(</span><span class="n">b1</span><span class="p">)</span>
+<span class="nb">print</span> <span class="n">b1</span><span class="o">.</span><span class="n">BAR</span>
+<span class="c1">#print b1.bar</span>
+
+<span class="c1">#@six.add_metaclass(UpperAttrMetaclass)</span>
+<span class="nd">@metaclass</span><span class="p">(</span><span class="n">UpperAttrMetaclass</span><span class="p">)</span>
+<span class="k">class</span> <span class="nc">B2</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="c1">#__metaclass__ = UpperAttrMetaclass</span>
+    <span class="n">bar2</span> <span class="o">=</span> <span class="s1">&#39;bar2&#39;</span>
+    <span class="n">foo2</span> <span class="o">=</span> <span class="s1">&#39;foo2&#39;</span>
+    <span class="c1"># __slots__ = (&quot;bar2&quot;, &quot;fo2&quot;)</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="nb">super</span><span class="p">(</span><span class="n">B2</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">()</span>
+
+<span class="c1">#B2=metaclass(UpperAttrMetaclass)(B2)</span>
+<span class="n">b2</span> <span class="o">=</span> <span class="n">B2</span><span class="p">();</span> <span class="nb">print</span> <span class="nb">dir</span><span class="p">(</span><span class="n">b2</span><span class="p">)</span>
+<span class="nb">print</span> <span class="s2">&quot;B2.__dict__, &quot;</span><span class="p">,</span> <span class="n">B2</span><span class="o">.</span><span class="n">__dict__</span>
+<span class="nb">print</span> <span class="s2">&quot;b2.__dict__, &quot;</span><span class="p">,</span> <span class="n">b2</span><span class="o">.</span><span class="n">__dict__</span>
+<span class="n">b2</span><span class="o">.</span><span class="n">a</span> <span class="o">=</span> <span class="s2">&quot;a&quot;</span>
+<span class="nb">print</span> <span class="s2">&quot;b2.__dict__, &quot;</span><span class="p">,</span> <span class="n">b2</span><span class="o">.</span><span class="n">__dict__</span>
+<span class="n">b2</span><span class="o">.</span><span class="n">dic</span> <span class="o">=</span> <span class="s2">&quot;dic&quot;</span>
+<span class="c1">#print b2.__slots__</span>
+<span class="c1">#print b1.BAR</span>
+<span class="nb">print</span> <span class="nb">type</span><span class="p">(</span><span class="n">B2</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>在这里的测试中，我使用了两种方式来测试元类：</p>
+<ul class="simple">
+<li>第一种是给 <code class="xref py py-class docutils literal"><span class="pre">B1</span></code> 类增加 <cite>__metaclass__</cite> 属性；</li>
+<li>第二种是给 <code class="xref py py-class docutils literal"><span class="pre">B2</span></code> 类使用 <code class="xref py py-func docutils literal"><span class="pre">metaclass()</span></code> 装饰器(源码拷贝于 <code class="xref py py-func docutils literal"><span class="pre">six.add_metaclass()</span></code> )</li>
+</ul>
+<p>我们来看看第二种方式，通过这种方式，可以了解元类的本质。</p>
+<p>在 <code class="xref py py-func docutils literal"><span class="pre">metaclass()</span></code> 中，以 <code class="xref py py-class docutils literal"><span class="pre">B2</span></code> 为例，讲解该函数的执行过程：</p>
+<ul class="simple">
+<li>首先获取 <code class="xref py py-class docutils literal"><span class="pre">B2</span></code> 字典属性;</li>
+<li>假如 <code class="xref py py-class docutils literal"><span class="pre">B2</span></code> 存在 __slots__ 属性，则从字典属性中移除相应的items；</li>
+<li>使用元类 <code class="xref py py-class docutils literal"><span class="pre">UpperAttrMetaclass</span></code> 生成类 <code class="xref py py-class docutils literal"><span class="pre">B2</span></code></li>
+</ul>
+<p>在 <code class="xref py py-class docutils literal"><span class="pre">UpperAttrMetaclass</span></code> 的 __new__ 魔法方法中，
+针对类的每一个非特殊属性，将属性名称转换成大写方式。因此 B2.foo2
+和 B2.bar2 都被转换成大写的形式，然后生成类 B2。</p>
+<p>综上，我们可以很清晰的看到，元类是怎样拦截类的创建的！</p>
+</div>
+
+
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../linux_tools/index.html" class="btn btn-neutral float-right" title="Hack Linux" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="webob_analysis.html" class="btn btn-neutral" title="10. webob库简单分析" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2016, chenshiqiang.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'0.1',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

@@ -272,6 +272,95 @@ test_cfg.py：
     :language: shell
     :linenos:
 
+补充和更新
+===========
+
+对配置项下划线的特殊处理
+++++++++++++++++++++++++
+
+**date: 2016/12/25-18-54**
+
+oslo.config.cfg 模块，对配置项名称中下划线进行了特殊处理，这一点要特别注意。
+
+比如我今天在阅读 nova/openstack/common/log.py 代码时，代码中有这么一项：
+
+::
+
+    if CONF.log_config_append:
+        xxxx
+
+结果怎么都搜索不到该配置项 ``log_config_append`` , 在 /etc/nova/nova.conf
+中也没有该配置项。后来，从文件头部开始查看每个配置项，发现有这么一项：
+
+::
+
+    cfg.StrOpt('log-config-append',)
+
+原来，以字符串形式定义配置项名称包括 ``-`` 时，由于它不是合法的名字标签字符，
+会被当成负号。因此，cfg.py 库会对名称中的 ``-`` 替换成 ``_`` ,这样我们就可以
+通过 CONF.log_config_append 获取该配置项值！
+
+.. figure:: /_static/images/log_config_append.png
+   :scale: 100
+   :align: center
+
+   搜索配置项
+
+
+.. figure:: /_static/images/opt_replace.png
+   :scale: 100
+   :align: center
+
+   oslo.config.cfg 模块替换配置项名称下划线
+
+加载配置文件
++++++++++++++++++
+
+**date: 2016/12/26-12-40**
+
+这种方式，也是我在阅读 nova/openstack/common/log 模块代码时注意到的。
+log 模块设置nova的日志保存在 /var/log/nova/ 目录下，该项由 /etc/nova/nova.conf
+配置文件指定：
+
+:file:`/etc/nova/nova.conf`
+::
+
+    logdir=/var/log/nova
+
+我们知道，oslo.config 默认存在 --config-file 和 --config-dir 选项，后来我从命令行启动的方式，
+根本不指定任务参数，可是 CONF.config_file 还是正确加载 /etc/nova/nova.conf 文件。来看看我的
+测试方式：
+
+:file:`cmd/scheduler.py`
+::
+
+    def main():
+        #config.parse_args(sys.argv)
+        CONF(project='nova')
+        print "+++===+++ CONF.config_dir2:", CONF.config_dir
+        print "+++===+++ CONF.config_file2:", CONF.config_file
+
+利用  /usr/bin/nova-scheduler 不带任何参数，直接启动 nova-scheduler 还是可以正确加载配置文件，
+为了分析出nova组件是如何正确加载 /etc/nova/nova.conf 文件，我折腾了一个上午(效率很低哈！)。
+
+原来，在 nova/config.py 文件中，进行参数解析时指定了一个额外的参数 project，如此就可以找到
+/etc/nova/nova.conf 配置文件了！
+
+:file:`nova/config.py`
+::
+
+    CONF(argv[1:],
+         project='nova',
+         version=version.version_string(),
+         default_config_files=default_config_files)
+
+
+.. figure:: /_static/images/get_config_dir.png
+   :scale: 100
+   :align: center
+
+   通过 project 参数查找配置文件目录
+
 ---------------------
 
 参考

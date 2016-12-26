@@ -113,7 +113,12 @@
 <li class="toctree-l3"><a class="reference internal" href="#id8">18.7. 命令行和配置文件重复指定配置项</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#id9">18.8. 从其他模块导入配置</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#id10">18.9. 代码汇总</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#id11">18.10. 参考</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id11">18.10. 补充和更新</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#id12">18.10.1. 对配置项下划线的特殊处理</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id13">18.10.2. 加载配置文件</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#id14">18.11. 参考</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="kombu.html">19. kombu和消息队列总结</a></li>
@@ -171,21 +176,26 @@
            <div itemprop="articleBody">
             
   <div class="section" id="oslo-config">
-<span id="oslo-cfg"></span><h1><a class="toc-backref" href="#id16">18. oslo.config 库学习</a><a class="headerlink" href="#oslo-config" title="Permalink to this headline">¶</a></h1>
+<span id="oslo-cfg"></span><h1><a class="toc-backref" href="#id22">18. oslo.config 库学习</a><a class="headerlink" href="#oslo-config" title="Permalink to this headline">¶</a></h1>
 <div class="contents topic" id="id1">
 <p class="topic-title first">目录</p>
 <ul class="simple">
-<li><a class="reference internal" href="#oslo-config" id="id16">oslo.config 库学习</a><ul>
-<li><a class="reference internal" href="#id2" id="id17">配置项</a></li>
-<li><a class="reference internal" href="#id3" id="id18">配置项类型</a></li>
-<li><a class="reference internal" href="#id4" id="id19">注册参数</a></li>
-<li><a class="reference internal" href="#id5" id="id20">参数解析</a></li>
-<li><a class="reference internal" href="#id6" id="id21">获取帮助信息</a></li>
-<li><a class="reference internal" href="#id7" id="id22">参数分组</a></li>
-<li><a class="reference internal" href="#id8" id="id23">命令行和配置文件重复指定配置项</a></li>
-<li><a class="reference internal" href="#id9" id="id24">从其他模块导入配置</a></li>
-<li><a class="reference internal" href="#id10" id="id25">代码汇总</a></li>
-<li><a class="reference internal" href="#id11" id="id26">参考</a></li>
+<li><a class="reference internal" href="#oslo-config" id="id22">oslo.config 库学习</a><ul>
+<li><a class="reference internal" href="#id2" id="id23">配置项</a></li>
+<li><a class="reference internal" href="#id3" id="id24">配置项类型</a></li>
+<li><a class="reference internal" href="#id4" id="id25">注册参数</a></li>
+<li><a class="reference internal" href="#id5" id="id26">参数解析</a></li>
+<li><a class="reference internal" href="#id6" id="id27">获取帮助信息</a></li>
+<li><a class="reference internal" href="#id7" id="id28">参数分组</a></li>
+<li><a class="reference internal" href="#id8" id="id29">命令行和配置文件重复指定配置项</a></li>
+<li><a class="reference internal" href="#id9" id="id30">从其他模块导入配置</a></li>
+<li><a class="reference internal" href="#id10" id="id31">代码汇总</a></li>
+<li><a class="reference internal" href="#id11" id="id32">补充和更新</a><ul>
+<li><a class="reference internal" href="#id12" id="id33">对配置项下划线的特殊处理</a></li>
+<li><a class="reference internal" href="#id13" id="id34">加载配置文件</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#id14" id="id35">参考</a></li>
 </ul>
 </li>
 </ul>
@@ -197,7 +207,7 @@
 支持的功能非常的多，因此这里可能只会列出常用的用法。</p>
 <p>代码版本为 OpenStack juno！</p>
 <div class="section" id="id2">
-<h2><a class="toc-backref" href="#id17">18.1. 配置项</a><a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id23">18.1. 配置项</a><a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">sys</span>
 <span class="kn">from</span> <span class="nn">oslo.config</span> <span class="k">import</span> <span class="n">cfg</span>
 <span class="kn">from</span> <span class="nn">oslo.config</span> <span class="k">import</span> <span class="n">types</span>
@@ -220,12 +230,12 @@
 </div>
 </div>
 <div class="section" id="id3">
-<h2><a class="toc-backref" href="#id18">18.2. 配置项类型</a><a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id24">18.2. 配置项类型</a><a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h2>
 <p>第一种方式是使用 cfg.StrOpt，cfg.IntOpt 等带有类型的参数类；另一种方式是在
 初始化 cfg.Opt 时传递 type 参数。oslo.config 支持多种类型！</p>
 </div>
 <div class="section" id="id4">
-<h2><a class="toc-backref" href="#id19">18.3. 注册参数</a><a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id25">18.3. 注册参数</a><a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h2>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="c1"># oslo.config 默认维护了一个 ConfigOpts 类型的全局变量 CONF。</span>
 <span class="c1"># 注册参数，以及后续获取参数，都是可以通过 CONF。</span>
 <span class="n">CONF</span> <span class="o">=</span> <span class="n">cfg</span><span class="o">.</span><span class="n">CONF</span>
@@ -246,7 +256,7 @@
 </div>
 </div>
 <div class="section" id="id5">
-<h2><a class="toc-backref" href="#id20">18.4. 参数解析</a><a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id26">18.4. 参数解析</a><a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h2>
 <p>配置文件和命令行参数解析是通过 <code class="docutils literal"><span class="pre">CONF(sys.argv[1:])</span></code> 完成。</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
     <span class="n">CONF</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">:])</span>
@@ -258,7 +268,7 @@
 </div>
 </div>
 <div class="section" id="id6">
-<h2><a class="toc-backref" href="#id21">18.5. 获取帮助信息</a><a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id27">18.5. 获取帮助信息</a><a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h2>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">root</span><span class="nd">@allinone</span><span class="o">-</span><span class="n">v2</span><span class="p">:</span><span class="o">/</span><span class="n">smbshare</span><span class="c1"># ./test_cfg.py -h</span>
 <span class="n">usage</span><span class="p">:</span> <span class="n">test_cfg</span><span class="o">.</span><span class="n">py</span> <span class="p">[</span><span class="o">-</span><span class="n">h</span><span class="p">]</span> <span class="p">[</span><span class="o">--</span><span class="n">config</span><span class="o">-</span><span class="nb">dir</span> <span class="n">DIR</span><span class="p">]</span> <span class="p">[</span><span class="o">--</span><span class="n">config</span><span class="o">-</span><span class="n">file</span> <span class="n">PATH</span><span class="p">]</span> <span class="p">[</span><span class="o">--</span><span class="n">host</span> <span class="n">HOST</span><span class="p">]</span>
                    <span class="p">[</span><span class="o">--</span><span class="n">port</span> <span class="n">PORT</span><span class="p">]</span> <span class="p">[</span><span class="o">--</span><span class="n">version</span><span class="p">]</span>
@@ -283,7 +293,7 @@
 选项，用来从配置文件中获取参数值！</p>
 </div>
 <div class="section" id="id7">
-<h2><a class="toc-backref" href="#id22">18.6. 参数分组</a><a class="headerlink" href="#id7" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id28">18.6. 参数分组</a><a class="headerlink" href="#id7" title="Permalink to this headline">¶</a></h2>
 <p>参数分组，既可以通过 <code class="xref py py-class docutils literal"><span class="pre">cfg.OptGroup</span></code> 指定，也可以在
 注册参数时直接指定分组名字字符串，个人倾向直接使用字符串组名。</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">CONF</span><span class="o">.</span><span class="n">register_opts</span><span class="p">(</span><span class="n">disk_opts</span><span class="p">,</span> <span class="s1">&#39;disk&#39;</span><span class="p">)</span>
@@ -331,7 +341,7 @@
 </ul>
 </div>
 <div class="section" id="id8">
-<h2><a class="toc-backref" href="#id23">18.7. 命令行和配置文件重复指定配置项</a><a class="headerlink" href="#id8" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id29">18.7. 命令行和配置文件重复指定配置项</a><a class="headerlink" href="#id8" title="Permalink to this headline">¶</a></h2>
 <p>假如在命令行和配置文件中，都指定了配置项，那么后指定的会覆盖先指定的！</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">root</span><span class="nd">@allinone</span><span class="o">-</span><span class="n">v2</span><span class="p">:</span><span class="o">/</span><span class="n">smbshare</span><span class="c1"># ./test_cfg.py</span>
 <span class="n">volume</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;hda 100G&#39;</span><span class="p">,</span> <span class="s1">&#39;hdb 150G&#39;</span><span class="p">,</span> <span class="s1">&#39;hdc 200G&#39;</span><span class="p">]</span>
@@ -357,7 +367,7 @@
 <p>可以看到，假如命令行参数最后指定，就会覆盖配置文件中的相应参数；反过来亦然！</p>
 </div>
 <div class="section" id="id9">
-<h2><a class="toc-backref" href="#id24">18.8. 从其他模块导入配置</a><a class="headerlink" href="#id9" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id30">18.8. 从其他模块导入配置</a><a class="headerlink" href="#id9" title="Permalink to this headline">¶</a></h2>
 <p>由于OpenStack项目大，模块多。因此假如可以在部分模块中定义配置项，然后其他模块直接
 导入，就会很方便，也方便管理。</p>
 <p>oslo.config 支持直接从其他模块中导入配置！可以使用 <a class="reference internal" href="#ConfigOpts.import_opt" title="ConfigOpts.import_opt"><code class="xref py py-meth docutils literal"><span class="pre">ConfigOpts.import_opt()</span></code></a> 实现。</p>
@@ -402,7 +412,7 @@
 从其他模块导入配置项这种用法在 OpenStack 组件中使用相当广泛!</p>
 </div>
 <div class="section" id="id10">
-<h2><a class="toc-backref" href="#id25">18.9. 代码汇总</a><a class="headerlink" href="#id10" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id31">18.9. 代码汇总</a><a class="headerlink" href="#id10" title="Permalink to this headline">¶</a></h2>
 <p>以下是本次测试代码，可以直接复制运行！</p>
 <p>test_cfg.py：</p>
 <div class="highlight-python"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
@@ -533,28 +543,94 @@ print <span class="s2">&quot;cli host: &quot;</span>, CONF.cli.host
 </pre></div>
 </td></tr></table></div>
 </div>
-<hr class="docutils" />
 <div class="section" id="id11">
-<h2><a class="toc-backref" href="#id26">18.10. 参考</a><a class="headerlink" href="#id11" title="Permalink to this headline">¶</a></h2>
-<table class="docutils footnote" frame="void" id="id12" rules="none">
+<h2><a class="toc-backref" href="#id32">18.10. 补充和更新</a><a class="headerlink" href="#id11" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id12">
+<h3><a class="toc-backref" href="#id33">18.10.1. 对配置项下划线的特殊处理</a><a class="headerlink" href="#id12" title="Permalink to this headline">¶</a></h3>
+<p><strong>date: 2016/12/25-18-54</strong></p>
+<p>oslo.config.cfg 模块，对配置项名称中下划线进行了特殊处理，这一点要特别注意。</p>
+<p>比如我今天在阅读 nova/openstack/common/log.py 代码时，代码中有这么一项：</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="n">CONF</span><span class="o">.</span><span class="n">log_config_append</span><span class="p">:</span>
+    <span class="n">xxxx</span>
+</pre></div>
+</div>
+<p>结果怎么都搜索不到该配置项 <code class="docutils literal"><span class="pre">log_config_append</span></code> , 在 /etc/nova/nova.conf
+中也没有该配置项。后来，从文件头部开始查看每个配置项，发现有这么一项：</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">cfg</span><span class="o">.</span><span class="n">StrOpt</span><span class="p">(</span><span class="s1">&#39;log-config-append&#39;</span><span class="p">,)</span>
+</pre></div>
+</div>
+<p>原来，以字符串形式定义配置项名称包括 <code class="docutils literal"><span class="pre">-</span></code> 时，由于它不是合法的名字标签字符，
+会被当成负号。因此，cfg.py 库会对名称中的 <code class="docutils literal"><span class="pre">-</span></code> 替换成 <code class="docutils literal"><span class="pre">_</span></code> ,这样我们就可以
+通过 CONF.log_config_append 获取该配置项值！</p>
+<div class="figure align-center" id="id19">
+<a class="reference internal image-reference" href="../_images/log_config_append.png"><img alt="../_images/log_config_append.png" src="../_images/log_config_append.png" style="width: 989.0px; height: 415.0px;" /></a>
+<p class="caption"><span class="caption-text">搜索配置项</span></p>
+</div>
+<div class="figure align-center" id="id20">
+<a class="reference internal image-reference" href="../_images/opt_replace.png"><img alt="../_images/opt_replace.png" src="../_images/opt_replace.png" style="width: 663.0px; height: 328.0px;" /></a>
+<p class="caption"><span class="caption-text">oslo.config.cfg 模块替换配置项名称下划线</span></p>
+</div>
+</div>
+<div class="section" id="id13">
+<h3><a class="toc-backref" href="#id34">18.10.2. 加载配置文件</a><a class="headerlink" href="#id13" title="Permalink to this headline">¶</a></h3>
+<p><strong>date: 2016/12/26-12-40</strong></p>
+<p>这种方式，也是我在阅读 nova/openstack/common/log 模块代码时注意到的。
+log 模块设置nova的日志保存在 /var/log/nova/ 目录下，该项由 /etc/nova/nova.conf
+配置文件指定：</p>
+<p><code class="file docutils literal"><span class="pre">/etc/nova/nova.conf</span></code></p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">logdir</span><span class="o">=/</span><span class="n">var</span><span class="o">/</span><span class="n">log</span><span class="o">/</span><span class="n">nova</span>
+</pre></div>
+</div>
+<p>我们知道，oslo.config 默认存在 &#8211;config-file 和 &#8211;config-dir 选项，后来我从命令行启动的方式，
+根本不指定任务参数，可是 CONF.config_file 还是正确加载 /etc/nova/nova.conf 文件。来看看我的
+测试方式：</p>
+<p><code class="file docutils literal"><span class="pre">cmd/scheduler.py</span></code></p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+    <span class="c1">#config.parse_args(sys.argv)</span>
+    <span class="n">CONF</span><span class="p">(</span><span class="n">project</span><span class="o">=</span><span class="s1">&#39;nova&#39;</span><span class="p">)</span>
+    <span class="nb">print</span> <span class="s2">&quot;+++===+++ CONF.config_dir2:&quot;</span><span class="p">,</span> <span class="n">CONF</span><span class="o">.</span><span class="n">config_dir</span>
+    <span class="nb">print</span> <span class="s2">&quot;+++===+++ CONF.config_file2:&quot;</span><span class="p">,</span> <span class="n">CONF</span><span class="o">.</span><span class="n">config_file</span>
+</pre></div>
+</div>
+<p>利用  /usr/bin/nova-scheduler 不带任何参数，直接启动 nova-scheduler 还是可以正确加载配置文件，
+为了分析出nova组件是如何正确加载 /etc/nova/nova.conf 文件，我折腾了一个上午(效率很低哈！)。</p>
+<p>原来，在 nova/config.py 文件中，进行参数解析时指定了一个额外的参数 project，如此就可以找到
+/etc/nova/nova.conf 配置文件了！</p>
+<p><code class="file docutils literal"><span class="pre">nova/config.py</span></code></p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">CONF</span><span class="p">(</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">:],</span>
+     <span class="n">project</span><span class="o">=</span><span class="s1">&#39;nova&#39;</span><span class="p">,</span>
+     <span class="n">version</span><span class="o">=</span><span class="n">version</span><span class="o">.</span><span class="n">version_string</span><span class="p">(),</span>
+     <span class="n">default_config_files</span><span class="o">=</span><span class="n">default_config_files</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="figure align-center" id="id21">
+<a class="reference internal image-reference" href="../_images/get_config_dir.png"><img alt="../_images/get_config_dir.png" src="../_images/get_config_dir.png" style="width: 770.0px; height: 522.0px;" /></a>
+<p class="caption"><span class="caption-text">通过 project 参数查找配置文件目录</span></p>
+</div>
+</div>
+</div>
+<hr class="docutils" />
+<div class="section" id="id14">
+<h2><a class="toc-backref" href="#id35">18.11. 参考</a><a class="headerlink" href="#id14" title="Permalink to this headline">¶</a></h2>
+<table class="docutils footnote" frame="void" id="id15" rules="none">
 <colgroup><col class="label" /><col /></colgroup>
 <tbody valign="top">
 <tr><td class="label">[1]</td><td><a class="reference external" href="https://blog.apporc.org/2016/08/python-%E9%85%8D%E7%BD%AE%E7%AE%A1%E7%90%86%EF%BC%9Aoslo-config/">https://blog.apporc.org/2016/08/python-%E9%85%8D%E7%BD%AE%E7%AE%A1%E7%90%86%EF%BC%9Aoslo-config/</a></td></tr>
 </tbody>
 </table>
-<table class="docutils footnote" frame="void" id="id13" rules="none">
+<table class="docutils footnote" frame="void" id="id16" rules="none">
 <colgroup><col class="label" /><col /></colgroup>
 <tbody valign="top">
 <tr><td class="label">[2]</td><td><a class="reference external" href="http://www.choudan.net/2013/11/28/OpenStack-Oslo.config-%E5%AD%A6%E4%B9%A0(%E4%BA%8C).html">http://www.choudan.net/2013/11/28/OpenStack-Oslo.config-%E5%AD%A6%E4%B9%A0(%E4%BA%8C).html</a></td></tr>
 </tbody>
 </table>
-<table class="docutils footnote" frame="void" id="id14" rules="none">
+<table class="docutils footnote" frame="void" id="id17" rules="none">
 <colgroup><col class="label" /><col /></colgroup>
 <tbody valign="top">
 <tr><td class="label">[3]</td><td><a class="reference external" href="http://blog.xiayf.cn/2013/03/30/argparse/">http://blog.xiayf.cn/2013/03/30/argparse/</a></td></tr>
 </tbody>
 </table>
-<table class="docutils footnote" frame="void" id="id15" rules="none">
+<table class="docutils footnote" frame="void" id="id18" rules="none">
 <colgroup><col class="label" /><col /></colgroup>
 <tbody valign="top">
 <tr><td class="label">[4]</td><td><a class="reference external" href="http://lingxiankong.github.io/blog/2014/08/31/openstack-oslo-config/">http://lingxiankong.github.io/blog/2014/08/31/openstack-oslo-config/</a></td></tr>

@@ -6,7 +6,7 @@ Python Note
 
 .. tip::
     Python是我当前工作的主要语言，也是我很喜欢的一门编程语言。
-    这篇是 Python 相关的个人学习笔记和工作总结。\
+    这篇是 Python 相关的个人学习笔记和工作总结。
 
 -----------------------
 
@@ -25,5 +25,7 @@ Python Note
     python_coding
     dec_logic
     webob_analysis
+    metaclass_intro
+    inspect_intro
 
 ..    django_note

@@ -1,0 +1,280 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>12. python inspect 模块 &mdash; Welcome to Sitian&#39;s Blog 0.1 documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+    <link rel="top" title="Welcome to Sitian&#39;s Blog 0.1 documentation" href="../index.html"/>
+        <link rel="up" title="Python Note" href="index.html"/>
+        <link rel="next" title="Hack Linux" href="../linux_tools/index.html"/>
+        <link rel="prev" title="11. Python元类" href="metaclass_intro.html"/> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> Welcome to Sitian's Blog
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.1
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Python Note</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="pysnmp_doc.html">1. [翻译] PySNMP教程</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pysnmp_doc_example.html">2. PySNMP获取设备信息</a></li>
+<li class="toctree-l2"><a class="reference internal" href="re_doc.html">3. [翻译] Python正则表达式</a></li>
+<li class="toctree-l2"><a class="reference internal" href="wsgi.html">4. WSGI基础</a></li>
+<li class="toctree-l2"><a class="reference internal" href="re_analysis.html">5. Python正则表达式分析利器</a></li>
+<li class="toctree-l2"><a class="reference internal" href="python_descriptor.html">6. Python描述器</a></li>
+<li class="toctree-l2"><a class="reference internal" href="python_notebook.html">7. Python学习总结</a></li>
+<li class="toctree-l2"><a class="reference internal" href="python_coding.html">8. Python 编码问题总结</a></li>
+<li class="toctree-l2"><a class="reference internal" href="dec_logic.html">9. Python 装饰器、闭包</a></li>
+<li class="toctree-l2"><a class="reference internal" href="webob_analysis.html">10. webob库简单分析</a></li>
+<li class="toctree-l2"><a class="reference internal" href="metaclass_intro.html">11. Python元类</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">12. python inspect 模块</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#inspect-stack">12.1. inspect.stack</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../linux_tools/index.html">Hack Linux</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../openstack/index.html">OpenStack Note</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../web/index.html">web开发</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../others/index.html">附录</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../index.html">Welcome to Sitian's Blog</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+ 
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../index.html">Docs</a> &raquo;</li>
+      
+          <li><a href="index.html">Python Note</a> &raquo;</li>
+      
+    <li>12. python inspect 模块</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="../_sources/py_doc/inspect_intro.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="python-inspect">
+<span id="inspect-intro"></span><h1><a class="toc-backref" href="#id3">12. python inspect 模块</a><a class="headerlink" href="#python-inspect" title="Permalink to this headline">¶</a></h1>
+<p><strong>date: 2016/12/26-14-40</strong></p>
+<div class="contents topic" id="id1">
+<p class="topic-title first">目录</p>
+<ul class="simple">
+<li><a class="reference internal" href="#python-inspect" id="id3">python inspect 模块</a><ul>
+<li><a class="reference internal" href="#inspect-stack" id="id4">inspect.stack</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<hr class="docutils" />
+<p>这里简要记录下 Python inspect 模块的用法。</p>
+<p>OpenStack 组件使用了非常多的python库，包括标准模块和第三方模块。
+之前自己在分析源码时，遇到不熟悉的库，总想把该库的方方面面都弄
+清楚，结果这就造成自己分析 nova 组件的进度非常之慢。因此尝试换
+一种方式，对于不熟悉的模块，把该模块在OpenStack组件中涉及到的用法
+熟悉一下，后续有机会再补充完整。</p>
+<div class="section" id="inspect-stack">
+<h2><a class="toc-backref" href="#id4">12.1. inspect.stack</a><a class="headerlink" href="#inspect-stack" title="Permalink to this headline">¶</a></h2>
+<p>对于 nova 组件，在 /var/log/nova 目录下都会有对应的 nova-*.log 日志文件，
+分析 nova/openstack/common/log.py 组件时，这是通过 <code class="xref py py-func docutils literal"><span class="pre">inspect.stack()</span></code>
+实现的。来看源码(为了方便输出调试信息，我对源码进行了更改！):</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">_get_binary_name</span><span class="p">():</span>
+        <span class="c1">#stack = inspect.stack()[-1][1]</span>
+        <span class="n">stack</span> <span class="o">=</span> <span class="n">inspect</span><span class="o">.</span><span class="n">stack</span><span class="p">()</span>
+        <span class="n">b</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">basename</span><span class="p">(</span><span class="n">stack</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="mi">1</span><span class="p">])</span>
+        <span class="nb">print</span> <span class="s2">&quot;+++===+++ stack: </span><span class="si">%s</span><span class="s2">&quot;</span><span class="o">%</span><span class="n">stack</span>
+        <span class="k">return</span> <span class="n">b</span>
+</pre></div>
+</div>
+<p>下面是运行时，打印的堆栈信息：</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="p">[(</span><span class="o">&lt;</span><span class="n">frame</span> <span class="nb">object</span> <span class="n">at</span> <span class="mh">0x7fa5692e2938</span><span class="o">&gt;</span><span class="p">,</span> <span class="s1">&#39;/usr/lib/python2.7/dist-packages/nova/openstack/common/log.py&#39;</span><span class="p">,</span> <span class="mi">211</span><span class="p">,</span> <span class="s1">&#39;_get_binary_name&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;    stack = inspect.stack()</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">],</span> <span class="mi">0</span><span class="p">),</span>
+<span class="p">(</span><span class="o">&lt;</span><span class="n">frame</span> <span class="nb">object</span> <span class="n">at</span> <span class="mh">0x7fa56936a620</span><span class="o">&gt;</span><span class="p">,</span> <span class="s1">&#39;/usr/lib/python2.7/dist-packages/nova/openstack/common/log.py&#39;</span><span class="p">,</span> <span class="mi">228</span><span class="p">,</span> <span class="s1">&#39;_get_log_file_path&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;        binary = binary or _get_binary_name()</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">],</span> <span class="mi">0</span><span class="p">),</span>
+<span class="p">(</span><span class="o">&lt;</span><span class="n">frame</span> <span class="nb">object</span> <span class="n">at</span> <span class="mh">0x18fb910</span><span class="o">&gt;</span><span class="p">,</span> <span class="s1">&#39;/usr/lib/python2.7/dist-packages/nova/openstack/common/log.py&#39;</span><span class="p">,</span> <span class="mi">493</span><span class="p">,</span> <span class="s1">&#39;_setup_logging_from_conf&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;    logpath = _get_log_file_path()</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">],</span> <span class="mi">0</span><span class="p">),</span>
+<span class="p">(</span><span class="o">&lt;</span><span class="n">frame</span> <span class="nb">object</span> <span class="n">at</span> <span class="mh">0x7fa5692e2770</span><span class="o">&gt;</span><span class="p">,</span> <span class="s1">&#39;/usr/lib/python2.7/dist-packages/nova/openstack/common/log.py&#39;</span><span class="p">,</span> <span class="mi">427</span><span class="p">,</span> <span class="s1">&#39;setup&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;        _setup_logging_from_conf(product_name, version)</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">],</span> <span class="mi">0</span><span class="p">),</span>
+<span class="p">(</span><span class="o">&lt;</span><span class="n">frame</span> <span class="nb">object</span> <span class="n">at</span> <span class="mh">0x7fa571e64d00</span><span class="o">&gt;</span><span class="p">,</span> <span class="s1">&#39;/usr/lib/python2.7/dist-packages/nova/cmd/scheduler.py&#39;</span><span class="p">,</span> <span class="mi">37</span><span class="p">,</span> <span class="s1">&#39;main&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;    logging.setup(&quot;nova&quot;)</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">],</span> <span class="mi">0</span><span class="p">),</span>
+<span class="p">(</span><span class="o">&lt;</span><span class="n">frame</span> <span class="nb">object</span> <span class="n">at</span> <span class="mh">0x7fa573361910</span><span class="o">&gt;</span><span class="p">,</span> <span class="s1">&#39;/usr/bin/nova-scheduler&#39;</span><span class="p">,</span> <span class="mi">40</span><span class="p">,</span> <span class="s1">&#39;&lt;module&gt;&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;        sys.exit(main())</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">],</span> <span class="mi">0</span><span class="p">)</span>
+<span class="p">]</span>
+</pre></div>
+</div>
+<p>可以看到，inspect.stack() 打印了调用处到程序启动的完整的堆栈信息。
+它的每一项是一个元祖，每个元祖的具体条目信息如下：</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span>(frame_obj, 模块字符串, 调用行号, 函数， 语句信息)
+</pre></div>
+</div>
+<p>因此，可以通过 inspect.stack()[-1][1] 获取服务启动时的服务名 <code class="docutils literal"><span class="pre">nova-scheduler</span></code></p>
+<p>关于 inspect 模块的更多用法，可以参考:</p>
+<table class="docutils footnote" frame="void" id="id2" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label">[1]</td><td><a class="reference external" href="http://www.programcreek.com/python/example/737/inspect.stack">http://www.programcreek.com/python/example/737/inspect.stack</a></td></tr>
+</tbody>
+</table>
+</div>
+</div>
+
+
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../linux_tools/index.html" class="btn btn-neutral float-right" title="Hack Linux" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="metaclass_intro.html" class="btn btn-neutral" title="11. Python元类" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2016, chenshiqiang.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'0.1',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>
