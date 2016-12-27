@@ -5,7 +5,13 @@ OpenStack定时任务分析(1)
 
 OpenStack 定时任务实现由两种实现方法，一种是通过 periodic_task 函数装饰器，
 另外一种是由 :class:`DynamicLoopingCall` 和 :class:`FixedIntervalLoopingCall`
-类通过协程来实现。主要用到的是 :class:`eventlet.event.Event` 类！让我们
+类通过协程来实现。
+
+**这两种定时任务的目的也完全不一样，前者一般都是用来装饰 nova-rpc-server 的
+manager 类方法，用来实现资源定时刷新、状态报告等；后者通过 wait() 调用进行阻
+塞，等待某些某些特定事件发生！**
+
+对于第二种用法，源码比较简单，主要用到的是 :class:`eventlet.event.Event` 类！让我们
 首先来看看该类的用法。
 
 ::

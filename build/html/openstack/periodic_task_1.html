@@ -32,7 +32,7 @@
   
     <link rel="top" title="Welcome to Sitian&#39;s Blog 0.1 documentation" href="../index.html"/>
         <link rel="up" title="OpenStack Note" href="index.html"/>
-        <link rel="next" title="web开发" href="../web/index.html"/>
+        <link rel="next" title="23. OpenStack 日志模块分析" href="nova_log.html"/>
         <link rel="prev" title="21. nova RPC服务启动分析" href="nova_rpcserver_start.html"/> 
 
   
@@ -108,6 +108,7 @@
 <li class="toctree-l2"><a class="reference internal" href="openstack_debug.html">20. OpenStack 调试</a></li>
 <li class="toctree-l2"><a class="reference internal" href="nova_rpcserver_start.html">21. nova RPC服务启动分析</a></li>
 <li class="toctree-l2 current"><a class="current reference internal" href="#">22. OpenStack定时任务分析(1)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nova_log.html">23. OpenStack 日志模块分析</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../web/index.html">web开发</a></li>
@@ -162,7 +163,11 @@
 <span id="periodic-task-1"></span><h1>22. OpenStack定时任务分析(1)<a class="headerlink" href="#openstack-1" title="Permalink to this headline">¶</a></h1>
 <p>OpenStack 定时任务实现由两种实现方法，一种是通过 periodic_task 函数装饰器，
 另外一种是由 <code class="xref py py-class docutils literal"><span class="pre">DynamicLoopingCall</span></code> 和 <code class="xref py py-class docutils literal"><span class="pre">FixedIntervalLoopingCall</span></code>
-类通过协程来实现。主要用到的是 <code class="xref py py-class docutils literal"><span class="pre">eventlet.event.Event</span></code> 类！让我们
+类通过协程来实现。</p>
+<p><strong>这两种定时任务的目的也完全不一样，前者一般都是用来装饰 nova-rpc-server 的
+manager 类方法，用来实现资源定时刷新、状态报告等；后者通过 wait() 调用进行阻
+塞，等待某些某些特定事件发生！</strong></p>
+<p>对于第二种用法，源码比较简单，主要用到的是 <code class="xref py py-class docutils literal"><span class="pre">eventlet.event.Event</span></code> 类！让我们
 首先来看看该类的用法。</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">eventlet</span> <span class="k">import</span> <span class="n">event</span>
 <span class="kn">import</span> <span class="nn">eventlet</span>
@@ -313,7 +318,7 @@ B把事情做好后运行evt.send(XXX)（注意，由于都在一个线程中，
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="../web/index.html" class="btn btn-neutral float-right" title="web开发" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="nova_log.html" class="btn btn-neutral float-right" title="23. OpenStack 日志模块分析" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
         <a href="nova_rpcserver_start.html" class="btn btn-neutral" title="21. nova RPC服务启动分析" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>

@@ -326,9 +326,22 @@ grep
     # -v: 表示搜索不匹配的！
     git status | grep -Pv '\.pyc$'
 
-    # 搜索固定字符串
+    # 搜索固定字符串, 否则 + 会被当成元字符
     fgrep '+++===+++' /var/log/apache2/error.log
 
     # 递归搜索
-    # -r: 递归搜索，不跟从符合链接！
+    # -r: 递归搜索，不跟从符号链接！
     fgrep -rn '+++===+++' .
+
+
+系统和内核信息
+++++++++++++++
+
+可以使用下面的命令
+
+::
+
+    cat /etc/issue
+    lsb_release -a
+    uname -a
+

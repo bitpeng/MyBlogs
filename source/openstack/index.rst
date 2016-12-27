@@ -39,6 +39,7 @@ OpenStack Note
     openstack_debug
     nova_rpcserver_start
     periodic_task_1
+    nova_log
 
 
 ..  sphinx_doc
