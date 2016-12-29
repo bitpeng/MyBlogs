@@ -5,18 +5,20 @@
 OpenStack 日志模块分析
 ########################
 
+**date: 2016-12-29 14:00**
 
 .. contents:: 目录
 
 --------------------------
 
 日志是OpenStack开发调试、运维等操作的重要参考。OpenStack log 模块在
-Python logging 模块的基础之上进行封装，并增加一些更丰富的特性。
-这篇文章尝试对 OpenStack log 模块进行彻底的分析！
+Python logging 模块的基础之上进行封装，并增加一些更丰富的特性。这篇
+文章尝试对 OpenStack log 模块进行彻底的分析！首先可以参考python 官网
+库参考 logging 模块和 `Python logging howto，python logging cookbook` ，
+对 logging模块的用法和特性有个基本的了解。也可以参考 :ref:`logging模块总结<log_summary>`。
 
-首先可以参考python 官网库参考 logging 模块和 Python logging howto, 
-python logging cookbook，对 logging模块的用法和特性有个基本的了解。
-也可以参考 :ref:`logging模块总结<log_summary>`。
+下面以 nova-scheduler 启动为例，讲解 nova-scheduler 服务的日志设施。这里是 nova-scheduler
+服务入口：
 
 :file:`nova/cmd/scheduler.py`
 ::
@@ -25,10 +27,12 @@ python logging cookbook，对 logging模块的用法和特性有个基本的了�
         config.parse_args(sys.argv)
         logging.setup("nova")
 
-以nova-scheduler 启动为例，从 logging.setup("nova") 开始，
-进行日志设置，接下来所有的源码基本都源于 nova/openstack/common/log.py 文件，
+
+命令行参数解析完成后，执行logging.setup("nova") 语句，
+进行日志设置，接下来所有的源码基本都源于 :file:`nova/openstack/common/log.py` 文件，
 不是该文件的源码会特别标出。
 
+:file:`nova/openstack/common/log.py`
 ::
 
     def setup(product_name, version='unknown'):
@@ -39,11 +43,14 @@ python logging cookbook，对 logging模块的用法和特性有个基本的了�
             _setup_logging_from_conf(product_name, version)
         sys.excepthook = _create_logging_excepthook(product_name)
 
-log_config_append 是log模块注册的配置项，默认为 Flase;
-于是从 _setup_logging_from_conf 加载设置日志信息！
+log_config_append 是 :file:`nova/openstack/common/log.py` 模块注册的命令行选项，默认为 Flase;
+于是执行 :func:`_setup_logging_from_conf` 函数设置日志信息！
 
-根据 :ref:`oslo.config 库学习 <oslo_cfg>` 可知，实际上 CONF 已经
-通过 ``project="nova"`` 参数加载了配置文件 /etc/nova/nova.conf 。
+.. note::
+
+    根据 :ref:`oslo.config 库学习 <oslo_cfg>` 可知，实际上参数解析时 ``CONF()`` 已经
+    通过 ``project="nova"`` 参数加载了配置文件 /etc/nova/nova.conf 。
+    因此有些配置项的值从该配置文件中取得。
 
 接下来的 :func:`_setup_logging_from_conf` 函数有点长，我们来慢慢看：
 
@@ -55,8 +62,9 @@ log_config_append 是log模块注册的配置项，默认为 Flase;
         for handler in log_root.handlers:
             log_root.removeHandler(handler)
         
-经测试，当 name 为None或者""(空字符串)调用 getLogger()时，返回root logger,
-然后root logger的设置，都会被child logger继承，除非 child logger显示设置。
+经测试，当 name 为None或者""(空字符串)调用 getLogger()时，返回root logger。
+
+.. 然后root logger的设置，都会被child logger继承，除非 child logger显示设置。
 
 ::
 
@@ -70,7 +78,7 @@ log_config_append 是log模块注册的配置项，默认为 Flase;
 getLogger 函数返回的是 logging Adapter 对象，允许我们重写 process 函数，
 从而在Formatter中添加自定义字段和格式信息。
 
-接下来继续返回到 _setup_logging_from_conf 函数：
+继续返回到 _setup_logging_from_conf 函数分析：
 
 ::
 
@@ -104,7 +112,7 @@ getLogger 函数返回的是 logging Adapter 对象，允许我们重写 process
 
 获取fileHandler的方式如下：
 
-尝试根据配置获取日志文件的目录; CONF.log_dir 已经在/etc/nova/nova.conf 中
+尝试根据配置获取日志文件的目录；CONF.log_dir 已经在/etc/nova/nova.conf 中
 定义为: ``log_dir=/var/log/nova``；并通过Python 自省获取应用程序名字。然后
 将日志目录和应用程序名称(eg: nova-scheduler)拼接组成日志路径。
 
@@ -181,7 +189,7 @@ getLogger 函数返回的是 logging Adapter 对象，允许我们重写 process
 根据打印信息，可以看到 **root logger 有两个 handler对象。因此符合日志等级的消息，一方面会被
 追加到日志文件 /var/log/nova-scheduler.log；还会输出到标准错误流(从命令行启动 nova-scheduler 时)。**
 
-接下来，设置 root logger的日志等级。假如在命令行选项开启 ``--debug`` 或者 `-d` 选项
+接下来，设置 root logger的日志等级。假如在命令行选项开启 ``--debug`` 或者 ``-d`` 选项
 则优先设置 debug 等级， CONF.verbose 在 /etc/nova/nova.conf 中定义，默认为真。
 然后设置一些库的默认日志等级。
 
@@ -225,13 +233,14 @@ getLogger 函数返回的是 logging Adapter 对象，允许我们重写 process
             log_root.error('Unable to add syslog handler. Verify that syslog'
                            'is running.')
 
-综上，通过 _setup_logging_from_conf 给 root logger增加了多个handlers对象，设置Formatter
+综上，通过 _setup_logging_from_conf 给 root logger增加了2个handlers对象，设置Formatter
 格式，和日志层级。
 
-在其他模块中，一般都是通过 ``LOG = logging.getLogger(__name__)`` 返回本模块 logger 对象(实际上是 ContextAdapter 对象)，
-然后直接使用 LOG 记录日志信息。请注意，实际上，**本模块logger(LOG.logger)实际上没有任何handlers对象，
-但是，由于 logger对象的 propagate 属性(默认为True)，因此会把日志消息"传递" 给每一个父 logger，父logger把消息发送到
-每一个handlers，直到root logger。**
+在其他模块中，一般都是通过 ``LOG = logging.getLogger(__name__)`` 返回本模块 logger 对象
+(实际上是 ContextAdapter 对象)，然后直接使用 LOG 记录日志信息。请注意，实际上，
+**本模块logger(LOG.logger)实际上没有任何handlers对象，但是，由于 logger对象的
+propagate 属性(默认为True)，因此会把日志消息"传递" 给每一个父 logger(直到root logger)，
+父logger把消息发送到每一个handlers(消息目的地)。**
 
 .. figure:: /_static/images/LOG_handlers.png
    :scale: 100

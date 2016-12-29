@@ -161,6 +161,7 @@
             
   <div class="section" id="openstack">
 <span id="nova-log"></span><h1><a class="toc-backref" href="#id5">23. OpenStack 日志模块分析</a><a class="headerlink" href="#openstack" title="Permalink to this headline">¶</a></h1>
+<p><strong>date: 2016-12-29 14:00</strong></p>
 <div class="contents topic" id="id1">
 <p class="topic-title first">目录</p>
 <ul class="simple">
@@ -169,20 +170,22 @@
 </div>
 <hr class="docutils" />
 <p>日志是OpenStack开发调试、运维等操作的重要参考。OpenStack log 模块在
-Python logging 模块的基础之上进行封装，并增加一些更丰富的特性。
-这篇文章尝试对 OpenStack log 模块进行彻底的分析！</p>
-<p>首先可以参考python 官网库参考 logging 模块和 Python logging howto,
-python logging cookbook，对 logging模块的用法和特性有个基本的了解。
-也可以参考 <a class="reference internal" href="../py_doc/log_summary.html#log-summary"><span class="std std-ref">logging模块总结</span></a>。</p>
+Python logging 模块的基础之上进行封装，并增加一些更丰富的特性。这篇
+文章尝试对 OpenStack log 模块进行彻底的分析！首先可以参考python 官网
+库参考 logging 模块和 <cite>Python logging howto，python logging cookbook</cite> ，
+对 logging模块的用法和特性有个基本的了解。也可以参考 <a class="reference internal" href="../py_doc/log_summary.html#log-summary"><span class="std std-ref">logging模块总结</span></a>。</p>
+<p>下面以 nova-scheduler 启动为例，讲解 nova-scheduler 服务的日志设施。这里是 nova-scheduler
+服务入口：</p>
 <p><code class="file docutils literal"><span class="pre">nova/cmd/scheduler.py</span></code></p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
     <span class="n">config</span><span class="o">.</span><span class="n">parse_args</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">)</span>
     <span class="n">logging</span><span class="o">.</span><span class="n">setup</span><span class="p">(</span><span class="s2">&quot;nova&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>以nova-scheduler 启动为例，从 logging.setup(&#8220;nova&#8221;) 开始，
-进行日志设置，接下来所有的源码基本都源于 nova/openstack/common/log.py 文件，
+<p>命令行参数解析完成后，执行logging.setup(&#8220;nova&#8221;) 语句，
+进行日志设置，接下来所有的源码基本都源于 <code class="file docutils literal"><span class="pre">nova/openstack/common/log.py</span></code> 文件，
 不是该文件的源码会特别标出。</p>
+<p><code class="file docutils literal"><span class="pre">nova/openstack/common/log.py</span></code></p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">setup</span><span class="p">(</span><span class="n">product_name</span><span class="p">,</span> <span class="n">version</span><span class="o">=</span><span class="s1">&#39;unknown&#39;</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Setup logging.&quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="n">CONF</span><span class="o">.</span><span class="n">log_config_append</span><span class="p">:</span>
@@ -192,10 +195,14 @@ python logging cookbook，对 logging模块的用法和特性有个基本的了�
     <span class="n">sys</span><span class="o">.</span><span class="n">excepthook</span> <span class="o">=</span> <span class="n">_create_logging_excepthook</span><span class="p">(</span><span class="n">product_name</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>log_config_append 是log模块注册的配置项，默认为 Flase;
-于是从 _setup_logging_from_conf 加载设置日志信息！</p>
-<p>根据 <a class="reference internal" href="oslo_cfg.html#oslo-cfg"><span class="std std-ref">oslo.config 库学习</span></a> 可知，实际上 CONF 已经
-通过 <code class="docutils literal"><span class="pre">project=&quot;nova&quot;</span></code> 参数加载了配置文件 /etc/nova/nova.conf 。</p>
+<p>log_config_append 是 <code class="file docutils literal"><span class="pre">nova/openstack/common/log.py</span></code> 模块注册的命令行选项，默认为 Flase;
+于是执行 <code class="xref py py-func docutils literal"><span class="pre">_setup_logging_from_conf()</span></code> 函数设置日志信息！</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">根据 <a class="reference internal" href="oslo_cfg.html#oslo-cfg"><span class="std std-ref">oslo.config 库学习</span></a> 可知，实际上参数解析时 <code class="docutils literal"><span class="pre">CONF()</span></code> 已经
+通过 <code class="docutils literal"><span class="pre">project=&quot;nova&quot;</span></code> 参数加载了配置文件 /etc/nova/nova.conf 。
+因此有些配置项的值从该配置文件中取得。</p>
+</div>
 <p>接下来的 <code class="xref py py-func docutils literal"><span class="pre">_setup_logging_from_conf()</span></code> 函数有点长，我们来慢慢看：</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">_setup_logging_from_conf</span><span class="p">(</span><span class="n">project</span><span class="p">,</span> <span class="n">version</span><span class="p">):</span>
     <span class="c1"># 这里返回name为None的Logger对象。实际上是返回root logger</span>
@@ -204,8 +211,7 @@ python logging cookbook，对 logging模块的用法和特性有个基本的了�
         <span class="n">log_root</span><span class="o">.</span><span class="n">removeHandler</span><span class="p">(</span><span class="n">handler</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>经测试，当 name 为None或者&#8221;&#8220;(空字符串)调用 getLogger()时，返回root logger,
-然后root logger的设置，都会被child logger继承，除非 child logger显示设置。</p>
+<p>经测试，当 name 为None或者&#8221;&#8220;(空字符串)调用 getLogger()时，返回root logger。</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">getLogger</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;unknown&#39;</span><span class="p">,</span> <span class="n">version</span><span class="o">=</span><span class="s1">&#39;unknown&#39;</span><span class="p">):</span>
     <span class="k">if</span> <span class="n">name</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">_loggers</span><span class="p">:</span>
         <span class="n">_loggers</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">ContextAdapter</span><span class="p">(</span><span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="n">name</span><span class="p">),</span>
@@ -216,7 +222,7 @@ python logging cookbook，对 logging模块的用法和特性有个基本的了�
 </div>
 <p>getLogger 函数返回的是 logging Adapter 对象，允许我们重写 process 函数，
 从而在Formatter中添加自定义字段和格式信息。</p>
-<p>接下来继续返回到 _setup_logging_from_conf 函数：</p>
+<p>继续返回到 _setup_logging_from_conf 函数分析：</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">logpath</span> <span class="o">=</span> <span class="n">_get_log_file_path</span><span class="p">()</span>
 <span class="k">if</span> <span class="n">logpath</span><span class="p">:</span>
     <span class="n">filelog</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">handlers</span><span class="o">.</span><span class="n">WatchedFileHandler</span><span class="p">(</span><span class="n">logpath</span><span class="p">)</span>
@@ -246,7 +252,7 @@ python logging cookbook，对 logging模块的用法和特性有个基本的了�
 </div>
 <p>这处代码尝试对root logger设置 fileHandler, StreamHandler等。</p>
 <p>获取fileHandler的方式如下：</p>
-<p>尝试根据配置获取日志文件的目录; CONF.log_dir 已经在/etc/nova/nova.conf 中
+<p>尝试根据配置获取日志文件的目录；CONF.log_dir 已经在/etc/nova/nova.conf 中
 定义为: <code class="docutils literal"><span class="pre">log_dir=/var/log/nova</span></code>；并通过Python 自省获取应用程序名字。然后
 将日志目录和应用程序名称(eg: nova-scheduler)拼接组成日志路径。</p>
 <p>通过Python自省获取应用程序名称。</p>
@@ -311,7 +317,7 @@ python logging cookbook，对 logging模块的用法和特性有个基本的了�
 </div>
 <p>根据打印信息，可以看到 <strong>root logger 有两个 handler对象。因此符合日志等级的消息，一方面会被
 追加到日志文件 /var/log/nova-scheduler.log；还会输出到标准错误流(从命令行启动 nova-scheduler 时)。</strong></p>
-<p>接下来，设置 root logger的日志等级。假如在命令行选项开启 <code class="docutils literal"><span class="pre">--debug</span></code> 或者 <cite>-d</cite> 选项
+<p>接下来，设置 root logger的日志等级。假如在命令行选项开启 <code class="docutils literal"><span class="pre">--debug</span></code> 或者 <code class="docutils literal"><span class="pre">-d</span></code> 选项
 则优先设置 debug 等级， CONF.verbose 在 /etc/nova/nova.conf 中定义，默认为真。
 然后设置一些库的默认日志等级。</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="n">CONF</span><span class="o">.</span><span class="n">debug</span><span class="p">:</span>
@@ -351,12 +357,13 @@ python logging cookbook，对 logging模块的用法和特性有个基本的了�
                        <span class="s1">&#39;is running.&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>综上，通过 _setup_logging_from_conf 给 root logger增加了多个handlers对象，设置Formatter
+<p>综上，通过 _setup_logging_from_conf 给 root logger增加了2个handlers对象，设置Formatter
 格式，和日志层级。</p>
-<p>在其他模块中，一般都是通过 <code class="docutils literal"><span class="pre">LOG</span> <span class="pre">=</span> <span class="pre">logging.getLogger(__name__)</span></code> 返回本模块 logger 对象(实际上是 ContextAdapter 对象)，
-然后直接使用 LOG 记录日志信息。请注意，实际上，<strong>本模块logger(LOG.logger)实际上没有任何handlers对象，
-但是，由于 logger对象的 propagate 属性(默认为True)，因此会把日志消息&#8221;传递&#8221; 给每一个父 logger，父logger把消息发送到
-每一个handlers，直到root logger。</strong></p>
+<p>在其他模块中，一般都是通过 <code class="docutils literal"><span class="pre">LOG</span> <span class="pre">=</span> <span class="pre">logging.getLogger(__name__)</span></code> 返回本模块 logger 对象
+(实际上是 ContextAdapter 对象)，然后直接使用 LOG 记录日志信息。请注意，实际上，
+<strong>本模块logger(LOG.logger)实际上没有任何handlers对象，但是，由于 logger对象的
+propagate 属性(默认为True)，因此会把日志消息&#8221;传递&#8221; 给每一个父 logger(直到root logger)，
+父logger把消息发送到每一个handlers(消息目的地)。</strong></p>
 <div class="figure align-center" id="id3">
 <a class="reference internal image-reference" href="../_images/LOG_handlers.png"><img alt="../_images/LOG_handlers.png" src="../_images/LOG_handlers.png" style="width: 1079.0px; height: 195.0px;" /></a>
 <p class="caption"><span class="caption-text">打印某模块 logger 的handler对象</span></p>

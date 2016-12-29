@@ -32,7 +32,7 @@
   
     <link rel="top" title="Welcome to Sitian&#39;s Blog 0.1 documentation" href="../index.html"/>
         <link rel="up" title="OpenStack Note" href="index.html"/>
-        <link rel="next" title="web开发" href="../web/index.html"/>
+        <link rel="next" title="13. 云平台服务器重启注意事项" href="cloud_check.html"/>
         <link rel="prev" title="11. horizon启动虚拟机分析" href="horizon_launch_instance.html"/> 
 
   
@@ -83,19 +83,19 @@
             
             
                 <ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="../py_doc/index.html">Hack Python</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../py_doc/index.html">Python Note</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../linux_tools/index.html">Hack Linux</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="index.html">OpenStack Note</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="horizon_develop.html">1. Horizon 二次开发指南</a></li>
 <li class="toctree-l2"><a class="reference internal" href="image-create-guide.html">2. OpenStack镜像制作</a></li>
-<li class="toctree-l2"><a class="reference internal" href="deploy_synopsis.html">3. openstack 实践指南</a></li>
+<li class="toctree-l2"><a class="reference internal" href="deploy_synopsis.html">3. openstack 部署实践</a></li>
 <li class="toctree-l2"><a class="reference internal" href="centos_vm_netconf.html">4. Centos虚拟机联网配置</a></li>
 <li class="toctree-l2"><a class="reference internal" href="lanch_instance_failure.html">5. OpenStack 启动虚拟机失败分析</a></li>
-<li class="toctree-l2"><a class="reference internal" href="rabbitmq_doc.html">6. rabbitmq教程</a></li>
+<li class="toctree-l2"><a class="reference internal" href="rabbitmq_doc.html">6. [翻译] rabbitmq教程</a></li>
 <li class="toctree-l2"><a class="reference internal" href="os_cmd.html">7. openstack命令汇总</a></li>
 <li class="toctree-l2"><a class="reference internal" href="kvm_error.html">8. KVM错误问题</a></li>
 <li class="toctree-l2"><a class="reference internal" href="django_middleware.html">9. django中间件和openstack用户重登录分析</a></li>
-<li class="toctree-l2"><a class="reference internal" href="horizon_workflows_analysis.html">10. horizon workflows????</a></li>
+<li class="toctree-l2"><a class="reference internal" href="horizon_workflows_analysis.html">10. [翻译] horizon workflows分析</a></li>
 <li class="toctree-l2"><a class="reference internal" href="horizon_launch_instance.html">11. horizon启动虚拟机分析</a></li>
 <li class="toctree-l2 current"><a class="current reference internal" href="#">12. django通用视图：一个小问题引发的思考</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#id2">12.1. 问题</a></li>
@@ -107,6 +107,17 @@
 <li class="toctree-l3"><a class="reference internal" href="#id4">12.3. 参考</a></li>
 </ul>
 </li>
+<li class="toctree-l2"><a class="reference internal" href="cloud_check.html">13. 云平台服务器重启注意事项</a></li>
+<li class="toctree-l2"><a class="reference internal" href="paste_webob_routes.html">14. OpenStack REST-API基础：paste/webob/routes库</a></li>
+<li class="toctree-l2"><a class="reference internal" href="opengrok_xp.html">15. OpenGrok代码浏览环境搭建</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nova_api.html">16. nova-api分析</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nova_smd.html">17. [翻译] nova:Services, Managers and Drivers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="oslo_cfg.html">18. oslo.config 库学习</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kombu.html">19. kombu和消息队列总结</a></li>
+<li class="toctree-l2"><a class="reference internal" href="openstack_debug.html">20. OpenStack 调试</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nova_rpcserver_start.html">21. nova RPC服务启动分析</a></li>
+<li class="toctree-l2"><a class="reference internal" href="periodic_task_1.html">22. OpenStack定时任务分析(1)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nova_log.html">23. OpenStack 日志模块分析</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../web/index.html">web开发</a></li>
@@ -194,12 +205,10 @@
 </div>
 </li>
 <li><p class="first">该页面源码，可知点击编辑虚拟机是一个超链接，那么根据django URLconf系统，会引起view处理函数的调用。</p>
-<blockquote>
-<div><div class="figure align-center" id="id9">
+<div class="figure align-center" id="id9">
 <a class="reference internal image-reference" href="../_images/update_instance_href.png"><img alt="../_images/update_instance_href.png" src="../_images/update_instance_href.png" style="width: 1019.0px; height: 86.0px;" /></a>
 <p class="caption"><span class="caption-text">点击虚拟机对应的超链接</span></p>
 </div>
-</div></blockquote>
 </li>
 <li><p class="first">根据URLconf映射，会调用UpdateView.as_view()函数。</p>
 <div class="figure align-center" id="id10">
@@ -262,9 +271,9 @@ URLs 的接口（as_view）、请求方法匹配（dispatch）和一些其他的
 </li>
 <li><p class="first">通用视图一个很pythonic的地方是：子类里面定义get post方法，就不需要写类似这种东西了。</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="n">request</span><span class="o">.</span><span class="n">method</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="o">==</span> <span class="s1">&#39;get&#39;</span><span class="p">:</span>
-        <span class="n">do_something</span><span class="p">()</span>
+    <span class="n">do_something</span><span class="p">()</span>
 <span class="k">else</span><span class="p">:</span>
-        <span class="n">do_otherthing</span><span class="p">()</span>
+    <span class="n">do_otherthing</span><span class="p">()</span>
 </pre></div>
 </div>
 </li>
@@ -296,12 +305,14 @@ URLs 的接口（as_view）、请求方法匹配（dispatch）和一些其他的
 <a class="reference internal image-reference" href="../_images/as_view.png"><img alt="../_images/as_view.png" src="../_images/as_view.png" style="width: 869.0px; height: 663.0px;" /></a>
 <p class="caption"><span class="caption-text">通用视图as_view()方法</span></p>
 </div>
-<p>可以看到，as_view 函数是一个闭包，对于http request，它实际上将调用view包装函数，然后进行dispatch处理。</p>
+<p>可以看到，as_view 函数返回一个闭包 <code class="xref py py-func docutils literal"><span class="pre">view()</span></code> ，对于http request，它实际上将调用view包装函数，然后进行dispatch处理。</p>
 <div class="figure align-center" id="id17">
 <a class="reference internal image-reference" href="../_images/view_dispatch.png"><img alt="../_images/view_dispatch.png" src="../_images/view_dispatch.png" style="width: 977.0px; height: 400.0px;" /></a>
 <p class="caption"><span class="caption-text">dispatch调用</span></p>
 </div>
-<p>为什么不需要写if else判断，而在子类里面定义get post即可，可以看到是下面的dispatch方法做了通用的处理。在dispatch方法中，根据request.method获取同名处理函数(子类一般会重写)。然后直接调用返回！</p>
+<p>为什么不需要写if else判断，而在子类里面定义get post即可，可以看到是下面的
+dispatch方法做了通用的处理。在dispatch方法中，根据request.method获取同名
+处理函数(子类一般会重写)。然后直接调用返回！</p>
 </div>
 </div>
 <hr class="docutils" />
@@ -335,7 +346,7 @@ URLs 的接口（as_view）、请求方法匹配（dispatch）和一些其他的
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="../web/index.html" class="btn btn-neutral float-right" title="web开发" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="cloud_check.html" class="btn btn-neutral float-right" title="13. 云平台服务器重启注意事项" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
         <a href="horizon_launch_instance.html" class="btn btn-neutral" title="11. horizon启动虚拟机分析" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>

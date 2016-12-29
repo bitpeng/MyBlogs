@@ -37,18 +37,79 @@ bash编程
 
     mv ./-hl hl.txt
 
-重定向
-+++++++
+重定向和管道
+++++++++++++
 
-shell输入输出重定向：
+我们来建立一个 ``test_redirect.sh`` 脚本来测试shell输入输出重定向和管道。
+shell 脚本中流重定向方式 ``>&2`` 参考于 service 命令源码。
+
+:file:`test_redirect.sh`
+::
+
+    #!/usr/bin/env bash
+
+    echo "stdout info"
+    echo "stdout info-2"
+    echo "stderr info" >&2
+    echo "stderr info-2" >&2
+
+重定向测试：
 
 ::
 
-    ls > log
-    ls 1> log
-    ls 2> log
-    ls &> log
-    ls 1> log 2> /dev/null
+    ## 过滤 stderr 或者过滤 stdout
+    root@ubuntu:/smbshare# ./test_redirect.sh 1>/dev/null
+    stderr info
+    stderr info-2
+    root@ubuntu:/smbshare# ./test_redirect.sh 2>/dev/null
+    stdout info
+    stdout info-2
+    
+    ## stdout 和 stderr 重定向
+    root@ubuntu:/smbshare# ./test_redirect.sh 1> 1.txt
+    stderr info
+    stderr info-2
+    root@ubuntu:/smbshare# ./test_redirect.sh 1> 2.txt
+    stderr info
+    stderr info-2
+    
+    root@ubuntu:/smbshare# more 1.txt
+    stdout info
+    stdout info-2
+    root@ubuntu:/smbshare# more 2.txt
+    stderr info
+    stderr info-2
+
+    ## stdout 和 stderr 重定向到一个文件
+    root@ubuntu:/smbshare# ./test_redirect.sh &> 3.txt
+    root@ubuntu:/smbshare# more 3.txt 
+    stdout info
+    stdout info-2
+    stderr info
+    stderr info-2
+
+管道测试一：
+
+.. figure:: /_static/images/grep_stdout.png
+   :scale: 100
+   :align: center
+
+   管道测试
+   
+**根据grep高亮显示可以知道，默认情况下只有 stdout (标准输出流)重定向到管道；
+标准错误流没有重定向到管道。**
+
+管道测试二：
+
+.. figure:: /_static/images/grep_and_pipe.png
+   :scale: 100
+   :align: center
+
+   重定向和管道测试
+   
+**根据搜索结果，可以看到，shell 先处理重定向，然后处理管道。因此，grep可以搜索到
+stderr info信息(标准错误重定向到标准输入而来)。**
+
 
 字符串截取
 ++++++++++

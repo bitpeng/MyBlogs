@@ -5,6 +5,7 @@
 logging 模块总结
 ########################
 
+**date: 2016-12-28 10:00**
 
 .. contents:: 目录
 
@@ -103,7 +104,7 @@ the way up the logging hierarchy and fallen off the...top of the chain (maybe I 
     WARNING:root:aaa
 
 
-从logging模块的源码我们知道，logging.warn() 实际上使用的是 root logger 处理日志。
+从logging模块的源码我们知道，logging.warn() 实际上使用的是 root logger (logging.py 模块的全局对象)处理日志。
 使用log1.warn() 时，由于此时root logger没有任何handler，所以提示 no handlers 消息。
 
 ::
@@ -236,8 +237,8 @@ the way up the logging hierarchy and fallen off the...top of the chain (maybe I 
 ::
 
     ./test_log.py 
-	# 过滤掉标准错误流(sys.stderr)
+    # 过滤掉标准错误流(sys.stderr)
     ./test_log.py 2>/dev/null
-	# 过滤掉标准输出流(sys.stdout)
+    # 过滤掉标准输出流(sys.stdout)
     ./test_log.py 1>/dev/null
     tail -f file.log

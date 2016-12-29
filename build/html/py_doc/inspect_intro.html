@@ -32,7 +32,7 @@
   
     <link rel="top" title="Welcome to Sitian&#39;s Blog 0.1 documentation" href="../index.html"/>
         <link rel="up" title="Python Note" href="index.html"/>
-        <link rel="next" title="Hack Linux" href="../linux_tools/index.html"/>
+        <link rel="next" title="13. logging 模块总结" href="log_summary.html"/>
         <link rel="prev" title="11. Python元类" href="metaclass_intro.html"/> 
 
   
@@ -99,6 +99,7 @@
 <li class="toctree-l3"><a class="reference internal" href="#inspect-stack">12.1. inspect.stack</a></li>
 </ul>
 </li>
+<li class="toctree-l2"><a class="reference internal" href="log_summary.html">13. logging 模块总结</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../linux_tools/index.html">Hack Linux</a></li>
@@ -176,11 +177,11 @@
 分析 nova/openstack/common/log.py 组件时，这是通过 <code class="xref py py-func docutils literal"><span class="pre">inspect.stack()</span></code>
 实现的。来看源码(为了方便输出调试信息，我对源码进行了更改！):</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">_get_binary_name</span><span class="p">():</span>
-        <span class="c1">#stack = inspect.stack()[-1][1]</span>
-        <span class="n">stack</span> <span class="o">=</span> <span class="n">inspect</span><span class="o">.</span><span class="n">stack</span><span class="p">()</span>
-        <span class="n">b</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">basename</span><span class="p">(</span><span class="n">stack</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="mi">1</span><span class="p">])</span>
-        <span class="nb">print</span> <span class="s2">&quot;+++===+++ stack: </span><span class="si">%s</span><span class="s2">&quot;</span><span class="o">%</span><span class="n">stack</span>
-        <span class="k">return</span> <span class="n">b</span>
+    <span class="c1">#stack = inspect.stack()[-1][1]</span>
+    <span class="n">stack</span> <span class="o">=</span> <span class="n">inspect</span><span class="o">.</span><span class="n">stack</span><span class="p">()</span>
+    <span class="n">b</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">basename</span><span class="p">(</span><span class="n">stack</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="mi">1</span><span class="p">])</span>
+    <span class="nb">print</span> <span class="s2">&quot;+++===+++ stack: </span><span class="si">%s</span><span class="s2">&quot;</span><span class="o">%</span><span class="n">stack</span>
+    <span class="k">return</span> <span class="n">b</span>
 </pre></div>
 </div>
 <p>下面是运行时，打印的堆栈信息：</p>
@@ -216,7 +217,7 @@
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="../linux_tools/index.html" class="btn btn-neutral float-right" title="Hack Linux" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="log_summary.html" class="btn btn-neutral float-right" title="13. logging 模块总结" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
         <a href="metaclass_intro.html" class="btn btn-neutral" title="11. Python元类" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>

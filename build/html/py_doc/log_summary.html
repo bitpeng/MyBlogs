@@ -159,6 +159,7 @@
             
   <div class="section" id="logging">
 <span id="log-summary"></span><h1><a class="toc-backref" href="#id3">13. logging 模块总结</a><a class="headerlink" href="#logging" title="Permalink to this headline">¶</a></h1>
+<p><strong>date: 2016-12-28 10:00</strong></p>
 <div class="contents topic" id="id1">
 <p class="topic-title first">目录</p>
 <ul class="simple">
@@ -259,7 +260,7 @@ the way up the logging hierarchy and fallen off the...top of the chain (maybe I 
 <span class="go">WARNING:root:aaa</span>
 </pre></div>
 </div>
-<p>从logging模块的源码我们知道，logging.warn() 实际上使用的是 root logger 处理日志。
+<p>从logging模块的源码我们知道，logging.warn() 实际上使用的是 root logger (logging.py 模块的全局对象)处理日志。
 使用log1.warn() 时，由于此时root logger没有任何handler，所以提示 no handlers 消息。</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">warning</span><span class="p">(</span><span class="n">msg</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
@@ -379,9 +380,9 @@ the way up the logging hierarchy and fallen off the...top of the chain (maybe I 
 </div>
 <p>测试结果：</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="o">./</span><span class="n">test_log</span><span class="o">.</span><span class="n">py</span>
-    <span class="c1"># 过滤掉标准错误流(sys.stderr)</span>
+<span class="c1"># 过滤掉标准错误流(sys.stderr)</span>
 <span class="o">./</span><span class="n">test_log</span><span class="o">.</span><span class="n">py</span> <span class="mi">2</span><span class="o">&gt;/</span><span class="n">dev</span><span class="o">/</span><span class="n">null</span>
-    <span class="c1"># 过滤掉标准输出流(sys.stdout)</span>
+<span class="c1"># 过滤掉标准输出流(sys.stdout)</span>
 <span class="o">./</span><span class="n">test_log</span><span class="o">.</span><span class="n">py</span> <span class="mi">1</span><span class="o">&gt;/</span><span class="n">dev</span><span class="o">/</span><span class="n">null</span>
 <span class="n">tail</span> <span class="o">-</span><span class="n">f</span> <span class="n">file</span><span class="o">.</span><span class="n">log</span>
 </pre></div>
