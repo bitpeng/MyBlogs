@@ -108,12 +108,7 @@
 <li class="toctree-l2"><a class="reference internal" href="openstack_debug.html">20. OpenStack 调试</a></li>
 <li class="toctree-l2"><a class="reference internal" href="nova_rpcserver_start.html">21. nova RPC服务启动分析</a></li>
 <li class="toctree-l2"><a class="reference internal" href="periodic_task_1.html">22. OpenStack定时任务分析(1)</a></li>
-<li class="toctree-l2 current"><a class="current reference internal" href="#">23. OpenStack 日志模块分析</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#id2">23.1. 问题</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#id3">23.2. 解决方案</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#id4">23.3. 参考</a></li>
-</ul>
-</li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">23. OpenStack 日志模块分析</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../web/index.html">web开发</a></li>
@@ -165,62 +160,210 @@
            <div itemprop="articleBody">
             
   <div class="section" id="openstack">
-<span id="nova-log"></span><h1><a class="toc-backref" href="#id9">23. OpenStack 日志模块分析</a><a class="headerlink" href="#openstack" title="Permalink to this headline">¶</a></h1>
-<div class="admonition tip">
-<p class="first admonition-title">Tip</p>
-<p class="last">在vmware里面用kvm启动虚拟机，发现无法启动，实际上问题很简单，但是由于多次犯了该错误，因此记录下来。</p>
-</div>
+<span id="nova-log"></span><h1><a class="toc-backref" href="#id5">23. OpenStack 日志模块分析</a><a class="headerlink" href="#openstack" title="Permalink to this headline">¶</a></h1>
 <div class="contents topic" id="id1">
 <p class="topic-title first">目录</p>
 <ul class="simple">
-<li><a class="reference internal" href="#openstack" id="id9">OpenStack 日志模块分析</a><ul>
-<li><a class="reference internal" href="#id2" id="id10">问题</a></li>
-<li><a class="reference internal" href="#id3" id="id11">解决方案</a></li>
-<li><a class="reference internal" href="#id4" id="id12">参考</a></li>
-</ul>
-</li>
+<li><a class="reference internal" href="#openstack" id="id5">OpenStack 日志模块分析</a></li>
 </ul>
 </div>
 <hr class="docutils" />
-<div class="section" id="id2">
-<h2><a class="toc-backref" href="#id10">23.1. 问题</a><a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
-<p>allinone环境下，安装了qemu-kvm命令后，启动虚拟机，提示错误。</p>
-<div class="figure align-center" id="id7">
-<a class="reference internal image-reference" href="../_images/kvm_error.png"><img alt="../_images/kvm_error.png" src="../_images/kvm_error.png" style="width: 839.0px; height: 145.0px;" /></a>
-<p class="caption"><span class="caption-text">KVM启动虚拟机错误</span></p>
+<p>日志是OpenStack开发调试、运维等操作的重要参考。OpenStack log 模块在
+Python logging 模块的基础之上进行封装，并增加一些更丰富的特性。
+这篇文章尝试对 OpenStack log 模块进行彻底的分析！</p>
+<p>首先可以参考python 官网库参考 logging 模块和 Python logging howto,
+python logging cookbook，对 logging模块的用法和特性有个基本的了解。
+也可以参考 <a class="reference internal" href="../py_doc/log_summary.html#log-summary"><span class="std std-ref">logging模块总结</span></a>。</p>
+<p><code class="file docutils literal"><span class="pre">nova/cmd/scheduler.py</span></code></p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+    <span class="n">config</span><span class="o">.</span><span class="n">parse_args</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">)</span>
+    <span class="n">logging</span><span class="o">.</span><span class="n">setup</span><span class="p">(</span><span class="s2">&quot;nova&quot;</span><span class="p">)</span>
+</pre></div>
 </div>
+<p>以nova-scheduler 启动为例，从 logging.setup(&#8220;nova&#8221;) 开始，
+进行日志设置，接下来所有的源码基本都源于 nova/openstack/common/log.py 文件，
+不是该文件的源码会特别标出。</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">setup</span><span class="p">(</span><span class="n">product_name</span><span class="p">,</span> <span class="n">version</span><span class="o">=</span><span class="s1">&#39;unknown&#39;</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Setup logging.&quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">CONF</span><span class="o">.</span><span class="n">log_config_append</span><span class="p">:</span>
+        <span class="n">_load_log_config</span><span class="p">(</span><span class="n">CONF</span><span class="o">.</span><span class="n">log_config_append</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">_setup_logging_from_conf</span><span class="p">(</span><span class="n">product_name</span><span class="p">,</span> <span class="n">version</span><span class="p">)</span>
+    <span class="n">sys</span><span class="o">.</span><span class="n">excepthook</span> <span class="o">=</span> <span class="n">_create_logging_excepthook</span><span class="p">(</span><span class="n">product_name</span><span class="p">)</span>
+</pre></div>
 </div>
-<div class="section" id="id3">
-<h2><a class="toc-backref" href="#id11">23.2. 解决方案</a><a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h2>
-<p>实际上，这个问题已经多次遇到了，但是每次还是会犯错。非常简单，就是CPU没有开启虚拟化。
-并且，google后，前几页就是该链接就是该问题。</p>
-<div class="figure align-center" id="id8">
-<a class="reference internal image-reference" href="../_images/kvm_google.png"><img alt="../_images/kvm_google.png" src="../_images/kvm_google.png" style="width: 752.0px; height: 567.0px;" /></a>
-<p class="caption"><span class="caption-text">Google 解决之</span></p>
+<p>log_config_append 是log模块注册的配置项，默认为 Flase;
+于是从 _setup_logging_from_conf 加载设置日志信息！</p>
+<p>根据 <a class="reference internal" href="oslo_cfg.html#oslo-cfg"><span class="std std-ref">oslo.config 库学习</span></a> 可知，实际上 CONF 已经
+通过 <code class="docutils literal"><span class="pre">project=&quot;nova&quot;</span></code> 参数加载了配置文件 /etc/nova/nova.conf 。</p>
+<p>接下来的 <code class="xref py py-func docutils literal"><span class="pre">_setup_logging_from_conf()</span></code> 函数有点长，我们来慢慢看：</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">_setup_logging_from_conf</span><span class="p">(</span><span class="n">project</span><span class="p">,</span> <span class="n">version</span><span class="p">):</span>
+    <span class="c1"># 这里返回name为None的Logger对象。实际上是返回root logger</span>
+    <span class="n">log_root</span> <span class="o">=</span> <span class="n">getLogger</span><span class="p">(</span><span class="kc">None</span><span class="p">)</span><span class="o">.</span><span class="n">logger</span>
+    <span class="k">for</span> <span class="n">handler</span> <span class="ow">in</span> <span class="n">log_root</span><span class="o">.</span><span class="n">handlers</span><span class="p">:</span>
+        <span class="n">log_root</span><span class="o">.</span><span class="n">removeHandler</span><span class="p">(</span><span class="n">handler</span><span class="p">)</span>
+</pre></div>
 </div>
-<div class="admonition important">
-<p class="first admonition-title">Important</p>
-<ul class="last simple">
-<li>犯过的错误一定要避免二次错误；</li>
-<li>多google，可以解决大部分问题；</li>
-</ul>
+<p>经测试，当 name 为None或者&#8221;&#8220;(空字符串)调用 getLogger()时，返回root logger,
+然后root logger的设置，都会被child logger继承，除非 child logger显示设置。</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">getLogger</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;unknown&#39;</span><span class="p">,</span> <span class="n">version</span><span class="o">=</span><span class="s1">&#39;unknown&#39;</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">name</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">_loggers</span><span class="p">:</span>
+        <span class="n">_loggers</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">ContextAdapter</span><span class="p">(</span><span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="n">name</span><span class="p">),</span>
+                                        <span class="n">name</span><span class="p">,</span>
+                                        <span class="n">version</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">_loggers</span><span class="p">[</span><span class="n">name</span><span class="p">]</span>
+</pre></div>
 </div>
+<p>getLogger 函数返回的是 logging Adapter 对象，允许我们重写 process 函数，
+从而在Formatter中添加自定义字段和格式信息。</p>
+<p>接下来继续返回到 _setup_logging_from_conf 函数：</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">logpath</span> <span class="o">=</span> <span class="n">_get_log_file_path</span><span class="p">()</span>
+<span class="k">if</span> <span class="n">logpath</span><span class="p">:</span>
+    <span class="n">filelog</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">handlers</span><span class="o">.</span><span class="n">WatchedFileHandler</span><span class="p">(</span><span class="n">logpath</span><span class="p">)</span>
+    <span class="n">log_root</span><span class="o">.</span><span class="n">addHandler</span><span class="p">(</span><span class="n">filelog</span><span class="p">)</span>
+
+<span class="k">if</span> <span class="n">CONF</span><span class="o">.</span><span class="n">use_stderr</span><span class="p">:</span>
+    <span class="n">streamlog</span> <span class="o">=</span> <span class="n">ColorHandler</span><span class="p">()</span>
+    <span class="n">log_root</span><span class="o">.</span><span class="n">addHandler</span><span class="p">(</span><span class="n">streamlog</span><span class="p">)</span>
+
+<span class="k">elif</span> <span class="ow">not</span> <span class="n">logpath</span><span class="p">:</span>
+    <span class="c1"># pass sys.stdout as a positional argument</span>
+    <span class="c1"># python2.6 calls the argument strm, in 2.7 it&#39;s stream</span>
+    <span class="n">streamlog</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">StreamHandler</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">stdout</span><span class="p">)</span>
+    <span class="n">log_root</span><span class="o">.</span><span class="n">addHandler</span><span class="p">(</span><span class="n">streamlog</span><span class="p">)</span>
+
+<span class="k">if</span> <span class="n">CONF</span><span class="o">.</span><span class="n">publish_errors</span><span class="p">:</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">handler</span> <span class="o">=</span> <span class="n">importutils</span><span class="o">.</span><span class="n">import_object</span><span class="p">(</span>
+            <span class="s2">&quot;nova.openstack.common.log_handler.PublishErrorsHandler&quot;</span><span class="p">,</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">ERROR</span><span class="p">)</span>
+    <span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
+        <span class="n">handler</span> <span class="o">=</span> <span class="n">importutils</span><span class="o">.</span><span class="n">import_object</span><span class="p">(</span>
+            <span class="s2">&quot;oslo.messaging.notify.log_handler.PublishErrorsHandler&quot;</span><span class="p">,</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">ERROR</span><span class="p">)</span>
+    <span class="n">log_root</span><span class="o">.</span><span class="n">addHandler</span><span class="p">(</span><span class="n">handler</span><span class="p">)</span>
+</pre></div>
 </div>
-<hr class="docutils" />
-<div class="section" id="id4">
-<h2><a class="toc-backref" href="#id12">23.3. 参考</a><a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h2>
-<table class="docutils footnote" frame="void" id="id5" rules="none">
-<colgroup><col class="label" /><col /></colgroup>
-<tbody valign="top">
-<tr><td class="label">[1]</td><td><a class="reference external" href="http://f.dataguru.cn/thread-127360-1-1.html">http://f.dataguru.cn/thread-127360-1-1.html</a></td></tr>
-</tbody>
-</table>
-<table class="docutils footnote" frame="void" id="id6" rules="none">
-<colgroup><col class="label" /><col /></colgroup>
-<tbody valign="top">
-<tr><td class="label">[2]</td><td><a class="reference external" href="http://askubuntu.com/questions/140360/kvm-kernel-module-error">http://askubuntu.com/questions/140360/kvm-kernel-module-error</a></td></tr>
-</tbody>
-</table>
+<p>这处代码尝试对root logger设置 fileHandler, StreamHandler等。</p>
+<p>获取fileHandler的方式如下：</p>
+<p>尝试根据配置获取日志文件的目录; CONF.log_dir 已经在/etc/nova/nova.conf 中
+定义为: <code class="docutils literal"><span class="pre">log_dir=/var/log/nova</span></code>；并通过Python 自省获取应用程序名字。然后
+将日志目录和应用程序名称(eg: nova-scheduler)拼接组成日志路径。</p>
+<p>通过Python自省获取应用程序名称。</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">_get_binary_name</span><span class="p">():</span>
+    <span class="c1">#stack = inspect.stack()[-1][1]</span>
+    <span class="n">stack</span> <span class="o">=</span> <span class="n">inspect</span><span class="o">.</span><span class="n">stack</span><span class="p">()</span>
+    <span class="n">b</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">basename</span><span class="p">(</span><span class="n">stack</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="mi">1</span><span class="p">])</span>
+    <span class="nb">print</span> <span class="p">(</span><span class="s2">&quot;+++===+++ stack: </span><span class="si">%s</span><span class="s2">&quot;</span><span class="o">%</span><span class="n">stack</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">b</span>
+</pre></div>
+</div>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="o">+++===+++</span> <span class="n">stack</span><span class="p">:</span> <span class="p">[(</span><span class="o">&lt;</span><span class="n">frame</span> <span class="nb">object</span> <span class="n">at</span> <span class="mh">0x7f7011b2db00</span><span class="o">&gt;</span><span class="p">,</span> <span class="s1">&#39;/usr/lib/python2.7/dist-packages/nova/openstack/common/log.py&#39;</span><span class="p">,</span> <span class="mi">211</span><span class="p">,</span> <span class="s1">&#39;_get_binary_name&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;    stack = inspect.stack()</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">],</span> <span class="mi">0</span><span class="p">),</span>
+<span class="p">(</span><span class="o">&lt;</span><span class="n">frame</span> <span class="nb">object</span> <span class="n">at</span> <span class="mh">0x7f7011aef620</span><span class="o">&gt;</span><span class="p">,</span> <span class="s1">&#39;/usr/lib/python2.7/dist-packages/nova/openstack/common/log.py&#39;</span><span class="p">,</span> <span class="mi">230</span><span class="p">,</span> <span class="s1">&#39;_get_log_file_path&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;        binary = binary or _get_binary_name()</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">],</span> <span class="mi">0</span><span class="p">),</span>
+<span class="p">(</span><span class="o">&lt;</span><span class="n">frame</span> <span class="nb">object</span> <span class="n">at</span> <span class="mh">0x29445f0</span><span class="o">&gt;</span><span class="p">,</span> <span class="s1">&#39;/usr/lib/python2.7/dist-packages/nova/openstack/common/log.py&#39;</span><span class="p">,</span> <span class="mi">498</span><span class="p">,</span> <span class="s1">&#39;_setup_logging_from_conf&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;    logpath = _get_log_file_path()</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">],</span> <span class="mi">0</span><span class="p">),</span>
+<span class="p">(</span><span class="o">&lt;</span><span class="n">frame</span> <span class="nb">object</span> <span class="n">at</span> <span class="mh">0x7f7011b2d938</span><span class="o">&gt;</span><span class="p">,</span> <span class="s1">&#39;/usr/lib/python2.7/dist-packages/nova/openstack/common/log.py&#39;</span><span class="p">,</span> <span class="mi">432</span><span class="p">,</span> <span class="s1">&#39;setup&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;        _setup_logging_from_conf(product_name, version)</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">],</span> <span class="mi">0</span><span class="p">),</span>
+<span class="p">(</span><span class="o">&lt;</span><span class="n">frame</span> <span class="nb">object</span> <span class="n">at</span> <span class="mh">0x7f701a5e9d00</span><span class="o">&gt;</span><span class="p">,</span> <span class="s1">&#39;/usr/lib/python2.7/dist-packages/nova/cmd/scheduler.py&#39;</span><span class="p">,</span> <span class="mi">44</span><span class="p">,</span> <span class="s1">&#39;main&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;    logging.setup(&quot;nova&quot;)</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">],</span> <span class="mi">0</span><span class="p">),</span>
+<span class="p">(</span><span class="o">&lt;</span><span class="n">frame</span> <span class="nb">object</span> <span class="n">at</span> <span class="mh">0x7f701ba703e0</span><span class="o">&gt;</span><span class="p">,</span> <span class="s1">&#39;/usr/bin/nova-scheduler&#39;</span><span class="p">,</span> <span class="mi">40</span><span class="p">,</span> <span class="s1">&#39;&lt;module&gt;&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;        sys.exit(main())</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">],</span> <span class="mi">0</span><span class="p">)]</span>
+</pre></div>
+</div>
+<p>将应用程序名称和日志目录拼接，结果返回 &#8220;/var/log/nova/nova-scheduler.log&#8221; 字符串，
+表示完整的日志文件路径。</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">_get_log_file_path</span><span class="p">(</span><span class="n">binary</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="n">logfile</span> <span class="o">=</span> <span class="n">CONF</span><span class="o">.</span><span class="n">log_file</span>
+    <span class="n">logdir</span> <span class="o">=</span> <span class="n">CONF</span><span class="o">.</span><span class="n">log_dir</span>
+
+    <span class="k">if</span> <span class="n">logfile</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">logdir</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">logfile</span>
+
+    <span class="k">if</span> <span class="n">logfile</span> <span class="ow">and</span> <span class="n">logdir</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">logdir</span><span class="p">,</span> <span class="n">logfile</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">logdir</span><span class="p">:</span>
+        <span class="n">binary</span> <span class="o">=</span> <span class="n">binary</span> <span class="ow">or</span> <span class="n">_get_binary_name</span><span class="p">()</span>
+        <span class="k">return</span> <span class="s1">&#39;</span><span class="si">%s</span><span class="s1">.log&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">logdir</span><span class="p">,</span> <span class="n">binary</span><span class="p">),)</span>
+
+    <span class="k">return</span> <span class="kc">None</span>
+</pre></div>
+</div>
+<p>接下来，对 root logger的每一个handlers对象，设置 Formatter 日志格式。
+我在这里加上了 print 语句，打印 root logger 拥有的 handler 对象。</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">datefmt</span> <span class="o">=</span> <span class="n">CONF</span><span class="o">.</span><span class="n">log_date_format</span>
+<span class="k">for</span> <span class="n">handler</span> <span class="ow">in</span> <span class="n">log_root</span><span class="o">.</span><span class="n">handlers</span><span class="p">:</span>
+    <span class="c1"># NOTE(alaski): CONF.log_format overrides everything currently.  This</span>
+    <span class="c1"># should be deprecated in favor of context aware formatting.</span>
+    <span class="c1"># add by chenshiqiang</span>
+    <span class="nb">print</span> <span class="s2">&quot;+++===+++ handler.stream:&quot;</span><span class="p">,</span> <span class="n">handler</span><span class="o">.</span><span class="n">stream</span>
+    <span class="c1"># end add</span>
+    <span class="k">if</span> <span class="n">CONF</span><span class="o">.</span><span class="n">log_format</span><span class="p">:</span>
+        <span class="n">handler</span><span class="o">.</span><span class="n">setFormatter</span><span class="p">(</span><span class="n">logging</span><span class="o">.</span><span class="n">Formatter</span><span class="p">(</span><span class="n">fmt</span><span class="o">=</span><span class="n">CONF</span><span class="o">.</span><span class="n">log_format</span><span class="p">,</span>
+                                               <span class="n">datefmt</span><span class="o">=</span><span class="n">datefmt</span><span class="p">))</span>
+        <span class="n">log_root</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;Deprecated: log_format is now deprecated and will &#39;</span>
+                      <span class="s1">&#39;be removed in the next release&#39;</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">handler</span><span class="o">.</span><span class="n">setFormatter</span><span class="p">(</span><span class="n">ContextFormatter</span><span class="p">(</span><span class="n">project</span><span class="o">=</span><span class="n">project</span><span class="p">,</span>
+                                              <span class="n">version</span><span class="o">=</span><span class="n">version</span><span class="p">,</span>
+                                              <span class="n">datefmt</span><span class="o">=</span><span class="n">datefmt</span><span class="p">))</span>
+</pre></div>
+</div>
+<div class="figure align-center" id="id2">
+<a class="reference internal image-reference" href="../_images/handler_stream.png"><img alt="../_images/handler_stream.png" src="../_images/handler_stream.png" style="width: 1108.0px; height: 321.0px;" /></a>
+<p class="caption"><span class="caption-text">root logger所拥有的handle对象</span></p>
+</div>
+<p>根据打印信息，可以看到 <strong>root logger 有两个 handler对象。因此符合日志等级的消息，一方面会被
+追加到日志文件 /var/log/nova-scheduler.log；还会输出到标准错误流(从命令行启动 nova-scheduler 时)。</strong></p>
+<p>接下来，设置 root logger的日志等级。假如在命令行选项开启 <code class="docutils literal"><span class="pre">--debug</span></code> 或者 <cite>-d</cite> 选项
+则优先设置 debug 等级， CONF.verbose 在 /etc/nova/nova.conf 中定义，默认为真。
+然后设置一些库的默认日志等级。</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="n">CONF</span><span class="o">.</span><span class="n">debug</span><span class="p">:</span>
+    <span class="n">log_root</span><span class="o">.</span><span class="n">setLevel</span><span class="p">(</span><span class="n">logging</span><span class="o">.</span><span class="n">DEBUG</span><span class="p">)</span>
+<span class="k">elif</span> <span class="n">CONF</span><span class="o">.</span><span class="n">verbose</span><span class="p">:</span>
+    <span class="n">log_root</span><span class="o">.</span><span class="n">setLevel</span><span class="p">(</span><span class="n">logging</span><span class="o">.</span><span class="n">INFO</span><span class="p">)</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="n">log_root</span><span class="o">.</span><span class="n">setLevel</span><span class="p">(</span><span class="n">logging</span><span class="o">.</span><span class="n">WARNING</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">pair</span> <span class="ow">in</span> <span class="n">CONF</span><span class="o">.</span><span class="n">default_log_levels</span><span class="p">:</span>
+    <span class="n">mod</span><span class="p">,</span> <span class="n">_sep</span><span class="p">,</span> <span class="n">level_name</span> <span class="o">=</span> <span class="n">pair</span><span class="o">.</span><span class="n">partition</span><span class="p">(</span><span class="s1">&#39;=&#39;</span><span class="p">)</span>
+    <span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="n">mod</span><span class="p">)</span>
+    <span class="c1"># NOTE(AAzza) in python2.6 Logger.setLevel doesn&#39;t convert string name</span>
+    <span class="c1"># to integer code.</span>
+    <span class="k">if</span> <span class="n">sys</span><span class="o">.</span><span class="n">version_info</span> <span class="o">&lt;</span> <span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">7</span><span class="p">):</span>
+        <span class="n">level</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLevelName</span><span class="p">(</span><span class="n">level_name</span><span class="p">)</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">setLevel</span><span class="p">(</span><span class="n">level</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">setLevel</span><span class="p">(</span><span class="n">level_name</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>最后，根据 use-syslog 选项，确定是否增加 SysLogHandler，该选项默认关闭。</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="n">CONF</span><span class="o">.</span><span class="n">use_syslog</span><span class="p">:</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">facility</span> <span class="o">=</span> <span class="n">_find_facility_from_conf</span><span class="p">()</span>
+        <span class="c1"># TODO(bogdando) use the format provided by RFCSysLogHandler</span>
+        <span class="c1">#   after existing syslog format deprecation in J</span>
+        <span class="k">if</span> <span class="n">CONF</span><span class="o">.</span><span class="n">use_syslog_rfc_format</span><span class="p">:</span>
+            <span class="n">syslog</span> <span class="o">=</span> <span class="n">RFCSysLogHandler</span><span class="p">(</span><span class="n">address</span><span class="o">=</span><span class="s1">&#39;/dev/log&#39;</span><span class="p">,</span>
+                                      <span class="n">facility</span><span class="o">=</span><span class="n">facility</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">syslog</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">handlers</span><span class="o">.</span><span class="n">SysLogHandler</span><span class="p">(</span><span class="n">address</span><span class="o">=</span><span class="s1">&#39;/dev/log&#39;</span><span class="p">,</span>
+                                                    <span class="n">facility</span><span class="o">=</span><span class="n">facility</span><span class="p">)</span>
+        <span class="n">log_root</span><span class="o">.</span><span class="n">addHandler</span><span class="p">(</span><span class="n">syslog</span><span class="p">)</span>
+    <span class="k">except</span> <span class="n">socket</span><span class="o">.</span><span class="n">error</span><span class="p">:</span>
+        <span class="n">log_root</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s1">&#39;Unable to add syslog handler. Verify that syslog&#39;</span>
+                       <span class="s1">&#39;is running.&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>综上，通过 _setup_logging_from_conf 给 root logger增加了多个handlers对象，设置Formatter
+格式，和日志层级。</p>
+<p>在其他模块中，一般都是通过 <code class="docutils literal"><span class="pre">LOG</span> <span class="pre">=</span> <span class="pre">logging.getLogger(__name__)</span></code> 返回本模块 logger 对象(实际上是 ContextAdapter 对象)，
+然后直接使用 LOG 记录日志信息。请注意，实际上，<strong>本模块logger(LOG.logger)实际上没有任何handlers对象，
+但是，由于 logger对象的 propagate 属性(默认为True)，因此会把日志消息&#8221;传递&#8221; 给每一个父 logger，父logger把消息发送到
+每一个handlers，直到root logger。</strong></p>
+<div class="figure align-center" id="id3">
+<a class="reference internal image-reference" href="../_images/LOG_handlers.png"><img alt="../_images/LOG_handlers.png" src="../_images/LOG_handlers.png" style="width: 1079.0px; height: 195.0px;" /></a>
+<p class="caption"><span class="caption-text">打印某模块 logger 的handler对象</span></p>
+</div>
+<div class="figure align-center" id="id4">
+<a class="reference internal image-reference" href="../_images/LOG_handlers_2.png"><img alt="../_images/LOG_handlers_2.png" src="../_images/LOG_handlers_2.png" style="width: 1131.0px; height: 420.0px;" /></a>
+<p class="caption"><span class="caption-text">模块logger handlers为空, 消息最终由 root logger记录进日志文件，并输出到标准错误</span></p>
 </div>
 </div>
 

@@ -2,7 +2,7 @@
 Python学习总结
 ###################
 
---------------
+
 
 .. tip::
     这是自己学习Python和工作中的总结，包括Python语言特性，小技巧，
@@ -10,18 +10,26 @@ Python学习总结
 
 .. contents:: 目录
 
-..
-   section-numbering::
-   标题 ####################
-   一号 ====================
-   二号 --------------------
-   三号 ++++++++++++++++++++
-   四号 ^^^^^^^^^^^^^^^^^^^^
 
 --------------
 
 语言特性
 ===================
+
+str
+~~~~
+
+partition和rpartition
+^^^^^^^^^^^^^^^^^^^^^^
+
+::
+
+    >>> s="nova.scheduler.manager.SchedulerManager"
+    >>> s.rpartition('.')
+    ('nova.scheduler.manager', '.', 'SchedulerManager')
+    >>> s.partition('.')
+    ('nova', '.', 'scheduler.manager.SchedulerManager')
+
 
 dict
 ~~~~~~~~

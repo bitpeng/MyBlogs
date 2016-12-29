@@ -27,5 +27,6 @@ Python Note
     webob_analysis
     metaclass_intro
     inspect_intro
+    log_summary
 
 ..    django_note
