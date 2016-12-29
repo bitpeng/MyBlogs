@@ -1,3 +1,5 @@
+.. _linux_cmd:
+
 ################
 Linux命令和shell
 ################
@@ -53,7 +55,7 @@ shell 脚本中流重定向方式 ``>&2`` 参考于 service 命令源码。
     echo "stderr info" >&2
     echo "stderr info-2" >&2
 
-重定向测试：
+重定向测试一：
 
 ::
 
@@ -88,6 +90,36 @@ shell 脚本中流重定向方式 ``>&2`` 参考于 service 命令源码。
     stderr info
     stderr info-2
 
+重定向测试二：
+
+::
+
+    root@ubuntu:/smbshare# ./test_redirect.sh 2>&1 1>4.txt
+    stderr info
+    stderr info-2
+    root@ubuntu:/smbshare# ./test_redirect.sh 1>5.txt 2>&1
+    root@ubuntu:/smbshare# more 5.txt
+    stdout info
+    stdout info-2
+    stderr info
+    stderr info-2
+    root@ubuntu:/smbshare# more 4.txt
+    stdout info
+    stdout info-2
+
+.. figure:: /_static/images/redirect_diff.png
+   :scale: 100
+   :align: center
+
+   重定向测试
+   
+可以看到，重定向顺序不同，结果差别很明显。**因为 shell 从左到右的顺序处理重定向。**
+因此命令 ``./test_redirect.sh 1>5.txt 2>&1`` 将标准输出和标准错误都重定向到文件 5.txt(
+先将标准输出重定向到文件 5.txt，然后标准错误重定向到标准输出既 5.xtx)；
+而命令 ``./test_redirect.sh 2>&1 1>4.txt`` 先将标准错误重定向到标准输出(此时是终端)，
+然后将标准输出重定向到文件 4.txt；而标准错误目的地依然是终端。
+
+
 管道测试一：
 
 .. figure:: /_static/images/grep_stdout.png
@@ -110,6 +142,72 @@ shell 脚本中流重定向方式 ``>&2`` 参考于 service 命令源码。
 **根据搜索结果，可以看到，shell 先处理重定向，然后处理管道。因此，grep可以搜索到
 stderr info信息(标准错误重定向到标准输入而来)。**
 
+尖括号用法收集
++++++++++++++++
+
+bash编程中自己遇到的尖括号用法汇总。
+
+流重定向
+---------
+
+流重定向的尖括号的用法包括：
+
+- ``<``，输入重定向；
+- ``>``，输出重定向；
+- ``>>``，追加重定向；
+
+更多细节可以参考上一节。
+
+::
+
+    # 逐行读取并处理文件
+    while read line
+    do
+        echo $line
+    done < /etc/passwd
+
+here-docement
+--------------
+
+有两种具体用法：
+
+::
+
+    # here-document
+    cat<< EOF > /smbshare/5.txt
+    Here document
+        test,
+      bye!
+    EOF
+
+    # here-document，结果会删除每行行首的tab，空格不会删除！
+    cat<<- EOF > /smbshare/6.txt
+		Here document
+		    test,
+          bye!
+    EOF
+
+从变量中读取信息
+-----------------
+
+::
+
+	# 从变量读取信息到arr数组
+	# read 命令设置 IFS 值不会改变整个shell环境的IFS值。
+	unset arr
+	line=`head -1 /etc/passwd`
+	line=$(head -1 /etc/passwd)
+	IFS=: read -a arr <<< $line
+	set | grep arr 
+
+.. figure:: /_static/images/san_zjkh.png
+   :scale: 100
+   :align: center
+
+   重定向和管道测试
+
+我们利用 ``<<<`` 符号，从 $line 变量读取信息，设置 IFS 分隔符，
+把读取的变量信息存入 arr 数组。
 
 字符串截取
 ++++++++++

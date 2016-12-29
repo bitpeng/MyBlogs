@@ -94,11 +94,12 @@
 <li class="toctree-l4"><a class="reference internal" href="#id3">4.2.1. 正则匹配</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#id4">4.2.2. 特殊字符处理</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#id5">4.2.3. 重定向和管道</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#id6">4.2.4. 字符串截取</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id6">4.2.4. 尖括号用法收集</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id9">4.2.5. 字符串截取</a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="#id8">4.3. 性能调优</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#id9">4.4. 常用命令</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id11">4.3. 性能调优</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id12">4.4. 常用命令</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#nc">4.4.1. nc</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#apt-get">4.4.2. apt-get</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#awk">4.4.3. awk</a></li>
@@ -114,7 +115,7 @@
 <li class="toctree-l4"><a class="reference internal" href="#lsof">4.4.13. lsof</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#ln">4.4.14. ln</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#grep">4.4.15. grep</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#id12">4.4.16. 系统和内核信息</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id15">4.4.16. 系统和内核信息</a></li>
 </ul>
 </li>
 </ul>
@@ -177,37 +178,43 @@
            <div itemprop="articleBody">
             
   <div class="section" id="linuxshell">
-<h1><a class="toc-backref" href="#id15">4. Linux命令和shell</a><a class="headerlink" href="#linuxshell" title="Permalink to this headline">¶</a></h1>
+<span id="linux-cmd"></span><h1><a class="toc-backref" href="#id20">4. Linux命令和shell</a><a class="headerlink" href="#linuxshell" title="Permalink to this headline">¶</a></h1>
 <div class="contents topic" id="id1">
 <p class="topic-title first">目录</p>
 <ul class="simple">
-<li><a class="reference internal" href="#linuxshell" id="id15">Linux命令和shell</a><ul>
-<li><a class="reference internal" href="#bash" id="id16">bash快捷键</a></li>
-<li><a class="reference internal" href="#id2" id="id17">bash编程</a><ul>
-<li><a class="reference internal" href="#id3" id="id18">正则匹配</a></li>
-<li><a class="reference internal" href="#id4" id="id19">特殊字符处理</a></li>
-<li><a class="reference internal" href="#id5" id="id20">重定向和管道</a></li>
-<li><a class="reference internal" href="#id6" id="id21">字符串截取</a></li>
+<li><a class="reference internal" href="#linuxshell" id="id20">Linux命令和shell</a><ul>
+<li><a class="reference internal" href="#bash" id="id21">bash快捷键</a></li>
+<li><a class="reference internal" href="#id2" id="id22">bash编程</a><ul>
+<li><a class="reference internal" href="#id3" id="id23">正则匹配</a></li>
+<li><a class="reference internal" href="#id4" id="id24">特殊字符处理</a></li>
+<li><a class="reference internal" href="#id5" id="id25">重定向和管道</a></li>
+<li><a class="reference internal" href="#id6" id="id26">尖括号用法收集</a><ul>
+<li><a class="reference internal" href="#id7" id="id27">流重定向</a></li>
+<li><a class="reference internal" href="#here-docement" id="id28">here-docement</a></li>
+<li><a class="reference internal" href="#id8" id="id29">从变量中读取信息</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#id8" id="id22">性能调优</a></li>
-<li><a class="reference internal" href="#id9" id="id23">常用命令</a><ul>
-<li><a class="reference internal" href="#nc" id="id24">nc</a></li>
-<li><a class="reference internal" href="#apt-get" id="id25">apt-get</a></li>
-<li><a class="reference internal" href="#awk" id="id26">awk</a></li>
-<li><a class="reference internal" href="#cut" id="id27">cut</a></li>
-<li><a class="reference internal" href="#dpkg" id="id28">dpkg</a></li>
-<li><a class="reference internal" href="#wget" id="id29">wget</a></li>
-<li><a class="reference internal" href="#scp" id="id30">scp</a></li>
-<li><a class="reference internal" href="#sed" id="id31">sed</a></li>
-<li><a class="reference internal" href="#route" id="id32">route</a></li>
-<li><a class="reference internal" href="#ps" id="id33">ps</a></li>
-<li><a class="reference internal" href="#df-du" id="id34">df/du</a></li>
-<li><a class="reference internal" href="#find-xargs" id="id35">find/xargs</a></li>
-<li><a class="reference internal" href="#lsof" id="id36">lsof</a></li>
-<li><a class="reference internal" href="#ln" id="id37">ln</a></li>
-<li><a class="reference internal" href="#grep" id="id38">grep</a></li>
-<li><a class="reference internal" href="#id12" id="id39">系统和内核信息</a></li>
+<li><a class="reference internal" href="#id9" id="id30">字符串截取</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#id11" id="id31">性能调优</a></li>
+<li><a class="reference internal" href="#id12" id="id32">常用命令</a><ul>
+<li><a class="reference internal" href="#nc" id="id33">nc</a></li>
+<li><a class="reference internal" href="#apt-get" id="id34">apt-get</a></li>
+<li><a class="reference internal" href="#awk" id="id35">awk</a></li>
+<li><a class="reference internal" href="#cut" id="id36">cut</a></li>
+<li><a class="reference internal" href="#dpkg" id="id37">dpkg</a></li>
+<li><a class="reference internal" href="#wget" id="id38">wget</a></li>
+<li><a class="reference internal" href="#scp" id="id39">scp</a></li>
+<li><a class="reference internal" href="#sed" id="id40">sed</a></li>
+<li><a class="reference internal" href="#route" id="id41">route</a></li>
+<li><a class="reference internal" href="#ps" id="id42">ps</a></li>
+<li><a class="reference internal" href="#df-du" id="id43">df/du</a></li>
+<li><a class="reference internal" href="#find-xargs" id="id44">find/xargs</a></li>
+<li><a class="reference internal" href="#lsof" id="id45">lsof</a></li>
+<li><a class="reference internal" href="#ln" id="id46">ln</a></li>
+<li><a class="reference internal" href="#grep" id="id47">grep</a></li>
+<li><a class="reference internal" href="#id15" id="id48">系统和内核信息</a></li>
 </ul>
 </li>
 </ul>
@@ -216,7 +223,7 @@
 </div>
 <hr class="docutils" />
 <div class="section" id="bash">
-<h2><a class="toc-backref" href="#id16">4.1. bash快捷键</a><a class="headerlink" href="#bash" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id21">4.1. bash快捷键</a><a class="headerlink" href="#bash" title="Permalink to this headline">¶</a></h2>
 <div class="highlight-default"><div class="highlight"><pre><span></span>ctrl + a;   定位光标到命令行首
 ctrl + e;   命令行尾
 !!:1        上一条命令第一个参数。
@@ -225,9 +232,9 @@ ctrl + e;   命令行尾
 </div>
 </div>
 <div class="section" id="id2">
-<h2><a class="toc-backref" href="#id17">4.2. bash编程</a><a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id22">4.2. bash编程</a><a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="id3">
-<h3><a class="toc-backref" href="#id18">4.2.1. 正则匹配</a><a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id23">4.2.1. 正则匹配</a><a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h3>
 <div class="highlight-default"><div class="highlight"><pre><span></span>cd /usr/bin
 # 判断变量是否不包含bak字符
 for i in nova-*; do [[ ! $i =~ &quot;bak&quot; ]] &amp;&amp; echo $i ;done
@@ -235,14 +242,14 @@ for i in nova-*; do [[ ! $i =~ &quot;bak&quot; ]] &amp;&amp; echo $i ;done
 </div>
 </div>
 <div class="section" id="id4">
-<h3><a class="toc-backref" href="#id19">4.2.2. 特殊字符处理</a><a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id24">4.2.2. 特殊字符处理</a><a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h3>
 <p>删除文件名包含特殊字符的文件：</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">mv</span> <span class="o">./-</span><span class="n">hl</span> <span class="n">hl</span><span class="o">.</span><span class="n">txt</span>
 </pre></div>
 </div>
 </div>
 <div class="section" id="id5">
-<h3><a class="toc-backref" href="#id20">4.2.3. 重定向和管道</a><a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id25">4.2.3. 重定向和管道</a><a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h3>
 <p>我们来建立一个 <code class="docutils literal"><span class="pre">test_redirect.sh</span></code> 脚本来测试shell输入输出重定向和管道。
 shell 脚本中流重定向方式 <code class="docutils literal"><span class="pre">&gt;&amp;2</span></code> 参考于 service 命令源码。</p>
 <p><code class="file docutils literal"><span class="pre">test_redirect.sh</span></code></p>
@@ -254,7 +261,7 @@ shell 脚本中流重定向方式 <code class="docutils literal"><span class="pr
 <span class="n">echo</span> <span class="s2">&quot;stderr info-2&quot;</span> <span class="o">&gt;&amp;</span><span class="mi">2</span>
 </pre></div>
 </div>
-<p>重定向测试：</p>
+<p>重定向测试一：</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="c1">## 过滤 stderr 或者过滤 stdout</span>
 <span class="n">root</span><span class="nd">@ubuntu</span><span class="p">:</span><span class="o">/</span><span class="n">smbshare</span><span class="c1"># ./test_redirect.sh 1&gt;/dev/null</span>
 <span class="n">stderr</span> <span class="n">info</span>
@@ -287,15 +294,39 @@ shell 脚本中流重定向方式 <code class="docutils literal"><span class="pr
 <span class="n">stderr</span> <span class="n">info</span><span class="o">-</span><span class="mi">2</span>
 </pre></div>
 </div>
+<p>重定向测试二：</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">root</span><span class="nd">@ubuntu</span><span class="p">:</span><span class="o">/</span><span class="n">smbshare</span><span class="c1"># ./test_redirect.sh 2&gt;&amp;1 1&gt;4.txt</span>
+<span class="n">stderr</span> <span class="n">info</span>
+<span class="n">stderr</span> <span class="n">info</span><span class="o">-</span><span class="mi">2</span>
+<span class="n">root</span><span class="nd">@ubuntu</span><span class="p">:</span><span class="o">/</span><span class="n">smbshare</span><span class="c1"># ./test_redirect.sh 1&gt;5.txt 2&gt;&amp;1</span>
+<span class="n">root</span><span class="nd">@ubuntu</span><span class="p">:</span><span class="o">/</span><span class="n">smbshare</span><span class="c1"># more 5.txt</span>
+<span class="n">stdout</span> <span class="n">info</span>
+<span class="n">stdout</span> <span class="n">info</span><span class="o">-</span><span class="mi">2</span>
+<span class="n">stderr</span> <span class="n">info</span>
+<span class="n">stderr</span> <span class="n">info</span><span class="o">-</span><span class="mi">2</span>
+<span class="n">root</span><span class="nd">@ubuntu</span><span class="p">:</span><span class="o">/</span><span class="n">smbshare</span><span class="c1"># more 4.txt</span>
+<span class="n">stdout</span> <span class="n">info</span>
+<span class="n">stdout</span> <span class="n">info</span><span class="o">-</span><span class="mi">2</span>
+</pre></div>
+</div>
+<div class="figure align-center" id="id16">
+<a class="reference internal image-reference" href="../_images/redirect_diff.png"><img alt="../_images/redirect_diff.png" src="../_images/redirect_diff.png" style="width: 612.0px; height: 290.0px;" /></a>
+<p class="caption"><span class="caption-text">重定向测试</span></p>
+</div>
+<p>可以看到，重定向顺序不同，结果差别很明显。<strong>因为 shell 从左到右的顺序处理重定向。</strong>
+因此命令 <code class="docutils literal"><span class="pre">./test_redirect.sh</span> <span class="pre">1&gt;5.txt</span> <span class="pre">2&gt;&amp;1</span></code> 将标准输出和标准错误都重定向到文件 5.txt(
+先将标准输出重定向到文件 5.txt，然后标准错误重定向到标准输出既 5.xtx)；
+而命令 <code class="docutils literal"><span class="pre">./test_redirect.sh</span> <span class="pre">2&gt;&amp;1</span> <span class="pre">1&gt;4.txt</span></code> 先将标准错误重定向到标准输出(此时是终端)，
+然后将标准输出重定向到文件 4.txt；而标准错误目的地依然是终端。</p>
 <p>管道测试一：</p>
-<div class="figure align-center" id="id13">
+<div class="figure align-center" id="id17">
 <a class="reference internal image-reference" href="../_images/grep_stdout.png"><img alt="../_images/grep_stdout.png" src="../_images/grep_stdout.png" style="width: 575.0px; height: 149.0px;" /></a>
 <p class="caption"><span class="caption-text">管道测试</span></p>
 </div>
 <p><strong>根据grep高亮显示可以知道，默认情况下只有 stdout (标准输出流)重定向到管道；
 标准错误流没有重定向到管道。</strong></p>
 <p>管道测试二：</p>
-<div class="figure align-center" id="id14">
+<div class="figure align-center" id="id18">
 <a class="reference internal image-reference" href="../_images/grep_and_pipe.png"><img alt="../_images/grep_and_pipe.png" src="../_images/grep_and_pipe.png" style="width: 624.0px; height: 233.0px;" /></a>
 <p class="caption"><span class="caption-text">重定向和管道测试</span></p>
 </div>
@@ -303,7 +334,65 @@ shell 脚本中流重定向方式 <code class="docutils literal"><span class="pr
 stderr info信息(标准错误重定向到标准输入而来)。</strong></p>
 </div>
 <div class="section" id="id6">
-<h3><a class="toc-backref" href="#id21">4.2.4. 字符串截取</a><a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id26">4.2.4. 尖括号用法收集</a><a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h3>
+<p>bash编程中自己遇到的尖括号用法汇总。</p>
+<div class="section" id="id7">
+<h4><a class="toc-backref" href="#id27">流重定向</a><a class="headerlink" href="#id7" title="Permalink to this headline">¶</a></h4>
+<p>流重定向的尖括号的用法包括：</p>
+<ul class="simple">
+<li><code class="docutils literal"><span class="pre">&lt;</span></code>，输入重定向；</li>
+<li><code class="docutils literal"><span class="pre">&gt;</span></code>，输出重定向；</li>
+<li><code class="docutils literal"><span class="pre">&gt;&gt;</span></code>，追加重定向；</li>
+</ul>
+<p>更多细节可以参考上一节。</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span># 逐行读取并处理文件
+while read line
+do
+    echo $line
+done &lt; /etc/passwd
+</pre></div>
+</div>
+</div>
+<div class="section" id="here-docement">
+<h4><a class="toc-backref" href="#id28">here-docement</a><a class="headerlink" href="#here-docement" title="Permalink to this headline">¶</a></h4>
+<p>有两种具体用法：</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span># here-document
+cat&lt;&lt; EOF &gt; /smbshare/5.txt
+Here document
+    test,
+  bye!
+EOF
+
+# here-document，结果会删除每行行首的tab，空格不会删除！
+cat&lt;&lt;- EOF &gt; /smbshare/6.txt
+            Here document
+                test,
+      bye!
+EOF
+</pre></div>
+</div>
+</div>
+<div class="section" id="id8">
+<h4><a class="toc-backref" href="#id29">从变量中读取信息</a><a class="headerlink" href="#id8" title="Permalink to this headline">¶</a></h4>
+<div class="highlight-default"><div class="highlight"><pre><span></span># 从变量读取信息到arr数组
+# read 命令设置 IFS 值不会改变整个shell环境的IFS值。
+unset arr
+line=`head -1 /etc/passwd`
+line=$(head -1 /etc/passwd)
+IFS=: read -a arr &lt;&lt;&lt; $line
+set | grep arr
+</pre></div>
+</div>
+<div class="figure align-center" id="id19">
+<a class="reference internal image-reference" href="../_images/san_zjkh.png"><img alt="../_images/san_zjkh.png" src="../_images/san_zjkh.png" style="width: 828.0px; height: 283.0px;" /></a>
+<p class="caption"><span class="caption-text">重定向和管道测试</span></p>
+</div>
+<p>我们利用 <code class="docutils literal"><span class="pre">&lt;&lt;&lt;</span></code> 符号，从 $line 变量读取信息，设置 IFS 分隔符，
+把读取的变量信息存入 arr 数组。</p>
+</div>
+</div>
+<div class="section" id="id9">
+<h3><a class="toc-backref" href="#id30">4.2.5. 字符串截取</a><a class="headerlink" href="#id9" title="Permalink to this headline">¶</a></h3>
 <div class="highlight-default"><div class="highlight"><pre><span></span>url=&#39;http://10.10.10.10:35357/v2.0&#39;
 # 从最左边开始删除
 echo ${SERVICE_ENDPOINT#*//}
@@ -311,7 +400,7 @@ echo ${SERVICE_ENDPOINT#*//}
 echo ${SERVICE_ENDPOINT##*/}
 </pre></div>
 </div>
-<table class="docutils footnote" frame="void" id="id7" rules="none">
+<table class="docutils footnote" frame="void" id="id10" rules="none">
 <colgroup><col class="label" /><col /></colgroup>
 <tbody valign="top">
 <tr><td class="label">[1]</td><td><a class="reference external" href="http://www.linuxidc.com/Linux/2015-03/115198.htm">http://www.linuxidc.com/Linux/2015-03/115198.htm</a></td></tr>
@@ -319,8 +408,8 @@ echo ${SERVICE_ENDPOINT##*/}
 </table>
 </div>
 </div>
-<div class="section" id="id8">
-<h2><a class="toc-backref" href="#id22">4.3. 性能调优</a><a class="headerlink" href="#id8" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id11">
+<h2><a class="toc-backref" href="#id31">4.3. 性能调优</a><a class="headerlink" href="#id11" title="Permalink to this headline">¶</a></h2>
 <p>释放缓存：</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">echo</span> <span class="mi">3</span> <span class="o">&gt;</span> <span class="o">/</span><span class="n">proc</span><span class="o">/</span><span class="n">sys</span><span class="o">/</span><span class="n">vm</span><span class="o">/</span><span class="n">drop_caches</span>
 </pre></div>
@@ -330,11 +419,11 @@ echo ${SERVICE_ENDPOINT##*/}
 </pre></div>
 </div>
 </div>
-<div class="section" id="id9">
-<h2><a class="toc-backref" href="#id23">4.4. 常用命令</a><a class="headerlink" href="#id9" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id12">
+<h2><a class="toc-backref" href="#id32">4.4. 常用命令</a><a class="headerlink" href="#id12" title="Permalink to this headline">¶</a></h2>
 <p>常用命令常用用法参考!</p>
 <div class="section" id="nc">
-<h3><a class="toc-backref" href="#id24">4.4.1. nc</a><a class="headerlink" href="#nc" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id33">4.4.1. nc</a><a class="headerlink" href="#nc" title="Permalink to this headline">¶</a></h3>
 <ul>
 <li><p class="first">传输目录</p>
 <p>server端：</p>
@@ -360,7 +449,7 @@ echo ${SERVICE_ENDPOINT##*/}
 <p>然后两端分别使用md5sum命令核对文件传输是否出错.</p>
 </div>
 <div class="section" id="apt-get">
-<h3><a class="toc-backref" href="#id25">4.4.2. apt-get</a><a class="headerlink" href="#apt-get" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id34">4.4.2. apt-get</a><a class="headerlink" href="#apt-get" title="Permalink to this headline">¶</a></h3>
 <p>只获取包，不安装：</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="c1"># 如果软件包没有安装</span>
 <span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="o">-</span><span class="n">d</span> <span class="n">install</span> <span class="n">git</span>
@@ -378,7 +467,7 @@ echo ${SERVICE_ENDPOINT##*/}
 </div>
 </div>
 <div class="section" id="awk">
-<h3><a class="toc-backref" href="#id26">4.4.3. awk</a><a class="headerlink" href="#awk" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id35">4.4.3. awk</a><a class="headerlink" href="#awk" title="Permalink to this headline">¶</a></h3>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="c1"># 打印某一行, 自设定分隔符</span>
 <span class="n">awk</span> <span class="o">-</span><span class="n">F</span><span class="p">:</span> <span class="s1">&#39;{print $1}&#39;</span>
 <span class="c1"># 打印除第一行之外的所有行</span>
@@ -389,7 +478,7 @@ echo ${SERVICE_ENDPOINT##*/}
 </div>
 </div>
 <div class="section" id="cut">
-<h3><a class="toc-backref" href="#id27">4.4.4. cut</a><a class="headerlink" href="#cut" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id36">4.4.4. cut</a><a class="headerlink" href="#cut" title="Permalink to this headline">¶</a></h3>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">echo</span> <span class="s2">&quot;test/dev/mapper/juno&quot;</span> <span class="o">|</span> <span class="n">cut</span> <span class="o">-</span><span class="n">d</span> <span class="s1">&#39;/&#39;</span> <span class="o">-</span><span class="n">f1</span>
 <span class="c1">#test</span>
 <span class="n">echo</span> <span class="s2">&quot;test/dev/mapper/juno&quot;</span> <span class="o">|</span> <span class="n">cut</span> <span class="o">-</span><span class="n">d</span> <span class="s1">&#39;/&#39;</span> <span class="o">-</span><span class="n">f2</span>
@@ -402,7 +491,7 @@ echo ${SERVICE_ENDPOINT##*/}
 <span class="c1">#dev</span>
 </pre></div>
 </div>
-<table class="docutils footnote" frame="void" id="id10" rules="none">
+<table class="docutils footnote" frame="void" id="id13" rules="none">
 <colgroup><col class="label" /><col /></colgroup>
 <tbody valign="top">
 <tr><td class="label">[2]</td><td><a class="reference external" href="http://www.jb51.net/article/41872.htm">http://www.jb51.net/article/41872.htm</a></td></tr>
@@ -410,7 +499,7 @@ echo ${SERVICE_ENDPOINT##*/}
 </table>
 </div>
 <div class="section" id="dpkg">
-<h3><a class="toc-backref" href="#id28">4.4.5. dpkg</a><a class="headerlink" href="#dpkg" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id37">4.4.5. dpkg</a><a class="headerlink" href="#dpkg" title="Permalink to this headline">¶</a></h3>
 <p>查看某软件包是否安装，这两条都可以：</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">dpkg</span> <span class="o">-</span><span class="n">s</span> <span class="n">lvm2</span>
 <span class="n">dpkg</span><span class="o">-</span><span class="n">query</span> <span class="o">-</span><span class="n">l</span> <span class="n">lvm</span>
@@ -427,14 +516,14 @@ echo ${SERVICE_ENDPOINT##*/}
 </div>
 </div>
 <div class="section" id="wget">
-<h3><a class="toc-backref" href="#id29">4.4.6. wget</a><a class="headerlink" href="#wget" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id38">4.4.6. wget</a><a class="headerlink" href="#wget" title="Permalink to this headline">¶</a></h3>
 <p>下载网站的整个目录，以供离线浏览：</p>
 <div class="code shell highlight-default"><div class="highlight"><pre><span></span><span class="n">wget</span> <span class="o">-</span><span class="n">c</span> <span class="o">-</span><span class="n">r</span> <span class="o">-</span><span class="n">np</span> <span class="o">-</span><span class="n">k</span> <span class="o">-</span><span class="n">L</span> <span class="o">-</span><span class="n">p</span> <span class="n">http</span><span class="p">:</span><span class="o">//</span><span class="n">docs</span><span class="o">.</span><span class="n">ceph</span><span class="o">.</span><span class="n">org</span><span class="o">.</span><span class="n">cn</span>
 </pre></div>
 </div>
 </div>
 <div class="section" id="scp">
-<h3><a class="toc-backref" href="#id30">4.4.7. scp</a><a class="headerlink" href="#scp" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id39">4.4.7. scp</a><a class="headerlink" href="#scp" title="Permalink to this headline">¶</a></h3>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="c1"># 远程拷贝文件</span>
 <span class="n">scp</span> <span class="n">root</span><span class="nd">@10</span><span class="o">.</span><span class="mf">11.113</span><span class="o">.</span><span class="mi">198</span><span class="p">:</span><span class="o">/</span><span class="n">smbshare</span><span class="o">/</span><span class="n">win7</span><span class="o">.</span><span class="n">raw</span> <span class="o">.</span>
 <span class="c1"># 远程拷贝目录</span>
@@ -443,7 +532,7 @@ echo ${SERVICE_ENDPOINT##*/}
 </div>
 </div>
 <div class="section" id="sed">
-<h3><a class="toc-backref" href="#id31">4.4.8. sed</a><a class="headerlink" href="#sed" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id40">4.4.8. sed</a><a class="headerlink" href="#sed" title="Permalink to this headline">¶</a></h3>
 <p>修改文件某一行：</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="c1"># 终端显示修改后的结果</span>
 <span class="n">sed</span> <span class="s2">&quot;s/&#39;metering&#39;,/&#39;metering&#39;,&#39;instances_monitor&#39;/g&quot;</span> <span class="n">txt</span>
@@ -453,7 +542,7 @@ echo ${SERVICE_ENDPOINT##*/}
 </div>
 </div>
 <div class="section" id="route">
-<h3><a class="toc-backref" href="#id32">4.4.9. route</a><a class="headerlink" href="#route" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id41">4.4.9. route</a><a class="headerlink" href="#route" title="Permalink to this headline">¶</a></h3>
 <p>添加路由：</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">route</span> <span class="n">add</span> <span class="o">-</span><span class="n">net</span> <span class="mf">224.0</span><span class="o">.</span><span class="mf">0.0</span> <span class="n">netmask</span> <span class="mf">240.0</span><span class="o">.</span><span class="mf">0.0</span> <span class="n">dev</span> <span class="n">eth0</span>
 </pre></div>
@@ -465,7 +554,7 @@ echo ${SERVICE_ENDPOINT##*/}
 </div>
 </div>
 <div class="section" id="ps">
-<h3><a class="toc-backref" href="#id33">4.4.10. ps</a><a class="headerlink" href="#ps" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id42">4.4.10. ps</a><a class="headerlink" href="#ps" title="Permalink to this headline">¶</a></h3>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="c1"># 批量杀死进程：</span>
 <span class="n">ps</span> <span class="o">-</span><span class="n">aux</span><span class="o">|</span><span class="n">grep</span> <span class="n">name</span><span class="o">|</span><span class="n">grep</span> <span class="o">-</span><span class="n">v</span> <span class="n">grep</span><span class="o">|</span><span class="n">cut</span> <span class="o">-</span><span class="n">c</span> <span class="mi">9</span><span class="o">-</span><span class="mi">15</span><span class="o">|</span><span class="n">xargs</span> <span class="n">kill</span> <span class="o">-</span><span class="mi">9</span>
 <span class="c1"># 显示进程的父子关系</span>
@@ -476,7 +565,7 @@ echo ${SERVICE_ENDPOINT##*/}
 </div>
 </div>
 <div class="section" id="df-du">
-<h3><a class="toc-backref" href="#id34">4.4.11. df/du</a><a class="headerlink" href="#df-du" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id43">4.4.11. df/du</a><a class="headerlink" href="#df-du" title="Permalink to this headline">¶</a></h3>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">df</span> <span class="o">-</span><span class="n">hl</span>
 <span class="n">du</span> <span class="o">-</span><span class="n">hd1</span>
 <span class="c1"># 列出某个文件或目录占用的空间</span>
@@ -485,11 +574,11 @@ echo ${SERVICE_ENDPOINT##*/}
 </div>
 </div>
 <div class="section" id="find-xargs">
-<h3><a class="toc-backref" href="#id35">4.4.12. find/xargs</a><a class="headerlink" href="#find-xargs" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id44">4.4.12. find/xargs</a><a class="headerlink" href="#find-xargs" title="Permalink to this headline">¶</a></h3>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">find</span> <span class="o">.</span> <span class="o">-</span><span class="nb">type</span> <span class="n">f</span> <span class="o">-</span><span class="n">name</span> <span class="s2">&quot;*.py&quot;</span> <span class="o">|</span> <span class="n">xargs</span> <span class="n">egrep</span> <span class="s2">&quot;xxx&quot;</span>
 </pre></div>
 </div>
-<table class="docutils footnote" frame="void" id="id11" rules="none">
+<table class="docutils footnote" frame="void" id="id14" rules="none">
 <colgroup><col class="label" /><col /></colgroup>
 <tbody valign="top">
 <tr><td class="label">[3]</td><td><a class="reference external" href="http://yansu.org/2014/01/15/general-shell-resources.html">http://yansu.org/2014/01/15/general-shell-resources.html</a></td></tr>
@@ -497,13 +586,13 @@ echo ${SERVICE_ENDPOINT##*/}
 </table>
 </div>
 <div class="section" id="lsof">
-<h3><a class="toc-backref" href="#id36">4.4.13. lsof</a><a class="headerlink" href="#lsof" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id45">4.4.13. lsof</a><a class="headerlink" href="#lsof" title="Permalink to this headline">¶</a></h3>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">lsof</span> <span class="o">-</span><span class="n">i</span> <span class="p">:</span><span class="mi">5000</span>
 </pre></div>
 </div>
 </div>
 <div class="section" id="ln">
-<h3><a class="toc-backref" href="#id37">4.4.14. ln</a><a class="headerlink" href="#ln" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id46">4.4.14. ln</a><a class="headerlink" href="#ln" title="Permalink to this headline">¶</a></h3>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="c1"># 建立硬链接</span>
 <span class="n">ln</span> <span class="n">srcfile</span> <span class="n">dstfile</span>
 <span class="c1"># 建立软连接</span>
@@ -524,7 +613,7 @@ echo ${SERVICE_ENDPOINT##*/}
 </ul>
 </div>
 <div class="section" id="grep">
-<h3><a class="toc-backref" href="#id38">4.4.15. grep</a><a class="headerlink" href="#grep" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id47">4.4.15. grep</a><a class="headerlink" href="#grep" title="Permalink to this headline">¶</a></h3>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="c1"># -P: 使用 pcre 模式搜索</span>
 <span class="c1"># -v: 表示搜索不匹配的！</span>
 <span class="n">git</span> <span class="n">status</span> <span class="o">|</span> <span class="n">grep</span> <span class="o">-</span><span class="n">Pv</span> <span class="s1">&#39;\.pyc$&#39;</span>
@@ -538,8 +627,8 @@ echo ${SERVICE_ENDPOINT##*/}
 </pre></div>
 </div>
 </div>
-<div class="section" id="id12">
-<h3><a class="toc-backref" href="#id39">4.4.16. 系统和内核信息</a><a class="headerlink" href="#id12" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id15">
+<h3><a class="toc-backref" href="#id48">4.4.16. 系统和内核信息</a><a class="headerlink" href="#id15" title="Permalink to this headline">¶</a></h3>
 <p>可以使用下面的命令</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">cat</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">issue</span>
 <span class="n">lsb_release</span> <span class="o">-</span><span class="n">a</span>
