@@ -68,23 +68,23 @@ shell 脚本中流重定向方式 ``>&2`` 参考于 service 命令源码。
     stdout info-2
     
     ## stdout 和 stderr 重定向
-    root@ubuntu:/smbshare# ./test_redirect.sh 1> 1.txt
+    root@ubuntu:/smbshare# ./test_redirect.sh 1> txt.1
     stderr info
     stderr info-2
-    root@ubuntu:/smbshare# ./test_redirect.sh 1> 2.txt
-    stderr info
-    stderr info-2
-    
-    root@ubuntu:/smbshare# more 1.txt
+    root@ubuntu:/smbshare# ./test_redirect.sh 2> txt.2
     stdout info
     stdout info-2
-    root@ubuntu:/smbshare# more 2.txt
+    
+    root@ubuntu:/smbshare# more txt.1
+    stdout info
+    stdout info-2
+    root@ubuntu:/smbshare# more txt.2
     stderr info
     stderr info-2
 
     ## stdout 和 stderr 重定向到一个文件
-    root@ubuntu:/smbshare# ./test_redirect.sh &> 3.txt
-    root@ubuntu:/smbshare# more 3.txt 
+    root@ubuntu:/smbshare# ./test_redirect.sh &> txt.3
+    root@ubuntu:/smbshare# more txt.3 
     stdout info
     stdout info-2
     stderr info
@@ -94,16 +94,16 @@ shell 脚本中流重定向方式 ``>&2`` 参考于 service 命令源码。
 
 ::
 
-    root@ubuntu:/smbshare# ./test_redirect.sh 2>&1 1>4.txt
+    root@ubuntu:/smbshare# ./test_redirect.sh 2>&1 1>txt.4
     stderr info
     stderr info-2
-    root@ubuntu:/smbshare# ./test_redirect.sh 1>5.txt 2>&1
-    root@ubuntu:/smbshare# more 5.txt
+    root@ubuntu:/smbshare# ./test_redirect.sh 1>txt.5 2>&1
+    root@ubuntu:/smbshare# more txt.5
     stdout info
     stdout info-2
     stderr info
     stderr info-2
-    root@ubuntu:/smbshare# more 4.txt
+    root@ubuntu:/smbshare# more txt.4
     stdout info
     stdout info-2
 
@@ -114,10 +114,10 @@ shell 脚本中流重定向方式 ``>&2`` 参考于 service 命令源码。
    重定向测试
    
 可以看到，重定向顺序不同，结果差别很明显。**因为 shell 从左到右的顺序处理重定向。**
-因此命令 ``./test_redirect.sh 1>5.txt 2>&1`` 将标准输出和标准错误都重定向到文件 5.txt(
-先将标准输出重定向到文件 5.txt，然后标准错误重定向到标准输出既 5.xtx)；
-而命令 ``./test_redirect.sh 2>&1 1>4.txt`` 先将标准错误重定向到标准输出(此时是终端)，
-然后将标准输出重定向到文件 4.txt；而标准错误目的地依然是终端。
+因此命令 ``./test_redirect.sh 1>txt.5 2>&1`` 将标准输出和标准错误都重定向到文件 txt.5(
+先将标准输出重定向到文件 txt.5 ，然后标准错误重定向到标准输出既 txt.5)；
+而命令 ``./test_redirect.sh 2>&1 1>txt.4`` 先将标准错误重定向到标准输出(此时是终端)，
+然后将标准输出重定向到文件 txt.4 ；而标准错误目的地依然是终端。
 
 
 管道测试一：
@@ -187,18 +187,27 @@ here-docement
           bye!
     EOF
 
+.. figure:: /_static/images/here_docment_1.png
+   :scale: 100
+   :align: center
+
+   here-docement 结果测试
+   
+可以看到，``<<-`` 形式的 here-docement，结果会删除行首的 tab；而 ``<<`` 形式的则不会。
+
+
 从变量中读取信息
 -----------------
 
 ::
 
-	# 从变量读取信息到arr数组
-	# read 命令设置 IFS 值不会改变整个shell环境的IFS值。
-	unset arr
-	line=`head -1 /etc/passwd`
-	line=$(head -1 /etc/passwd)
-	IFS=: read -a arr <<< $line
-	set | grep arr 
+    # 从变量读取信息到arr数组
+    # read 命令设置 IFS 值不会改变整个shell环境的IFS值。
+    unset arr
+    line=`head -1 /etc/passwd`
+    line=$(head -1 /etc/passwd)
+    IFS=: read -a arr <<< $line
+    set | grep arr 
 
 .. figure:: /_static/images/san_zjkh.png
    :scale: 100
@@ -494,6 +503,23 @@ grep
     # -r: 递归搜索，不跟从符号链接！
     fgrep -rn '+++===+++' .
 
+pgrep
+++++++
+
+搜索进程名称包含 name 的进程；该命令还有其他的选项。
+
+::
+
+    pgrep nova-scheduler
+
+pkill
+++++++
+
+根据 name 名称杀死进程：
+
+::
+
+    pkill nova-api
 
 系统和内核信息
 ++++++++++++++
@@ -502,7 +528,10 @@ grep
 
 ::
 
+    # 查看操作系统发行版信息
     cat /etc/issue
     lsb_release -a
+
+    # 查看内核信息
     uname -a
 
