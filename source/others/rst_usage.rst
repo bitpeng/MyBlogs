@@ -44,10 +44,10 @@ rst 用法自我总结
 
 ::
 
-    .. literalinclude:: example.py
-        :language: python
-        
-        code here
+	.. literalinclude:: /_static/src/test_cfg.py
+		:language: python
+		:linenos:
+
 
 
 引用图片

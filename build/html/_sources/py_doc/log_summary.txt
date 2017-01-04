@@ -117,7 +117,7 @@ the way up the logging hierarchy and fallen off the...top of the chain (maybe I 
             basicConfig()
         root.warning(msg, *args, **kwargs)
 
-    
+
 ::
 
     def basicConfig(**kwargs):
@@ -144,7 +144,7 @@ the way up the logging hierarchy and fallen off the...top of the chain (maybe I 
                     root.setLevel(level)
         finally:
             _releaseLock()
-    
+
 ::
 
     class StreamHandler(Handler):
@@ -242,3 +242,43 @@ the way up the logging hierarchy and fallen off the...top of the chain (maybe I 
     # 过滤掉标准输出流(sys.stdout)
     ./test_log.py 1>/dev/null
     tail -f file.log
+
+
+编写自己的日志包
+=================
+
+在充分理解了 Python logging 日志设施之后，完全可以编写自己的 log 包装模块
+
+::
+
+    root@allinone-v2:/usr/local/lib/python2.7/dist-packages# tree clog
+    clog
+    ├── __init__.py
+    ├── __init__.pyc
+    ├── log.py
+    ├── log.pyc
+    └── test.py
+
+    0 directories, 5 files
+
+自己编写的log包装模块目录结构如上图所示。
+
+以下是包的代码，并附有简单的注释：
+
+:file:`log.py`
+
+.. literalinclude:: /_static/common/clog/log.py
+    :language: python
+    :linenos:
+
+:file:`__init__.py`
+
+.. literalinclude:: /_static/common/clog/__init__.py
+    :language: python
+    :linenos:
+
+:file:`test.py`
+
+.. literalinclude:: /_static/common/clog/test.py
+    :language: python
+    :linenos:

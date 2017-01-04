@@ -1,4 +1,4 @@
-.. _periodic_task_1:
+.. _periodic_task:
 
 OpenStack定时任务分析
 ########################
@@ -187,7 +187,7 @@ B把事情做好后运行evt.send(XXX) [注意，由于都在一个线程中，�
 另外，根据源码可知，_inner() 函数内部是一个循环，只有捕获 :class:`LoopingCallDone` 异常才会
 停止任务并通过 done.send() 解除 done.wait() 阻塞。因此，一般对于这类定时任务在要调用的函数
 内部，抛出 :class:`LoopingCallDone` 异常。nova源码中也有类似的处理：比如 libvirt 启动虚拟机时，
-就一直阻塞等待虚拟机状态为 ``RUNNING``。
+就一直阻塞等待虚拟机状态为 ``RUNNING`` 。
 
 :file:`nova/virt/libvirt/driver.py`
 ::
@@ -223,7 +223,7 @@ B把事情做好后运行evt.send(XXX) [注意，由于都在一个线程中，�
    :align: center
 
    日志输出定时任务运行信息
-   
+
 ::
 
     root@allinone-v2:/var/log/nova# grep "Running periodic task" nova-scheduler.log 
@@ -303,7 +303,7 @@ SchedulerManager 类有两个定时任务，我们来看看定时任务装饰器
             return decorator
         else:
             return decorator(args[0])
-    
+
 代码注释很清楚，这个装饰器就是给要定时运行的函数加上一些额外的属性，用来控制
 定时任务函数的执行和执行频率等。
 
@@ -462,7 +462,7 @@ run_periodic_tasks 函数在具有元类 _PeriodicTasksMeta 的类 PeriodicTasks
                 time.sleep(0)
 
             return idle_for
-        
+
 从而最终实际上要调用的动态定时函数是 run_periodic_tasks ，在该函数中，会
 依次调用所有的被 periodic_task 装饰器包装的函数。
 
@@ -521,3 +521,5 @@ run_periodic_tasks 函数在具有元类 _PeriodicTasksMeta 的类 PeriodicTasks
     },  
     [###] /usr/lib/python2.7/dist-packages/nova/openstack/common/threadgroup.py:wait:115
 
+
+.. [#] http://www.cnblogs.com/yuhan-TB/p/4085074.html
