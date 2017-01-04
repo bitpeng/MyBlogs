@@ -87,3 +87,7 @@ raw message.  If there is no date format string, the default date format is::
 
     %Y-%m-%d %H:%M:%S
 
+
+.. |date| date::
+
+Today's date is |date|.

@@ -38,7 +38,7 @@ OpenStack Note
     kombu
     openstack_debug
     nova_rpcserver_start
-    periodic_task_1
+    periodic_task
     nova_log
 
 

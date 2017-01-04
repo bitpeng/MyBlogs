@@ -46,6 +46,7 @@ Python ``six.add_metaclass`` 可以用来实现给类增加 __metaclass__ 属性
     class UpperAttrMetaclass(type):
 
         def __new__(cls, clsname, bases, dct):
+            print "in new:", "%s, %s, %s, %s"%(cls, clsname, bases, dct)
 
             uppercase_attr = {}
             for name, val in dct.items():
@@ -57,38 +58,59 @@ Python ``six.add_metaclass`` 可以用来实现给类增加 __metaclass__ 属性
             return super(UpperAttrMetaclass, cls).__new__(cls, clsname, bases, uppercase_attr)
             #return type(clsname, bases, uppercase_attr)
 
+        def __init__(cls, names, bases, dict_):
+            print "in init:", "%s, %s, %s, %s"%(cls, names, bases, dict_)
+
     #b = UpperAttrMetaclass()
     class B1(object):
         __metaclass__ = UpperAttrMetaclass
         bar = 'bar'
         foo = 'foo'
         def __init__(self):
+            print "in B1 init", self
             return super(B1, self).__init__()
 
     b1 = B1(); print dir(b1)
     print b1.BAR
+    print '\n\n'
     #print b1.bar
 
-    #@six.add_metaclass(UpperAttrMetaclass)
     @metaclass(UpperAttrMetaclass)
     class B2(object):
         #__metaclass__ = UpperAttrMetaclass
         bar2 = 'bar2'
         foo2 = 'foo2'
-        # __slots__ = ("bar2", "fo2")
+        #__slots__ = ('bar2', 'foo2')
         def __init__(self):
+            print "in B2 init", self
             return super(B2, self).__init__()
 
+        def f1(self): pass
+
+        def f2(self):
+            return "f2"
+
     #B2=metaclass(UpperAttrMetaclass)(B2)
-    b2 = B2(); print dir(b2)
+    b2 = B2(); #print dir(b2)
     print "B2.__dict__, ", B2.__dict__
-    print "b2.__dict__, ", b2.__dict__
-    b2.a = "a"
-    print "b2.__dict__, ", b2.__dict__
-    b2.dic = "dic"
+    #print "B2.__slots__, ", B2.__slots__
+    #print "b2.__dict__, ", b2.__dict__
+    #b2.a = "a"
+    #print "b2.__dict__, ", b2.__dict__
+    #b2.dic = "dic"
     #print b2.__slots__
     #print b1.BAR
     print type(B2)
+    print "dir(b2), ", dir(b2)
+    print
+    print "dir(B2), ", dir(B2)
+    print b2.F2()
+    #print b2.f2()
+    #print b2.f2()
+    print "\n\n"
+    b22=B2()
+    b11 = B1()
+
 
 在这里的测试中，我使用了两种方式来测试元类：
 
@@ -108,3 +130,21 @@ Python ``six.add_metaclass`` 可以用来实现给类增加 __metaclass__ 属性
 和 B2.bar2 都被转换成大写的形式，然后生成类 B2。
 
 综上，我们可以很清晰的看到，元类是怎样拦截类的创建的！
+
+**update: 2017-1-3 15:00**
+
+另外，今天再次测试该例子。任何一个类，假如有某个元类，那么实例化类对象时相关魔法
+方法的顺序如下：
+
+::
+
+    metaclass.__new__ --> metaclass.init --> class.__init__
+    
+.. figure:: /_static/images/init_order.png
+   :scale: 100
+   :align: center
+
+   具有元类属性的类对象实例化时魔法方法调用顺序
+
+可以看到，只有第一个类对象实例化时，才会调用元类的 __new__ 和 __init__ 方法。
+后面的只会调用自身的 __int__ 方法。

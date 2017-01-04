@@ -32,7 +32,7 @@
   
     <link rel="top" title="Welcome to Sitian&#39;s Blog 0.1 documentation" href="../index.html"/>
         <link rel="up" title="Python Note" href="index.html"/>
-        <link rel="next" title="Hack Linux" href="../linux_tools/index.html"/>
+        <link rel="next" title="12. python inspect 模块" href="inspect_intro.html"/>
         <link rel="prev" title="10. webob库简单分析" href="webob_analysis.html"/> 
 
   
@@ -95,6 +95,8 @@
 <li class="toctree-l2"><a class="reference internal" href="dec_logic.html">9. Python 装饰器、闭包</a></li>
 <li class="toctree-l2"><a class="reference internal" href="webob_analysis.html">10. webob库简单分析</a></li>
 <li class="toctree-l2 current"><a class="current reference internal" href="#">11. Python元类</a></li>
+<li class="toctree-l2"><a class="reference internal" href="inspect_intro.html">12. python inspect 模块</a></li>
+<li class="toctree-l2"><a class="reference internal" href="log_summary.html">13. logging 模块总结</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../linux_tools/index.html">Hack Linux</a></li>
@@ -192,6 +194,7 @@
 <span class="k">class</span> <span class="nc">UpperAttrMetaclass</span><span class="p">(</span><span class="nb">type</span><span class="p">):</span>
 
     <span class="k">def</span> <span class="nf">__new__</span><span class="p">(</span><span class="n">cls</span><span class="p">,</span> <span class="n">clsname</span><span class="p">,</span> <span class="n">bases</span><span class="p">,</span> <span class="n">dct</span><span class="p">):</span>
+        <span class="nb">print</span> <span class="s2">&quot;in new:&quot;</span><span class="p">,</span> <span class="s2">&quot;</span><span class="si">%s</span><span class="s2">, </span><span class="si">%s</span><span class="s2">, </span><span class="si">%s</span><span class="s2">, </span><span class="si">%s</span><span class="s2">&quot;</span><span class="o">%</span><span class="p">(</span><span class="n">cls</span><span class="p">,</span> <span class="n">clsname</span><span class="p">,</span> <span class="n">bases</span><span class="p">,</span> <span class="n">dct</span><span class="p">)</span>
 
         <span class="n">uppercase_attr</span> <span class="o">=</span> <span class="p">{}</span>
         <span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">val</span> <span class="ow">in</span> <span class="n">dct</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
@@ -203,38 +206,58 @@
         <span class="k">return</span> <span class="nb">super</span><span class="p">(</span><span class="n">UpperAttrMetaclass</span><span class="p">,</span> <span class="n">cls</span><span class="p">)</span><span class="o">.</span><span class="n">__new__</span><span class="p">(</span><span class="n">cls</span><span class="p">,</span> <span class="n">clsname</span><span class="p">,</span> <span class="n">bases</span><span class="p">,</span> <span class="n">uppercase_attr</span><span class="p">)</span>
         <span class="c1">#return type(clsname, bases, uppercase_attr)</span>
 
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="n">cls</span><span class="p">,</span> <span class="n">names</span><span class="p">,</span> <span class="n">bases</span><span class="p">,</span> <span class="n">dict_</span><span class="p">):</span>
+        <span class="nb">print</span> <span class="s2">&quot;in init:&quot;</span><span class="p">,</span> <span class="s2">&quot;</span><span class="si">%s</span><span class="s2">, </span><span class="si">%s</span><span class="s2">, </span><span class="si">%s</span><span class="s2">, </span><span class="si">%s</span><span class="s2">&quot;</span><span class="o">%</span><span class="p">(</span><span class="n">cls</span><span class="p">,</span> <span class="n">names</span><span class="p">,</span> <span class="n">bases</span><span class="p">,</span> <span class="n">dict_</span><span class="p">)</span>
+
 <span class="c1">#b = UpperAttrMetaclass()</span>
 <span class="k">class</span> <span class="nc">B1</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
     <span class="n">__metaclass__</span> <span class="o">=</span> <span class="n">UpperAttrMetaclass</span>
     <span class="n">bar</span> <span class="o">=</span> <span class="s1">&#39;bar&#39;</span>
     <span class="n">foo</span> <span class="o">=</span> <span class="s1">&#39;foo&#39;</span>
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="nb">print</span> <span class="s2">&quot;in B1 init&quot;</span><span class="p">,</span> <span class="bp">self</span>
         <span class="k">return</span> <span class="nb">super</span><span class="p">(</span><span class="n">B1</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">()</span>
 
 <span class="n">b1</span> <span class="o">=</span> <span class="n">B1</span><span class="p">();</span> <span class="nb">print</span> <span class="nb">dir</span><span class="p">(</span><span class="n">b1</span><span class="p">)</span>
 <span class="nb">print</span> <span class="n">b1</span><span class="o">.</span><span class="n">BAR</span>
+<span class="nb">print</span> <span class="s1">&#39;</span><span class="se">\n\n</span><span class="s1">&#39;</span>
 <span class="c1">#print b1.bar</span>
 
-<span class="c1">#@six.add_metaclass(UpperAttrMetaclass)</span>
 <span class="nd">@metaclass</span><span class="p">(</span><span class="n">UpperAttrMetaclass</span><span class="p">)</span>
 <span class="k">class</span> <span class="nc">B2</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
     <span class="c1">#__metaclass__ = UpperAttrMetaclass</span>
     <span class="n">bar2</span> <span class="o">=</span> <span class="s1">&#39;bar2&#39;</span>
     <span class="n">foo2</span> <span class="o">=</span> <span class="s1">&#39;foo2&#39;</span>
-    <span class="c1"># __slots__ = (&quot;bar2&quot;, &quot;fo2&quot;)</span>
+    <span class="c1">#__slots__ = (&#39;bar2&#39;, &#39;foo2&#39;)</span>
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="nb">print</span> <span class="s2">&quot;in B2 init&quot;</span><span class="p">,</span> <span class="bp">self</span>
         <span class="k">return</span> <span class="nb">super</span><span class="p">(</span><span class="n">B2</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">()</span>
 
+    <span class="k">def</span> <span class="nf">f1</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span> <span class="k">pass</span>
+
+    <span class="k">def</span> <span class="nf">f2</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="s2">&quot;f2&quot;</span>
+
 <span class="c1">#B2=metaclass(UpperAttrMetaclass)(B2)</span>
-<span class="n">b2</span> <span class="o">=</span> <span class="n">B2</span><span class="p">();</span> <span class="nb">print</span> <span class="nb">dir</span><span class="p">(</span><span class="n">b2</span><span class="p">)</span>
+<span class="n">b2</span> <span class="o">=</span> <span class="n">B2</span><span class="p">();</span> <span class="c1">#print dir(b2)</span>
 <span class="nb">print</span> <span class="s2">&quot;B2.__dict__, &quot;</span><span class="p">,</span> <span class="n">B2</span><span class="o">.</span><span class="n">__dict__</span>
-<span class="nb">print</span> <span class="s2">&quot;b2.__dict__, &quot;</span><span class="p">,</span> <span class="n">b2</span><span class="o">.</span><span class="n">__dict__</span>
-<span class="n">b2</span><span class="o">.</span><span class="n">a</span> <span class="o">=</span> <span class="s2">&quot;a&quot;</span>
-<span class="nb">print</span> <span class="s2">&quot;b2.__dict__, &quot;</span><span class="p">,</span> <span class="n">b2</span><span class="o">.</span><span class="n">__dict__</span>
-<span class="n">b2</span><span class="o">.</span><span class="n">dic</span> <span class="o">=</span> <span class="s2">&quot;dic&quot;</span>
+<span class="c1">#print &quot;B2.__slots__, &quot;, B2.__slots__</span>
+<span class="c1">#print &quot;b2.__dict__, &quot;, b2.__dict__</span>
+<span class="c1">#b2.a = &quot;a&quot;</span>
+<span class="c1">#print &quot;b2.__dict__, &quot;, b2.__dict__</span>
+<span class="c1">#b2.dic = &quot;dic&quot;</span>
 <span class="c1">#print b2.__slots__</span>
 <span class="c1">#print b1.BAR</span>
 <span class="nb">print</span> <span class="nb">type</span><span class="p">(</span><span class="n">B2</span><span class="p">)</span>
+<span class="nb">print</span> <span class="s2">&quot;dir(b2), &quot;</span><span class="p">,</span> <span class="nb">dir</span><span class="p">(</span><span class="n">b2</span><span class="p">)</span>
+<span class="nb">print</span>
+<span class="nb">print</span> <span class="s2">&quot;dir(B2), &quot;</span><span class="p">,</span> <span class="nb">dir</span><span class="p">(</span><span class="n">B2</span><span class="p">)</span>
+<span class="nb">print</span> <span class="n">b2</span><span class="o">.</span><span class="n">F2</span><span class="p">()</span>
+<span class="c1">#print b2.f2()</span>
+<span class="c1">#print b2.f2()</span>
+<span class="nb">print</span> <span class="s2">&quot;</span><span class="se">\n\n</span><span class="s2">&quot;</span>
+<span class="n">b22</span><span class="o">=</span><span class="n">B2</span><span class="p">()</span>
+<span class="n">b11</span> <span class="o">=</span> <span class="n">B1</span><span class="p">()</span>
 </pre></div>
 </div>
 <p>在这里的测试中，我使用了两种方式来测试元类：</p>
@@ -253,6 +276,18 @@
 针对类的每一个非特殊属性，将属性名称转换成大写方式。因此 B2.foo2
 和 B2.bar2 都被转换成大写的形式，然后生成类 B2。</p>
 <p>综上，我们可以很清晰的看到，元类是怎样拦截类的创建的！</p>
+<p><strong>update: 2017-1-3 15:00</strong></p>
+<p>另外，今天再次测试该例子。任何一个类，假如有某个元类，那么实例化类对象时相关魔法
+方法的顺序如下：</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">metaclass</span><span class="o">.</span><span class="n">__new__</span> <span class="o">--&gt;</span> <span class="n">metaclass</span><span class="o">.</span><span class="n">init</span> <span class="o">--&gt;</span> <span class="n">class</span><span class="o">.</span><span class="n">__init__</span>
+</pre></div>
+</div>
+<div class="figure align-center" id="id3">
+<a class="reference internal image-reference" href="../_images/init_order.png"><img alt="../_images/init_order.png" src="../_images/init_order.png" style="width: 1139.0px; height: 327.0px;" /></a>
+<p class="caption"><span class="caption-text">具有元类属性的类对象实例化时魔法方法调用顺序</span></p>
+</div>
+<p>可以看到，只有第一个类对象实例化时，才会调用元类的 __new__ 和 __init__ 方法。
+后面的只会调用自身的 __int__ 方法。</p>
 </div>
 
 
@@ -262,7 +297,7 @@
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="../linux_tools/index.html" class="btn btn-neutral float-right" title="Hack Linux" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="inspect_intro.html" class="btn btn-neutral float-right" title="12. python inspect 模块" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
         <a href="webob_analysis.html" class="btn btn-neutral" title="10. webob库简单分析" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
