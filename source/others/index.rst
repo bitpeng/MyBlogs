@@ -16,5 +16,6 @@
     store_intro
     mark_lan
     tools
+    keep_writting
 
 ..    sphinx_doc
