@@ -210,6 +210,13 @@ set_trace
     的断点，因为 import 时使用的是 sys.path 中指定的路径！
 
 
+使用自己编写的日志包
+======================
+
+参考 :ref:`Python logging 模块<log_summary>` ，完全可以使用该日志包记录日志，
+然后通过 ``LOG_DEBUG()`` 添加的日志信息都输出到 /smbshare/csq.log 文件。很方便！
+
+
 ---------------------
 
 参考

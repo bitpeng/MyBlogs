@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>22. OpenStack定时任务分析 &mdash; Welcome to Sitian&#39;s Blog 0.1 documentation</title>
+  <title>22. OpenStack周期性任务分析 &mdash; Welcome to Sitian&#39;s Blog 0.1 documentation</title>
   
 
   
@@ -107,7 +107,7 @@
 <li class="toctree-l2"><a class="reference internal" href="kombu.html">19. kombu和消息队列总结</a></li>
 <li class="toctree-l2"><a class="reference internal" href="openstack_debug.html">20. OpenStack 调试</a></li>
 <li class="toctree-l2"><a class="reference internal" href="nova_rpcserver_start.html">21. nova RPC服务启动分析</a></li>
-<li class="toctree-l2 current"><a class="current reference internal" href="#">22. OpenStack定时任务分析</a><ul>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">22. OpenStack周期性任务分析</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#id2">22.1. 阻塞型定时任务</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#id3">22.2. 状态报告和通知型定时任务</a></li>
 </ul>
@@ -116,7 +116,7 @@
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../web/index.html">web开发</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../others/index.html">附录</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../others/index.html">杂项讨论</a></li>
 </ul>
 
             
@@ -149,7 +149,7 @@
       
           <li><a href="index.html">OpenStack Note</a> &raquo;</li>
       
-    <li>22. OpenStack定时任务分析</li>
+    <li>22. OpenStack周期性任务分析</li>
       <li class="wy-breadcrumbs-aside">
         
           
@@ -164,11 +164,11 @@
            <div itemprop="articleBody">
             
   <div class="section" id="openstack">
-<span id="periodic-task"></span><h1><a class="toc-backref" href="#id9">22. OpenStack定时任务分析</a><a class="headerlink" href="#openstack" title="Permalink to this headline">¶</a></h1>
+<span id="periodic-task"></span><h1><a class="toc-backref" href="#id9">22. OpenStack周期性任务分析</a><a class="headerlink" href="#openstack" title="Permalink to this headline">¶</a></h1>
 <div class="contents topic" id="id1">
 <p class="topic-title first">目录</p>
 <ul class="simple">
-<li><a class="reference internal" href="#openstack" id="id9">OpenStack定时任务分析</a><ul>
+<li><a class="reference internal" href="#openstack" id="id9">OpenStack周期性任务分析</a><ul>
 <li><a class="reference internal" href="#id2" id="id10">阻塞型定时任务</a></li>
 <li><a class="reference internal" href="#id3" id="id11">状态报告和通知型定时任务</a></li>
 </ul>
@@ -331,7 +331,10 @@ B把事情做好后运行evt.send(XXX) [注意，由于都在一个线程中，�
 执行完成，否则代码 <code class="docutils literal"><span class="pre">periodic.wait()</span></code> 会永远阻塞。可是 OpenStack 组件一般
 有很多定时任务，那么他们是如何做到同时执行的呢。这个问题待结合OpenStack相关代码
 进行分析，待完成。</p>
-<p class="last"><strong>初步猜想，可能是在线程中启动协程。这样就可以开启多个定时任务，待验证！</strong></p>
+<p><strong>初步猜想，可能是在线程中启动协程。这样就可以开启多个定时任务，待验证！</strong></p>
+<p><strong>update: 2017-1-4 17:00</strong></p>
+<p class="last">根据补充的通知型定时任务分析可知，并非用到了什么多线程，实际上，nova是在一个函数
+<code class="xref py py-func docutils literal"><span class="pre">PeriodicTasks.run_periodic_tasks()</span></code> 中循环调用所有的定时任务来实现的。</p>
 </div>
 <p><strong>update: 2017-1-3 17:00</strong></p>
 <p>另外，根据源码可知，_inner() 函数内部是一个循环，只有捕获 <code class="xref py py-class docutils literal"><span class="pre">LoopingCallDone</span></code> 异常才会

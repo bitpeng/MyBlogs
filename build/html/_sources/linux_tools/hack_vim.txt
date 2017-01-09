@@ -59,3 +59,15 @@ TAB替换为空格:
     ^ ;
     $ ;
 
+其他
+=======
+
+统计字符串出现个数:
+
+::
+
+    :%s/context/&/ng
+    :%s/context//ng
+
+
+.. [#] http://coolshell.cn/articles/5426.html

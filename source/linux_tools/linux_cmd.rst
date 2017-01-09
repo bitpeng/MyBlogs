@@ -431,6 +431,7 @@ ps
     ps afx -o pid,cmd | grep nova
     # 查看某bash的进程树
     ps f
+    ps f | grep nova
 
 df/du
 +++++
@@ -457,7 +458,22 @@ lsof
 
 ::
 
+    # 不带任何参数，则输出所有活跃进程的所有打开文件
+    lsof
+
+    # 获取网络连接信息
+    lsof -i
+    lsof -i tcp
+
+    # 查看某端口的文件信息
     lsof -i :5000
+
+    # 查看文件别哪些进程打开
+    lsof /smbshare/csq.log
+
+lsof 还有很多其他的高级用法，可以参考：
+
+.. [#] https://linux.cn/article-4099-1.html
 
 
 ln
@@ -535,3 +551,9 @@ pkill
     # 查看内核信息
     uname -a
 
+查看系统启动服务
++++++++++++++++++
+
+::
+
+    initctl list | grep nova

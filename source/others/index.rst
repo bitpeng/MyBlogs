@@ -1,6 +1,5 @@
-.. _database
 
-附录
+杂项讨论
 ==========
 
 .. tip::
@@ -16,5 +15,6 @@
     rst_usage
     store_intro
     mark_lan
+    tools
 
 ..    sphinx_doc

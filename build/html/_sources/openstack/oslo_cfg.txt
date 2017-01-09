@@ -278,7 +278,7 @@ test_cfg.py：
 对配置项下划线的特殊处理
 ++++++++++++++++++++++++
 
-**date: 2016/12/25-18-54**
+**update: 2016/12/25-18-54**
 
 oslo.config.cfg 模块，对配置项名称中下划线进行了特殊处理，这一点要特别注意。
 
@@ -316,7 +316,7 @@ oslo.config.cfg 模块，对配置项名称中下划线进行了特殊处理，�
 加载配置文件
 +++++++++++++++++
 
-**date: 2016/12/26-12-40**
+**update: 2016/12/26-12-40**
 
 这种方式，也是我在阅读 nova/openstack/common/log 模块代码时注意到的。
 log 模块设置nova的日志保存在 /var/log/nova/ 目录下，该项由 /etc/nova/nova.conf
@@ -360,6 +360,35 @@ log 模块设置nova的日志保存在 /var/log/nova/ 目录下，该项由 /etc
    :align: center
 
    通过 project 参数查找配置文件目录
+
+记录所有的配置项
++++++++++++++++++
+
+**update: 2017-1-8 18:30**
+
+该函数的用法也是在分析nova组件源码时学习到的，会尝试
+以level级别记录CONF所有的配置项：
+
+.. method:: ConfigOpts.log_opt_values(self, logger, level)
+
+    :param logger: logging.Logger 对象
+    :param level: 记录配置项的级别
+
+比如，在 :file:`nova/openstack/common/service.py` 中，有这样一处代码：
+
+::
+
+    CONF.log_opt_values(LOG, std_logging.DEBUG)
+
+这里尝试以DEBUG级别记录配置项。但是nova组件默认的日志级别为 ``INFO`` ， 因此
+我们可以通过命令行开启 ``--debug`` 选项，然后所有的配置项都会输出到日志。
+
+
+.. figure:: /_static/images/log_opt_values.png
+   :scale: 100
+   :align: center
+
+   输出所有配置项值
 
 ---------------------
 
