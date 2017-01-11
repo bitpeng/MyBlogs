@@ -1,0 +1,477 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>26. nova虚机加密总结 &mdash; Welcome to Sitian&#39;s Blog 0.1 documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+    <link rel="top" title="Welcome to Sitian&#39;s Blog 0.1 documentation" href="../index.html"/>
+        <link rel="up" title="OpenStack Note" href="index.html"/>
+        <link rel="next" title="杂项讨论" href="../others/index.html"/>
+        <link rel="prev" title="25. 虚拟化相关命令" href="virt_cmd.html"/> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> Welcome to Sitian's Blog
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.1
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../py_doc/index.html">Python Note</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../linux_tools/index.html">Hack Linux</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">OpenStack Note</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="horizon_develop.html">1. Horizon 二次开发指南</a></li>
+<li class="toctree-l2"><a class="reference internal" href="image-create-guide.html">2. OpenStack镜像制作</a></li>
+<li class="toctree-l2"><a class="reference internal" href="deploy_synopsis.html">3. openstack 部署实践</a></li>
+<li class="toctree-l2"><a class="reference internal" href="centos_vm_netconf.html">4. Centos虚拟机联网配置</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lanch_instance_failure.html">5. OpenStack 启动虚拟机失败分析</a></li>
+<li class="toctree-l2"><a class="reference internal" href="rabbitmq_doc.html">6. [翻译] rabbitmq教程</a></li>
+<li class="toctree-l2"><a class="reference internal" href="os_cmd.html">7. openstack命令汇总</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kvm_error.html">8. KVM错误问题</a></li>
+<li class="toctree-l2"><a class="reference internal" href="django_middleware.html">9. django中间件和openstack用户重登录分析</a></li>
+<li class="toctree-l2"><a class="reference internal" href="horizon_workflows_analysis.html">10. [翻译] horizon workflows分析</a></li>
+<li class="toctree-l2"><a class="reference internal" href="horizon_launch_instance.html">11. horizon启动虚拟机分析</a></li>
+<li class="toctree-l2"><a class="reference internal" href="django-generic_view.html">12. django通用视图：一个小问题引发的思考</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cloud_check.html">13. 云平台服务器重启注意事项</a></li>
+<li class="toctree-l2"><a class="reference internal" href="paste_webob_routes.html">14. OpenStack REST-API基础：paste/webob/routes库</a></li>
+<li class="toctree-l2"><a class="reference internal" href="opengrok_xp.html">15. OpenGrok代码浏览环境搭建</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nova_api.html">16. nova-api分析</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nova_smd.html">17. [翻译] nova:Services, Managers and Drivers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="oslo_cfg.html">18. oslo.config 库学习</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kombu.html">19. kombu和消息队列总结</a></li>
+<li class="toctree-l2"><a class="reference internal" href="openstack_debug.html">20. OpenStack 调试</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nova_rpcserver_start.html">21. nova RPC服务启动分析</a></li>
+<li class="toctree-l2"><a class="reference internal" href="periodic_task.html">22. OpenStack周期性任务分析</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nova_log.html">23. OpenStack 日志模块分析</a></li>
+<li class="toctree-l2"><a class="reference internal" href="qemu_kvm.html">24. qemu/kvm学习笔记</a></li>
+<li class="toctree-l2"><a class="reference internal" href="virt_cmd.html">25. 虚拟化相关命令</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">26. nova虚机加密总结</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id2">26.1. 预备知识</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#qemu-img">26.2. qemu-img 磁盘加密</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#backing-file">26.2.1. backing_file</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#backfile">26.2.2. 创建加密磁盘，开启backfile选项</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#convert">26.2.3. 利用convert命令创建加密磁盘</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id3">26.2.4. 区别分析</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#id4">26.3. 附录：实验步骤</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../others/index.html">杂项讨论</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../index.html">Welcome to Sitian's Blog</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+ 
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../index.html">Docs</a> &raquo;</li>
+      
+          <li><a href="index.html">OpenStack Note</a> &raquo;</li>
+      
+    <li>26. nova虚机加密总结</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="../_sources/openstack/qemu_img_encry.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="nova">
+<span id="qemu-img-encry"></span><h1><a class="toc-backref" href="#id6">26. nova虚机加密总结</a><a class="headerlink" href="#nova" title="Permalink to this headline">¶</a></h1>
+<div class="contents topic" id="id1">
+<p class="topic-title first">目录</p>
+<ul class="simple">
+<li><a class="reference internal" href="#nova" id="id6">nova虚机加密总结</a><ul>
+<li><a class="reference internal" href="#id2" id="id7">预备知识</a></li>
+<li><a class="reference internal" href="#qemu-img" id="id8">qemu-img 磁盘加密</a><ul>
+<li><a class="reference internal" href="#backing-file" id="id9">backing_file</a></li>
+<li><a class="reference internal" href="#backfile" id="id10">创建加密磁盘，开启backfile选项</a></li>
+<li><a class="reference internal" href="#convert" id="id11">利用convert命令创建加密磁盘</a></li>
+<li><a class="reference internal" href="#id3" id="id12">区别分析</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#id4" id="id13">附录：实验步骤</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<hr class="docutils" />
+<p>把最近对 qemu-img 加密虚机磁盘和高安云v2.5创建加密虚机的相关知识做下总结。</p>
+<div class="section" id="id2">
+<h2><a class="toc-backref" href="#id7">26.1. 预备知识</a><a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
+<p>高安云v2.5基于 OpenStack Juno 版本，该版本可以在 nova/glance/cinder 中统一
+用ceph做后端存储。</p>
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">root@allinone-v2:/smbshare#</span>  rados -p images ls
+<span class="go">rbd_data.10807612e851.0000000000000000</span>
+<span class="go">rbd_data.10807612e851.0000000000000003</span>
+<span class="go">rbd_directory</span>
+<span class="go">rbd_data.10807612e851.0000000000000001</span>
+<span class="go">rbd_header.10807612e851</span>
+<span class="go">rbd_id.b5351923-136c-484a-a538-49f81bdf9497</span>
+<span class="go">rbd_data.10807612e851.0000000000000002</span>
+<span class="go">rbd_data.10807612e851.0000000000000004</span>
+<span class="gp">root@allinone-v2:/smbshare#</span> <span class="k">for</span> i in <span class="k">$(</span>rados -p images ls <span class="p">|</span> grep rbd_data<span class="k">)</span><span class="p">;</span> <span class="k">do</span> rados -p images stat <span class="nv">$i</span><span class="p">;</span> <span class="k">done</span>
+<span class="go">images/rbd_data.10807612e851.0000000000000000 mtime 1480335467, size 8388608</span>
+<span class="go">images/rbd_data.10807612e851.0000000000000003 mtime 1480335471, size 8388608</span>
+<span class="go">images/rbd_data.10807612e851.0000000000000001 mtime 1480335468, size 8388608</span>
+<span class="go">images/rbd_data.10807612e851.0000000000000002 mtime 1480335470, size 8388608</span>
+<span class="go">images/rbd_data.10807612e851.0000000000000004 mtime 1480335472, size 7571968</span>
+</pre></div>
+</div>
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">root@allinone-v2:/smbshare#</span> <span class="nb">source</span> /root/openstackrc
+<span class="gp">root@allinone-v2:/smbshare#</span> glance image-list
+<span class="go">+--------------------------------------+---------------+-------------+------------------+----------+--------+</span>
+<span class="go">| ID                                   | Name          | Disk Format | Container Format | Size     | Status |</span>
+<span class="go">+--------------------------------------+---------------+-------------+------------------+----------+--------+</span>
+<span class="go">| b5351923-136c-484a-a538-49f81bdf9497 | cirros-x86_64 | raw         | ovf              | 41126400 | active |</span>
+<span class="go">+--------------------------------------+---------------+-------------+------------------+----------+--------+</span>
+<span class="gp">root@allinone-v2:/smbshare#</span> glance image-show cirros-x86_64
+<span class="go">+------------------+--------------------------------------+</span>
+<span class="go">| Property         | Value                                |</span>
+<span class="go">+------------------+--------------------------------------+</span>
+<span class="go">| checksum         | 0590d15336f919496ccc91b2c0f667bc     |</span>
+<span class="go">| container_format | ovf                                  |</span>
+<span class="go">| created_at       | 2016-11-28T12:17:45                  |</span>
+<span class="go">| deleted          | False                                |</span>
+<span class="go">| disk_format      | raw                                  |</span>
+<span class="go">| id               | b5351923-136c-484a-a538-49f81bdf9497 |</span>
+<span class="go">| is_public        | True                                 |</span>
+<span class="go">| min_disk         | 0                                    |</span>
+<span class="go">| min_ram          | 0                                    |</span>
+<span class="go">| name             | cirros-x86_64                        |</span>
+<span class="go">| owner            | fd616fcac0724cbea065a786bab4587e     |</span>
+<span class="go">| protected        | False                                |</span>
+<span class="go">| size             | 41126400                             |</span>
+<span class="go">| status           | active                               |</span>
+<span class="go">| updated_at       | 2016-11-28T12:18:00                  |</span>
+<span class="go">+------------------+--------------------------------------+</span>
+</pre></div>
+</div>
+<p>我们只上传了一个镜像到glance，刚好上传的镜像大小与 images/rdb_data.10807612e851 之和相等。</p>
+<p>通过 horizon 启动虚机时，可选择不同的启动项包括：&#8221;从镜像启动&#8221;，&#8221;从镜像启动(创建新硬盘)&#8221; 等；
+通过代码分析可知选择不同的启动项时，最终会在 self.driver.spawn() 中通过不同
+的 image_backend 获取镜像。其中&#8221;从镜像启动&#8221;时
+imaeg_backend 为 <code class="docutils literal"><span class="pre">nova.virt.libvirt.imagebackend.Qcow2</span></code>，其他启动方式对应的 image_backend
+是 Rbd 或者 Raw，而只有qcow2格式的虚拟磁盘才支持加密。因此，只有&#8221;从镜像启动&#8221;时才可以设置虚机
+加密，为了方便讨论，下面我们都假设是&#8221;从镜像启动&#8221;，镜像为cirros-x86_64 启动虚机。</p>
+<p>openstack libvirt启动虚机时，磁盘镜像的主要传输过程如下图所示：</p>
+<div class="figure align-center">
+<a class="reference internal image-reference" href="../_images/disk_image.png"><img alt="../_images/disk_image.png" src="../_images/disk_image.png" style="width: 733.0px; height: 223.0px;" /></a>
+</div>
+<p>nova/virt/libvirt/LibvirtDriver:_create_image() 函数会尝试从 glance 获取cirros镜像，并缓存在
+本地 /var/lib/nova/instances/_base 目录里，然后通过 qemu-img create -o backing_file 命令，
+在虚机目录下生成 disk 磁盘文件。</p>
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">root@allinone-v2:/var/lib/nova/instances#</span> tree
+<span class="go">.</span>
+<span class="go">├── aa8e9ed7-ca99-43c0-9d71-c5ae0e98a746</span>
+<span class="go">│   ├── console.log</span>
+<span class="go">│   ├── disk</span>
+<span class="go">│   ├── disk.info</span>
+<span class="go">│   └── libvirt.xml</span>
+<span class="go">├── _base</span>
+<span class="go">│   └── 6a6f72f6c315b082cba3e32e0ece4a5e933a868a</span>
+<span class="go">├── compute_nodes</span>
+<span class="go">├── f5f898c0-6206-4071-aa9f-3beb905f48e3</span>
+<span class="go">│   ├── console.log</span>
+<span class="go">│   ├── disk</span>
+<span class="go">│   ├── disk.info</span>
+<span class="go">│   ├── libvirt.xml</span>
+<span class="go">│   └── secret.xml</span>
+<span class="go">└── locks</span>
+<span class="go">    ├── nova-6a6f72f6c315b082cba3e32e0ece4a5e933a868a</span>
+<span class="go">    └── nova-storage-registry-lock</span>
+
+<span class="go">4 directories, 13 files</span>
+<span class="gp">#</span><span class="c1"># 从这里可以看出，base目录缓存的是从glance下载下来的 cirros 镜像。</span>
+<span class="gp">root@allinone-v2:/var/lib/nova/instances#</span> qemu-img info _base/6a6f72f6c315b082cba3e32e0ece4a5e933a868a
+<span class="go">image: _base/6a6f72f6c315b082cba3e32e0ece4a5e933a868a</span>
+<span class="go">file format: raw</span>
+<span class="go">virtual size: 39M (41126400 bytes)</span>
+<span class="go">disk size: 39M</span>
+<span class="gp">#</span><span class="c1"># 通过 -o encryption 和 backing_file 选项，生成加密磁盘。</span>
+<span class="gp">root@allinone-v2:/var/lib/nova/instances#</span> qemu-img info f5f898c0-6206-4071-aa9f-3beb905f48e3/disk
+<span class="go">image: f5f898c0-6206-4071-aa9f-3beb905f48e3/disk</span>
+<span class="go">file format: qcow2</span>
+<span class="go">virtual size: 1.0G (1073741824 bytes)</span>
+<span class="go">disk size: 1.5M</span>
+<span class="go">encrypted: yes</span>
+<span class="go">cluster_size: 65536</span>
+<span class="go">backing file: /var/lib/nova/instances/_base/6a6f72f6c315b082cba3e32e0ece4a5e933a868a</span>
+<span class="go">Format specific information:</span>
+<span class="go">    compat: 1.1</span>
+<span class="go">    lazy refcounts: false</span>
+</pre></div>
+</div>
+<p>通过打log，可以看到生成加密磁盘执行的命令：</p>
+<div class="figure align-center" id="id5">
+<a class="reference internal image-reference" href="../_images/qemu_create_encry_disk.png"><img alt="../_images/qemu_create_encry_disk.png" src="../_images/qemu_create_encry_disk.png" style="width: 1005.0px; height: 81.0px;" /></a>
+<p class="caption"><span class="caption-text">生成加密磁盘命令</span></p>
+</div>
+<p>至此，虚机创建/虚机加密的整个流程就很清晰了。无非是调用qemu-img命令，根据虚机镜像
+生成虚拟磁盘文件，然后通过libvirt API定义虚机xml文件并控制虚机的启动，运行，迁移等。</p>
+</div>
+<div class="section" id="qemu-img">
+<h2><a class="toc-backref" href="#id8">26.2. qemu-img 磁盘加密</a><a class="headerlink" href="#qemu-img" title="Permalink to this headline">¶</a></h2>
+<p>nova 创建虚机是借助于 libvirt&#8211;&gt; qemu 来实现的。为此，我进一步试验了 qemu-img 有关磁盘
+加密的命令，不同的加密选项差别很大。</p>
+<div class="section" id="backing-file">
+<h3><a class="toc-backref" href="#id9">26.2.1. backing_file</a><a class="headerlink" href="#backing-file" title="Permalink to this headline">¶</a></h3>
+<p>qcow 是 <code class="docutils literal"><span class="pre">Qemu</span> <span class="pre">Copy</span> <span class="pre">On</span> <span class="pre">Write</span></code> 的缩写。关于cow技术，可以自行搜索相关材料。</p>
+<p>qemu 创建虚机磁盘时，通过 <code class="docutils literal"><span class="pre">-o</span> <span class="pre">backing_file=file</span></code> 或者 <code class="docutils literal"><span class="pre">-b</span> <span class="pre">file</span></code> 开启
+写时复制。这样多个虚机磁盘，可以共享同一个 backfile ，并把自己独有的内容
+写到自己的磁盘中。</p>
+<p><strong>backfile 有一个重要特性，它是只读的。除非显示使用 commit 命令，将改动提交
+到backfile。</strong></p>
+</div>
+<div class="section" id="backfile">
+<h3><a class="toc-backref" href="#id10">26.2.2. 创建加密磁盘，开启backfile选项</a><a class="headerlink" href="#backfile" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">root@allinone-v2:/smbshare#</span> qemu-img create -f qcow2 -o  <span class="nv">backing_file</span><span class="o">=</span>/var/lib/nova/instances/_base/6a6f72f6c315b082cba3e32e0ece4a5e933a868a,encryption<span class="o">=</span>on,size<span class="o">=</span><span class="m">1073741824</span> /smbshare/encry3.qcow2
+<span class="go">Formatting &#39;/smbshare/encry3.qcow2&#39;, fmt=qcow2 size=1073741824 backing_file=&#39;/var/lib/nova/instances/_base/6a6f72f6c315b082cba3e32e0ece4a5e933a868a&#39; encryption=on cluster_size=65536 lazy_refcounts=off</span>
+</pre></div>
+</div>
+<p>经测试，使用这种方式加密的虚机，使用 <code class="docutils literal"><span class="pre">virsh</span> <span class="pre">secret-list</span></code> 中任意的的uuid，都可以正常启动虚机。</p>
+</div>
+<div class="section" id="convert">
+<h3><a class="toc-backref" href="#id11">26.2.3. 利用convert命令创建加密磁盘</a><a class="headerlink" href="#convert" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">#</span><span class="c1"># 该方式会提示输入密码，假设输入密码123456</span>
+<span class="gp">root@allinone-v2:/smbshare#</span> qemu-img convert -f raw -O qcow2 -o <span class="nv">encryption</span><span class="o">=</span>on,size<span class="o">=</span><span class="m">1073741824</span> /var/lib/nova/instances/_base/6a6f72f6c315b082cba3e32e0ece4a5e933a868a encry2.qcow2
+<span class="go">Disk image &#39;encry2.qcow2&#39; is encrypted.</span>
+<span class="go">password:</span>
+</pre></div>
+</div>
+<p>这种方式加密的磁盘会提示输入秘钥，然后通过 virsh start 命令启动虚机时，只有 xml 文件中的 encryption 字段
+uuid 为根据密码生成的才可以启动。</p>
+</div>
+<div class="section" id="id3">
+<h3><a class="toc-backref" href="#id12">26.2.4. 区别分析</a><a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h3>
+<p>一种提示输入密码，一种无需密码；一种用任意的 secret-uuid 都可以启动，另一种只有密码对应的 secret-uuid 才可以启动。
+为何会表现出这么大的差别呢？</p>
+<p>对此，我的理解是：</p>
+<ul class="simple">
+<li>开启backfile选项时，backfile中是cirros镜像，而它并没有被加密；加密的是写时复制文件
+encry3.qcow2。相当于只加密了虚拟硬盘，而操作系统启动镜像并没有被加密。因此，只要是
+libvirt 中合法的 secret-uuid，都可以正常启动虚机。</li>
+<li>convert命令创建的磁盘，encry2.qcow2 虚拟磁盘中，不仅仅有普通文件内容，还有cirros系统镜像，
+加密磁盘时，系统启动镜像也被加密掉了。因此只有正确的密码对应的 secret-uuid，才可以启动虚机。</li>
+</ul>
+<p>待验证我的想法，初步的验证思路是创建一个加密的 cirros 镜像，然后利用该镜像再重复上述两步骤。</p>
+</div>
+</div>
+<div class="section" id="id4">
+<h2><a class="toc-backref" href="#id13">26.3. 附录：实验步骤</a><a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h2>
+<ol class="arabic">
+<li><p class="first">导出某个虚机的xml文件</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">virsh</span> <span class="nb">list</span> <span class="o">--</span><span class="nb">all</span>
+<span class="c1"># 导出虚机对应的 xml 文件</span>
+<span class="n">virsh</span> <span class="n">dumpxml</span> <span class="n">instance</span><span class="o">-</span><span class="mi">00000040</span> <span class="o">&gt;</span> <span class="o">/</span><span class="n">smbshare</span><span class="o">/</span><span class="n">encry2</span><span class="o">.</span><span class="n">xml</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first">编辑虚机xml文件，更改 name，将disk文件替换成 encry2.qcow2</p>
+</li>
+<li><p class="first">生成两个 secret-uuid，一个是随机的，一个是根据加密密码生成的。</p>
+<div class="highlight-shell"><div class="highlight"><pre><span></span>cat <span class="s">&lt;&lt; EOF &gt;secret.xml</span>
+<span class="s">&lt;secret ephemeral=&#39;no&#39; private=&#39;yes&#39;&gt;</span>
+<span class="s">&lt;/secret&gt;</span>
+<span class="s">EOF</span>
+
+<span class="nv">secret_uuid</span><span class="o">=</span><span class="k">$(</span>virsh secret-define secret.xml <span class="p">|</span> awk <span class="s1">&#39;{print $2}&#39;</span><span class="k">)</span>
+virsh secret-set-value <span class="nv">$secret_uuid</span> <span class="k">$(</span><span class="nb">printf</span> %s <span class="s2">&quot;123456&quot;</span> <span class="p">|</span> base64<span class="k">)</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first">在 xml 配置文件磁盘段中添加秘钥：</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="o">&lt;</span><span class="n">encryption</span> <span class="nb">format</span><span class="o">=</span><span class="s1">&#39;qcow&#39;</span><span class="o">&gt;</span>
+    <span class="o">&lt;</span><span class="n">secret</span> <span class="nb">type</span><span class="o">=</span><span class="s1">&#39;passphrase&#39;</span> <span class="n">uuid</span><span class="o">=</span><span class="s1">&#39;3f8475e9-868c-4543-a510-7f668ba83d46&#39;</span><span class="o">/&gt;</span>
+<span class="o">&lt;/</span><span class="n">encryption</span><span class="o">&gt;</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first">定义虚机并启动：</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">virsh</span> <span class="n">define</span> <span class="n">encry2</span><span class="o">.</span><span class="n">xml</span>
+<span class="n">virsh</span> <span class="n">start</span> <span class="n">encry2</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first">利用 vncviewer 查看虚机是否正常启动(假如xml文件中定义了console.log 文件，观察该文件也可以)；
+然后依次利用不同的uuid和encry3.qcow2 重复上面的实验。</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">virsh</span> <span class="n">destroy</span> <span class="n">encry2</span>
+<span class="n">virsh</span> <span class="n">undefine</span> <span class="n">encry2</span>
+<span class="n">virsh</span> <span class="n">define</span> <span class="n">encry2</span><span class="o">.</span><span class="n">xml</span>
+</pre></div>
+</div>
+</li>
+</ol>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">在 virsh define 虚机xml文件之前，生成 secret-uuid 并在 xml 文件中添加 encryption 字段的步骤
+必不可少，否则会 virsh 相关命令会提示磁盘已被加密错误。</p>
+</div>
+</div>
+</div>
+
+
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../others/index.html" class="btn btn-neutral float-right" title="杂项讨论" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="virt_cmd.html" class="btn btn-neutral" title="25. 虚拟化相关命令" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2016, chenshiqiang.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'0.1',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>
