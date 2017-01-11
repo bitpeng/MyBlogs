@@ -57,7 +57,7 @@ shell 脚本中流重定向方式 ``>&2`` 参考于 service 命令源码。
 
 重定向测试一：
 
-::
+.. code-block:: console
 
     ## 过滤 stderr 或者过滤 stdout
     root@ubuntu:/smbshare# ./test_redirect.sh 1>/dev/null

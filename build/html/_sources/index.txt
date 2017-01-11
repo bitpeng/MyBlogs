@@ -35,8 +35,9 @@
     py_doc/index
     linux_tools/index
     openstack/index
-    web/index
     others/index
+
+..    web/index
 
 ..    rst_template
 

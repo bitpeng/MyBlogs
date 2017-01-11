@@ -62,7 +62,7 @@ update()
 golbal
 ~~~~~~~~~~
 
-and和or
+and/or/not
 ~~~~~~~~~~~
 
 .. code:: python
@@ -95,6 +95,29 @@ and和or
     >>> 'a' or ''
     'a'
     >>>
+
+    # 从这里的测试可以，可以看到，not的优先级高于and和or
+    >>> not 0 and 0
+    0
+    >>> not 0 and 1
+    1
+    >>> not 1 and 0
+    False
+    >>> not 1 and 1
+    False
+    >>>
+
+    >>> not 0 or 0
+    True
+    >>> not 0 or 1
+    True
+    >>> not 1 or 0
+    0
+    >>> not 1 or 1
+    1
+    >>>
+
+
 
 for……else循环
 ~~~~~~~~~~~~~~~~~

@@ -132,7 +132,6 @@
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../openstack/index.html">OpenStack Note</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../web/index.html">web开发</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../others/index.html">杂项讨论</a></li>
 </ul>
 
@@ -268,36 +267,36 @@ shell 脚本中流重定向方式 <code class="docutils literal"><span class="pr
 </pre></div>
 </div>
 <p>重定向测试一：</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="c1">## 过滤 stderr 或者过滤 stdout</span>
-<span class="n">root</span><span class="nd">@ubuntu</span><span class="p">:</span><span class="o">/</span><span class="n">smbshare</span><span class="c1"># ./test_redirect.sh 1&gt;/dev/null</span>
-<span class="n">stderr</span> <span class="n">info</span>
-<span class="n">stderr</span> <span class="n">info</span><span class="o">-</span><span class="mi">2</span>
-<span class="n">root</span><span class="nd">@ubuntu</span><span class="p">:</span><span class="o">/</span><span class="n">smbshare</span><span class="c1"># ./test_redirect.sh 2&gt;/dev/null</span>
-<span class="n">stdout</span> <span class="n">info</span>
-<span class="n">stdout</span> <span class="n">info</span><span class="o">-</span><span class="mi">2</span>
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">#</span><span class="c1"># 过滤 stderr 或者过滤 stdout</span>
+<span class="gp">root@ubuntu:/smbshare#</span> ./test_redirect.sh 1&gt;/dev/null
+<span class="go">stderr info</span>
+<span class="go">stderr info-2</span>
+<span class="gp">root@ubuntu:/smbshare#</span> ./test_redirect.sh 2&gt;/dev/null
+<span class="go">stdout info</span>
+<span class="go">stdout info-2</span>
 
-<span class="c1">## stdout 和 stderr 重定向</span>
-<span class="n">root</span><span class="nd">@ubuntu</span><span class="p">:</span><span class="o">/</span><span class="n">smbshare</span><span class="c1"># ./test_redirect.sh 1&gt; txt.1</span>
-<span class="n">stderr</span> <span class="n">info</span>
-<span class="n">stderr</span> <span class="n">info</span><span class="o">-</span><span class="mi">2</span>
-<span class="n">root</span><span class="nd">@ubuntu</span><span class="p">:</span><span class="o">/</span><span class="n">smbshare</span><span class="c1"># ./test_redirect.sh 2&gt; txt.2</span>
-<span class="n">stdout</span> <span class="n">info</span>
-<span class="n">stdout</span> <span class="n">info</span><span class="o">-</span><span class="mi">2</span>
+<span class="gp">#</span><span class="c1"># stdout 和 stderr 重定向</span>
+<span class="gp">root@ubuntu:/smbshare#</span> ./test_redirect.sh 1&gt; txt.1
+<span class="go">stderr info</span>
+<span class="go">stderr info-2</span>
+<span class="gp">root@ubuntu:/smbshare#</span> ./test_redirect.sh 2&gt; txt.2
+<span class="go">stdout info</span>
+<span class="go">stdout info-2</span>
 
-<span class="n">root</span><span class="nd">@ubuntu</span><span class="p">:</span><span class="o">/</span><span class="n">smbshare</span><span class="c1"># more txt.1</span>
-<span class="n">stdout</span> <span class="n">info</span>
-<span class="n">stdout</span> <span class="n">info</span><span class="o">-</span><span class="mi">2</span>
-<span class="n">root</span><span class="nd">@ubuntu</span><span class="p">:</span><span class="o">/</span><span class="n">smbshare</span><span class="c1"># more txt.2</span>
-<span class="n">stderr</span> <span class="n">info</span>
-<span class="n">stderr</span> <span class="n">info</span><span class="o">-</span><span class="mi">2</span>
+<span class="gp">root@ubuntu:/smbshare#</span> more txt.1
+<span class="go">stdout info</span>
+<span class="go">stdout info-2</span>
+<span class="gp">root@ubuntu:/smbshare#</span> more txt.2
+<span class="go">stderr info</span>
+<span class="go">stderr info-2</span>
 
-<span class="c1">## stdout 和 stderr 重定向到一个文件</span>
-<span class="n">root</span><span class="nd">@ubuntu</span><span class="p">:</span><span class="o">/</span><span class="n">smbshare</span><span class="c1"># ./test_redirect.sh &amp;&gt; txt.3</span>
-<span class="n">root</span><span class="nd">@ubuntu</span><span class="p">:</span><span class="o">/</span><span class="n">smbshare</span><span class="c1"># more txt.3</span>
-<span class="n">stdout</span> <span class="n">info</span>
-<span class="n">stdout</span> <span class="n">info</span><span class="o">-</span><span class="mi">2</span>
-<span class="n">stderr</span> <span class="n">info</span>
-<span class="n">stderr</span> <span class="n">info</span><span class="o">-</span><span class="mi">2</span>
+<span class="gp">#</span><span class="c1"># stdout 和 stderr 重定向到一个文件</span>
+<span class="gp">root@ubuntu:/smbshare#</span> ./test_redirect.sh <span class="p">&amp;</span>&gt; txt.3
+<span class="gp">root@ubuntu:/smbshare#</span> more txt.3
+<span class="go">stdout info</span>
+<span class="go">stdout info-2</span>
+<span class="go">stderr info</span>
+<span class="go">stderr info-2</span>
 </pre></div>
 </div>
 <p>重定向测试二：</p>
