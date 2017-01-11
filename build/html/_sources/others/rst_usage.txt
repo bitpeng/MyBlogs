@@ -13,6 +13,13 @@ rst 用法自我总结
 锚点链接
 ========
 
+::
+
+
+    .. _link_text:
+
+    :ref:`点击链接<link_text>`
+
 .. _link_text:
 
 :ref:`点击链接<link_text>`
@@ -25,28 +32,58 @@ rst 用法自我总结
 
 ::
 
-    code here
+    ::
 
-高亮代码定义1：
+        import sys
+        from mod import main
+        if __name__ == "__main__":
+            sys.exit(main())
+
+效果：
+
+::
+
+    import sys
+    from mod import main
+    if __name__ == "__main__":
+        sys.exit(main())
+
+高亮代码定义，带行号：
+
+::
+
+    .. code-block:: python|console
+        :linenos:
+    
+        import sys
+        from mod import main
+        if __name__ == "__main__":
+            sys.exit(main())
 
 .. code-block:: python
     :linenos:
-    
-    code here
+
+    import sys
+    from mod import main
+    if __name__ == "__main__":
+        sys.exit(main())
 
 高亮代码定义2：
 
 .. code:: python
 
-    code here
+    import sys
+    from mod import main
+    if __name__ == "__main__":
+        sys.exit(main())
 
 引用代码文件：
 
 ::
 
-	.. literalinclude:: /_static/src/test_cfg.py
-		:language: python
-		:linenos:
+    .. literalinclude:: /_static/src/test_cfg.py
+        :language: python
+        :linenos:
 
 
 
