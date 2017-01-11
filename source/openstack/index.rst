@@ -41,6 +41,7 @@ OpenStack Note
     periodic_task
     nova_log
     qemu_kvm
+    virt_cmd
 
 
 ..  sphinx_doc
