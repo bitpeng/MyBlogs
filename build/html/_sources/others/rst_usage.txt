@@ -13,6 +13,9 @@ rst 用法总结
 锚点链接
 ========
 
+内部链接
++++++++++++
+
 ::
 
 
@@ -24,6 +27,14 @@ rst 用法总结
 
 :ref:`点击链接<link_text>`
 
+外部链接
++++++++++
+
+::
+
+    请访问 `孔令贤的csdn <http://blog.csdn.net/lynn_kong?viewmode=contents>`_ 所有博文
+
+请访问 `孔令贤的csdn <http://blog.csdn.net/lynn_kong?viewmode=contents>`_ 所有博文
 
 代码相关
 ========

@@ -95,6 +95,17 @@ nova 相关
 
     nova start/stop vm_id
 
+虚机诊断信息
++++++++++++++
+
+::
+
+    source /smbshare/chensqrc
+    nova list
+    # 获取test虚机的诊断信息
+    # 只有租户可以获取诊断信息
+    nova diagnostics test
+
 
 其他命令收集
 ============
