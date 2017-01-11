@@ -1,0 +1,345 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>24. qemu/kvm学习笔记 &mdash; Welcome to Sitian&#39;s Blog 0.1 documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+    <link rel="top" title="Welcome to Sitian&#39;s Blog 0.1 documentation" href="../index.html"/>
+        <link rel="up" title="OpenStack Note" href="index.html"/>
+        <link rel="next" title="杂项讨论" href="../others/index.html"/>
+        <link rel="prev" title="23. OpenStack 日志模块分析" href="nova_log.html"/> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> Welcome to Sitian's Blog
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.1
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../py_doc/index.html">Python Note</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../linux_tools/index.html">Hack Linux</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">OpenStack Note</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="horizon_develop.html">1. Horizon 二次开发指南</a></li>
+<li class="toctree-l2"><a class="reference internal" href="image-create-guide.html">2. OpenStack镜像制作</a></li>
+<li class="toctree-l2"><a class="reference internal" href="deploy_synopsis.html">3. openstack 部署实践</a></li>
+<li class="toctree-l2"><a class="reference internal" href="centos_vm_netconf.html">4. Centos虚拟机联网配置</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lanch_instance_failure.html">5. OpenStack 启动虚拟机失败分析</a></li>
+<li class="toctree-l2"><a class="reference internal" href="rabbitmq_doc.html">6. [翻译] rabbitmq教程</a></li>
+<li class="toctree-l2"><a class="reference internal" href="os_cmd.html">7. openstack命令汇总</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kvm_error.html">8. KVM错误问题</a></li>
+<li class="toctree-l2"><a class="reference internal" href="django_middleware.html">9. django中间件和openstack用户重登录分析</a></li>
+<li class="toctree-l2"><a class="reference internal" href="horizon_workflows_analysis.html">10. [翻译] horizon workflows分析</a></li>
+<li class="toctree-l2"><a class="reference internal" href="horizon_launch_instance.html">11. horizon启动虚拟机分析</a></li>
+<li class="toctree-l2"><a class="reference internal" href="django-generic_view.html">12. django通用视图：一个小问题引发的思考</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cloud_check.html">13. 云平台服务器重启注意事项</a></li>
+<li class="toctree-l2"><a class="reference internal" href="paste_webob_routes.html">14. OpenStack REST-API基础：paste/webob/routes库</a></li>
+<li class="toctree-l2"><a class="reference internal" href="opengrok_xp.html">15. OpenGrok代码浏览环境搭建</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nova_api.html">16. nova-api分析</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nova_smd.html">17. [翻译] nova:Services, Managers and Drivers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="oslo_cfg.html">18. oslo.config 库学习</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kombu.html">19. kombu和消息队列总结</a></li>
+<li class="toctree-l2"><a class="reference internal" href="openstack_debug.html">20. OpenStack 调试</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nova_rpcserver_start.html">21. nova RPC服务启动分析</a></li>
+<li class="toctree-l2"><a class="reference internal" href="periodic_task.html">22. OpenStack周期性任务分析</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nova_log.html">23. OpenStack 日志模块分析</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">24. qemu/kvm学习笔记</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id3">24.1. 虚拟化</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#kvm">24.2. kvm</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id4">24.3. qemu-kvm</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#qemu-img">24.4. qemu-img</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../others/index.html">杂项讨论</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../index.html">Welcome to Sitian's Blog</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+ 
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../index.html">Docs</a> &raquo;</li>
+      
+          <li><a href="index.html">OpenStack Note</a> &raquo;</li>
+      
+    <li>24. qemu/kvm学习笔记</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="../_sources/openstack/qemu_kvm.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="qemu-kvm">
+<span id="id1"></span><h1><a class="toc-backref" href="#id7">24. qemu/kvm学习笔记</a><a class="headerlink" href="#qemu-kvm" title="Permalink to this headline">¶</a></h1>
+<div class="contents topic" id="id2">
+<p class="topic-title first">目录</p>
+<ul class="simple">
+<li><a class="reference internal" href="#qemu-kvm" id="id7">qemu/kvm学习笔记</a><ul>
+<li><a class="reference internal" href="#id3" id="id8">虚拟化</a></li>
+<li><a class="reference internal" href="#kvm" id="id9">kvm</a></li>
+<li><a class="reference internal" href="#id4" id="id10">qemu-kvm</a></li>
+<li><a class="reference internal" href="#qemu-img" id="id11">qemu-img</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<hr class="docutils" />
+<p>最近分析 nova 组件以及启动虚机流程，已经看到通过 driver spawn虚机部分了。
+由于没有虚拟化方面的基础，代码看的很费劲，因此停留下来，补了补虚拟化方面
+的知识，自己通过 google 搜索阅读了很多的讲解，中英文的都有。现在在自己理解
+的基础上，写一篇总结笔记。</p>
+<div class="section" id="id3">
+<h2><a class="toc-backref" href="#id8">24.1. 虚拟化</a><a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h2>
+<p>虚拟化类型从不同分类角度来说包括软件虚拟化、硬件辅助虚拟化、半虚拟化、全虚拟化等：</p>
+<ul class="simple">
+<li>软件虚拟化，解析 guest os 所有指令并仿真处理；</li>
+<li>硬件辅助虚拟化，需要 CPU 支持虚拟化，然后对于 guest os 的特权指令，通过 trap 捕获并处理；</li>
+<li>半虚拟化，对 guest os 的特权指令进行修改；</li>
+<li>全虚拟化，guest os 不需要任何的修改；</li>
+</ul>
+<p>另外，根据 Hypervisor 是直接管理裸机还是部署于os之上，又可以分为I型/II型虚拟化。
+I型虚拟化直接部署于裸机，如 xen；II型虚拟化部署于宿主机os之上，如 vmware workstations。</p>
+</div>
+<div class="section" id="kvm">
+<h2><a class="toc-backref" href="#id9">24.2. kvm</a><a class="headerlink" href="#kvm" title="Permalink to this headline">¶</a></h2>
+<p>KVM 是基于 X86 CPU 硬件辅助虚拟化支持的Linux平台原生的全虚拟化解决方案。
+kvm 是 linux 内核的模块，它实现了对 CPU 和内存的模拟，可以通过如下命令，
+判断是否系统是否支持或者开启 CPU 虚拟化以及内核是否已经加载 kvm 模块:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="c1"># vmx for intel and svm for amd</span>
+<span class="n">grep</span> <span class="o">-</span><span class="n">P</span> <span class="s2">&quot;vmx|svm&quot;</span> <span class="o">/</span><span class="n">proc</span><span class="o">/</span><span class="n">cpuinfo</span>
+
+<span class="n">lsmod</span> <span class="o">|</span> <span class="n">grep</span> <span class="n">kvm</span>
+</pre></div>
+</div>
+<p>在 kvm 虚拟化解决方案中，
+虚拟机是 Linux 的一个 kvm进程，每个 vcpu 都对应一个线程，如下图:</p>
+<div class="figure align-center" id="id5">
+<a class="reference internal image-reference" href="../_images/kvm_model.png"><img alt="../_images/kvm_model.png" src="../_images/kvm_model.png" style="width: 344.0px; height: 475.0px;" /></a>
+<p class="caption"><span class="caption-text">KVM虚拟化模型</span></p>
+</div>
+<p>OpenStack 通过 libvirt 启动的虚机，不过是 qemu_system_x86_64 开启 kvm 加速的一个进程：</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">ps</span> <span class="o">-</span><span class="n">ef</span> <span class="o">|</span> <span class="n">grep</span> <span class="o">-</span><span class="n">P</span> <span class="s2">&quot;kvm|qemu-&quot;</span>
+</pre></div>
+</div>
+<div class="figure align-center" id="id6">
+<a class="reference internal image-reference" href="../_images/qemu_system_x86_64.png"><img alt="../_images/qemu_system_x86_64.png" src="../_images/qemu_system_x86_64.png" style="width: 1423.0px; height: 270.0px;" /></a>
+<p class="caption"><span class="caption-text">虚机对应 qemu 进程</span></p>
+</div>
+</div>
+<div class="section" id="id4">
+<h2><a class="toc-backref" href="#id10">24.3. qemu-kvm</a><a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h2>
+<p>kvm 实现了 CPU 和内存的虚拟化，而这是远远不够的。对于外部设备的模拟，社区
+选择了qemu。</p>
+<p>qemu是纯软件实现的全套虚拟化解决方案，仿真处理 guest os 的指令，效率
+比较低。后来社区 fork 分支 qemu-kvm，把 CPU 和内存的替换成 kvm，而设备的
+模拟代码部分保留下来，从而实现虚拟化加速、提高性能。并在1.3版本之后合并
+进主干分支，因此 qemu + kvm 就组成了一个完整的虚拟化平台。</p>
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">root@allinone-v2:/#</span> kvm-ok
+<span class="go">INFO: /dev/kvm exists</span>
+<span class="go">KVM acceleration can be used</span>
+</pre></div>
+</div>
+<p>在 <a class="reference internal" href="image-create-guide.html#image-guide"><span class="std std-ref">虚拟机镜像制作</span></a> 中，都是用 kvm 命令启动虚机并安装，
+该命令需要安装 qemu-kvm 包：</p>
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">root@allinone-v2:/#</span> kvm
+<span class="go">The program &#39;kvm&#39; is currently not installed. You can install it by typing:</span>
+<span class="go">apt-get install qemu-kvm</span>
+</pre></div>
+</div>
+<p>安装好 qemu-kvm 包后，可以发现，<code class="docutils literal"><span class="pre">kvm</span></code> 命令不过是 qemu 命令开启 kvm 加速的包装而已：</p>
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">root@juno-controller:/smbshare#</span> which kvm
+<span class="go">/usr/bin/kvm</span>
+<span class="gp">root@juno-controller:/smbshare# more $</span><span class="o">(</span>which kvm<span class="o">)</span>
+<span class="gp">#</span>!/bin/sh
+<span class="go">exec qemu-system-x86_64 -enable-kvm &quot;$@&quot;</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="qemu-img">
+<h2><a class="toc-backref" href="#id11">24.4. qemu-img</a><a class="headerlink" href="#qemu-img" title="Permalink to this headline">¶</a></h2>
+<p>qemu-img 是 qemu 的虚拟磁盘管理命令。</p>
+<p>镜像是包含可启动操作系统的虚拟磁盘文件。要制作镜像，我们需要一个虚拟磁盘，
+这个虚拟磁盘就相当于物理机的硬盘，它用于安装虚拟机操作系统，虚拟磁盘有多
+种不同的格式，常见的格式有 raw,qcow2,vmdk,vdi 等，raw格式是最常见的，随便创
+建一个文件，或者使用dd生成一个文件，都是raw格式。</p>
+<p>安装系统，有多种方法，但是基本的原理是一样的，一个虚拟磁盘，还需要一个ISO安装
+文件，然后设置虚拟机从光盘启动，安装系统到虚拟磁盘上。通过以上步骤，我们就得到
+一个操作系统镜像了。</p>
+<p>根据上面的阐述，很容易理解，在 <a class="reference internal" href="image-create-guide.html#image-guide"><span class="std std-ref">虚拟机镜像制作</span></a> 中，制作镜像
+的相关步骤和命令。</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="c1"># 制作空虚拟硬盘，由于安装centos</span>
+<span class="n">qemu</span><span class="o">-</span><span class="n">img</span> <span class="n">create</span> <span class="o">-</span><span class="n">f</span> <span class="n">raw</span> <span class="n">centos</span><span class="o">-</span><span class="mf">6.5</span><span class="o">.</span><span class="n">raw</span> <span class="mi">10</span><span class="n">G</span>
+<span class="c1"># 开始安装，设置从虚拟光驱启动安装</span>
+<span class="n">kvm</span> <span class="o">-</span><span class="n">m</span> <span class="mi">512</span> <span class="o">-</span><span class="n">cdrom</span> <span class="n">CentOS</span><span class="o">-</span><span class="mf">6.5</span><span class="o">-</span><span class="n">x86_64</span><span class="o">-</span><span class="nb">bin</span><span class="o">-</span><span class="n">DVD1</span><span class="o">.</span><span class="n">iso</span> <span class="o">-</span><span class="n">drive</span> <span class="n">file</span><span class="o">=</span><span class="n">centos</span><span class="o">-</span><span class="mf">6.5</span><span class="o">.</span><span class="n">raw</span> <span class="o">-</span><span class="n">boot</span> <span class="n">d</span> <span class="o">-</span><span class="n">nographic</span> <span class="o">-</span><span class="n">vnc</span> <span class="p">:</span><span class="mi">2</span>
+<span class="c1"># 安装完成，从硬盘自启动操作系统</span>
+<span class="n">kvm</span> <span class="o">-</span><span class="n">m</span> <span class="mi">512</span> <span class="o">-</span><span class="n">drive</span> <span class="n">file</span><span class="o">=</span><span class="n">centos</span><span class="o">-</span><span class="mf">6.5</span><span class="o">.</span><span class="n">raw</span> <span class="o">-</span><span class="n">boot</span> <span class="n">c</span> <span class="o">-</span><span class="n">nographic</span> <span class="o">-</span><span class="n">vnc</span> <span class="p">:</span><span class="mi">2</span>
+</pre></div>
+</div>
+</div>
+</div>
+
+
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../others/index.html" class="btn btn-neutral float-right" title="杂项讨论" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="nova_log.html" class="btn btn-neutral" title="23. OpenStack 日志模块分析" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2016, chenshiqiang.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'0.1',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

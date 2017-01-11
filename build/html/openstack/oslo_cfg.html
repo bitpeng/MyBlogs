@@ -127,9 +127,9 @@
 <li class="toctree-l2"><a class="reference internal" href="nova_rpcserver_start.html">21. nova RPC服务启动分析</a></li>
 <li class="toctree-l2"><a class="reference internal" href="periodic_task.html">22. OpenStack周期性任务分析</a></li>
 <li class="toctree-l2"><a class="reference internal" href="nova_log.html">23. OpenStack 日志模块分析</a></li>
+<li class="toctree-l2"><a class="reference internal" href="qemu_kvm.html">24. qemu/kvm学习笔记</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="../web/index.html">web开发</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../others/index.html">杂项讨论</a></li>
 </ul>
 
@@ -272,24 +272,24 @@
 </div>
 <div class="section" id="id6">
 <h2><a class="toc-backref" href="#id29">18.5. 获取帮助信息</a><a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h2>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">root</span><span class="nd">@allinone</span><span class="o">-</span><span class="n">v2</span><span class="p">:</span><span class="o">/</span><span class="n">smbshare</span><span class="c1"># ./test_cfg.py -h</span>
-<span class="n">usage</span><span class="p">:</span> <span class="n">test_cfg</span><span class="o">.</span><span class="n">py</span> <span class="p">[</span><span class="o">-</span><span class="n">h</span><span class="p">]</span> <span class="p">[</span><span class="o">--</span><span class="n">config</span><span class="o">-</span><span class="nb">dir</span> <span class="n">DIR</span><span class="p">]</span> <span class="p">[</span><span class="o">--</span><span class="n">config</span><span class="o">-</span><span class="n">file</span> <span class="n">PATH</span><span class="p">]</span> <span class="p">[</span><span class="o">--</span><span class="n">host</span> <span class="n">HOST</span><span class="p">]</span>
-                   <span class="p">[</span><span class="o">--</span><span class="n">port</span> <span class="n">PORT</span><span class="p">]</span> <span class="p">[</span><span class="o">--</span><span class="n">version</span><span class="p">]</span>
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">root@allinone-v2:/smbshare#</span> ./test_cfg.py -h
+<span class="go">usage: test_cfg.py [-h] [--config-dir DIR] [--config-file PATH] [--host HOST]</span>
+<span class="go">                   [--port PORT] [--version]</span>
 
-<span class="n">optional</span> <span class="n">arguments</span><span class="p">:</span>
-  <span class="o">-</span><span class="n">h</span><span class="p">,</span> <span class="o">--</span><span class="n">help</span>          <span class="n">show</span> <span class="n">this</span> <span class="n">help</span> <span class="n">message</span> <span class="ow">and</span> <span class="n">exit</span>
-  <span class="o">--</span><span class="n">config</span><span class="o">-</span><span class="nb">dir</span> <span class="n">DIR</span>    <span class="n">Path</span> <span class="n">to</span> <span class="n">a</span> <span class="n">config</span> <span class="n">directory</span> <span class="n">to</span> <span class="n">pull</span> <span class="o">*.</span><span class="n">conf</span> <span class="n">files</span> <span class="n">from</span><span class="o">.</span>
-                      <span class="n">This</span> <span class="n">file</span> <span class="nb">set</span> <span class="ow">is</span> <span class="nb">sorted</span><span class="p">,</span> <span class="n">so</span> <span class="k">as</span> <span class="n">to</span> <span class="n">provide</span> <span class="n">a</span> <span class="n">predictable</span>
-                      <span class="n">parse</span> <span class="n">order</span> <span class="k">if</span> <span class="n">individual</span> <span class="n">options</span> <span class="n">are</span> <span class="n">over</span><span class="o">-</span><span class="n">ridden</span><span class="o">.</span> <span class="n">The</span>
-                      <span class="nb">set</span> <span class="ow">is</span> <span class="n">parsed</span> <span class="n">after</span> <span class="n">the</span> <span class="n">file</span><span class="p">(</span><span class="n">s</span><span class="p">)</span> <span class="n">specified</span> <span class="n">via</span> <span class="n">previous</span>
-                      <span class="o">--</span><span class="n">config</span><span class="o">-</span><span class="n">file</span><span class="p">,</span> <span class="n">arguments</span> <span class="n">hence</span> <span class="n">over</span><span class="o">-</span><span class="n">ridden</span> <span class="n">options</span> <span class="ow">in</span>
-                      <span class="n">the</span> <span class="n">directory</span> <span class="n">take</span> <span class="n">precedence</span><span class="o">.</span>
-  <span class="o">--</span><span class="n">config</span><span class="o">-</span><span class="n">file</span> <span class="n">PATH</span>  <span class="n">Path</span> <span class="n">to</span> <span class="n">a</span> <span class="n">config</span> <span class="n">file</span> <span class="n">to</span> <span class="n">use</span><span class="o">.</span> <span class="n">Multiple</span> <span class="n">config</span> <span class="n">files</span> <span class="n">can</span>
-                      <span class="n">be</span> <span class="n">specified</span><span class="p">,</span> <span class="k">with</span> <span class="n">values</span> <span class="ow">in</span> <span class="n">later</span> <span class="n">files</span> <span class="n">taking</span>
-                      <span class="n">precedence</span><span class="o">.</span> <span class="n">The</span> <span class="n">default</span> <span class="n">files</span> <span class="n">used</span> <span class="n">are</span><span class="p">:</span> <span class="kc">None</span><span class="o">.</span>
-  <span class="o">--</span><span class="n">host</span> <span class="n">HOST</span>         <span class="n">IP</span> <span class="n">address</span> <span class="n">to</span> <span class="n">listen</span> <span class="n">on</span><span class="o">.</span>
-  <span class="o">--</span><span class="n">port</span> <span class="n">PORT</span>         <span class="n">Port</span> <span class="n">number</span> <span class="n">to</span> <span class="n">listen</span> <span class="n">on</span><span class="o">.</span>
-  <span class="o">--</span><span class="n">version</span>           <span class="n">show</span> <span class="n">program</span><span class="s1">&#39;s version number and exit</span>
+<span class="go">optional arguments:</span>
+<span class="go">  -h, --help          show this help message and exit</span>
+<span class="go">  --config-dir DIR    Path to a config directory to pull *.conf files from.</span>
+<span class="go">                      This file set is sorted, so as to provide a predictable</span>
+<span class="go">                      parse order if individual options are over-ridden. The</span>
+<span class="go">                      set is parsed after the file(s) specified via previous</span>
+<span class="go">                      --config-file, arguments hence over-ridden options in</span>
+<span class="go">                      the directory take precedence.</span>
+<span class="go">  --config-file PATH  Path to a config file to use. Multiple config files can</span>
+<span class="go">                      be specified, with values in later files taking</span>
+<span class="go">                      precedence. The default files used are: None.</span>
+<span class="go">  --host HOST         IP address to listen on.</span>
+<span class="go">  --port PORT         Port number to listen on.</span>
+<span class="go">  --version           show program&#39;s version number and exit</span>
 </pre></div>
 </div>
 <p>可以看到，oslo.config 默认具有 &#8211;config-file 和 &#8211;config-dir 两个
@@ -304,26 +304,26 @@
 </pre></div>
 </div>
 <p>使用分组后，看看帮助信息</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">root</span><span class="nd">@allinone</span><span class="o">-</span><span class="n">v2</span><span class="p">:</span><span class="o">/</span><span class="n">smbshare</span><span class="c1"># ./test_cfg.py -h</span>
-<span class="n">usage</span><span class="p">:</span> <span class="n">test_cfg</span><span class="o">.</span><span class="n">py</span> <span class="p">[</span><span class="o">-</span><span class="n">h</span><span class="p">]</span> <span class="p">[</span><span class="o">--</span><span class="n">config</span><span class="o">-</span><span class="nb">dir</span> <span class="n">DIR</span><span class="p">]</span> <span class="p">[</span><span class="o">--</span><span class="n">config</span><span class="o">-</span><span class="n">file</span> <span class="n">PATH</span><span class="p">]</span> <span class="p">[</span><span class="o">--</span><span class="n">version</span><span class="p">]</span>
-                   <span class="p">[</span><span class="o">--</span><span class="n">cli</span><span class="o">-</span><span class="n">host</span> <span class="n">CLI_HOST</span><span class="p">]</span> <span class="p">[</span><span class="o">--</span><span class="n">cli</span><span class="o">-</span><span class="n">port</span> <span class="n">CLI_PORT</span><span class="p">]</span>
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">root@allinone-v2:/smbshare#</span> ./test_cfg.py -h
+<span class="go">usage: test_cfg.py [-h] [--config-dir DIR] [--config-file PATH] [--version]</span>
+<span class="go">                   [--cli-host CLI_HOST] [--cli-port CLI_PORT]</span>
 
-<span class="n">optional</span> <span class="n">arguments</span><span class="p">:</span>
-  <span class="o">-</span><span class="n">h</span><span class="p">,</span> <span class="o">--</span><span class="n">help</span>           <span class="n">show</span> <span class="n">this</span> <span class="n">help</span> <span class="n">message</span> <span class="ow">and</span> <span class="n">exit</span>
-  <span class="o">--</span><span class="n">config</span><span class="o">-</span><span class="nb">dir</span> <span class="n">DIR</span>     <span class="n">Path</span> <span class="n">to</span> <span class="n">a</span> <span class="n">config</span> <span class="n">directory</span> <span class="n">to</span> <span class="n">pull</span> <span class="o">*.</span><span class="n">conf</span> <span class="n">files</span> <span class="n">from</span><span class="o">.</span>
-                       <span class="n">This</span> <span class="n">file</span> <span class="nb">set</span> <span class="ow">is</span> <span class="nb">sorted</span><span class="p">,</span> <span class="n">so</span> <span class="k">as</span> <span class="n">to</span> <span class="n">provide</span> <span class="n">a</span> <span class="n">predictable</span>
-                       <span class="n">parse</span> <span class="n">order</span> <span class="k">if</span> <span class="n">individual</span> <span class="n">options</span> <span class="n">are</span> <span class="n">over</span><span class="o">-</span><span class="n">ridden</span><span class="o">.</span> <span class="n">The</span>
-                       <span class="nb">set</span> <span class="ow">is</span> <span class="n">parsed</span> <span class="n">after</span> <span class="n">the</span> <span class="n">file</span><span class="p">(</span><span class="n">s</span><span class="p">)</span> <span class="n">specified</span> <span class="n">via</span> <span class="n">previous</span>
-                       <span class="o">--</span><span class="n">config</span><span class="o">-</span><span class="n">file</span><span class="p">,</span> <span class="n">arguments</span> <span class="n">hence</span> <span class="n">over</span><span class="o">-</span><span class="n">ridden</span> <span class="n">options</span> <span class="ow">in</span>
-                       <span class="n">the</span> <span class="n">directory</span> <span class="n">take</span> <span class="n">precedence</span><span class="o">.</span>
-  <span class="o">--</span><span class="n">config</span><span class="o">-</span><span class="n">file</span> <span class="n">PATH</span>   <span class="n">Path</span> <span class="n">to</span> <span class="n">a</span> <span class="n">config</span> <span class="n">file</span> <span class="n">to</span> <span class="n">use</span><span class="o">.</span> <span class="n">Multiple</span> <span class="n">config</span> <span class="n">files</span> <span class="n">can</span>
-                       <span class="n">be</span> <span class="n">specified</span><span class="p">,</span> <span class="k">with</span> <span class="n">values</span> <span class="ow">in</span> <span class="n">later</span> <span class="n">files</span> <span class="n">taking</span>
-                       <span class="n">precedence</span><span class="o">.</span> <span class="n">The</span> <span class="n">default</span> <span class="n">files</span> <span class="n">used</span> <span class="n">are</span><span class="p">:</span> <span class="kc">None</span><span class="o">.</span>
-  <span class="o">--</span><span class="n">version</span>            <span class="n">show</span> <span class="n">program</span><span class="s1">&#39;s version number and exit</span>
+<span class="go">optional arguments:</span>
+<span class="go">  -h, --help           show this help message and exit</span>
+<span class="go">  --config-dir DIR     Path to a config directory to pull *.conf files from.</span>
+<span class="go">                       This file set is sorted, so as to provide a predictable</span>
+<span class="go">                       parse order if individual options are over-ridden. The</span>
+<span class="go">                       set is parsed after the file(s) specified via previous</span>
+<span class="go">                       --config-file, arguments hence over-ridden options in</span>
+<span class="go">                       the directory take precedence.</span>
+<span class="go">  --config-file PATH   Path to a config file to use. Multiple config files can</span>
+<span class="go">                       be specified, with values in later files taking</span>
+<span class="go">                       precedence. The default files used are: None.</span>
+<span class="go">  --version            show program&#39;s version number and exit</span>
 
-<span class="n">cli</span> <span class="n">options</span><span class="p">:</span>
-  <span class="o">--</span><span class="n">cli</span><span class="o">-</span><span class="n">host</span> <span class="n">CLI_HOST</span>  <span class="n">IP</span> <span class="n">address</span> <span class="n">to</span> <span class="n">listen</span> <span class="n">on</span><span class="o">.</span>
-  <span class="o">--</span><span class="n">cli</span><span class="o">-</span><span class="n">port</span> <span class="n">CLI_PORT</span>  <span class="n">Port</span> <span class="n">number</span> <span class="n">to</span> <span class="n">listen</span> <span class="n">on</span><span class="o">.</span>
+<span class="go">cli options:</span>
+<span class="go">  --cli-host CLI_HOST  IP address to listen on.</span>
+<span class="go">  --cli-port CLI_PORT  Port number to listen on.</span>
 </pre></div>
 </div>
 <p>可以看到，指定分组后：</p>
@@ -346,25 +346,25 @@
 <div class="section" id="id8">
 <h2><a class="toc-backref" href="#id31">18.7. 命令行和配置文件重复指定配置项</a><a class="headerlink" href="#id8" title="Permalink to this headline">¶</a></h2>
 <p>假如在命令行和配置文件中，都指定了配置项，那么后指定的会覆盖先指定的！</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">root</span><span class="nd">@allinone</span><span class="o">-</span><span class="n">v2</span><span class="p">:</span><span class="o">/</span><span class="n">smbshare</span><span class="c1"># ./test_cfg.py</span>
-<span class="n">volume</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;hda 100G&#39;</span><span class="p">,</span> <span class="s1">&#39;hdb 150G&#39;</span><span class="p">,</span> <span class="s1">&#39;hdc 200G&#39;</span><span class="p">]</span>
-<span class="n">cli_host</span><span class="p">:</span> <span class="mf">119.119</span><span class="o">.</span><span class="mf">119.119</span>
-<span class="n">cli_port</span><span class="p">:</span> <span class="mi">9292</span>
-<span class="n">root</span><span class="nd">@allinone</span><span class="o">-</span><span class="n">v2</span><span class="p">:</span><span class="o">/</span><span class="n">smbshare</span><span class="c1">#</span>
-<span class="n">root</span><span class="nd">@allinone</span><span class="o">-</span><span class="n">v2</span><span class="p">:</span><span class="o">/</span><span class="n">smbshare</span><span class="c1">#</span>
-<span class="n">root</span><span class="nd">@allinone</span><span class="o">-</span><span class="n">v2</span><span class="p">:</span><span class="o">/</span><span class="n">smbshare</span><span class="c1"># ./test_cfg.py --config-dir .</span>
-<span class="n">volume</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;sda 100GB&#39;</span><span class="p">,</span> <span class="s1">&#39;sdb 200GB&#39;</span><span class="p">]</span>
-<span class="n">cli_host</span><span class="p">:</span> <span class="mf">0.0</span><span class="o">.</span><span class="mf">0.0</span>
-<span class="n">cli_port</span><span class="p">:</span> <span class="mi">8080</span>
-<span class="n">root</span><span class="nd">@allinone</span><span class="o">-</span><span class="n">v2</span><span class="p">:</span><span class="o">/</span><span class="n">smbshare</span><span class="c1">#</span>
-<span class="n">root</span><span class="nd">@allinone</span><span class="o">-</span><span class="n">v2</span><span class="p">:</span><span class="o">/</span><span class="n">smbshare</span><span class="c1"># ./test_cfg.py --config-dir . --cli-host 1.1.1.1</span>
-<span class="n">volume</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;sda 100GB&#39;</span><span class="p">,</span> <span class="s1">&#39;sdb 200GB&#39;</span><span class="p">]</span>
-<span class="n">cli_host</span><span class="p">:</span> <span class="mf">1.1</span><span class="o">.</span><span class="mf">1.1</span>
-<span class="n">cli_port</span><span class="p">:</span> <span class="mi">8080</span>
-<span class="n">root</span><span class="nd">@allinone</span><span class="o">-</span><span class="n">v2</span><span class="p">:</span><span class="o">/</span><span class="n">smbshare</span><span class="c1"># ./test_cfg.py --cli-host 1.1.1.1 --config-dir .</span>
-<span class="n">volume</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;sda 100GB&#39;</span><span class="p">,</span> <span class="s1">&#39;sdb 200GB&#39;</span><span class="p">]</span>
-<span class="n">cli_host</span><span class="p">:</span> <span class="mf">0.0</span><span class="o">.</span><span class="mf">0.0</span>
-<span class="n">cli_port</span><span class="p">:</span> <span class="mi">8080</span>
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">root@allinone-v2:/smbshare#</span> ./test_cfg.py
+<span class="go">volume: [&#39;hda 100G&#39;, &#39;hdb 150G&#39;, &#39;hdc 200G&#39;]</span>
+<span class="go">cli_host: 119.119.119.119</span>
+<span class="go">cli_port: 9292</span>
+<span class="gp">root@allinone-v2:/smbshare#</span>
+<span class="gp">root@allinone-v2:/smbshare#</span>
+<span class="gp">root@allinone-v2:/smbshare#</span> ./test_cfg.py --config-dir .
+<span class="go">volume: [&#39;sda 100GB&#39;, &#39;sdb 200GB&#39;]</span>
+<span class="go">cli_host: 0.0.0.0</span>
+<span class="go">cli_port: 8080</span>
+<span class="gp">root@allinone-v2:/smbshare#</span>
+<span class="gp">root@allinone-v2:/smbshare#</span> ./test_cfg.py --config-dir . --cli-host 1.1.1.1
+<span class="go">volume: [&#39;sda 100GB&#39;, &#39;sdb 200GB&#39;]</span>
+<span class="go">cli_host: 1.1.1.1</span>
+<span class="go">cli_port: 8080</span>
+<span class="gp">root@allinone-v2:/smbshare#</span> ./test_cfg.py --cli-host 1.1.1.1 --config-dir .
+<span class="go">volume: [&#39;sda 100GB&#39;, &#39;sdb 200GB&#39;]</span>
+<span class="go">cli_host: 0.0.0.0</span>
+<span class="go">cli_port: 8080</span>
 </pre></div>
 </div>
 <p>可以看到，假如命令行参数最后指定，就会覆盖配置文件中的相应参数；反过来亦然！</p>
@@ -404,10 +404,10 @@
 </pre></div>
 </div>
 <p>导入配置项测试结果:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">root</span><span class="nd">@allinone</span><span class="o">-</span><span class="n">v2</span><span class="p">:</span><span class="o">/</span><span class="n">smbshare</span><span class="c1"># python test_import_oslo.py</span>
-<span class="n">disk</span> <span class="n">volume</span><span class="p">:</span>  <span class="p">[</span><span class="s1">&#39;hda 100G&#39;</span><span class="p">,</span> <span class="s1">&#39;hdb 150G&#39;</span><span class="p">,</span> <span class="s1">&#39;hdc 200G&#39;</span><span class="p">]</span>
-<span class="n">disk</span> <span class="nb">type</span><span class="p">:</span>  <span class="n">ssd</span>
-<span class="n">cli</span> <span class="n">host</span><span class="p">:</span>  <span class="mf">119.119</span><span class="o">.</span><span class="mf">119.119</span>
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">root@allinone-v2:/smbshare#</span> python test_import_oslo.py
+<span class="go">disk volume:  [&#39;hda 100G&#39;, &#39;hdb 150G&#39;, &#39;hdc 200G&#39;]</span>
+<span class="go">disk type:  ssd</span>
+<span class="go">cli host:  119.119.119.119</span>
 </pre></div>
 </div>
 <p>导入配置项结果测试在我意料之外，原来，<strong>导入某模块中任意一项，

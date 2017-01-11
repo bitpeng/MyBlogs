@@ -40,6 +40,7 @@ OpenStack Note
     nova_rpcserver_start
     periodic_task
     nova_log
+    qemu_kvm
 
 
 ..  sphinx_doc

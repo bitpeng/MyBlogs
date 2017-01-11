@@ -99,7 +99,7 @@ oslo.config 库学习
 获取帮助信息
 ============
 
-::
+.. code-block:: console
 
     root@allinone-v2:/smbshare# ./test_cfg.py -h
     usage: test_cfg.py [-h] [--config-dir DIR] [--config-file PATH] [--host HOST]
@@ -139,7 +139,7 @@ oslo.config 库学习
 
 使用分组后，看看帮助信息
 
-::
+.. code-block:: console
 
     root@allinone-v2:/smbshare# ./test_cfg.py -h
     usage: test_cfg.py [-h] [--config-dir DIR] [--config-file PATH] [--version]
@@ -183,7 +183,7 @@ oslo.config 库学习
 
 假如在命令行和配置文件中，都指定了配置项，那么后指定的会覆盖先指定的！
 
-::
+.. code-block:: console
 
     root@allinone-v2:/smbshare# ./test_cfg.py
     volume: ['hda 100G', 'hdb 150G', 'hdc 200G']
@@ -238,7 +238,7 @@ oslo.config 支持直接从其他模块中导入配置！可以使用 :meth:`Con
 
 导入配置项测试结果:
 
-::
+.. code-block:: console
 
     root@allinone-v2:/smbshare# python test_import_oslo.py
     disk volume:  ['hda 100G', 'hdb 150G', 'hdc 200G']
@@ -323,6 +323,7 @@ log 模块设置nova的日志保存在 /var/log/nova/ 目录下，该项由 /etc
 配置文件指定：
 
 :file:`/etc/nova/nova.conf`
+
 ::
 
     logdir=/var/log/nova
@@ -332,6 +333,7 @@ log 模块设置nova的日志保存在 /var/log/nova/ 目录下，该项由 /etc
 测试方式：
 
 :file:`cmd/scheduler.py`
+
 ::
 
     def main():
@@ -347,6 +349,7 @@ log 模块设置nova的日志保存在 /var/log/nova/ 目录下，该项由 /etc
 /etc/nova/nova.conf 配置文件了！
 
 :file:`nova/config.py`
+
 ::
 
     CONF(argv[1:],
