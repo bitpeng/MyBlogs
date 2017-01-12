@@ -20,10 +20,11 @@ virsh
     # 导出虚机对应的xml文件
     virsh dumpxml instance-00000037
     # 根据xml文件定义虚机
+    ## 特别注意，通过define定义的虚机，会在 /etc/libvirt/qemu 目录下生成 instance-name.xml 文件
     virsh define demo.xml
     # 启动虚机
     virsh start test
-    # 编辑虚机对应的xml 文件；
+    # 编辑虚机对应的xml文件；
     virsh edit test
     # 关闭虚机
     virsh shutdown test

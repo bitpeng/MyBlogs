@@ -32,7 +32,7 @@
   
     <link rel="top" title="Welcome to Sitian&#39;s Blog 0.1 documentation" href="../index.html"/>
         <link rel="up" title="OpenStack Note" href="index.html"/>
-        <link rel="next" title="杂项讨论" href="../others/index.html"/>
+        <link rel="next" title="26. nova虚机加密总结" href="qemu_img_encry.html"/>
         <link rel="prev" title="24. qemu/kvm学习笔记" href="qemu_kvm.html"/> 
 
   
@@ -115,6 +115,7 @@
 <li class="toctree-l3"><a class="reference internal" href="#qemu">25.2. qemu</a></li>
 </ul>
 </li>
+<li class="toctree-l2"><a class="reference internal" href="qemu_img_encry.html">26. nova虚机加密总结</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../others/index.html">杂项讨论</a></li>
@@ -186,10 +187,11 @@
 <span class="c1"># 导出虚机对应的xml文件</span>
 <span class="n">virsh</span> <span class="n">dumpxml</span> <span class="n">instance</span><span class="o">-</span><span class="mi">00000037</span>
 <span class="c1"># 根据xml文件定义虚机</span>
+<span class="c1">## 特别注意，通过define定义的虚机，会在 /etc/libvirt/qemu 目录下生成 instance-name.xml 文件</span>
 <span class="n">virsh</span> <span class="n">define</span> <span class="n">demo</span><span class="o">.</span><span class="n">xml</span>
 <span class="c1"># 启动虚机</span>
 <span class="n">virsh</span> <span class="n">start</span> <span class="n">test</span>
-<span class="c1"># 编辑虚机对应的xml 文件；</span>
+<span class="c1"># 编辑虚机对应的xml文件；</span>
 <span class="n">virsh</span> <span class="n">edit</span> <span class="n">test</span>
 <span class="c1"># 关闭虚机</span>
 <span class="n">virsh</span> <span class="n">shutdown</span> <span class="n">test</span>
@@ -217,7 +219,7 @@
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="../others/index.html" class="btn btn-neutral float-right" title="杂项讨论" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="qemu_img_encry.html" class="btn btn-neutral float-right" title="26. nova虚机加密总结" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
         <a href="qemu_kvm.html" class="btn btn-neutral" title="24. qemu/kvm学习笔记" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
