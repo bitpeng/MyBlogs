@@ -32,7 +32,7 @@
   
     <link rel="top" title="Welcome to Sitian&#39;s Blog 0.1 documentation" href="../index.html"/>
         <link rel="up" title="Python Note" href="index.html"/>
-        <link rel="next" title="9. Python 装饰器逻辑" href="dec_logic.html"/>
+        <link rel="next" title="9. Python 装饰器、闭包" href="dec_logic.html"/>
         <link rel="prev" title="7. Python学习总结" href="python_notebook.html"/> 
 
   
@@ -110,14 +110,16 @@
 <li class="toctree-l3"><a class="reference internal" href="#id10">8.7. 参考</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="dec_logic.html">9. Python 装饰器逻辑</a></li>
+<li class="toctree-l2"><a class="reference internal" href="dec_logic.html">9. Python 装饰器、闭包</a></li>
 <li class="toctree-l2"><a class="reference internal" href="webob_analysis.html">10. webob库简单分析</a></li>
+<li class="toctree-l2"><a class="reference internal" href="metaclass_intro.html">11. Python元类</a></li>
+<li class="toctree-l2"><a class="reference internal" href="inspect_intro.html">12. python inspect 模块</a></li>
+<li class="toctree-l2"><a class="reference internal" href="log_summary.html">13. logging 模块总结</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../linux_tools/index.html">Hack Linux</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../openstack/index.html">OpenStack Note</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../web/index.html">web开发</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../others/index.html">附录</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../others/index.html">杂项讨论</a></li>
 </ul>
 
             
@@ -234,7 +236,7 @@
 Python2文本串和字节序列可以进行拼接、格式化等混合操作。混合操作过程不可编码的
 涉及到编码转换(Python解释器隐式进行)，因此Python2中，涉及到编码隐式转换的，
 都会使用sys.getdefaultencoding()进行【参考stackoverflow，再加上个人理解！】。</p>
-<p>sys.getdefaultencoding() is used on Python 2 for implicit conversions (when the encoding is not set explicitly) i.e., Python 2 may mix ascii-only bytestrings and Unicode strings together e.g., xml.etree.ElementTree stores text in ascii range as bytestrings or json.dumps() returns an ascii-only bytestring instead of Unicode in Python 2 — perhaps due to performance — bytes were cheaper than Unicode for representing ascii characters. Implicit conversions are forbidden in Python 3.</p>
+<p><cite>sys.getdefaultencoding() is used on Python 2 for implicit conversions (when the encoding is not set explicitly) i.e., Python 2 may mix ascii-only bytestrings and Unicode strings together e.g., xml.etree.ElementTree stores text in ascii range as bytestrings or json.dumps() returns an ascii-only bytestring instead of Unicode in Python 2 — perhaps due to performance — bytes were cheaper than Unicode for representing ascii characters. Implicit conversions are forbidden in Python 3.</cite></p>
 <table class="docutils footnote" frame="void" id="id5" rules="none">
 <colgroup><col class="label" /><col /></colgroup>
 <tbody valign="top">
@@ -261,8 +263,8 @@ Python2文本串和字节序列可以进行拼接、格式化等混合操作。�
 <span class="go">&gt;&gt;&gt;</span>
 </pre></div>
 </div>
-<p>可以看到，文本串和字节串混合操作时，一律都是str对象转换成unicode然后操作。结果类型
-也一律是unicode对象！</p>
+<p><strong>可以看到，文本串和字节串混合操作时，一律都是str对象转换成unicode然后操作。结果类型
+也一律是unicode对象！</strong></p>
 <p>假如混合操作时有非拉丁字母，会怎样呢？</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">sys</span><span class="o">.</span><span class="n">getdefaultencoding</span><span class="p">()</span>
 <span class="go">&#39;ascii&#39;</span>
@@ -290,7 +292,7 @@ Python2文本串和字节序列可以进行拼接、格式化等混合操作。�
 </pre></div>
 </div>
 <p>不出意外，果然混合操作失败了。根据异常信息，可以看到，系统隐式转换时
-尝试使用ascii 对 a字节序列进行编码。 <cite>xe4</cite> 超出了ascii的编码范围，所以
+尝试使用ascii对a字节序列进行编码。 <code class="docutils literal"><span class="pre">\xe4</span></code> 超出了ascii的编码范围，所以
 编码转换失败。</p>
 <p>通过 setdefaultencoding(&#8220;utf-8&#8221;)，后面的操作都成功了。但是，需要注意的是，
 该操作虽然可以解决中文乱码问题，但是也可能带来其他bug。要避免使用，我们
@@ -366,16 +368,16 @@ var.decode(encoding)，从文本编码成字节，用 var.encode(encoding)。</l
 都是bytestring。近期测试webob程序的时候，程序总是报错。原来wsgi
 app要求假如返回字符串类型，则只能是str类型，而不能是unicode类型。</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">simple_app</span><span class="p">(</span><span class="n">environ</span><span class="p">,</span> <span class="n">start_response</span><span class="p">):</span>
-        <span class="n">status</span> <span class="o">=</span> <span class="s1">&#39;200 OK&#39;</span>
-        <span class="n">response_headers</span> <span class="o">=</span> <span class="p">[(</span><span class="s1">&#39;Content-type&#39;</span><span class="p">,</span><span class="s1">&#39;text/plain&#39;</span><span class="p">)]</span>
-        <span class="n">start_response</span><span class="p">(</span><span class="n">status</span><span class="p">,</span> <span class="n">response_headers</span><span class="p">)</span>
-        <span class="c1"># app 的返回值不能是 unicode 对象！</span>
-        <span class="k">return</span> <span class="p">[</span><span class="s1">u&#39;Hello world!</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">]</span>
-        <span class="c1">#return [&#39;Hello world!\n&#39;]</span>
+    <span class="n">status</span> <span class="o">=</span> <span class="s1">&#39;200 OK&#39;</span>
+    <span class="n">response_headers</span> <span class="o">=</span> <span class="p">[(</span><span class="s1">&#39;Content-type&#39;</span><span class="p">,</span><span class="s1">&#39;text/plain&#39;</span><span class="p">)]</span>
+    <span class="n">start_response</span><span class="p">(</span><span class="n">status</span><span class="p">,</span> <span class="n">response_headers</span><span class="p">)</span>
+    <span class="c1"># app 的返回值不能是 unicode 对象！</span>
+    <span class="k">return</span> <span class="p">[</span><span class="s1">u&#39;Hello world!</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">]</span>
+    <span class="c1">#return [&#39;Hello world!\n&#39;]</span>
 </pre></div>
 </div>
 <p>simple_app返回的可迭代对象元素是unicode类型，因此curl请求时，报错如下:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span>        <span class="k">assert</span> <span class="nb">type</span><span class="p">(</span><span class="n">data</span><span class="p">)</span> <span class="ow">is</span> <span class="n">StringType</span><span class="p">,</span><span class="s2">&quot;write() argument must be string&quot;</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span>    <span class="k">assert</span> <span class="nb">type</span><span class="p">(</span><span class="n">data</span><span class="p">)</span> <span class="ow">is</span> <span class="n">StringType</span><span class="p">,</span><span class="s2">&quot;write() argument must be string&quot;</span>
 <span class="ne">AssertionError</span><span class="p">:</span> <span class="n">write</span><span class="p">()</span> <span class="n">argument</span> <span class="n">must</span> <span class="n">be</span> <span class="n">string</span>
 <span class="mf">127.0</span><span class="o">.</span><span class="mf">0.1</span> <span class="o">-</span> <span class="o">-</span> <span class="p">[</span><span class="mi">20</span><span class="o">/</span><span class="n">Nov</span><span class="o">/</span><span class="mi">2016</span> <span class="mi">20</span><span class="p">:</span><span class="mi">24</span><span class="p">:</span><span class="mi">40</span><span class="p">]</span> <span class="s2">&quot;GET / HTTP/1.1&quot;</span> <span class="mi">500</span> <span class="mi">59</span>
 </pre></div>
@@ -438,7 +440,7 @@ wsgi app 提供包含任意其他unicode字符集或者码点的strings都是严
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="dec_logic.html" class="btn btn-neutral float-right" title="9. Python 装饰器逻辑" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="dec_logic.html" class="btn btn-neutral float-right" title="9. Python 装饰器、闭包" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
         <a href="python_notebook.html" class="btn btn-neutral" title="7. Python学习总结" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>

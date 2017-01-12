@@ -29,9 +29,9 @@ Python2.x 中有多个不同的系统默认编码。
 
 ::
 
-	#coding:utf-8
-	#coding=utf-8
-	
+    #coding:utf-8
+    #coding=utf-8
+    
 来设置当源文件中有飞拉丁字符时的情况(如中文注释)。如果没有指定，
 系统就会默认使用ascii对源文件编码，会出现不能识别中文的情况。
 
@@ -43,12 +43,12 @@ sdtin和stdout输入输出使用的编码，包括命令行参数和print输出�
 
 ::
 
-	>>> import sys
-	>>> sys.stdin.encoding
-	'UTF-8'
-	>>> sys.stdout.encoding
-	'UTF-8'
-	>>> 
+    >>> import sys
+    >>> sys.stdin.encoding
+    'UTF-8'
+    >>> sys.stdout.encoding
+    'UTF-8'
+    >>> 
 
 sys.getdefaultencoding()
 ++++++++++++++++++++++++
@@ -58,7 +58,7 @@ Python2文本串和字节序列可以进行拼接、格式化等混合操作。�
 涉及到编码转换(Python解释器隐式进行)，因此Python2中，涉及到编码隐式转换的，
 都会使用sys.getdefaultencoding()进行【参考stackoverflow，再加上个人理解！】。
 
-sys.getdefaultencoding() is used on Python 2 for implicit conversions (when the encoding is not set explicitly) i.e., Python 2 may mix ascii-only bytestrings and Unicode strings together e.g., xml.etree.ElementTree stores text in ascii range as bytestrings or json.dumps() returns an ascii-only bytestring instead of Unicode in Python 2 — perhaps due to performance — bytes were cheaper than Unicode for representing ascii characters. Implicit conversions are forbidden in Python 3.
+`sys.getdefaultencoding() is used on Python 2 for implicit conversions (when the encoding is not set explicitly) i.e., Python 2 may mix ascii-only bytestrings and Unicode strings together e.g., xml.etree.ElementTree stores text in ascii range as bytestrings or json.dumps() returns an ascii-only bytestring instead of Unicode in Python 2 — perhaps due to performance — bytes were cheaper than Unicode for representing ascii characters. Implicit conversions are forbidden in Python 3.`
 
 .. [#] http://stackoverflow.com/questions/15530635/why-is-sys-getdefaultencoding-different-from-sys-stdout-encoding-and-how-does
 
@@ -71,53 +71,53 @@ sys.getdefaultencoding() is used on Python 2 for implicit conversions (when the 
 
 ::
 
-	>>> a = '<+ a:%s +> '
-	>>> b = u'{b:%s} '
-	>>> 
-	>>> print type(a + b)
-	<type 'unicode'>
-	>>> print type(b + a)
-	<type 'unicode'>
-	>>> print type(a%b)
-	<type 'unicode'>
-	>>> print type(b%a)
-	<type 'unicode'>
-	>>> 
+    >>> a = '<+ a:%s +> '
+    >>> b = u'{b:%s} '
+    >>> 
+    >>> print type(a + b)
+    <type 'unicode'>
+    >>> print type(b + a)
+    <type 'unicode'>
+    >>> print type(a%b)
+    <type 'unicode'>
+    >>> print type(b%a)
+    <type 'unicode'>
+    >>> 
 
-可以看到，文本串和字节串混合操作时，一律都是str对象转换成unicode然后操作。结果类型
-也一律是unicode对象！
+**可以看到，文本串和字节串混合操作时，一律都是str对象转换成unicode然后操作。结果类型
+也一律是unicode对象！**
 
 假如混合操作时有非拉丁字母，会怎样呢？
 
 ::
 
-	>>> sys.getdefaultencoding()
-	'ascii'
-	>>> a = '<+ 你好:%s +> '
-	>>> b = u'{中国:%s} '
-	>>> 
-	>>> print type(a + b)
-	Traceback (most recent call last):
-	  File "<stdin>", line 1, in <module>
-	UnicodeDecodeError: 'ascii' codec can't decode byte 0xe4 in position 3: ordinal not in range(128)
-	>>> print a.decode('utf-8') + b
-	<+ 你好:%s +> {中国:%s} 
-	>>> print a + b.encode('utf-8')
-	<+ 你好:%s +> {中国:%s} 
-	>>> 
-	>>> reload(sys)
-	<module 'sys' (built-in)>
-	>>> sys.setdefaultencoding('utf-8')
-	>>> print type(a + b)
-	<type 'unicode'>
-	>>> print type(b%a)
-	>>> a
-	'<+ \xe4\xbd\xa0\xe5\xa5\xbd:%s +> '
-	>>> 
+    >>> sys.getdefaultencoding()
+    'ascii'
+    >>> a = '<+ 你好:%s +> '
+    >>> b = u'{中国:%s} '
+    >>> 
+    >>> print type(a + b)
+    Traceback (most recent call last):
+      File "<stdin>", line 1, in <module>
+    UnicodeDecodeError: 'ascii' codec can't decode byte 0xe4 in position 3: ordinal not in range(128)
+    >>> print a.decode('utf-8') + b
+    <+ 你好:%s +> {中国:%s} 
+    >>> print a + b.encode('utf-8')
+    <+ 你好:%s +> {中国:%s} 
+    >>> 
+    >>> reload(sys)
+    <module 'sys' (built-in)>
+    >>> sys.setdefaultencoding('utf-8')
+    >>> print type(a + b)
+    <type 'unicode'>
+    >>> print type(b%a)
+    >>> a
+    '<+ \xe4\xbd\xa0\xe5\xa5\xbd:%s +> '
+    >>> 
 
 
 不出意外，果然混合操作失败了。根据异常信息，可以看到，系统隐式转换时
-尝试使用ascii 对 a字节序列进行编码。 `\xe4` 超出了ascii的编码范围，所以
+尝试使用ascii对a字节序列进行编码。 ``\xe4`` 超出了ascii的编码范围，所以
 编码转换失败。
 
 通过 setdefaultencoding("utf-8")，后面的操作都成功了。但是，需要注意的是，
@@ -134,9 +134,9 @@ Python 为了让其语法看上去简洁好用，做了很多 tricky 的事情�
 
 在 Python 里，有三大类 string 类型：
 
--	unicode（text string），
--	str（byte string，二进制数据），
--	basestring，是前两者的父类。
+-   unicode（text string），
+-   str（byte string，二进制数据），
+-   basestring，是前两者的父类。
 
 其实，在语言设计领域，一串字节（sequences of bytes）是否应该当做字符串
 （string）一直是存在争议的。我们熟知的 Java 和 C# 投了反对票，而 Python 
@@ -158,14 +158,14 @@ Unicode，这也就意味着，做所有需要转换的场合，都能正确并�
 
 在Python2.x中，编码问题尽量遵循下列原则。
 
--	所有 text string 都应该是 unicode 类型，而不是 str，
-	如果你在操作 text，而类型却是 str，那就是在制造 bug。
+-   所有 text string 都应该是 unicode 类型，而不是 str，
+    如果你在操作 text，而类型却是 str，那就是在制造 bug。
 
--	在需要转换的时候，显式转换。从字节解码成文本，用 
-	var.decode(encoding)，从文本编码成字节，用 var.encode(encoding)。
+-   在需要转换的时候，显式转换。从字节解码成文本，用 
+    var.decode(encoding)，从文本编码成字节，用 var.encode(encoding)。
 
--	从外部读取数据时，默认它是字节，然后 decode 成需要的文本；
-	同样的，当需要向外部发送文本时，encode 成字节再发送。
+-   从外部读取数据时，默认它是字节，然后 decode 成需要的文本；
+    同样的，当需要向外部发送文本时，encode 成字节再发送。
 
 
 Python unicode HowTo
@@ -205,22 +205,22 @@ app要求假如返回字符串类型，则只能是str类型，而不能是unico
 
 ::
 
-	def simple_app(environ, start_response):
-		status = '200 OK'
-		response_headers = [('Content-type','text/plain')]
-		start_response(status, response_headers)
-		# app 的返回值不能是 unicode 对象！
-		return [u'Hello world!\n']
-		#return ['Hello world!\n']
+    def simple_app(environ, start_response):
+        status = '200 OK'
+        response_headers = [('Content-type','text/plain')]
+        start_response(status, response_headers)
+        # app 的返回值不能是 unicode 对象！
+        return [u'Hello world!\n']
+        #return ['Hello world!\n']
 
 simple_app返回的可迭代对象元素是unicode类型，因此curl请求时，报错如下:
 
 ::
 
-		assert type(data) is StringType,"write() argument must be string"
-	AssertionError: write() argument must be string
-	127.0.0.1 - - [20/Nov/2016 20:24:40] "GET / HTTP/1.1" 500 59
-	 
+        assert type(data) is StringType,"write() argument must be string"
+    AssertionError: write() argument must be string
+    127.0.0.1 - - [20/Nov/2016 20:24:40] "GET / HTTP/1.1" 500 59
+     
 请看pep-3333 wsgi规范关于unicode 的描述：
 
 HTTP does not directly support Unicode, and neither does this interface. All encoding/decoding must be handled by the application; all strings passed to or from the server must be of type str or bytes , never unicode . The result of using a unicode object where a string object is required, is undefined.
