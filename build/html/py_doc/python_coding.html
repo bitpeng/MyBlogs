@@ -168,8 +168,7 @@
             
   <div class="section" id="python">
 <h1><a class="toc-backref" href="#id15">8. Python 编码问题总结</a><a class="headerlink" href="#python" title="Permalink to this headline">¶</a></h1>
-<p>注意：如没有特别说明，所有的描述均针对Python2.x。试验
-验证一般采用的Ubuntu-14.04-LTS Python2.7。</p>
+<p>注意：如没有特别说明，所有的描述均针对Python2.x。试验验证一般采用的Ubuntu-14.04-LTS Python2.7。</p>
 <div class="contents topic" id="id1">
 <p class="topic-title first">目录</p>
 <ul class="simple">
@@ -195,9 +194,7 @@
 </ul>
 </div>
 <hr class="docutils" />
-<p>Python蛋疼的编码问题，陆陆续续遇到过很多次了。原来在爬取网页时，就遇到过网页乱码；
-最近测试wsgi程序时，又遇到`AssertionError: write() argument must be string`问题。
-原来Python编码问题就做过相关总结，今天又探索了一番，记录下来，以作参考。</p>
+<p>Python蛋疼的编码问题，陆陆续续遇到过很多次了。原来在爬取网页时，就遇到过网页乱码；最近测试wsgi程序时，又遇到`AssertionError: write() argument must be string`问题。原来Python编码问题就做过相关总结，今天又探索了一番，记录下来，以作参考。</p>
 <div class="section" id="id2">
 <h2><a class="toc-backref" href="#id16">8.1. 系统默认编码</a><a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
 <p>Python2.x 中有多个不同的系统默认编码。</p>
@@ -214,13 +211,11 @@
 <span class="c1">#coding=utf-8</span>
 </pre></div>
 </div>
-<p>来设置当源文件中有飞拉丁字符时的情况(如中文注释)。如果没有指定，
-系统就会默认使用ascii对源文件编码，会出现不能识别中文的情况。</p>
+<p>来设置当源文件中有飞拉丁字符时的情况(如中文注释)。如果没有指定，系统就会默认使用ascii对源文件编码，会出现不能识别中文的情况。</p>
 </div>
 <div class="section" id="sys-stdin-encodingsys-stdout-encoding">
 <h3><a class="toc-backref" href="#id18">8.1.2. sys.stdin.encoding和sys.stdout.encoding</a><a class="headerlink" href="#sys-stdin-encodingsys-stdout-encoding" title="Permalink to this headline">¶</a></h3>
-<p>sdtin和stdout输入输出使用的编码，包括命令行参数和print输出，
-由locale环境变量决定。在en_US.UTF-8的系统中，默认值是UTF-8。</p>
+<p>sdtin和stdout输入输出使用的编码，包括命令行参数和print输出，由locale环境变量决定。在en_US.UTF-8的系统中，默认值是UTF-8。</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">sys</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">sys</span><span class="o">.</span><span class="n">stdin</span><span class="o">.</span><span class="n">encoding</span>
 <span class="go">&#39;UTF-8&#39;</span>
@@ -232,10 +227,7 @@
 </div>
 <div class="section" id="sys-getdefaultencoding">
 <h3><a class="toc-backref" href="#id19">8.1.3. sys.getdefaultencoding()</a><a class="headerlink" href="#sys-getdefaultencoding" title="Permalink to this headline">¶</a></h3>
-<p><strong>在Python2.x中：只有unicode对象才是真正意义的文本串，str类型表示的字节序列</strong>。
-Python2文本串和字节序列可以进行拼接、格式化等混合操作。混合操作过程不可编码的
-涉及到编码转换(Python解释器隐式进行)，因此Python2中，涉及到编码隐式转换的，
-都会使用sys.getdefaultencoding()进行【参考stackoverflow，再加上个人理解！】。</p>
+<p><strong>在Python2.x中：只有unicode对象才是真正意义的文本串，str类型表示的字节序列</strong>。Python2文本串和字节序列可以进行拼接、格式化等混合操作。混合操作过程不可编码的涉及到编码转换(Python解释器隐式进行)，因此Python2中，涉及到编码隐式转换的，都会使用sys.getdefaultencoding()进行.【参考stackoverflow，再加上个人理解！】</p>
 <p><cite>sys.getdefaultencoding() is used on Python 2 for implicit conversions (when the encoding is not set explicitly) i.e., Python 2 may mix ascii-only bytestrings and Unicode strings together e.g., xml.etree.ElementTree stores text in ascii range as bytestrings or json.dumps() returns an ascii-only bytestring instead of Unicode in Python 2 — perhaps due to performance — bytes were cheaper than Unicode for representing ascii characters. Implicit conversions are forbidden in Python 3.</cite></p>
 <table class="docutils footnote" frame="void" id="id5" rules="none">
 <colgroup><col class="label" /><col /></colgroup>
@@ -247,8 +239,7 @@ Python2文本串和字节序列可以进行拼接、格式化等混合操作。�
 </div>
 <div class="section" id="id6">
 <h2><a class="toc-backref" href="#id20">8.2. 文本串/字节串混合操作</a><a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h2>
-<p>前文提到，Python2.x中文本串(unicode对象)和字节串(str类型对象)可以混合操作。
-中间涉及到的编码隐式转换由Python解释器自动完成。</p>
+<p>前文提到，Python2.x中文本串(unicode对象)和字节串(str类型对象)可以混合操作。中间涉及到的编码隐式转换由Python解释器自动完成。</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">a</span> <span class="o">=</span> <span class="s1">&#39;&lt;+ a:</span><span class="si">%s</span><span class="s1"> +&gt; &#39;</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">b</span> <span class="o">=</span> <span class="s1">u&#39;{b:</span><span class="si">%s</span><span class="s1">} &#39;</span>
 <span class="go">&gt;&gt;&gt;</span>
@@ -263,8 +254,7 @@ Python2文本串和字节序列可以进行拼接、格式化等混合操作。�
 <span class="go">&gt;&gt;&gt;</span>
 </pre></div>
 </div>
-<p><strong>可以看到，文本串和字节串混合操作时，一律都是str对象转换成unicode然后操作。结果类型
-也一律是unicode对象！</strong></p>
+<p><strong>可以看到，文本串和字节串混合操作时，一律都是str对象转换成unicode然后操作。结果类型也一律是unicode对象！</strong></p>
 <p>假如混合操作时有非拉丁字母，会怎样呢？</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">sys</span><span class="o">.</span><span class="n">getdefaultencoding</span><span class="p">()</span>
 <span class="go">&#39;ascii&#39;</span>
@@ -294,9 +284,7 @@ Python2文本串和字节序列可以进行拼接、格式化等混合操作。�
 <p>不出意外，果然混合操作失败了。根据异常信息，可以看到，系统隐式转换时
 尝试使用ascii对a字节序列进行编码。 <code class="docutils literal"><span class="pre">\xe4</span></code> 超出了ascii的编码范围，所以
 编码转换失败。</p>
-<p>通过 setdefaultencoding(&#8220;utf-8&#8221;)，后面的操作都成功了。但是，需要注意的是，
-该操作虽然可以解决中文乱码问题，但是也可能带来其他bug。要避免使用，我们
-Python项目中，也很少发现该用法。</p>
+<p>通过 setdefaultencoding(&#8220;utf-8&#8221;)，后面的操作都成功了。但是，需要注意的是，该操作虽然可以解决中文乱码问题，但是也可能带来其他bug。要避免使用，我们Python项目中，也很少发现该用法。</p>
 <table class="docutils footnote" frame="void" id="id7" rules="none">
 <colgroup><col class="label" /><col /></colgroup>
 <tbody valign="top">
@@ -306,67 +294,43 @@ Python项目中，也很少发现该用法。</p>
 </div>
 <div class="section" id="python2-xstring">
 <h2><a class="toc-backref" href="#id21">8.3. Python2.x中的string</a><a class="headerlink" href="#python2-xstring" title="Permalink to this headline">¶</a></h2>
-<p>Python 为了让其语法看上去简洁好用，做了很多 tricky 的事情，
-混淆 byte string 和 text string 就是其中一例。</p>
+<p>Python为了让其语法看上去简洁好用，做了很多tricky的事情，混淆byte string和text string就是其中一例。</p>
 <p>在 Python 里，有三大类 string 类型：</p>
 <ul class="simple">
 <li>unicode（text string），</li>
 <li>str（byte string，二进制数据），</li>
 <li>basestring，是前两者的父类。</li>
 </ul>
-<p>其实，在语言设计领域，一串字节（sequences of bytes）是否应该当做字符串
-（string）一直是存在争议的。我们熟知的 Java 和 C# 投了反对票，而 Python
-则站在了支持者的阵营里。其实我们在很多情况下，给文本做的操作，比如正
-则匹配、字符替换等，对于字节来说是用不着的。而 Python 认为字节就是字符，
-所以他们俩的操作集合是一致的。</p>
-<p>然后进一步的，Python 会在必要的情况下，尝试对字节做自动类型转换，
-例如，在上文中的 ==，或者字节和文本拼接时。如果没有一个编码（encoding），
-两个不同类型之间的转换是无法进行的，于是，Python 需要一个默认编码。
-在 Python2 诞生的年代，ASCII 是最流行的（可以这么说吧），于是 Python2 选择了
-ASCII。然而，众所周知，在需要需要转换的场景，ASCII 都是没用的（128个字符，够什么吃）。</p>
-<p>在历经这么多年吐槽后，Python 3 终于学乖了。默认编码是
-Unicode，这也就意味着，做所有需要转换的场合，都能正确并成功的转换。</p>
+<p>其实，在语言设计领域，一串字节（sequences of bytes）是否应该当做字符串（string）一直是存在争议的。我们熟知的 Java 和 C# 投了反对票，而 Python 则站在了支持者的阵营里。其实我们在很多情况下，给文本做的操作，比如正则匹配、字符替换等，对于字节来说是用不着的。而 Python 认为字节就是字符，所以他们俩的操作集合是一致的。</p>
+<p>然后进一步的，Python 会在必要的情况下，尝试对字节做自动类型转换，例如，在上文中的 ==，或者字节和文本拼接时。如果没有一个编码（encoding），两个不同类型之间的转换是无法进行的，于是，Python 需要一个默认编码。在 Python2 诞生的年代，ASCII 是最流行的（可以这么说吧），于是 Python2 选择了ASCII。然而，众所周知，在需要需要转换的场景，ASCII 都是没用的（128个字符，够什么吃）。</p>
+<p>在历经这么多年吐槽后，Python 3 终于学乖了。默认编码是Unicode，这也就意味着，做所有需要转换的场合，都能正确并成功的转换。</p>
 </div>
 <div class="section" id="id8">
 <h2><a class="toc-backref" href="#id22">8.4. 最佳实践</a><a class="headerlink" href="#id8" title="Permalink to this headline">¶</a></h2>
 <p>在Python2.x中，编码问题尽量遵循下列原则。</p>
 <ul class="simple">
-<li>所有 text string 都应该是 unicode 类型，而不是 str，
-如果你在操作 text，而类型却是 str，那就是在制造 bug。</li>
-<li>在需要转换的时候，显式转换。从字节解码成文本，用
-var.decode(encoding)，从文本编码成字节，用 var.encode(encoding)。</li>
-<li>从外部读取数据时，默认它是字节，然后 decode 成需要的文本；
-同样的，当需要向外部发送文本时，encode 成字节再发送。</li>
+<li>所有 text string 都应该是 unicode 类型，而不是 str，如果你在操作 text，而类型却是 str，那就是在制造 bug。</li>
+<li>在需要转换的时候，显式转换。从字节解码成文本，用var.decode(encoding)，从文本编码成字节，用 var.encode(encoding)。</li>
+<li>从外部读取数据时，默认它是字节，然后 decode 成需要的文本；同样的，当需要向外部发送文本时，encode 成字节再发送。</li>
 </ul>
 </div>
 <div class="section" id="python-unicode-howto">
 <h2><a class="toc-backref" href="#id23">8.5. Python unicode HowTo</a><a class="headerlink" href="#python-unicode-howto" title="Permalink to this headline">¶</a></h2>
-<p>该节的大部分内容，来源于Python官网Python HowTo,强烈推荐。英文看起来
-也一点都不难！</p>
+<p>该节的大部分内容，来源于Python官网Python HowTo,强烈推荐。英文看起来也一点都不难！</p>
 <div class="section" id="id9">
 <h3><a class="toc-backref" href="#id24">8.5.1. 编码定义</a><a class="headerlink" href="#id9" title="Permalink to this headline">¶</a></h3>
-<p>unicode定义了字符集和码点(code point)的映射，
-一个unicode string就是一系列unicode码点序列。该码点序列
-在计算机内存中需要有种表示方式，定义unicode string码点序列到
-内存字节序列的转换规则就称之为编码。</p>
+<p>unicode定义了字符集和码点(code point)的映射，一个unicode string就是一系列unicode码点序列。该码点序列在计算机内存中需要有种表示方式，定义unicode string码点序列到内存字节序列的转换规则就称之为编码。</p>
 </div>
 <div class="section" id="unicode">
 <h3><a class="toc-backref" href="#id25">8.5.2. 读写unicode数据</a><a class="headerlink" href="#unicode" title="Permalink to this headline">¶</a></h3>
-<p>一旦程序涉及到操作unicode 数据的代码，下一个问题就是I/O。你的程序从
-哪里获得unicode数据？怎样把unicode数据转换成合适的格式以供传输和存储？</p>
-<p>根据你的数据输入源和输出目的地，有时你可能什么都不用做，你只需要检查你程序中
-所使用的库是否原声的支持unicode。比如XML解析库一般都直接返回unicode数据；许多
-关系数据库都支持unicode列存储和unicode SQL查询！</p>
-<p>但是unicode数据写到磁盘上或者传送到socket时，一般都会转换成特定的格式。
-但是这时我们需要注意的是读取不完整unicode的问题。</p>
+<p>一旦程序涉及到操作unicode 数据的代码，下一个问题就是I/O。你的程序从哪里获得unicode数据？怎样把unicode数据转换成合适的格式以供传输和存储？</p>
+<p>根据你的数据输入源和输出目的地，有时你可能什么都不用做，你只需要检查你程序中所使用的库是否原声的支持unicode。比如XML解析库一般都直接返回unicode数据；许多关系数据库都支持unicode列存储和unicode SQL查询！</p>
+<p>但是unicode数据写到磁盘上或者传送到socket时，一般都会转换成特定的格式。但是这时我们需要注意的是读取不完整unicode的问题。</p>
 </div>
 </div>
 <div class="section" id="wsgi-http">
 <h2><a class="toc-backref" href="#id26">8.6. WSGI/HTTP编码问题</a><a class="headerlink" href="#wsgi-http" title="Permalink to this headline">¶</a></h2>
-<p>通常，http协议处理的是字节序列(HTTP 协议也不直接支持unicode，来源于PEP-3333)，
-因此，wsgi规范涉及到的string一般
-都是bytestring。近期测试webob程序的时候，程序总是报错。原来wsgi
-app要求假如返回字符串类型，则只能是str类型，而不能是unicode类型。</p>
+<p>通常，http协议处理的是字节序列(HTTP 协议也不直接支持unicode，来源于PEP-3333)，因此，wsgi规范涉及到的string一般都是bytestring。近期测试webob程序的时候，程序总是报错。原来wsgi app要求假如返回字符串类型，则只能是str类型，而不能是unicode类型。</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">simple_app</span><span class="p">(</span><span class="n">environ</span><span class="p">,</span> <span class="n">start_response</span><span class="p">):</span>
     <span class="n">status</span> <span class="o">=</span> <span class="s1">&#39;200 OK&#39;</span>
     <span class="n">response_headers</span> <span class="o">=</span> <span class="p">[(</span><span class="s1">&#39;Content-type&#39;</span><span class="p">,</span><span class="s1">&#39;text/plain&#39;</span><span class="p">)]</span>
@@ -384,24 +348,15 @@ app要求假如返回字符串类型，则只能是str类型，而不能是unico
 </div>
 <p>请看pep-3333 wsgi规范关于unicode 的描述：</p>
 <p>HTTP does not directly support Unicode, and neither does this interface. All encoding/decoding must be handled by the application; all strings passed to or from the server must be of type str or bytes , never unicode . The result of using a unicode object where a string object is required, is undefined.</p>
-<p>HTTP协议不直接支持unicode，它的接口也不支持。因此app需要处理encoding/decoding：
-所有的strings(server传来的和传递给server的)都只能是str类型或者bytes类型，决不能
-是unicode。在需要string对象而返回unicode对象的地方，结果是未定义的！</p>
+<p>HTTP协议不直接支持unicode，它的接口也不支持。因此app需要处理encoding/decoding：所有的strings(server传来的和传递给server的)都只能是str类型或者bytes类型，决不能是unicode。在需要string对象而返回unicode对象的地方，结果是未定义的！</p>
 <p>Note also that strings passed to start_response() as a status or as response headers must follow RFC 2616 with respect to encoding. That is, they must either be ISO-8859-1 characters, or use RFC 2047 MIME encoding.</p>
-<p>同样需要指出：传递给 start_response 回调函数的strings(作为HTTP 响应状态码和
-头部)需要服从RFC-2616的编码规定。因此：他们只可能是ISO-8859-1字符集或者RFC-2047多媒体编码！</p>
+<p>同样需要指出：传递给 start_response 回调函数的strings(作为HTTP 响应状态码和头部)需要服从RFC-2616的编码规定。因此：他们只可能是ISO-8859-1字符集或者RFC-2047多媒体编码！</p>
 <p>On Python platforms where the str or StringType type is in fact Unicode-based (e.g. Jython, IronPython, Python 3, etc.), all &#8220;strings&#8221; referred to in this specification must contain only code points representable in ISO-8859-1 encoding ( u0000 through u00FF , inclusive). It is a fatal error for an application to supply strings containing any other Unicode character or code point. Similarly, servers and gateways must not supply strings to an application containing any other Unicode characters.</p>
-<p>在python平台上，str和StringType类型都是基于unicode的(如：Jython, IronPython, Python3);
-该规范里涉及到的所有strings只能包含 ISO-8859-1 编码规则列出的码点。
-wsgi app 提供包含任意其他unicode字符集或者码点的strings都是严重错误。
-类似的，servers或者gateway也不应该给一个app提供包含其他unicode字符集的strings</p>
+<p>在python平台上，str和StringType类型都是基于unicode的(如：Jython, IronPython, Python3);该规范里涉及到的所有strings只能包含 ISO-8859-1编码规则列出的码点。wsgi app 提供包含任意其他unicode字符集或者码点的strings都是严重错误。类似的，servers或者gateway也不应该给一个app提供包含其他unicode字符集的strings</p>
 <p>Again, all objects referred to in this specification as &#8220;strings&#8221; must be of type str or StringType , and must not be of type unicode or UnicodeType . And, even if a given platform allows for more than 8 bits per character in str / StringType objects, only the lower 8 bits may be used, for any value referred to in this specification as a &#8220;string&#8221;.</p>
-<p>再次强调：该规范里涉及的所有string对象只能是str或者StringType，而不能是unicode 或者UnicodeType；
-即使有些平台str或者StringType对象支持超过 8bits/每字符，也可能只有低8
-位字符可用。</p>
+<p>再次强调：该规范里涉及的所有string对象只能是str或者StringType，而不能是unicode 或者UnicodeType；即使有些平台str或者StringType对象支持超过 8bits/每字符，也可能只有低8位字符可用。</p>
 <p>For values referred to in this specification as &#8220;bytestrings&#8221; (i.e., values read from wsgi.input , passed to write() or yielded by the application), the value must be of type bytes under Python 3, and str in earlier versions of Python.</p>
-<p>如果该规范里涉及到的值为”bytestrings“(如：wsgi.input, 传递给write(),或者由app yield产生)，
-他们的类型只能是bytes(在Python3中)，或者str(以前的Python版本！)</p>
+<p>如果该规范里涉及到的值为”bytestrings“(如：wsgi.input, 传递给write(),或者由app yield产生)，他们的类型只能是bytes(在Python3中)，或者str(以前的Python版本！)</p>
 </div>
 <hr class="docutils" />
 <div class="section" id="id10">
