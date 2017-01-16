@@ -101,7 +101,7 @@
 <li class="toctree-l2"><a class="reference internal" href="paste_webob_routes.html">14. OpenStack REST-API基础：paste/webob/routes库</a></li>
 <li class="toctree-l2"><a class="reference internal" href="opengrok_xp.html">15. OpenGrok代码浏览环境搭建</a></li>
 <li class="toctree-l2"><a class="reference internal" href="nova_api.html">16. nova-api分析</a></li>
-<li class="toctree-l2"><a class="reference internal" href="nova_smd.html">17. [翻译] nova:Services, Managers and Drivers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nova_smd.html">17. [翻译] nova：Services、Managers and Drivers</a></li>
 <li class="toctree-l2"><a class="reference internal" href="oslo_cfg.html">18. oslo.config 库学习</a></li>
 <li class="toctree-l2"><a class="reference internal" href="kombu.html">19. kombu和消息队列总结</a></li>
 <li class="toctree-l2"><a class="reference internal" href="openstack_debug.html">20. OpenStack 调试</a></li>
@@ -111,6 +111,7 @@
 <li class="toctree-l2"><a class="reference internal" href="qemu_kvm.html">24. qemu/kvm学习笔记</a></li>
 <li class="toctree-l2"><a class="reference internal" href="virt_cmd.html">25. 虚拟化相关命令</a></li>
 <li class="toctree-l2"><a class="reference internal" href="qemu_img_encry.html">26. nova虚机加密总结</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nova_interact.html">27. nova组件间交互总结</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../others/index.html">杂项讨论</a></li>
@@ -180,6 +181,10 @@
 <li class="toctree-l3"><a class="reference internal" href="horizon_develop.html#id4">1.5.1. 前端调试</a></li>
 <li class="toctree-l3"><a class="reference internal" href="horizon_develop.html#id5">1.5.2. 后端调试</a></li>
 <li class="toctree-l3"><a class="reference internal" href="horizon_develop.html#id6">1.5.3. 使用manage.py调试</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="horizon_develop.html#id7">1.6. 其他问题</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="horizon_develop.html#id8">1.6.1. 权限错误</a></li>
 </ul>
 </li>
 </ul>
@@ -427,7 +432,7 @@
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="nova_api.html">16. nova-api分析</a></li>
-<li class="toctree-l1"><a class="reference internal" href="nova_smd.html">17. [翻译] nova:Services, Managers and Drivers</a><ul>
+<li class="toctree-l1"><a class="reference internal" href="nova_smd.html">17. [翻译] nova：Services、Managers and Drivers</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="nova_smd.html#nova-service">17.1. nova.service 模块</a></li>
 <li class="toctree-l2"><a class="reference internal" href="nova_smd.html#nova-manager">17.2. nova.manager 模块</a></li>
 <li class="toctree-l2"><a class="reference internal" href="nova_smd.html#drivers">17.3. Drivers:特定实现</a></li>
@@ -471,7 +476,7 @@
 <li class="toctree-l3"><a class="reference internal" href="openstack_debug.html#id4">20.2.2. 直接使用 pdb 模块参数</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="openstack_debug.html#id5">20.3. 使用自己编写的日志包</a></li>
+<li class="toctree-l2"><a class="reference internal" href="openstack_debug.html#id5">20.3. 使用自己编写的调试设施</a></li>
 <li class="toctree-l2"><a class="reference internal" href="openstack_debug.html#id6">20.4. 参考</a></li>
 </ul>
 </li>
@@ -508,6 +513,11 @@
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="qemu_img_encry.html#id4">26.3. 附录：实验步骤</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="nova_interact.html">27. nova组件间交互总结</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="nova_interact.html#id2">27.1. 模块与组件调用关系</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nova_interact.html#id3">27.2. 一些误区</a></li>
 </ul>
 </li>
 </ul>

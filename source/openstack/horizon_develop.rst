@@ -174,6 +174,25 @@ horizon 项目基于apache部署时，假如开发过程horizon代码发生
    过滤，查看变量信息
 
 
+其他问题
+=========
+
+这一小节对horizon二次开发中常遇到的问题坐下记录。
+
+权限错误
++++++++++
+
+horizon权限问题遇到多次，具体错误信息可以通过 tail -f /var/log/apache2/error.log 命令查看。
+在测试自己维护的调试信息库，还有snmp监控时都遇到过。使用 chmod 666/777 file/dir -Rn 修改权限，
+错误消失！
+
+.. figure:: /_static/images/permission_denied.png
+   :scale: 100
+   :align: center
+
+   修改代码重启后权限错误
+
+
 ---------------------
 
 .. [#] http://www.360doc.com/content/13/1114/19/8504707_329234716.shtml

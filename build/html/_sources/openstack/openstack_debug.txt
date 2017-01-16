@@ -210,11 +210,24 @@ set_trace
     的断点，因为 import 时使用的是 sys.path 中指定的路径！
 
 
-使用自己编写的日志包
-======================
+使用自己编写的调试设施
+=======================
 
-参考 :ref:`Python logging 模块<log_summary>` ，完全可以使用该日志包记录日志，
-然后通过 ``LOG_DEBUG()`` 添加的日志信息都输出到 /smbshare/csq.log 文件。很方便！
+nova 组件日志是根据进程，分别输出到 nova-api.log，nova-scheduler.log 等文件。
+假如我们自己添加一些调试信息，那么调试信息也会分散到上述不同文件，并和系统原来
+众多的日志混合在一起，查看起来非常不方便。
+
+在充分了解Python和nova日志设施后，完全可以添加自己的filehandler。参考 :ref:`Python logging 模块<log_summary>` ，可以使用该日志包记录日志，然后通过 ``LOG_DEBUG()`` 添加的日志信息都输出到 /smbshare/csq.log 文件。很方便！
+
+另外，nova各组件间，调用和跳转关系比较复杂，为此，自己也维护了一个工具设施 ``LOG_STACK`` ，可以用来很方便
+的查看函数调用栈。并格式化输出到文件 call_stack.log，如下图所示；
+
+
+.. figure:: /_static/images/call_stack1.png
+   :scale: 100
+   :align: center
+
+   build_instance 函数调用栈
 
 
 ---------------------

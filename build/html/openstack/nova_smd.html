@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>17. [翻译] nova:Services, Managers and Drivers &mdash; Welcome to Sitian&#39;s Blog 0.1 documentation</title>
+  <title>17. [翻译] nova：Services、Managers and Drivers &mdash; Welcome to Sitian&#39;s Blog 0.1 documentation</title>
   
 
   
@@ -102,7 +102,7 @@
 <li class="toctree-l2"><a class="reference internal" href="paste_webob_routes.html">14. OpenStack REST-API基础：paste/webob/routes库</a></li>
 <li class="toctree-l2"><a class="reference internal" href="opengrok_xp.html">15. OpenGrok代码浏览环境搭建</a></li>
 <li class="toctree-l2"><a class="reference internal" href="nova_api.html">16. nova-api分析</a></li>
-<li class="toctree-l2 current"><a class="current reference internal" href="#">17. [翻译] nova:Services, Managers and Drivers</a><ul>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">17. [翻译] nova：Services、Managers and Drivers</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#nova-service">17.1. nova.service 模块</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#nova-manager">17.2. nova.manager 模块</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#drivers">17.3. Drivers:特定实现</a></li>
@@ -112,10 +112,14 @@
 <li class="toctree-l2"><a class="reference internal" href="kombu.html">19. kombu和消息队列总结</a></li>
 <li class="toctree-l2"><a class="reference internal" href="openstack_debug.html">20. OpenStack 调试</a></li>
 <li class="toctree-l2"><a class="reference internal" href="nova_rpcserver_start.html">21. nova RPC服务启动分析</a></li>
+<li class="toctree-l2"><a class="reference internal" href="periodic_task.html">22. OpenStack周期性任务分析</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nova_log.html">23. OpenStack 日志模块分析</a></li>
+<li class="toctree-l2"><a class="reference internal" href="qemu_kvm.html">24. qemu/kvm学习笔记</a></li>
+<li class="toctree-l2"><a class="reference internal" href="virt_cmd.html">25. 虚拟化相关命令</a></li>
+<li class="toctree-l2"><a class="reference internal" href="qemu_img_encry.html">26. nova虚机加密总结</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="../web/index.html">web开发</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../others/index.html">附录</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../others/index.html">杂项讨论</a></li>
 </ul>
 
             
@@ -148,7 +152,7 @@
       
           <li><a href="index.html">OpenStack Note</a> &raquo;</li>
       
-    <li>17. [翻译] nova:Services, Managers and Drivers</li>
+    <li>17. [翻译] nova：Services、Managers and Drivers</li>
       <li class="wy-breadcrumbs-aside">
         
           
@@ -162,21 +166,15 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="nova-services-managers-and-drivers">
-<span id="nova-smd"></span><h1>17. [翻译] nova:Services, Managers and Drivers<a class="headerlink" href="#nova-services-managers-and-drivers" title="Permalink to this headline">¶</a></h1>
+  <div class="section" id="nova-servicesmanagers-and-drivers">
+<span id="nova-smd"></span><h1>17. [翻译] nova：Services、Managers and Drivers<a class="headerlink" href="#nova-servicesmanagers-and-drivers" title="Permalink to this headline">¶</a></h1>
 <p>参考链接：<a class="reference external" href="http://docs.openstack.org/developer/nova/services.html">http://docs.openstack.org/developer/nova/services.html</a></p>
-<p>对于初次接触nova的新手来说，Services/Managers/Drivers的作用可能让人
-很困惑。该文档就试图概括他们之间的区别，使得理解系统更容易！</p>
-<p>当前，Managers 和 Drivers 通过标志指定，并使用utils.load_object() 加载，
-该函数允许他们(指Managers和Drivers)通过单态、类、模块或者对象来实现。
-只要(通过标志指定的)路径指向一个(响应getattr的)对象(或者返回一个对象的callable)，
-它就应该是manager或dirver！</p>
+<p>对于初次接触nova的新手来说，Services/Managers/Drivers的作用可能让人很困惑。该文档就试图概括他们之间的区别，使得理解系统更容易！</p>
+<p>当前，Managers 和 Drivers 通过标志指定，并使用utils.load_object() 加载，该函数允许他们(指Managers和Drivers)通过单态、类、模块或者对象来实现。只要(通过标志指定的)路径指向一个(响应getattr的)对象(或者返回一个对象的callable)，它就应该是manager或dirver！</p>
 <div class="section" id="nova-service">
 <h2>17.1. nova.service 模块<a class="headerlink" href="#nova-service" title="Permalink to this headline">¶</a></h2>
 <p>所有运行在hosts工作进程的通用节点基类！</p>
-<p>每个 service 对象都有一个或多个manager对象，manager 对象是 rpcserver 的 endpoints，
-并通过topic监听消息队列。service对象也可以运行 manager 对象的周期性任务并报告
-它的状态给数据库状态服务表。</p>
+<p>每个 service 对象都有一个或多个manager对象，manager 对象是 rpcserver 的 endpoints，并通过topic监听消息队列。service对象也可以运行 manager 对象的周期性任务并报告它的状态给数据库状态服务表。</p>
 <p>Service 类定义如下：</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Service</span><span class="p">(</span><span class="n">host</span><span class="p">,</span> <span class="n">binary</span><span class="p">,</span> <span class="n">topic</span><span class="p">,</span> <span class="n">manager</span><span class="p">,</span> <span class="n">report_interval</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
               <span class="n">periodic_enable</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">periodic_fuzzy_delay</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
@@ -223,19 +221,12 @@
 <div class="section" id="nova-manager">
 <h2>17.2. nova.manager 模块<a class="headerlink" href="#nova-manager" title="Permalink to this headline">¶</a></h2>
 <p>Manager 基类。</p>
-<p>Manager 负责系统的某个特定方面。它是关系系统某一部分的一组逻辑代码。
-一般来说，其他组件应该使用Managers对它负责的组件进行更改。</p>
-<p>例如，其他组件需要以某种方式处理卷，那它应该使用 VolumeManager的方法，而不是直接
-更改数据库域。这允许我们把所有与卷相关的代码放在同一个地方！</p>
-<p>我们采用了智能managers和哑数据的基本策略，这意味着不是把方法附加给
-数据对象，而是组件需要调用manager的(作用于数据的)方法</p>
-<p>managers的方法能在本机运行的应该直接调用。如果某些特殊的方法需要在
-远程host上执行，这应该通过发送RPC调用给(包装了manager的)service。</p>
-<p>Managers负责绝大部分的数据访问，但是不实现特定的数据。需要特定实现的任何东西(不能通用化的)
-都应该由Driver去做！</p>
-<p>通常，我们倾向使用一个Manager对应不同的Drivers实现，但有时有很多Managers是必要的。
-你可以这样想：在manager层抽象不同的所有策略(如FlatNetwork和VlanNetwork)，在Drivers
-层做不同的实现(LinuxNetDriver 和 CiscoNetDriver)。</p>
+<p>Manager 负责系统的某个特定方面。它是关系系统某一部分的一组逻辑代码。一般来说，其他组件应该使用Managers对它负责的组件进行更改。</p>
+<p>例如，其他组件需要以某种方式处理卷，那它应该使用 VolumeManager的方法，而不是直接更改数据库域。这允许我们把所有与卷相关的代码放在同一个地方！</p>
+<p>我们采用了智能managers和哑数据的基本策略，这意味着不是把方法附加给数据对象，而是组件需要调用manager的(作用于数据的)方法</p>
+<p>managers的方法能在本机运行的应该直接调用。如果某些特殊的方法需要在远程host上执行，这应该通过发送RPC调用给(包装了manager的)service。</p>
+<p>Managers负责绝大部分的数据访问，但是不实现特定的数据。需要特定实现的任何东西(不能通用化的)都应该由Driver去做！</p>
+<p>通常，我们倾向使用一个Manager对应不同的Drivers实现，但有时有很多Managers是必要的。你可以这样想：在manager层抽象不同的所有策略(如FlatNetwork和VlanNetwork)，在Drivers层做不同的实现(LinuxNetDriver 和 CiscoNetDriver)。</p>
 <p>Managers 通常提供方法，用来进行主机初始化设置或者包装了服务的周期性任务初始化设置！</p>
 <p>该模块提供 Manager， managers的基类。</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Manager</span><span class="p">(</span><span class="n">host</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">db_driver</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">service_name</span><span class="o">=</span><span class="s1">&#39;undefined&#39;</span><span class="p">)</span>

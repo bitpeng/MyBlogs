@@ -102,7 +102,7 @@
 <li class="toctree-l2"><a class="reference internal" href="paste_webob_routes.html">14. OpenStack REST-API基础：paste/webob/routes库</a></li>
 <li class="toctree-l2"><a class="reference internal" href="opengrok_xp.html">15. OpenGrok代码浏览环境搭建</a></li>
 <li class="toctree-l2"><a class="reference internal" href="nova_api.html">16. nova-api分析</a></li>
-<li class="toctree-l2"><a class="reference internal" href="nova_smd.html">17. [翻译] nova:Services, Managers and Drivers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nova_smd.html">17. [翻译] nova：Services、Managers and Drivers</a></li>
 <li class="toctree-l2"><a class="reference internal" href="oslo_cfg.html">18. oslo.config 库学习</a></li>
 <li class="toctree-l2"><a class="reference internal" href="kombu.html">19. kombu和消息队列总结</a></li>
 <li class="toctree-l2 current"><a class="current reference internal" href="#">20. OpenStack 调试</a><ul>
@@ -112,16 +112,18 @@
 <li class="toctree-l4"><a class="reference internal" href="#id4">20.2.2. 直接使用 pdb 模块参数</a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="#id5">20.3. 使用自己编写的日志包</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id5">20.3. 使用自己编写的调试设施</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#id6">20.4. 参考</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="nova_rpcserver_start.html">21. nova RPC服务启动分析</a></li>
 <li class="toctree-l2"><a class="reference internal" href="periodic_task.html">22. OpenStack周期性任务分析</a></li>
 <li class="toctree-l2"><a class="reference internal" href="nova_log.html">23. OpenStack 日志模块分析</a></li>
+<li class="toctree-l2"><a class="reference internal" href="qemu_kvm.html">24. qemu/kvm学习笔记</a></li>
+<li class="toctree-l2"><a class="reference internal" href="virt_cmd.html">25. 虚拟化相关命令</a></li>
+<li class="toctree-l2"><a class="reference internal" href="qemu_img_encry.html">26. nova虚机加密总结</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="../web/index.html">web开发</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../others/index.html">杂项讨论</a></li>
 </ul>
 
@@ -170,19 +172,19 @@
            <div itemprop="articleBody">
             
   <div class="section" id="openstack">
-<span id="openstack-debug"></span><h1><a class="toc-backref" href="#id12">20. OpenStack 调试</a><a class="headerlink" href="#openstack" title="Permalink to this headline">¶</a></h1>
+<span id="openstack-debug"></span><h1><a class="toc-backref" href="#id13">20. OpenStack 调试</a><a class="headerlink" href="#openstack" title="Permalink to this headline">¶</a></h1>
 <div class="contents topic" id="id1">
 <p class="topic-title first">目录</p>
 <ul class="simple">
-<li><a class="reference internal" href="#openstack" id="id12">OpenStack 调试</a><ul>
-<li><a class="reference internal" href="#id3" id="id13">日志</a></li>
-<li><a class="reference internal" href="#pdb" id="id14">pdb</a><ul>
-<li><a class="reference internal" href="#set-trace" id="id15">set_trace</a></li>
-<li><a class="reference internal" href="#id4" id="id16">直接使用 pdb 模块参数</a></li>
+<li><a class="reference internal" href="#openstack" id="id13">OpenStack 调试</a><ul>
+<li><a class="reference internal" href="#id3" id="id14">日志</a></li>
+<li><a class="reference internal" href="#pdb" id="id15">pdb</a><ul>
+<li><a class="reference internal" href="#set-trace" id="id16">set_trace</a></li>
+<li><a class="reference internal" href="#id4" id="id17">直接使用 pdb 模块参数</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#id5" id="id17">使用自己编写的日志包</a></li>
-<li><a class="reference internal" href="#id6" id="id18">参考</a></li>
+<li><a class="reference internal" href="#id5" id="id18">使用自己编写的调试设施</a></li>
+<li><a class="reference internal" href="#id6" id="id19">参考</a></li>
 </ul>
 </li>
 </ul>
@@ -191,7 +193,7 @@
 <p>这里简要把自己分析、跟踪、调试OpenStack组件所用到的方法记录下来。
 主要参考了网友 <cite>koala bear</cite> 的博文 <a class="reference external" href="http://wsfdl.com/openstack/2013/08/28/%E8%B0%83%E8%AF%95OpenStack.html">OpenStack调试</a> ，在此表示感谢！</p>
 <div class="section" id="id3">
-<h2><a class="toc-backref" href="#id13">20.1. 日志</a><a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id14">20.1. 日志</a><a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h2>
 <p><code class="docutils literal"><span class="pre">OpenStack</span> <span class="pre">logging</span></code> 模块是在 <code class="docutils literal"><span class="pre">python</span> <span class="pre">logging</span></code> 基础之上做了封装，使用简单，以 nova 为例，首先需要导入相关代码文件，获取日志句柄后，即可往该句柄写入日志信息。</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">nova.openstack.common</span> <span class="k">import</span> <span class="n">log</span> <span class="k">as</span> <span class="n">logging</span>
 
@@ -234,7 +236,7 @@ OpenStack logging 模块提供了丰富的和日志相关的配置项，详情�
 </ul>
 </div>
 <div class="section" id="pdb">
-<h2><a class="toc-backref" href="#id14">20.2. pdb</a><a class="headerlink" href="#pdb" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id15">20.2. pdb</a><a class="headerlink" href="#pdb" title="Permalink to this headline">¶</a></h2>
 <p>Pdb 是 python 自带的库，它支持设置断点、单步调试源码、查看当前代码、
 查看 stack 片段和动态修改变量的值等功能，根据个人经验，使用 pdb 调试 OpenStack
 使用到的主要命令包括：</p>
@@ -250,7 +252,7 @@ OpenStack logging 模块提供了丰富的和日志相关的配置项，详情�
 </pre></div>
 </div>
 <div class="section" id="set-trace">
-<h3><a class="toc-backref" href="#id15">20.2.1. set_trace</a><a class="headerlink" href="#set-trace" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id16">20.2.1. set_trace</a><a class="headerlink" href="#set-trace" title="Permalink to this headline">¶</a></h3>
 <p>使用该方法时，需在断点处加入以下代码：</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pdb</span><span class="p">;</span> <span class="n">pdb</span><span class="o">.</span><span class="n">set_trace</span><span class="p">()</span>
 </pre></div>
@@ -283,7 +285,7 @@ OpenStack logging 模块提供了丰富的和日志相关的配置项，详情�
 </div>
 </div>
 <div class="section" id="id4">
-<h3><a class="toc-backref" href="#id16">20.2.2. 直接使用 pdb 模块参数</a><a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id17">20.2.2. 直接使用 pdb 模块参数</a><a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h3>
 <p>无论是日志还是 pdb.set_trace 方法，均需要修改源代码，有没有一种方
 法不需要改动文件呢？答案是肯定的，pdb 还提供了另外一种调试模式：</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span>$ python -m pdb debug_file.py
@@ -353,13 +355,21 @@ OpenStack logging 模块提供了丰富的和日志相关的配置项，详情�
 </div>
 </div>
 <div class="section" id="id5">
-<h2><a class="toc-backref" href="#id17">20.3. 使用自己编写的日志包</a><a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h2>
-<p>参考 <a class="reference internal" href="../py_doc/log_summary.html#log-summary"><span class="std std-ref">Python logging 模块</span></a> ，完全可以使用该日志包记录日志，
-然后通过 <code class="docutils literal"><span class="pre">LOG_DEBUG()</span></code> 添加的日志信息都输出到 /smbshare/csq.log 文件。很方便！</p>
+<h2><a class="toc-backref" href="#id18">20.3. 使用自己编写的调试设施</a><a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h2>
+<p>nova 组件日志是根据进程，分别输出到 nova-api.log，nova-scheduler.log 等文件。
+假如我们自己添加一些调试信息，那么调试信息也会分散到上述不同文件，并和系统原来
+众多的日志混合在一起，查看起来非常不方便。</p>
+<p>在充分了解Python和nova日志设施后，完全可以添加自己的filehandler。参考 <a class="reference internal" href="../py_doc/log_summary.html#log-summary"><span class="std std-ref">Python logging 模块</span></a> ，可以使用该日志包记录日志，然后通过 <code class="docutils literal"><span class="pre">LOG_DEBUG()</span></code> 添加的日志信息都输出到 /smbshare/csq.log 文件。很方便！</p>
+<p>另外，nova各组件间，调用和跳转关系比较复杂，为此，自己也维护了一个工具设施 <code class="docutils literal"><span class="pre">LOG_STACK</span></code> ，可以用来很方便
+的查看函数调用栈。并格式化输出到文件 call_stack.log，如下图所示；</p>
+<div class="figure align-center" id="id12">
+<a class="reference internal image-reference" href="../_images/call_stack1.png"><img alt="../_images/call_stack1.png" src="../_images/call_stack1.png" style="width: 950.0px; height: 722.0px;" /></a>
+<p class="caption"><span class="caption-text">build_instance 函数调用栈</span></p>
+</div>
 </div>
 <hr class="docutils" />
 <div class="section" id="id6">
-<h2><a class="toc-backref" href="#id18">20.4. 参考</a><a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id19">20.4. 参考</a><a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h2>
 <table class="docutils footnote" frame="void" id="id7" rules="none">
 <colgroup><col class="label" /><col /></colgroup>
 <tbody valign="top">

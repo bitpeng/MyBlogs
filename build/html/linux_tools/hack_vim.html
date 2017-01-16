@@ -96,15 +96,25 @@
 <li class="toctree-l2 current"><a class="current reference internal" href="#">9. vim技巧</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#id1">9.1. 末行命令</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#id2">9.2. 光标移动</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#id3">9.3. 其他</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id3">9.3. 文本修改</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#id4">9.3.1. 插入</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id5">9.3.2. 复制/移动</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id6">9.3.3. 恢复和撤销</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#id7">9.4. 可视化操作</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#id8">9.4.1. 文本对象选择</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id9">9.4.2. 列模式操作</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#id10">9.5. 其他</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="centos_net_sum.html">10. Linux 联网问题汇总</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../openstack/index.html">OpenStack Note</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../web/index.html">web开发</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../others/index.html">附录</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../others/index.html">杂项讨论</a></li>
 </ul>
 
             
@@ -193,20 +203,95 @@ ctrl + i ; 光标回退到较新位置！
 <div class="highlight-default"><div class="highlight"><pre><span></span>0 ;
 ^ ;
 $ ;
+g_;
+b ;
+B ;
+w ;
+W ;
+e ;
+</pre></div>
+</div>
+<p>全局光标移动：</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">gg</span> <span class="p">;</span> <span class="n">定位到第一行</span>
+<span class="n">G</span> <span class="p">;</span> <span class="n">定位到末行</span>
+<span class="p">:</span><span class="n">n</span> <span class="p">;</span> <span class="n">定位到第n行</span>
+<span class="n">hjkl</span><span class="p">;</span>
+<span class="n">N</span><span class="p">(</span><span class="n">hjkl</span><span class="p">);</span>
+<span class="o">*</span> <span class="p">;</span>
+<span class="c1"># ;</span>
+<span class="o">%</span> <span class="p">;</span>
 </pre></div>
 </div>
 </div>
 <div class="section" id="id3">
-<h2>9.3. 其他<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h2>
+<h2>9.3. 文本修改<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id4">
+<h3>9.3.1. 插入<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">i</span><span class="p">;</span>
+<span class="n">I</span><span class="p">;</span>
+<span class="n">o</span><span class="p">;</span>
+<span class="n">O</span><span class="p">;</span>
+<span class="n">a</span><span class="p">;</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="id5">
+<h3>9.3.2. 复制/移动<a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">单行复制</span><span class="o">/</span><span class="n">移动</span>
+<span class="n">Y</span> <span class="o">+</span> <span class="n">p</span> <span class="o">/</span> <span class="n">dd</span> <span class="o">+</span> <span class="n">p</span>
+<span class="n">多行复制</span><span class="o">/</span><span class="n">移动</span>
+<span class="n">V</span> <span class="o">+</span> <span class="n">nj</span> <span class="o">+</span> <span class="n">p</span><span class="p">(</span><span class="n">ddp</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="id6">
+<h3>9.3.3. 恢复和撤销<a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">u</span> <span class="p">;</span> <span class="n">撤销</span>
+<span class="n">Ctrl</span> <span class="o">+</span> <span class="n">r</span> <span class="p">;</span> <span class="n">恢复重做</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="id7">
+<h2>9.4. 可视化操作<a class="headerlink" href="#id7" title="Permalink to this headline">¶</a></h2>
+<p>v 或者 V进入可视化是个人自喜欢的命令, 其中:</p>
+<ul class="simple">
+<li>V 是整行可视化模式：</li>
+<li>v 是简单可视化模式;</li>
+</ul>
+<p>其中整行可视化个人一般都是进行一些整行复制、移动粘贴、删除等操作。</p>
+<p>简单可视化功能更强大，自己常用的有：</p>
+<div class="section" id="id8">
+<h3>9.4.1. 文本对象选择<a class="headerlink" href="#id8" title="Permalink to this headline">¶</a></h3>
+<p>利用普通vi/va模式进行文本选择，然后执行 c, d, y/p/P 等操作</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">viw</span>
+<span class="n">vi</span><span class="s2">&quot; / va&quot;</span>
+<span class="n">vi</span><span class="p">)</span> <span class="o">/</span> <span class="n">va</span><span class="p">)</span>
+<span class="n">vi</span><span class="p">]</span> <span class="o">/</span> <span class="n">va</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="id9">
+<h3>9.4.2. 列模式操作<a class="headerlink" href="#id9" title="Permalink to this headline">¶</a></h3>
+<p>该操作一般在写代码时添加多行注释, 多列删除：</p>
+<ul class="simple">
+<li>ctrl +v</li>
+<li>I / x</li>
+<li># &lt;esc&gt;</li>
+</ul>
+</div>
+</div>
+<div class="section" id="id10">
+<h2>9.5. 其他<a class="headerlink" href="#id10" title="Permalink to this headline">¶</a></h2>
 <p>统计字符串出现个数:</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="p">:</span><span class="o">%</span><span class="n">s</span><span class="o">/</span><span class="n">context</span><span class="o">/&amp;/</span><span class="n">ng</span>
 <span class="p">:</span><span class="o">%</span><span class="n">s</span><span class="o">/</span><span class="n">context</span><span class="o">//</span><span class="n">ng</span>
 </pre></div>
 </div>
-<table class="docutils footnote" frame="void" id="id4" rules="none">
+<table class="docutils footnote" frame="void" id="id11" rules="none">
 <colgroup><col class="label" /><col /></colgroup>
 <tbody valign="top">
-<tr><td class="label">[1]</td><td><a class="reference external" href="http://coolshell.cn/articles/5426.html">http://coolshell.cn/articles/5426.html</a></td></tr>
+<tr><td class="label">[1]</td><td><a class="reference external" href="HTTP://coolshell.cn/articles/5426.html">HTTP://coolshell.cn/articles/5426.html</a></td></tr>
 </tbody>
 </table>
 </div>

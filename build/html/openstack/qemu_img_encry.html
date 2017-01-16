@@ -102,7 +102,7 @@
 <li class="toctree-l2"><a class="reference internal" href="paste_webob_routes.html">14. OpenStack REST-API基础：paste/webob/routes库</a></li>
 <li class="toctree-l2"><a class="reference internal" href="opengrok_xp.html">15. OpenGrok代码浏览环境搭建</a></li>
 <li class="toctree-l2"><a class="reference internal" href="nova_api.html">16. nova-api分析</a></li>
-<li class="toctree-l2"><a class="reference internal" href="nova_smd.html">17. [翻译] nova:Services, Managers and Drivers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nova_smd.html">17. [翻译] nova：Services、Managers and Drivers</a></li>
 <li class="toctree-l2"><a class="reference internal" href="oslo_cfg.html">18. oslo.config 库学习</a></li>
 <li class="toctree-l2"><a class="reference internal" href="kombu.html">19. kombu和消息队列总结</a></li>
 <li class="toctree-l2"><a class="reference internal" href="openstack_debug.html">20. OpenStack 调试</a></li>
@@ -347,8 +347,8 @@ uuid 为根据密码生成的才可以启动。</p>
 <li>开启backfile选项时，backfile中是cirros镜像，而它并没有被加密；加密的是写时复制文件
 encry3.qcow2。相当于只加密了虚拟硬盘，而操作系统启动镜像并没有被加密。因此，只要是
 libvirt 中合法的 secret-uuid，都可以正常启动虚机。</li>
-<li>convert命令创建的磁盘，encry2.qcow2 虚拟磁盘中，不仅仅有普通文件内容，还有cirros系统镜像，
-加密磁盘时，系统启动镜像也被加密掉了。因此只有正确的密码对应的 secret-uuid，才可以启动虚机。</li>
+<li>convert命令创建的磁盘，会将backfile和虚拟磁盘文件进行合并，encry2.qcow2 虚拟磁盘中，不仅仅有普通文件内容，还有cirros系统镜像，
+因此生成加密磁盘时，系统启动镜像也被加密掉了。因此只有正确的密码对应的 secret-uuid，才可以启动虚机。</li>
 </ul>
 <p>待验证我的想法，初步的验证思路是创建一个加密的 cirros 镜像，然后利用该镜像再重复上述两步骤。</p>
 </div>

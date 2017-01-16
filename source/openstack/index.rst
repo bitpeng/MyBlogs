@@ -43,6 +43,6 @@ OpenStack Note
     qemu_kvm
     virt_cmd
     qemu_img_encry
-
+    nova_interact
 
 ..  sphinx_doc

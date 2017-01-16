@@ -97,10 +97,14 @@
 <li class="toctree-l4"><a class="reference internal" href="#id6">1.5.3. 使用manage.py调试</a></li>
 </ul>
 </li>
+<li class="toctree-l3"><a class="reference internal" href="#id7">1.6. 其他问题</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#id8">1.6.1. 权限错误</a></li>
+</ul>
+</li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="image-create-guide.html">2. OpenStack镜像制作</a></li>
-<li class="toctree-l2"><a class="reference internal" href="deploy_synopsis.html">3. openstack 实践指南</a></li>
+<li class="toctree-l2"><a class="reference internal" href="deploy_synopsis.html">3. openstack 部署实践</a></li>
 <li class="toctree-l2"><a class="reference internal" href="centos_vm_netconf.html">4. Centos虚拟机联网配置</a></li>
 <li class="toctree-l2"><a class="reference internal" href="lanch_instance_failure.html">5. OpenStack 启动虚拟机失败分析</a></li>
 <li class="toctree-l2"><a class="reference internal" href="rabbitmq_doc.html">6. [翻译] rabbitmq教程</a></li>
@@ -113,10 +117,20 @@
 <li class="toctree-l2"><a class="reference internal" href="cloud_check.html">13. 云平台服务器重启注意事项</a></li>
 <li class="toctree-l2"><a class="reference internal" href="paste_webob_routes.html">14. OpenStack REST-API基础：paste/webob/routes库</a></li>
 <li class="toctree-l2"><a class="reference internal" href="opengrok_xp.html">15. OpenGrok代码浏览环境搭建</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nova_api.html">16. nova-api分析</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nova_smd.html">17. [翻译] nova：Services、Managers and Drivers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="oslo_cfg.html">18. oslo.config 库学习</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kombu.html">19. kombu和消息队列总结</a></li>
+<li class="toctree-l2"><a class="reference internal" href="openstack_debug.html">20. OpenStack 调试</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nova_rpcserver_start.html">21. nova RPC服务启动分析</a></li>
+<li class="toctree-l2"><a class="reference internal" href="periodic_task.html">22. OpenStack周期性任务分析</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nova_log.html">23. OpenStack 日志模块分析</a></li>
+<li class="toctree-l2"><a class="reference internal" href="qemu_kvm.html">24. qemu/kvm学习笔记</a></li>
+<li class="toctree-l2"><a class="reference internal" href="virt_cmd.html">25. 虚拟化相关命令</a></li>
+<li class="toctree-l2"><a class="reference internal" href="qemu_img_encry.html">26. nova虚机加密总结</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="../web/index.html">web开发</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../others/index.html">附录</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../others/index.html">杂项讨论</a></li>
 </ul>
 
             
@@ -164,7 +178,7 @@
            <div itemprop="articleBody">
             
   <div class="section" id="horizon">
-<span id="horizon-develop"></span><h1><a class="toc-backref" href="#id14">1. Horizon 二次开发指南</a><a class="headerlink" href="#horizon" title="Permalink to this headline">¶</a></h1>
+<span id="horizon-develop"></span><h1><a class="toc-backref" href="#id17">1. Horizon 二次开发指南</a><a class="headerlink" href="#horizon" title="Permalink to this headline">¶</a></h1>
 <div class="admonition tip">
 <p class="first admonition-title">Tip</p>
 <p class="last">在OpenStack云平台中，horizon是一个相对比较简单的项目，是入门OpenStack开发的一个比较好的切入点，
@@ -173,15 +187,19 @@
 <div class="contents topic" id="id1">
 <p class="topic-title first">目录</p>
 <ul class="simple">
-<li><a class="reference internal" href="#horizon" id="id14">Horizon 二次开发指南</a><ul>
-<li><a class="reference internal" href="#id2" id="id15">Horizon结构</a></li>
-<li><a class="reference internal" href="#panel" id="id16">快速生成panel</a></li>
-<li><a class="reference internal" href="#dashboard" id="id17">dashboard汉化</a></li>
-<li><a class="reference internal" href="#manage-py" id="id18">manage.py文件</a></li>
-<li><a class="reference internal" href="#id3" id="id19">调试</a><ul>
-<li><a class="reference internal" href="#id4" id="id20">前端调试</a></li>
-<li><a class="reference internal" href="#id5" id="id21">后端调试</a></li>
-<li><a class="reference internal" href="#id6" id="id22">使用manage.py调试</a></li>
+<li><a class="reference internal" href="#horizon" id="id17">Horizon 二次开发指南</a><ul>
+<li><a class="reference internal" href="#id2" id="id18">Horizon结构</a></li>
+<li><a class="reference internal" href="#panel" id="id19">快速生成panel</a></li>
+<li><a class="reference internal" href="#dashboard" id="id20">dashboard汉化</a></li>
+<li><a class="reference internal" href="#manage-py" id="id21">manage.py文件</a></li>
+<li><a class="reference internal" href="#id3" id="id22">调试</a><ul>
+<li><a class="reference internal" href="#id4" id="id23">前端调试</a></li>
+<li><a class="reference internal" href="#id5" id="id24">后端调试</a></li>
+<li><a class="reference internal" href="#id6" id="id25">使用manage.py调试</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#id7" id="id26">其他问题</a><ul>
+<li><a class="reference internal" href="#id8" id="id27">权限错误</a></li>
 </ul>
 </li>
 </ul>
@@ -190,16 +208,16 @@
 </div>
 <hr class="docutils" />
 <div class="section" id="id2">
-<h2><a class="toc-backref" href="#id15">1.1. Horizon结构</a><a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id18">1.1. Horizon结构</a><a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
 <p>如图1所示的仪表盘结构，最上的导航栏为 <code class="xref py py-class docutils literal"><span class="pre">dashboard</span></code> 元素，左侧为panel，中间为tab和tabgroup。
 因此，我们第一步尝试自己创建一个panel。</p>
-<div class="figure align-center" id="id9">
+<div class="figure align-center" id="id11">
 <a class="reference internal image-reference" href="../_images/dashboard.PNG"><img alt="../_images/dashboard.PNG" src="../_images/dashboard.PNG" style="width: 1037.0px; height: 566.0px;" /></a>
 <p class="caption"><span class="caption-text">图1：dashboard结构</span></p>
 </div>
 </div>
 <div class="section" id="panel">
-<h2><a class="toc-backref" href="#id16">1.2. 快速生成panel</a><a class="headerlink" href="#panel" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id19">1.2. 快速生成panel</a><a class="headerlink" href="#panel" title="Permalink to this headline">¶</a></h2>
 <p>OpenStak horizon为我们提供两个命令startpanel和startdash，供我们快速生产panel和dashboard。我自己试了很多次startdash命令，
 新添加的dashboard命令无法显示，可能还需要修改某些地方的配置文件。而startpanel命令，测试成功。</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">cd</span> <span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">cecgw</span><span class="o">/</span><span class="n">csmp</span><span class="o">/</span><span class="n">openstack_dashboard</span><span class="o">/</span><span class="n">dashboards</span><span class="o">/</span><span class="n">admin_traffic_monitor</span>
@@ -214,13 +232,13 @@
 中的Admin_Traffic_Monitor更改成和dashboard.py中类名一致。</li>
 <li>重启apache2，刷新页面，就可以看到效果。</li>
 </ul>
-<div class="figure align-center" id="id10">
+<div class="figure align-center" id="id12">
 <img alt="../_images/start_panel.png" src="../_images/start_panel.png" />
 <p class="caption"><span class="caption-text">图：添加panel效果</span></p>
 </div>
 </div>
 <div class="section" id="dashboard">
-<h2><a class="toc-backref" href="#id17">1.3. dashboard汉化</a><a class="headerlink" href="#dashboard" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id20">1.3. dashboard汉化</a><a class="headerlink" href="#dashboard" title="Permalink to this headline">¶</a></h2>
 <p>如效果图可以看到，新添加的panel是英文显示的，可以通过如下步骤进行汉化：</p>
 <ul class="simple">
 <li>编辑dango.po文件；</li>
@@ -232,13 +250,13 @@
 <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">init</span><span class="o">.</span><span class="n">d</span><span class="o">/</span><span class="n">apache2</span> <span class="n">restart</span>
 </pre></div>
 </div>
-<div class="figure align-center" id="id11">
+<div class="figure align-center" id="id13">
 <img alt="../_images/translation.png" src="../_images/translation.png" />
 <p class="caption"><span class="caption-text">图：dashboard元素汉化</span></p>
 </div>
 </div>
 <div class="section" id="manage-py">
-<h2><a class="toc-backref" href="#id18">1.4. manage.py文件</a><a class="headerlink" href="#manage-py" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id21">1.4. manage.py文件</a><a class="headerlink" href="#manage-py" title="Permalink to this headline">¶</a></h2>
 <p>horizon项目是基于django的，而manage.py文件是django项目的一个重要文件，可以用来生成模型，自省模型，
 还可以用来开启django环境的命令行。</p>
 <p>基于ubuntu部署openstack时，manage.py文件位于： <code class="docutils literal"><span class="pre">/usr/share/openstack-dashboard</span></code></p>
@@ -250,14 +268,14 @@
 <p>manage.py 文件还有一个重要作用是用来调试，是最近才发现的一个新功能！后调试一节中讲解。</p>
 </div>
 <div class="section" id="id3">
-<h2><a class="toc-backref" href="#id19">1.5. 调试</a><a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id22">1.5. 调试</a><a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="id4">
-<h3><a class="toc-backref" href="#id20">1.5.1. 前端调试</a><a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id23">1.5.1. 前端调试</a><a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h3>
 <p>对前端开发不是太熟，在dashboard开发中，我使用的是firebug插件，配合在js文件中使用console打印信息，
 用来跟踪变量，查看变量状态等。</p>
 </div>
 <div class="section" id="id5">
-<h3><a class="toc-backref" href="#id21">1.5.2. 后端调试</a><a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id24">1.5.2. 后端调试</a><a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h3>
 <p>horizon项目中，对于前端发起的http请求，有时要跟踪跟踪后端的处理流，查看变量值等。由于horizon项目
 使用apache2进行部署，apache会把后端的操作记录在相关的日志中，因此我们可以使用log库，配合以下命令，
 跟踪变量状态；但是对于处理流程分析，我目前还没有发现好的方法，都是根据代码逻辑进行分析。</p>
@@ -270,7 +288,7 @@
 </div>
 </div>
 <div class="section" id="id6">
-<h3><a class="toc-backref" href="#id22">1.5.3. 使用manage.py调试</a><a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id25">1.5.3. 使用manage.py调试</a><a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h3>
 <p>horizon 项目基于apache部署时，假如开发过程horizon代码发生
 改动，需要重启apache2服务器，然后刷新页面，不太方便也比较麻烦！</p>
 <p>其实django 框架的manage.py 文件也具有一定的调试功能。
@@ -288,22 +306,36 @@
 <span class="n">tail</span> <span class="o">-</span><span class="n">f</span> <span class="o">/</span><span class="n">smbshare</span><span class="o">/</span><span class="n">horizon</span><span class="o">.</span><span class="n">log</span> <span class="o">|</span> <span class="n">fgrep</span> <span class="s2">&quot;+++===+++&quot;</span>
 </pre></div>
 </div>
-<div class="figure align-center" id="id12">
+<div class="figure align-center" id="id14">
 <a class="reference internal image-reference" href="../_images/manage_runserver.png"><img alt="../_images/manage_runserver.png" src="../_images/manage_runserver.png" style="width: 887.0px; height: 80.0px;" /></a>
 <p class="caption"><span class="caption-text">运行开发模式服务器</span></p>
 </div>
-<div class="figure align-center" id="id13">
+<div class="figure align-center" id="id15">
 <a class="reference internal image-reference" href="../_images/filter_args.png"><img alt="../_images/filter_args.png" src="../_images/filter_args.png" style="width: 752.0px; height: 438.0px;" /></a>
 <p class="caption"><span class="caption-text">过滤，查看变量信息</span></p>
 </div>
+</div>
+</div>
+<div class="section" id="id7">
+<h2><a class="toc-backref" href="#id26">1.6. 其他问题</a><a class="headerlink" href="#id7" title="Permalink to this headline">¶</a></h2>
+<p>这一小节对horizon二次开发中常遇到的问题坐下记录。</p>
+<div class="section" id="id8">
+<h3><a class="toc-backref" href="#id27">1.6.1. 权限错误</a><a class="headerlink" href="#id8" title="Permalink to this headline">¶</a></h3>
+<p>horizon权限问题遇到多次，具体错误信息可以通过 tail -f /var/log/apache2/error.log 命令查看。
+在测试自己维护的调试信息库，还有snmp监控时都遇到过。使用 chmod 666/777 file/dir -Rn 修改权限，
+错误消失！</p>
+<div class="figure align-center" id="id16">
+<a class="reference internal image-reference" href="../_images/permission_denied.png"><img alt="../_images/permission_denied.png" src="../_images/permission_denied.png" style="width: 1422.0px; height: 465.0px;" /></a>
+<p class="caption"><span class="caption-text">修改代码重启后权限错误</span></p>
+</div>
 <hr class="docutils" />
-<table class="docutils footnote" frame="void" id="id7" rules="none">
+<table class="docutils footnote" frame="void" id="id9" rules="none">
 <colgroup><col class="label" /><col /></colgroup>
 <tbody valign="top">
 <tr><td class="label">[1]</td><td><a class="reference external" href="http://www.360doc.com/content/13/1114/19/8504707_329234716.shtml">http://www.360doc.com/content/13/1114/19/8504707_329234716.shtml</a></td></tr>
 </tbody>
 </table>
-<table class="docutils footnote" frame="void" id="id8" rules="none">
+<table class="docutils footnote" frame="void" id="id10" rules="none">
 <colgroup><col class="label" /><col /></colgroup>
 <tbody valign="top">
 <tr><td class="label">[2]</td><td><a class="reference external" href="http://blog.csdn.net/bpingchang/article/details/37728415">http://blog.csdn.net/bpingchang/article/details/37728415</a></td></tr>
