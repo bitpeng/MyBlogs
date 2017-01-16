@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>18. oslo.config 库学习 &mdash; Welcome to Sitian&#39;s Blog 0.1 documentation</title>
+  <title>18. oslo.config 用法总结 &mdash; Welcome to Sitian&#39;s Blog 0.1 documentation</title>
   
 
   
@@ -103,7 +103,7 @@
 <li class="toctree-l2"><a class="reference internal" href="opengrok_xp.html">15. OpenGrok代码浏览环境搭建</a></li>
 <li class="toctree-l2"><a class="reference internal" href="nova_api.html">16. nova-api分析</a></li>
 <li class="toctree-l2"><a class="reference internal" href="nova_smd.html">17. [翻译] nova：Services、Managers and Drivers</a></li>
-<li class="toctree-l2 current"><a class="current reference internal" href="#">18. oslo.config 库学习</a><ul>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">18. oslo.config 用法总结</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#id2">18.1. 配置项</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#id3">18.2. 配置项类型</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#id4">18.3. 注册参数</a></li>
@@ -167,7 +167,7 @@
       
           <li><a href="index.html">OpenStack Note</a> &raquo;</li>
       
-    <li>18. oslo.config 库学习</li>
+    <li>18. oslo.config 用法总结</li>
       <li class="wy-breadcrumbs-aside">
         
           
@@ -182,11 +182,11 @@
            <div itemprop="articleBody">
             
   <div class="section" id="oslo-config">
-<span id="oslo-cfg"></span><h1><a class="toc-backref" href="#id25">18. oslo.config 库学习</a><a class="headerlink" href="#oslo-config" title="Permalink to this headline">¶</a></h1>
+<span id="oslo-cfg"></span><h1><a class="toc-backref" href="#id25">18. oslo.config 用法总结</a><a class="headerlink" href="#oslo-config" title="Permalink to this headline">¶</a></h1>
 <div class="contents topic" id="id1">
 <p class="topic-title first">目录</p>
 <ul class="simple">
-<li><a class="reference internal" href="#oslo-config" id="id25">oslo.config 库学习</a><ul>
+<li><a class="reference internal" href="#oslo-config" id="id25">oslo.config 用法总结</a><ul>
 <li><a class="reference internal" href="#id2" id="id26">配置项</a></li>
 <li><a class="reference internal" href="#id3" id="id27">配置项类型</a></li>
 <li><a class="reference internal" href="#id4" id="id28">注册参数</a></li>
@@ -651,7 +651,7 @@ log 模块设置nova的日志保存在 /var/log/nova/ 目录下，该项由 /etc
 </div>
 <div class="section" id="id15">
 <h3><a class="toc-backref" href="#id39">18.10.4. 变量引用和替换</a><a class="headerlink" href="#id15" title="Permalink to this headline">¶</a></h3>
-<p><strong>update: 2017-1-5</strong></p>
+<p><strong>update: 2017-1-10</strong></p>
 <p>oslo.config 支持配置项引用其他配置项的值。</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">cfg</span><span class="o">.</span><span class="n">StrOpt</span><span class="p">(</span><span class="s1">&#39;state_path&#39;</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="s1">&#39;/root&#39;</span><span class="p">)</span>
 <span class="n">cfg</span><span class="o">.</span><span class="n">StrOpt</span><span class="p">(</span><span class="s1">&#39;instances_path&#39;</span><span class="p">,</span>
@@ -659,11 +659,13 @@ log 模块设置nova的日志保存在 /var/log/nova/ 目录下，该项由 /etc
 </pre></div>
 </div>
 <p>如上所示，instances_path直接引用state_path配置项作为默认值的一部分。</p>
-<div class="code console highlight-default"><div class="highlight"><pre><span></span><span class="n">root</span><span class="nd">@allinone</span><span class="o">-</span><span class="n">v2</span><span class="p">:</span><span class="o">/</span><span class="n">smbshare</span><span class="c1"># ./test_cfg.py</span>
-<span class="n">instances_path</span><span class="p">:</span> <span class="o">/</span><span class="n">root</span><span class="o">/</span><span class="n">instances</span>
-<span class="n">state_path</span><span class="p">:</span> <span class="o">/</span><span class="n">root</span>
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">root@allinone-v2:/smbshare#</span> ./test_cfg.py
+<span class="go">instances_path: /root/instances</span>
+<span class="go">state_path: /root</span>
 </pre></div>
 </div>
+<p>这种用法也是在分析源码时发现的。实际上，这种用法在openstack官网
+文档有清晰的描述。看来还是得好好看文档！</p>
 </div>
 </div>
 <hr class="docutils" />
