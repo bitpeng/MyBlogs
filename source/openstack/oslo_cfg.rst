@@ -415,6 +415,8 @@ oslo.config 支持配置项引用其他配置项的值。
     instances_path: /root/instances
     state_path: /root
 
+这种用法也是在分析源码时发现的。实际上，这种用法在openstack官网
+文档有清晰的描述。看来还是得好好看文档！
 
 
 
