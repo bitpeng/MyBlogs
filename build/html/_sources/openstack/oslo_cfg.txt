@@ -393,6 +393,31 @@ log 模块设置nova的日志保存在 /var/log/nova/ 目录下，该项由 /etc
 
    输出所有配置项值
 
+
+变量引用和替换
++++++++++++++++
+
+**update: 2017-1-5**
+
+oslo.config 支持配置项引用其他配置项的值。
+
+::
+
+    cfg.StrOpt('state_path', default='/root')
+    cfg.StrOpt('instances_path',
+               default='$state_path/instances')
+
+如上所示，instances_path直接引用state_path配置项作为默认值的一部分。
+
+.. code:: console
+
+    root@allinone-v2:/smbshare# ./test_cfg.py 
+    instances_path: /root/instances
+    state_path: /root
+
+
+
+
 ---------------------
 
 参考
