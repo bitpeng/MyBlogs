@@ -137,6 +137,16 @@ nova 相关
     neutron router-gateway-set demo-router ext-net
     neutron router-interface-add demo-router demo-subnet
 
+    #查看所有的虚机/某个租户虚机
+    source /root/openstackrc
+    nova list --all-tenants
+    nova list --tenant csq
+
+    # 迁移虚机，迁移虚机时使用虚机名称总是提示找不到名字。
+    source /root/openstackrc
+    nova migrate <server-id>
+
+
 ---------------------
 
 参考

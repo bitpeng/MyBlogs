@@ -103,7 +103,7 @@
 <li class="toctree-l2"><a class="reference internal" href="opengrok_xp.html">15. OpenGrok代码浏览环境搭建</a></li>
 <li class="toctree-l2"><a class="reference internal" href="nova_api.html">16. nova-api分析</a></li>
 <li class="toctree-l2"><a class="reference internal" href="nova_smd.html">17. [翻译] nova：Services、Managers and Drivers</a></li>
-<li class="toctree-l2"><a class="reference internal" href="oslo_cfg.html">18. oslo.config 库学习</a></li>
+<li class="toctree-l2"><a class="reference internal" href="oslo_cfg.html">18. oslo.config 用法总结</a></li>
 <li class="toctree-l2"><a class="reference internal" href="kombu.html">19. kombu和消息队列总结</a></li>
 <li class="toctree-l2 current"><a class="current reference internal" href="#">20. OpenStack 调试</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#id3">20.1. 日志</a></li>
@@ -122,6 +122,7 @@
 <li class="toctree-l2"><a class="reference internal" href="qemu_kvm.html">24. qemu/kvm学习笔记</a></li>
 <li class="toctree-l2"><a class="reference internal" href="virt_cmd.html">25. 虚拟化相关命令</a></li>
 <li class="toctree-l2"><a class="reference internal" href="qemu_img_encry.html">26. nova虚机加密总结</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nova_interact.html">27. nova组件间交互总结</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../others/index.html">杂项讨论</a></li>
@@ -240,7 +241,7 @@ OpenStack logging 模块提供了丰富的和日志相关的配置项，详情�
 <p>Pdb 是 python 自带的库，它支持设置断点、单步调试源码、查看当前代码、
 查看 stack 片段和动态修改变量的值等功能，根据个人经验，使用 pdb 调试 OpenStack
 使用到的主要命令包括：</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">b</span> <span class="c1"># 设置断点</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">b</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">python2</span><span class="o">.</span><span class="mi">7</span><span class="o">/</span><span class="n">dist</span><span class="o">-</span><span class="n">packages</span><span class="o">/</span><span class="n">nova</span><span class="o">/</span><span class="n">virt</span><span class="o">/</span><span class="n">libvirt</span><span class="o">/</span><span class="n">driver</span><span class="o">.</span><span class="n">py</span><span class="p">:</span><span class="mi">6046</span> <span class="c1"># 设置断点</span>
 <span class="n">c</span> <span class="c1"># 继续执行程序直到下一个断点</span>
 <span class="n">n</span> <span class="c1"># 继续执行下一行代码</span>
 <span class="n">l</span> <span class="c1"># 列出当前代码</span>
@@ -248,6 +249,7 @@ OpenStack logging 模块提供了丰富的和日志相关的配置项，详情�
 <span class="n">s</span> <span class="c1"># 进入函数，该选项对于跨模块调试非常有用！</span>
 <span class="n">r</span> <span class="c1"># 执行代码直到从当前函数返回</span>
 <span class="n">q</span> <span class="c1"># 退出调试</span>
+<span class="n">a</span> <span class="c1"># 列出函数所有参数</span>
 <span class="n">ctrl</span> <span class="o">+</span> <span class="n">c</span> <span class="c1"># 重新开始调试</span>
 </pre></div>
 </div>

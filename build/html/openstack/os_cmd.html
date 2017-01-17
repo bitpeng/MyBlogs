@@ -117,8 +117,8 @@
 <li class="toctree-l2"><a class="reference internal" href="paste_webob_routes.html">14. OpenStack REST-API基础：paste/webob/routes库</a></li>
 <li class="toctree-l2"><a class="reference internal" href="opengrok_xp.html">15. OpenGrok代码浏览环境搭建</a></li>
 <li class="toctree-l2"><a class="reference internal" href="nova_api.html">16. nova-api分析</a></li>
-<li class="toctree-l2"><a class="reference internal" href="nova_smd.html">17. [翻译] nova:Services, Managers and Drivers</a></li>
-<li class="toctree-l2"><a class="reference internal" href="oslo_cfg.html">18. oslo.config 库学习</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nova_smd.html">17. [翻译] nova：Services、Managers and Drivers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="oslo_cfg.html">18. oslo.config 用法总结</a></li>
 <li class="toctree-l2"><a class="reference internal" href="kombu.html">19. kombu和消息队列总结</a></li>
 <li class="toctree-l2"><a class="reference internal" href="openstack_debug.html">20. OpenStack 调试</a></li>
 <li class="toctree-l2"><a class="reference internal" href="nova_rpcserver_start.html">21. nova RPC服务启动分析</a></li>
@@ -127,6 +127,7 @@
 <li class="toctree-l2"><a class="reference internal" href="qemu_kvm.html">24. qemu/kvm学习笔记</a></li>
 <li class="toctree-l2"><a class="reference internal" href="virt_cmd.html">25. 虚拟化相关命令</a></li>
 <li class="toctree-l2"><a class="reference internal" href="qemu_img_encry.html">26. nova虚机加密总结</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nova_interact.html">27. nova组件间交互总结</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../others/index.html">杂项讨论</a></li>
@@ -294,6 +295,15 @@
 <span class="n">neutron</span> <span class="n">router</span><span class="o">-</span><span class="n">create</span> <span class="n">demo</span><span class="o">-</span><span class="n">router</span>
 <span class="n">neutron</span> <span class="n">router</span><span class="o">-</span><span class="n">gateway</span><span class="o">-</span><span class="nb">set</span> <span class="n">demo</span><span class="o">-</span><span class="n">router</span> <span class="n">ext</span><span class="o">-</span><span class="n">net</span>
 <span class="n">neutron</span> <span class="n">router</span><span class="o">-</span><span class="n">interface</span><span class="o">-</span><span class="n">add</span> <span class="n">demo</span><span class="o">-</span><span class="n">router</span> <span class="n">demo</span><span class="o">-</span><span class="n">subnet</span>
+
+<span class="c1">#查看所有的虚机/某个租户虚机</span>
+<span class="n">source</span> <span class="o">/</span><span class="n">root</span><span class="o">/</span><span class="n">openstackrc</span>
+<span class="n">nova</span> <span class="nb">list</span> <span class="o">--</span><span class="nb">all</span><span class="o">-</span><span class="n">tenants</span>
+<span class="n">nova</span> <span class="nb">list</span> <span class="o">--</span><span class="n">tenant</span> <span class="n">csq</span>
+
+<span class="c1"># 迁移虚机，迁移虚机时使用虚机名称总是提示找不到名字。</span>
+<span class="n">source</span> <span class="o">/</span><span class="n">root</span><span class="o">/</span><span class="n">openstackrc</span>
+<span class="n">nova</span> <span class="n">migrate</span> <span class="o">&lt;</span><span class="n">server</span><span class="o">-</span><span class="nb">id</span><span class="o">&gt;</span>
 </pre></div>
 </div>
 </div>
