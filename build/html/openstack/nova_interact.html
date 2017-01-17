@@ -103,7 +103,7 @@
 <li class="toctree-l2"><a class="reference internal" href="opengrok_xp.html">15. OpenGrok代码浏览环境搭建</a></li>
 <li class="toctree-l2"><a class="reference internal" href="nova_api.html">16. nova-api分析</a></li>
 <li class="toctree-l2"><a class="reference internal" href="nova_smd.html">17. [翻译] nova：Services、Managers and Drivers</a></li>
-<li class="toctree-l2"><a class="reference internal" href="oslo_cfg.html">18. oslo.config 库学习</a></li>
+<li class="toctree-l2"><a class="reference internal" href="oslo_cfg.html">18. oslo.config 用法总结</a></li>
 <li class="toctree-l2"><a class="reference internal" href="kombu.html">19. kombu和消息队列总结</a></li>
 <li class="toctree-l2"><a class="reference internal" href="openstack_debug.html">20. OpenStack 调试</a></li>
 <li class="toctree-l2"><a class="reference internal" href="nova_rpcserver_start.html">21. nova RPC服务启动分析</a></li>
@@ -195,6 +195,9 @@
 <a class="reference internal image-reference" href="../_images/nova1.png"><img alt="../_images/nova1.png" src="../_images/nova1.png" style="width: 1773.0px; height: 1091.0px;" /></a>
 <p class="caption"><span class="caption-text">虚机创建的前两个阶段调用关系</span></p>
 </div>
+<p>如 nova-api 尝试对 nova-conductor 发起rpc调用时，并不会直接调用 nova/conductor/rpcapi.py 发起
+cast rpc调用，而是调用 nova/conductor/api.py，然后在api.py模块中调用rpcapi.py模块中的同名函数，
+而rpcapi.py模块才最终发起rpc请求。rpc请求由 nova/conduct/manager.py中的endpoints处理。</p>
 </div>
 <div class="section" id="id3">
 <h2><a class="toc-backref" href="#id7">27.2. 一些误区</a><a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h2>

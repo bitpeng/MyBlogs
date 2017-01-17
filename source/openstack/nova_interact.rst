@@ -33,6 +33,10 @@ nova组件间交互总结
 
    虚机创建的前两个阶段调用关系
 
+如 nova-api 尝试对 nova-conductor 发起rpc调用时，并不会直接调用 nova/conductor/rpcapi.py 发起
+cast rpc调用，而是调用 nova/conductor/api.py，然后在api.py模块中调用rpcapi.py模块中的同名函数，
+而rpcapi.py模块才最终发起rpc请求。rpc请求由 nova/conduct/manager.py中的endpoints处理。
+
 
 一些误区
 +++++++++
