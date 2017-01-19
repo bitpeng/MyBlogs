@@ -380,8 +380,8 @@ wget
     wget -c -r -np -k -L -p http://docs.ceph.org.cn
 
 
-scp
-+++
+scp/rsync
+++++++++++
 
 ::
 
@@ -390,8 +390,69 @@ scp
     # 远程拷贝目录
     scp -r root@10.11.113.198:/smbshare/ .
 
+rsync 命令是一个远程同步工具，也可以用来拷贝远程文件, 比如openstack虚机冷迁移都是通过该命令，来拷贝虚机磁盘文件的：
+
+::
+
+    rsync -av /home/coremail/ 192.168.11.12:/home/coremail/
+
+.. [#] http://coolnull.com/1899.html
+
+
+ssh
+++++
+
+原来以为ssh是一个远程登录工具，实际上ssh还可以执行远程主机上的命令，结果输出到本地。
+
+这种方式，也是从openstack nova项目源码学习到的。
+
+.. code-block:: console
+
+    root@ubuntu:/smbshare# nova -h
+    The program 'nova' is currently not installed. You can install it by typing:
+    apt-get install python-novaclient
+    root@ubuntu:/smbshare# ssh root@192.168.159.155 nova -h
+    root@192.168.159.155's password: 
+    usage: nova [--version] [--debug] [--os-cache] [--timings]
+                [--timeout <seconds>] [--os-auth-token OS_AUTH_TOKEN]
+                [--os-username <auth-user-name>] [--os-user-id <auth-user-id>]
+                [--os-password <auth-password>]
+                [--os-tenant-name <auth-tenant-name>]
+                [--os-tenant-id <auth-tenant-id>] [--os-auth-url <auth-url>]
+                [--os-region-name <region-name>] [--os-auth-system <auth-system>]
+                [--service-type <service-type>] [--service-name <service-name>]
+                [--volume-service-name <volume-service-name>]
+                [--endpoint-type <endpoint-type>]
+                [--os-compute-api-version <compute-api-ver>]
+                [--os-cacert <ca-certificate>] [--insecure]
+                [--bypass-url <bypass-url>]
+                <subcommand> ...
+
+    Command-line interface to the OpenStack Nova API.
+    .....
+    root@ubuntu:/smbshare# ssh 192.168.159.155 'nova -h | grep list'
+    root@192.168.159.155's password: 
+        absolute-limits             Print a list of absolute limits for a user
+        agent-list                  List all builds.
+        aggregate-list              Print a list of all aggregates.
+        availability-zone-list      List all the availability zones.
+        cloudpipe-list              Print a list of all cloudpipe instances.
+        dns-domains                 Print a list of available dns domains.
+        dns-list                    List current DNS entries for domain and ip or
+        flavor-access-list          Print access information about the given
+        flavor-list                 Print a list of available 'flavors' (sizes of
+        floating-ip-bulk-list       List all floating ips.
+        floating-ip-list            List floating ips.
+        floating-ip-pool-list       List all floating ip pools.
+        host-list                   List all hosts by service.
+        hypervisor-list             List hypervisors.
+        image-list                  Print a list of available images to boot from.
+        interface-list              List interfaces attached to a server.
+        keypair-list                Print a list of keypairs for a user
+
+
 sed
-+++
+++++
 
 修改文件某一行：
 

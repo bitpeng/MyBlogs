@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>21. nova RPC服务启动分析 &mdash; Welcome to Sitian&#39;s Blog 0.1 documentation</title>
+  <title>21. nova rpc服务启动分析 &mdash; Welcome to Sitian&#39;s Blog 0.1 documentation</title>
   
 
   
@@ -32,7 +32,7 @@
   
     <link rel="top" title="Welcome to Sitian&#39;s Blog 0.1 documentation" href="../index.html"/>
         <link rel="up" title="OpenStack Note" href="index.html"/>
-        <link rel="next" title="web开发" href="../web/index.html"/>
+        <link rel="next" title="22. OpenStack周期性任务分析" href="periodic_task.html"/>
         <link rel="prev" title="20. OpenStack 调试" href="openstack_debug.html"/> 
 
   
@@ -102,19 +102,24 @@
 <li class="toctree-l2"><a class="reference internal" href="paste_webob_routes.html">14. OpenStack REST-API基础：paste/webob/routes库</a></li>
 <li class="toctree-l2"><a class="reference internal" href="opengrok_xp.html">15. OpenGrok代码浏览环境搭建</a></li>
 <li class="toctree-l2"><a class="reference internal" href="nova_api.html">16. nova-api分析</a></li>
-<li class="toctree-l2"><a class="reference internal" href="nova_smd.html">17. [翻译] nova:Services, Managers and Drivers</a></li>
-<li class="toctree-l2"><a class="reference internal" href="oslo_cfg.html">18. oslo.config 库学习</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nova_smd.html">17. [翻译] nova：Services、Managers and Drivers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="oslo_cfg.html">18. oslo.config 用法总结</a></li>
 <li class="toctree-l2"><a class="reference internal" href="kombu.html">19. kombu和消息队列总结</a></li>
 <li class="toctree-l2"><a class="reference internal" href="openstack_debug.html">20. OpenStack 调试</a></li>
-<li class="toctree-l2 current"><a class="current reference internal" href="#">21. nova RPC服务启动分析</a><ul>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">21. nova rpc服务启动分析</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#id2">21.1. 服务创建</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#id3">21.2. 启动服务</a></li>
 </ul>
 </li>
+<li class="toctree-l2"><a class="reference internal" href="periodic_task.html">22. OpenStack周期性任务分析</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nova_log.html">23. OpenStack 日志模块分析</a></li>
+<li class="toctree-l2"><a class="reference internal" href="qemu_kvm.html">24. qemu/kvm学习笔记</a></li>
+<li class="toctree-l2"><a class="reference internal" href="virt_cmd.html">25. 虚拟化相关命令</a></li>
+<li class="toctree-l2"><a class="reference internal" href="qemu_img_encry.html">26. nova虚机加密总结</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nova_interact.html">27. nova组件间交互总结</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="../web/index.html">web开发</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../others/index.html">附录</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../others/index.html">杂项讨论</a></li>
 </ul>
 
             
@@ -147,7 +152,7 @@
       
           <li><a href="index.html">OpenStack Note</a> &raquo;</li>
       
-    <li>21. nova RPC服务启动分析</li>
+    <li>21. nova rpc服务启动分析</li>
       <li class="wy-breadcrumbs-aside">
         
           
@@ -162,11 +167,11 @@
            <div itemprop="articleBody">
             
   <div class="section" id="nova-rpc">
-<span id="nova-rpcserver"></span><h1><a class="toc-backref" href="#id5">21. nova RPC服务启动分析</a><a class="headerlink" href="#nova-rpc" title="Permalink to this headline">¶</a></h1>
+<span id="nova-rpcserver"></span><h1><a class="toc-backref" href="#id5">21. nova rpc服务启动分析</a><a class="headerlink" href="#nova-rpc" title="Permalink to this headline">¶</a></h1>
 <div class="contents topic" id="id1">
 <p class="topic-title first">目录</p>
 <ul class="simple">
-<li><a class="reference internal" href="#nova-rpc" id="id5">nova RPC服务启动分析</a><ul>
+<li><a class="reference internal" href="#nova-rpc" id="id5">nova rpc服务启动分析</a><ul>
 <li><a class="reference internal" href="#id2" id="id6">服务创建</a></li>
 <li><a class="reference internal" href="#id3" id="id7">启动服务</a></li>
 </ul>
@@ -656,7 +661,7 @@ drivers 中实现代码细节。感觉这种架构很强大！具体可以参考
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="../web/index.html" class="btn btn-neutral float-right" title="web开发" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="periodic_task.html" class="btn btn-neutral float-right" title="22. OpenStack周期性任务分析" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
         <a href="openstack_debug.html" class="btn btn-neutral" title="20. OpenStack 调试" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
