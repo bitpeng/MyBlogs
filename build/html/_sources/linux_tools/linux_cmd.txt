@@ -67,7 +67,7 @@ shell 脚本中流重定向方式 ``>&2`` 参考于 service 命令源码。
     root@ubuntu:/smbshare# ./test_redirect.sh 2>/dev/null
     stdout info
     stdout info-2
-    
+
     ## stdout 和 stderr 重定向
     root@ubuntu:/smbshare# ./test_redirect.sh 1> txt.1
     stderr info
@@ -75,7 +75,7 @@ shell 脚本中流重定向方式 ``>&2`` 参考于 service 命令源码。
     root@ubuntu:/smbshare# ./test_redirect.sh 2> txt.2
     stdout info
     stdout info-2
-    
+
     root@ubuntu:/smbshare# more txt.1
     stdout info
     stdout info-2
@@ -93,7 +93,7 @@ shell 脚本中流重定向方式 ``>&2`` 参考于 service 命令源码。
 
 重定向测试二：
 
-::
+.. code-block:: console
 
     root@ubuntu:/smbshare# ./test_redirect.sh 2>&1 1>txt.4
     stderr info
@@ -113,7 +113,7 @@ shell 脚本中流重定向方式 ``>&2`` 参考于 service 命令源码。
    :align: center
 
    重定向测试
-   
+
 可以看到，重定向顺序不同，结果差别很明显。**因为 shell 从左到右的顺序处理重定向。**
 因此命令 ``./test_redirect.sh 1>txt.5 2>&1`` 将标准输出和标准错误都重定向到文件 txt.5(
 先将标准输出重定向到文件 txt.5 ，然后标准错误重定向到标准输出既 txt.5)；
@@ -139,7 +139,7 @@ shell 脚本中流重定向方式 ``>&2`` 参考于 service 命令源码。
    :align: center
 
    重定向和管道测试
-   
+
 **根据搜索结果，可以看到，shell 先处理重定向，然后处理管道。因此，grep可以搜索到
 stderr info信息(标准错误重定向到标准输入而来)。**
 

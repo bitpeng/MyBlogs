@@ -303,18 +303,18 @@ shell 脚本中流重定向方式 <code class="docutils literal"><span class="pr
 </pre></div>
 </div>
 <p>重定向测试二：</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">root</span><span class="nd">@ubuntu</span><span class="p">:</span><span class="o">/</span><span class="n">smbshare</span><span class="c1"># ./test_redirect.sh 2&gt;&amp;1 1&gt;txt.4</span>
-<span class="n">stderr</span> <span class="n">info</span>
-<span class="n">stderr</span> <span class="n">info</span><span class="o">-</span><span class="mi">2</span>
-<span class="n">root</span><span class="nd">@ubuntu</span><span class="p">:</span><span class="o">/</span><span class="n">smbshare</span><span class="c1"># ./test_redirect.sh 1&gt;txt.5 2&gt;&amp;1</span>
-<span class="n">root</span><span class="nd">@ubuntu</span><span class="p">:</span><span class="o">/</span><span class="n">smbshare</span><span class="c1"># more txt.5</span>
-<span class="n">stdout</span> <span class="n">info</span>
-<span class="n">stdout</span> <span class="n">info</span><span class="o">-</span><span class="mi">2</span>
-<span class="n">stderr</span> <span class="n">info</span>
-<span class="n">stderr</span> <span class="n">info</span><span class="o">-</span><span class="mi">2</span>
-<span class="n">root</span><span class="nd">@ubuntu</span><span class="p">:</span><span class="o">/</span><span class="n">smbshare</span><span class="c1"># more txt.4</span>
-<span class="n">stdout</span> <span class="n">info</span>
-<span class="n">stdout</span> <span class="n">info</span><span class="o">-</span><span class="mi">2</span>
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">root@ubuntu:/smbshare#</span> ./test_redirect.sh 2&gt;<span class="p">&amp;</span><span class="m">1</span> 1&gt;txt.4
+<span class="go">stderr info</span>
+<span class="go">stderr info-2</span>
+<span class="gp">root@ubuntu:/smbshare#</span> ./test_redirect.sh 1&gt;txt.5 2&gt;<span class="p">&amp;</span>1
+<span class="gp">root@ubuntu:/smbshare#</span> more txt.5
+<span class="go">stdout info</span>
+<span class="go">stdout info-2</span>
+<span class="go">stderr info</span>
+<span class="go">stderr info-2</span>
+<span class="gp">root@ubuntu:/smbshare#</span> more txt.4
+<span class="go">stdout info</span>
+<span class="go">stdout info-2</span>
 </pre></div>
 </div>
 <div class="figure align-center" id="id19">
