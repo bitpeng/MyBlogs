@@ -102,8 +102,7 @@
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../openstack/index.html">OpenStack Note</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../web/index.html">web开发</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../others/index.html">附录</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../others/index.html">杂项讨论</a></li>
 </ul>
 
             
@@ -157,12 +156,12 @@
 <h2>8.1. curl 命令行参数截断问题<a class="headerlink" href="#curl" title="Permalink to this headline">¶</a></h2>
 <p>在使用curl 测试paste库的过程中，发现总是出现错误：</p>
 <p>curl 请求及输出如下：</p>
-<div class="code sh highlight-default"><div class="highlight"><pre><span></span>root@juno-controller:/# curl http://localhost:9999/calc?oper=plus&amp;op1=20&amp;op2=30
-[1] 10390
-[2] 10391
-root@juno-controller:/# A server error occurred.  Please contact the administrator.
-[1]-  Done                    curl http://localhost:9999/calc?oper=plus
-[2]+  Done                    op1=20
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">root@juno-controller:/#</span> curl http://localhost:9999/calc?oper<span class="o">=</span>plus<span class="p">&amp;</span><span class="nv">op1</span><span class="o">=</span>20<span class="p">&amp;</span><span class="nv">op2</span><span class="o">=</span>30
+<span class="go">[1] 10390</span>
+<span class="go">[2] 10391</span>
+<span class="gp">root@juno-controller:/#</span> A server error occurred.  Please contact the administrator.
+<span class="go">[1]-  Done                    curl http://localhost:9999/calc?oper=plus</span>
+<span class="go">[2]+  Done                    op1=20</span>
 </pre></div>
 </div>
 <p>通过查看服务端程序输出，发现只有plus参数成功专递，后面的op1和op2两个参数不见了。</p>
@@ -172,9 +171,9 @@ root@juno-controller:/# A server error occurred.  Please contact the administrat
 </div>
 <p>原来，&amp;字符是shell的元字符，被shell解释了。根本没有传递给curl程序！因此，我们使用反斜杠对&amp;进行转义即可！
 现在传递的参数也正常了。</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">root</span><span class="nd">@juno</span><span class="o">-</span><span class="n">controller</span><span class="p">:</span><span class="o">/</span><span class="c1"># curl http://localhost:9999/calc?oper=plus\&amp;op1=20\&amp;op2=30</span>
-<span class="n">GET</span><span class="p">([(</span><span class="s1">u&#39;oper&#39;</span><span class="p">,</span> <span class="s1">u&#39;plus&#39;</span><span class="p">),</span> <span class="p">(</span><span class="s1">u&#39;op1&#39;</span><span class="p">,</span> <span class="s1">u&#39;20&#39;</span><span class="p">),</span> <span class="p">(</span><span class="s1">u&#39;op2&#39;</span><span class="p">,</span> <span class="s1">u&#39;30&#39;</span><span class="p">)])</span>
-<span class="n">RESULT</span> <span class="o">=</span> <span class="mi">50</span>
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">root@juno-controller:/#</span> curl http://localhost:9999/calc?oper<span class="o">=</span>plus<span class="se">\&amp;</span><span class="nv">op1</span><span class="o">=</span>20<span class="se">\&amp;</span><span class="nv">op2</span><span class="o">=</span>30
+<span class="go">GET([(u&#39;oper&#39;, u&#39;plus&#39;), (u&#39;op1&#39;, u&#39;20&#39;), (u&#39;op2&#39;, u&#39;30&#39;)])</span>
+<span class="go">RESULT = 50</span>
 </pre></div>
 </div>
 <div class="figure align-center">
@@ -184,7 +183,7 @@ root@juno-controller:/# A server error occurred.  Please contact the administrat
 <div class="section" id="id1">
 <h2>8.2. 引号<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
 <p>先来看看原来编写lvm自动化脚本遇到的问题：</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">vgdisplay</span><span class="o">|</span> <span class="n">grep</span> <span class="s2">&quot;VG Name&quot;</span> <span class="o">|</span> <span class="n">awk</span> <span class="s2">&quot;{print $3}&quot;</span>
+<div class="code shell highlight-default"><div class="highlight"><pre><span></span><span class="n">vgdisplay</span><span class="o">|</span> <span class="n">grep</span> <span class="s2">&quot;VG Name&quot;</span> <span class="o">|</span> <span class="n">awk</span> <span class="s2">&quot;{print $3}&quot;</span>
 <span class="c1">#  VG Name               juno-controller-vg</span>
 <span class="n">vgdisplay</span><span class="o">|</span> <span class="n">grep</span> <span class="s2">&quot;VG Name&quot;</span> <span class="o">|</span> <span class="n">awk</span> <span class="s1">&#39;{print $3}&#39;</span>
 <span class="c1">#juno-controller-vg</span>
@@ -202,54 +201,54 @@ root@juno-controller:/# A server error occurred.  Please contact the administrat
 <a class="reference internal image-reference" href="../_images/quote_test.png"><img alt="../_images/quote_test.png" src="../_images/quote_test.png" style="width: 595.0px; height: 225.0px;" /></a>
 <p class="caption"><span class="caption-text">单双引号区别测试</span></p>
 </div>
-<div class="highlight-default"><div class="highlight"><pre><span></span>root@juno-controller:/# a=1
-root@juno-controller:/# echo &quot;$a&quot;    #$被bash解释到
-1
-root@juno-controller:/# echo &#39;$a&#39;    #$被hard quote被关闭
-$a
-root@juno-controller:/# echo &#39;&quot;$a&quot;&#39;  #$被hard quote关闭
-&quot;$a&quot;
-root@juno-controller:/# echo &quot;&#39;$a&#39;&quot;  #所有都被关闭了
-&#39;1&#39;
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">root@juno-controller:/#</span> <span class="nv">a</span><span class="o">=</span>1
+<span class="gp">root@juno-controller:/#</span> <span class="nb">echo</span> <span class="s2">&quot;</span><span class="nv">$a</span><span class="s2">&quot;</span>    <span class="c1">#$被bash解释到</span>
+<span class="go">1</span>
+<span class="gp">root@juno-controller:/#</span> <span class="nb">echo</span> <span class="s1">&#39;$a&#39;</span>    <span class="c1">#$被hard quote被关闭</span>
+<span class="gp">$</span>a
+<span class="gp">root@juno-controller:/#</span> <span class="nb">echo</span> <span class="s1">&#39;&quot;$a&quot;&#39;</span>  <span class="c1">#$被hard quote关闭</span>
+<span class="go">&quot;$a&quot;</span>
+<span class="gp">root@juno-controller:/#</span> <span class="nb">echo</span> <span class="s2">&quot;&#39;</span><span class="nv">$a</span><span class="s2">&#39;&quot;</span>  <span class="c1">#所有都被关闭了</span>
+<span class="go">&#39;1&#39;</span>
 </pre></div>
 </div>
 <p>如果能够理解上面的了，那基本知道怎么用单引号和双引号了。</p>
 <p>而对于awk、ed等等命令，需要区分shell meta和command meta
 对于awk来说，它的{ }：是将其内的命令置于non-named function 中执行，awk用{ }来区分命令段，例如BEGIN，END等等。举个例子：</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">root</span><span class="nd">@ubuntu</span><span class="p">:</span><span class="o">/</span><span class="c1"># head -4 /etc/passwd | awk -F: {print $1}</span>
-<span class="n">awk</span><span class="p">:</span> <span class="n">line</span> <span class="mi">2</span><span class="p">:</span> <span class="n">missing</span> <span class="p">}</span> <span class="n">near</span> <span class="n">end</span> <span class="n">of</span> <span class="n">file</span>
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">root@ubuntu:/#</span> head -4 /etc/passwd <span class="p">|</span> awk -F: <span class="o">{</span>print <span class="nv">$1</span><span class="o">}</span>
+<span class="go">awk: line 2: missing } near end of file</span>
 </pre></div>
 </div>
 <p>看看报错，如果直接使用{ }，那么我们知道{ }没有被shell关闭，也就是说它看成shell的meta了，当然报错了，所以要关闭，同时shell中的$也关闭，也就是$需要成为awk的meta了，很好理解吧？如下输出了内容。</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">root</span><span class="nd">@ubuntu</span><span class="p">:</span><span class="o">/</span><span class="c1"># head -4 /etc/passwd | awk -F: &#39;{print $1}&#39;</span>
-<span class="n">root</span>
-<span class="n">daemon</span>
-<span class="nb">bin</span>
-<span class="n">sys</span>
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">root@ubuntu:/#</span> head -4 /etc/passwd <span class="p">|</span> awk -F: <span class="s1">&#39;{print $1}&#39;</span>
+<span class="go">root</span>
+<span class="go">daemon</span>
+<span class="go">bin</span>
+<span class="go">sys</span>
 </pre></div>
 </div>
 <p>既然要要关闭{ }，那么也可以用soft quote，</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">root</span><span class="nd">@ubuntu</span><span class="p">:</span><span class="o">/</span><span class="c1"># head -4 /etc/passwd | awk -F: &quot;{print $1}&quot;</span>
-<span class="n">root</span><span class="p">:</span><span class="n">x</span><span class="p">:</span><span class="mi">0</span><span class="p">:</span><span class="mi">0</span><span class="p">:</span><span class="n">root</span><span class="p">:</span><span class="o">/</span><span class="n">root</span><span class="p">:</span><span class="o">/</span><span class="nb">bin</span><span class="o">/</span><span class="n">bash</span>
-<span class="n">daemon</span><span class="p">:</span><span class="n">x</span><span class="p">:</span><span class="mi">1</span><span class="p">:</span><span class="mi">1</span><span class="p">:</span><span class="n">daemon</span><span class="p">:</span><span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">sbin</span><span class="p">:</span><span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">sbin</span><span class="o">/</span><span class="n">nologin</span>
-<span class="nb">bin</span><span class="p">:</span><span class="n">x</span><span class="p">:</span><span class="mi">2</span><span class="p">:</span><span class="mi">2</span><span class="p">:</span><span class="nb">bin</span><span class="p">:</span><span class="o">/</span><span class="nb">bin</span><span class="p">:</span><span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">sbin</span><span class="o">/</span><span class="n">nologin</span>
-<span class="n">sys</span><span class="p">:</span><span class="n">x</span><span class="p">:</span><span class="mi">3</span><span class="p">:</span><span class="mi">3</span><span class="p">:</span><span class="n">sys</span><span class="p">:</span><span class="o">/</span><span class="n">dev</span><span class="p">:</span><span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">sbin</span><span class="o">/</span><span class="n">nologin</span>
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">root@ubuntu:/#</span> head -4 /etc/passwd <span class="p">|</span> awk -F: <span class="s2">&quot;{print </span><span class="nv">$1</span><span class="s2">}&quot;</span>
+<span class="go">root:x:0:0:root:/root:/bin/bash</span>
+<span class="go">daemon:x:1:1:daemon:/usr/sbin:/usr/sbin/nologin</span>
+<span class="go">bin:x:2:2:bin:/bin:/usr/sbin/nologin</span>
+<span class="go">sys:x:3:3:sys:/dev:/usr/sbin/nologin</span>
 </pre></div>
 </div>
 <p>可以看到，soft quote预期的关闭了{ }，但是$还是被shell解释了，这次我们可以用escape，将$关闭了。</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">root</span><span class="nd">@ubuntu</span><span class="p">:</span><span class="o">/</span><span class="c1"># head -4 /etc/passwd | awk -F: &quot;{print \$1}&quot;</span>
-<span class="n">root</span>
-<span class="n">daemon</span>
-<span class="nb">bin</span>
-<span class="n">sys</span>
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">root@ubuntu:/#</span> head -4 /etc/passwd <span class="p">|</span> awk -F: <span class="s2">&quot;{print \$1}&quot;</span>
+<span class="go">root</span>
+<span class="go">daemon</span>
+<span class="go">bin</span>
+<span class="go">sys</span>
 </pre></div>
 </div>
 <p>说到这里，可以大家都一点明白了，并不是awk &#8216;{ }&#8217; urfile是awk的固定语法，而是为了让awk能够跳脱shell的偷取其命令和参数，看看这个例子就明白了。</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">root</span><span class="nd">@ubuntu</span><span class="p">:</span><span class="o">/</span><span class="c1"># head -4 /etc/passwd | awk -F: \{print\ \$1}</span>
-<span class="n">root</span>
-<span class="n">daemon</span>
-<span class="nb">bin</span>
-<span class="n">sys</span>
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">root@ubuntu:/#</span> head -4 /etc/passwd <span class="p">|</span> awk -F: <span class="se">\{</span>print<span class="se">\ \$</span>1<span class="o">}</span>
+<span class="go">root</span>
+<span class="go">daemon</span>
+<span class="go">bin</span>
+<span class="go">sys</span>
 </pre></div>
 </div>
 <p>所作的一切是为了让awk或者自己的meta，请切记注意print后的空格，也要关闭，要不又被shell解释了。</p>
@@ -264,7 +263,7 @@ linux如果echo要让转义字符发生作用,就要使用-e选项,且转义字�
 用双引号echo -e &#8220;n&#8221;反斜杠的另一种作用,就是当反斜杠用于一行的
 最后一个字符时，shell把行尾的反斜杠作为续行，
 这种结构在分几行输入长命令时经常使用。</li>
-<li><em>$()和``的区别</em>：反引号和$()的功能是命令替换，将反引号或$()中的字符串做为命令来执行，
+<li><em>$()和``的区别</em> ：反引号和$()的功能是命令替换，将反引号或$()中的字符串做为命令来执行，
 我们在用shell编程时经常用的到　将系统命令的执行结果赋给一个变量
 但反引号内不能再引用反引号，而$()中可以引用反引号</li>
 </ul>

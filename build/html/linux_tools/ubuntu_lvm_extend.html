@@ -103,8 +103,7 @@
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../openstack/index.html">OpenStack Note</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../web/index.html">web开发</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../others/index.html">附录</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../others/index.html">杂项讨论</a></li>
 </ul>
 
             
@@ -250,8 +249,8 @@
 <span class="o">[</span>root@host-13-13-13-4 ~<span class="o">]</span><span class="c1"># fdisk /dev/vda</span>
 
 WARNING: DOS-compatible mode is deprecated. It is strongly recommended to
-                 switch off the mode <span class="o">(</span><span class="nb">command</span> <span class="s1">&#39;c&#39;</span><span class="o">)</span> and change display units to
-                 sectors <span class="o">(</span><span class="nb">command</span> <span class="s1">&#39;u&#39;</span><span class="o">)</span>.
+         switch off the mode <span class="o">(</span><span class="nb">command</span> <span class="s1">&#39;c&#39;</span><span class="o">)</span> and change display units to
+         sectors <span class="o">(</span><span class="nb">command</span> <span class="s1">&#39;u&#39;</span><span class="o">)</span>.
 
 Command <span class="o">(</span>m <span class="k">for</span> <span class="nb">help</span><span class="o">)</span>: p
 
@@ -357,9 +356,10 @@ pvcreate /dev/vda4
 <span class="nv">VG_NAME</span><span class="o">=</span><span class="sb">`</span>vgdisplay<span class="p">|</span> grep <span class="s2">&quot;VG Name&quot;</span> <span class="p">|</span> awk <span class="s1">&#39;{print $3}&#39;</span><span class="sb">`</span>
 vgextend <span class="nv">$VG_NAME</span> /dev/vda4
 <span class="c1">#LVM_ROOT=`df -hl | grep &quot;/dev/mapper&quot; | awk &#39;{print $1}&#39; | cut -d &quot;/&quot; -f4`</span>
-<span class="nv">LVM_ROOT</span><span class="o">=</span><span class="sb">`</span>df -hl <span class="p">|</span> grep <span class="s2">&quot;/dev/mapper&quot;</span> <span class="p">|</span> awk <span class="s1">&#39;{print $1}&#39;</span>
+<span class="nv">LVM_ROOT</span><span class="o">=</span><span class="sb">`</span>df -hl <span class="p">|</span> grep <span class="s2">&quot;/dev/mapper&quot;</span> <span class="p">|</span> awk <span class="s1">&#39;{print $1}&#39;</span><span class="sb">`</span>
 lvextend -L 190G <span class="nv">$LVM_ROOT</span>
-resize2fs /dev/mapper/VolGroup-lv_root
+<span class="c1">#resize2fs /dev/mapper/VolGroup-lv_root</span>
+resize2fs <span class="nv">$LVM_ROOT</span>
 </pre></div>
 </div>
 </div>

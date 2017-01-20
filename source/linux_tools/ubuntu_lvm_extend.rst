@@ -126,93 +126,93 @@ ubuntu 根分区剩余空间不足，影响工作，因此通过lvm工具对根�
 
 .. code-block:: bash
 
-	# 对已经使用但是没有完全使用的分区进行lvm扩容。
-	# 比如，有vda,总容量为500G，但是只有两个分区:vda1和vda2且只用了10G。
-	# 因此可以使用下面的命令进行操作新建分区。
-	# 对于一块完整的未使用的硬盘，参考原来写的。
+    # 对已经使用但是没有完全使用的分区进行lvm扩容。
+    # 比如，有vda,总容量为500G，但是只有两个分区:vda1和vda2且只用了10G。
+    # 因此可以使用下面的命令进行操作新建分区。
+    # 对于一块完整的未使用的硬盘，参考原来写的。
 
-	[root@host-13-13-13-4 ~]# fdisk /dev/vda
+    [root@host-13-13-13-4 ~]# fdisk /dev/vda
 
-	WARNING: DOS-compatible mode is deprecated. It is strongly recommended to
-			 switch off the mode (command 'c') and change display units to
-			 sectors (command 'u').
+    WARNING: DOS-compatible mode is deprecated. It is strongly recommended to
+             switch off the mode (command 'c') and change display units to
+             sectors (command 'u').
 
-	Command (m for help): p
+    Command (m for help): p
 
-	Disk /dev/vda: 214.7 GB, 214748364800 bytes
-	16 heads, 63 sectors/track, 416101 cylinders
-	Units = cylinders of 1008 * 512 = 516096 bytes
-	Sector size (logical/physical): 512 bytes / 512 bytes
-	I/O size (minimum/optimal): 512 bytes / 512 bytes
-	Disk identifier: 0x000b404e
+    Disk /dev/vda: 214.7 GB, 214748364800 bytes
+    16 heads, 63 sectors/track, 416101 cylinders
+    Units = cylinders of 1008 * 512 = 516096 bytes
+    Sector size (logical/physical): 512 bytes / 512 bytes
+    I/O size (minimum/optimal): 512 bytes / 512 bytes
+    Disk identifier: 0x000b404e
 
-	   Device Boot      Start         End      Blocks   Id  System
-	/dev/vda1   *           3        1018      512000   83  Linux
-	Partition 1 does not end on cylinder boundary.
-	/dev/vda2            1018       20806     9972736   8e  Linux LVM
-	Partition 2 does not end on cylinder boundary.
+       Device Boot      Start         End      Blocks   Id  System
+    /dev/vda1   *           3        1018      512000   83  Linux
+    Partition 1 does not end on cylinder boundary.
+    /dev/vda2            1018       20806     9972736   8e  Linux LVM
+    Partition 2 does not end on cylinder boundary.
 
-	Command (m for help): n
-	Command action
-	   e   extended
-	   p   primary partition (1-4)
-	p
-	Partition number (1-4): 3
-	First cylinder (1-416101, default 1): 
-	Using default value 1
-	Last cylinder, +cylinders or +size{K,M,G} (1-2, default 2): 
-	Using default value 2
+    Command (m for help): n
+    Command action
+       e   extended
+       p   primary partition (1-4)
+    p
+    Partition number (1-4): 3
+    First cylinder (1-416101, default 1): 
+    Using default value 1
+    Last cylinder, +cylinders or +size{K,M,G} (1-2, default 2): 
+    Using default value 2
 
-	Command (m for help): n
-	Command action
-	   e   extended
-	   p   primary partition (1-4)
-	p
-	Selected partition 4
-	First cylinder (20806-416101, default 20806): 
-	Using default value 20806
-	Last cylinder, +cylinders or +size{K,M,G} (20806-416101, default 416101): 
-	Using default value 416101
+    Command (m for help): n
+    Command action
+       e   extended
+       p   primary partition (1-4)
+    p
+    Selected partition 4
+    First cylinder (20806-416101, default 20806): 
+    Using default value 20806
+    Last cylinder, +cylinders or +size{K,M,G} (20806-416101, default 416101): 
+    Using default value 416101
 
-	Command (m for help): p
+    Command (m for help): p
 
-	Disk /dev/vda: 214.7 GB, 214748364800 bytes
-	16 heads, 63 sectors/track, 416101 cylinders
-	Units = cylinders of 1008 * 512 = 516096 bytes
-	Sector size (logical/physical): 512 bytes / 512 bytes
-	I/O size (minimum/optimal): 512 bytes / 512 bytes
-	Disk identifier: 0x000b404e
+    Disk /dev/vda: 214.7 GB, 214748364800 bytes
+    16 heads, 63 sectors/track, 416101 cylinders
+    Units = cylinders of 1008 * 512 = 516096 bytes
+    Sector size (logical/physical): 512 bytes / 512 bytes
+    I/O size (minimum/optimal): 512 bytes / 512 bytes
+    Disk identifier: 0x000b404e
 
-	   Device Boot      Start         End      Blocks   Id  System
-	/dev/vda1   *           3        1018      512000   83  Linux
-	Partition 1 does not end on cylinder boundary.
-	/dev/vda2            1018       20806     9972736   8e  Linux LVM
-	Partition 2 does not end on cylinder boundary.
-	/dev/vda3               1           2         976+  83  Linux
-	/dev/vda4           20806      416101   199229144   83  Linux
+       Device Boot      Start         End      Blocks   Id  System
+    /dev/vda1   *           3        1018      512000   83  Linux
+    Partition 1 does not end on cylinder boundary.
+    /dev/vda2            1018       20806     9972736   8e  Linux LVM
+    Partition 2 does not end on cylinder boundary.
+    /dev/vda3               1           2         976+  83  Linux
+    /dev/vda4           20806      416101   199229144   83  Linux
 
-	Partition table entries are not in disk order
+    Partition table entries are not in disk order
 
-	Command (m for help): t
-	Partition number (1-4): 3
-	Hex code (type L to list codes): 8e
-	Changed system type of partition 3 to 8e (Linux LVM)
+    Command (m for help): t
+    Partition number (1-4): 3
+    Hex code (type L to list codes): 8e
+    Changed system type of partition 3 to 8e (Linux LVM)
 
-	Command (m for help): t
-	Partition number (1-4): 4
-	Hex code (type L to list codes): 8e
-	Changed system type of partition 4 to 8e (Linux LVM)
+    Command (m for help): t
+    Partition number (1-4): 4
+    Hex code (type L to list codes): 8e
+    Changed system type of partition 4 to 8e (Linux LVM)
 
-	Command (m for help): w
-	The partition table has been altered!
+    Command (m for help): w
+    The partition table has been altered!
 
-	Calling ioctl() to re-read partition table.
+    Calling ioctl() to re-read partition table.
 
-	WARNING: Re-reading the partition table failed with error 16: 设备或资源忙.
-	The kernel still uses the old table. The new table will be used at
-	the next reboot or after you run partprobe(8) or kpartx(8)
-	Syncing disks.
-	[root@host-13-13-13-4 ~]# reboot
+    WARNING: Re-reading the partition table failed with error 16: 设备或资源忙.
+    The kernel still uses the old table. The new table will be used at
+    the next reboot or after you run partprobe(8) or kpartx(8)
+    Syncing disks.
+    [root@host-13-13-13-4 ~]# reboot
 
 
 
@@ -241,12 +241,13 @@ fdisk 命令新建好分区后，扩展根文件系统的相关命令以及自�
 
 .. code-block:: bash
 
-	# 然后使用下面的命令扩展根文件系统
-	mkfs.ext4 /dev/vda4
-	pvcreate /dev/vda4
-	VG_NAME=`vgdisplay| grep "VG Name" | awk '{print $3}'`
-	vgextend $VG_NAME /dev/vda4
-	#LVM_ROOT=`df -hl | grep "/dev/mapper" | awk '{print $1}' | cut -d "/" -f4`
-	LVM_ROOT=`df -hl | grep "/dev/mapper" | awk '{print $1}'
-	lvextend -L 190G $LVM_ROOT
-	resize2fs /dev/mapper/VolGroup-lv_root
+    # 然后使用下面的命令扩展根文件系统
+    mkfs.ext4 /dev/vda4
+    pvcreate /dev/vda4
+    VG_NAME=`vgdisplay| grep "VG Name" | awk '{print $3}'`
+    vgextend $VG_NAME /dev/vda4
+    #LVM_ROOT=`df -hl | grep "/dev/mapper" | awk '{print $1}' | cut -d "/" -f4`
+    LVM_ROOT=`df -hl | grep "/dev/mapper" | awk '{print $1}'`
+    lvextend -L 190G $LVM_ROOT
+    #resize2fs /dev/mapper/VolGroup-lv_root
+    resize2fs $LVM_ROOT
