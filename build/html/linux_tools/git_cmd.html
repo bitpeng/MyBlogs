@@ -83,7 +83,7 @@
             
             
                 <ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="../py_doc/index.html">Hack Python</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../py_doc/index.html">Python Note</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="index.html">Hack Linux</a><ul class="current">
 <li class="toctree-l2 current"><a class="current reference internal" href="#">1. git 版本控制</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#id1">1.1. 提交代码流程</a></li>
@@ -91,9 +91,17 @@
 </li>
 <li class="toctree-l2"><a class="reference internal" href="samba_config.html">2. Samba共享访问配置</a></li>
 <li class="toctree-l2"><a class="reference internal" href="use_man_page.html">3. 善用Linux man page</a></li>
+<li class="toctree-l2"><a class="reference internal" href="linux_cmd.html">4. Linux命令和shell</a></li>
+<li class="toctree-l2"><a class="reference internal" href="disk_note.html">5. Linux 磁盘和分区</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ubuntu_lvm_extend.html">6. Ubuntu根分区使用Lvm扩容</a></li>
+<li class="toctree-l2"><a class="reference internal" href="dell_server_manual.html">7. DELL 服务器操作手册</a></li>
+<li class="toctree-l2"><a class="reference internal" href="curl_param_cut.html">8. shell 元字符问题</a></li>
+<li class="toctree-l2"><a class="reference internal" href="hack_vim.html">9. vim技巧</a></li>
+<li class="toctree-l2"><a class="reference internal" href="centos_net_sum.html">10. Linux 联网问题汇总</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="../others/index.html">其他杂项</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../openstack/index.html">OpenStack Note</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../others/index.html">杂项讨论</a></li>
 </ul>
 
             
@@ -150,6 +158,20 @@
 <span class="n">git</span> <span class="n">remote</span> <span class="n">add</span> <span class="n">origin</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">github</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">bitpeng</span><span class="o">/</span><span class="n">MyBlogs</span><span class="o">.</span><span class="n">git</span>
 <span class="n">git</span> <span class="n">push</span> <span class="o">-</span><span class="n">u</span> <span class="n">origin</span> <span class="n">master</span>
 <span class="n">git</span> <span class="n">status</span>
+
+<span class="c1"># 查看提交历史记录</span>
+<span class="n">git</span> <span class="n">log</span>
+<span class="c1"># 查看最近n次提交历史记录</span>
+<span class="n">git</span> <span class="n">log</span> <span class="o">-</span><span class="n">n</span>
+
+<span class="c1"># 查看某次提交修改内容</span>
+<span class="n">git</span> <span class="n">show</span> <span class="o">&lt;</span><span class="nb">id</span><span class="o">&gt;</span>
+<span class="n">git</span> <span class="n">show</span> <span class="o">&lt;</span><span class="nb">id</span><span class="o">&gt;</span> <span class="n">file</span>
+
+<span class="c1"># 查看文件提交记录</span>
+<span class="n">git</span> <span class="n">log</span> <span class="n">file</span>
+<span class="c1"># 查看文件提交每次修改信息</span>
+<span class="n">git</span> <span class="n">log</span> <span class="o">-</span><span class="n">p</span> <span class="n">file</span>
 </pre></div>
 </div>
 </div>
