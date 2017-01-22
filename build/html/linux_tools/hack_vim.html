@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>9. vim技巧 &mdash; Welcome to Sitian&#39;s Blog 0.1 documentation</title>
+  <title>9. vim使用手册 &mdash; Welcome to Sitian&#39;s Blog 0.1 documentation</title>
   
 
   
@@ -93,21 +93,22 @@
 <li class="toctree-l2"><a class="reference internal" href="ubuntu_lvm_extend.html">6. Ubuntu根分区使用Lvm扩容</a></li>
 <li class="toctree-l2"><a class="reference internal" href="dell_server_manual.html">7. DELL 服务器操作手册</a></li>
 <li class="toctree-l2"><a class="reference internal" href="curl_param_cut.html">8. shell 元字符问题</a></li>
-<li class="toctree-l2 current"><a class="current reference internal" href="#">9. vim技巧</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#id1">9.1. 末行命令</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#id2">9.2. 光标移动</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#id3">9.3. 文本修改</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#id4">9.3.1. 插入</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#id5">9.3.2. 复制/移动</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#id6">9.3.3. 恢复和撤销</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">9. vim使用手册</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id2">9.1. 光标移动</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id3">9.2. 文本修改</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#id4">9.2.1. 插入</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id5">9.2.2. 复制/移动</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id6">9.2.3. 重复上次命令</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id7">9.2.4. 恢复和撤销</a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="#id7">9.4. 可视化操作</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#id8">9.4.1. 文本对象选择</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#id9">9.4.2. 列模式操作</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id8">9.3. 可视化操作</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#id9">9.3.1. 文本对象选择</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id10">9.3.2. 列模式操作</a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="#id10">9.5. 其他</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id11">9.4. 末行命令</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id12">9.5. 其他</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="centos_net_sum.html">10. Linux 联网问题汇总</a></li>
@@ -147,7 +148,7 @@
       
           <li><a href="index.html">Hack Linux</a> &raquo;</li>
       
-    <li>9. vim技巧</li>
+    <li>9. vim使用手册</li>
       <li class="wy-breadcrumbs-aside">
         
           
@@ -162,33 +163,40 @@
            <div itemprop="articleBody">
             
   <div class="section" id="vim">
-<h1>9. vim技巧<a class="headerlink" href="#vim" title="Permalink to this headline">¶</a></h1>
+<span id="hack-vim"></span><h1><a class="toc-backref" href="#id14">9. vim使用手册</a><a class="headerlink" href="#vim" title="Permalink to this headline">¶</a></h1>
+<div class="contents topic" id="id1">
+<p class="topic-title first">目录</p>
+<ul class="simple">
+<li><a class="reference internal" href="#vim" id="id14">vim使用手册</a><ul>
+<li><a class="reference internal" href="#id2" id="id15">光标移动</a></li>
+<li><a class="reference internal" href="#id3" id="id16">文本修改</a><ul>
+<li><a class="reference internal" href="#id4" id="id17">插入</a></li>
+<li><a class="reference internal" href="#id5" id="id18">复制/移动</a></li>
+<li><a class="reference internal" href="#id6" id="id19">重复上次命令</a></li>
+<li><a class="reference internal" href="#id7" id="id20">恢复和撤销</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#id8" id="id21">可视化操作</a><ul>
+<li><a class="reference internal" href="#id9" id="id22">文本对象选择</a></li>
+<li><a class="reference internal" href="#id10" id="id23">列模式操作</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#id11" id="id24">末行命令</a></li>
+<li><a class="reference internal" href="#id12" id="id25">其他</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<hr class="docutils" />
 <p>陆续收集中......</p>
-<div class="section" id="id1">
-<h2>9.1. 末行命令<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
-<p>删除行末所有空格：</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span>:%s/\s\+$//
-</pre></div>
-</div>
-<p>开头的 % 代表匹配当前文件的所有行
-s 代表匹配空格字符，即空格符（Space）和制表符（Tab）
-+ 用于匹配一个及多个。故 s+ 代表匹配一个或多个空格字符。
-$ 代表匹配行末。</p>
-<p>TAB替换为空格:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span>:set ts=4
-:set expandtab
-:%retab!
-</pre></div>
-</div>
-</div>
 <div class="section" id="id2">
-<h2>9.2. 光标移动<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id15">9.1. 光标移动</a><a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
 <p>翻页:</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">ctrl</span> <span class="o">+</span> <span class="n">u</span><span class="o">/</span><span class="n">d</span><span class="p">;</span> <span class="n">向上</span><span class="o">/</span><span class="n">下滚动半屏</span>
 <span class="n">ctrl</span> <span class="o">+</span> <span class="n">b</span><span class="o">/</span><span class="n">f</span><span class="p">;</span> <span class="n">向上</span><span class="o">/</span><span class="n">下滚动半屏</span>
 </pre></div>
 </div>
-<p>当前页:</p>
+<p>当前页内移动:</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">H</span> <span class="p">;</span> <span class="n">当前屏首行</span>
 <span class="n">L</span> <span class="p">;</span> <span class="n">当前屏末行</span>
 <span class="n">M</span> <span class="p">;</span> <span class="n">当前屏中间行</span>
@@ -209,86 +217,149 @@ B ;
 w ;
 W ;
 e ;
+/pattern ; 搜索模式然后输入 n, N 查找下一个或者上一个
+fa ;
+Fa ;
+ta ;
+Ta ;
 </pre></div>
 </div>
 <p>全局光标移动：</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">gg</span> <span class="p">;</span> <span class="n">定位到第一行</span>
-<span class="n">G</span> <span class="p">;</span> <span class="n">定位到末行</span>
-<span class="p">:</span><span class="n">n</span> <span class="p">;</span> <span class="n">定位到第n行</span>
-<span class="n">hjkl</span><span class="p">;</span>
-<span class="n">N</span><span class="p">(</span><span class="n">hjkl</span><span class="p">);</span>
-<span class="o">*</span> <span class="p">;</span>
-<span class="c1"># ;</span>
-<span class="o">%</span> <span class="p">;</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span>gg ; 定位到第一行
+G ; 定位到末行
+:n ; 定位到第n行
+hjkl;
+N(hjkl);
+* ; 查找下一个单词，然后依次输入n
+# ;
+% ;
 </pre></div>
 </div>
 </div>
 <div class="section" id="id3">
-<h2>9.3. 文本修改<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id16">9.2. 文本修改</a><a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="id4">
-<h3>9.3.1. 插入<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id17">9.2.1. 插入</a><a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h3>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">i</span><span class="p">;</span>
 <span class="n">I</span><span class="p">;</span>
 <span class="n">o</span><span class="p">;</span>
 <span class="n">O</span><span class="p">;</span>
 <span class="n">a</span><span class="p">;</span>
+<span class="n">C</span><span class="p">;</span>
+<span class="n">D</span><span class="p">;</span>
 </pre></div>
 </div>
+<p>通过组合基础命令，可以表现出更强大的功能，如：</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">cw</span><span class="p">;</span>
+<span class="n">dt</span><span class="p">);</span>
+<span class="n">ct</span><span class="p">};</span>
+</pre></div>
+</div>
+<p>还可以在文本插入模式下输入 <code class="docutils literal"><span class="pre">ctrl</span> <span class="pre">+</span> <span class="pre">n</span></code> 进行自动提示。</p>
 </div>
 <div class="section" id="id5">
-<h3>9.3.2. 复制/移动<a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h3>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">单行复制</span><span class="o">/</span><span class="n">移动</span>
+<h3><a class="toc-backref" href="#id18">9.2.2. 复制/移动</a><a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="c1">#单行复制/移动</span>
 <span class="n">Y</span> <span class="o">+</span> <span class="n">p</span> <span class="o">/</span> <span class="n">dd</span> <span class="o">+</span> <span class="n">p</span>
-<span class="n">多行复制</span><span class="o">/</span><span class="n">移动</span>
+<span class="c1">#多行复制/移动</span>
 <span class="n">V</span> <span class="o">+</span> <span class="n">nj</span> <span class="o">+</span> <span class="n">p</span><span class="p">(</span><span class="n">ddp</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="section" id="id6">
-<h3>9.3.3. 恢复和撤销<a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id19">9.2.3. 重复上次命令</a><a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h3>
+<p><code class="docutils literal"><span class="pre">.</span></code> 表示重复上次命令，请试一试：</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">iabcd</span><span class="o">&lt;</span><span class="n">ESC</span><span class="o">&gt;</span>
+<span class="o">.</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="id7">
+<h3><a class="toc-backref" href="#id20">9.2.4. 恢复和撤销</a><a class="headerlink" href="#id7" title="Permalink to this headline">¶</a></h3>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">u</span> <span class="p">;</span> <span class="n">撤销</span>
 <span class="n">Ctrl</span> <span class="o">+</span> <span class="n">r</span> <span class="p">;</span> <span class="n">恢复重做</span>
 </pre></div>
 </div>
 </div>
 </div>
-<div class="section" id="id7">
-<h2>9.4. 可视化操作<a class="headerlink" href="#id7" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id8">
+<h2><a class="toc-backref" href="#id21">9.3. 可视化操作</a><a class="headerlink" href="#id8" title="Permalink to this headline">¶</a></h2>
 <p>v 或者 V进入可视化是个人自喜欢的命令, 其中:</p>
 <ul class="simple">
-<li>V 是整行可视化模式：</li>
-<li>v 是简单可视化模式;</li>
+<li><code class="docutils literal"><span class="pre">V</span></code> 是整行可视化模式：</li>
+<li><code class="docutils literal"><span class="pre">v</span></code> 是简单可视化模式;</li>
 </ul>
 <p>其中整行可视化个人一般都是进行一些整行复制、移动粘贴、删除等操作。</p>
+<p><strong>还可以进入整行可视化后，然后输入 J 将行拼接成一行！</strong></p>
 <p>简单可视化功能更强大，自己常用的有：</p>
-<div class="section" id="id8">
-<h3>9.4.1. 文本对象选择<a class="headerlink" href="#id8" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id9">
+<h3><a class="toc-backref" href="#id22">9.3.1. 文本对象选择</a><a class="headerlink" href="#id9" title="Permalink to this headline">¶</a></h3>
 <p>利用普通vi/va模式进行文本选择，然后执行 c, d, y/p/P 等操作</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">viw</span>
-<span class="n">vi</span><span class="s2">&quot; / va&quot;</span>
-<span class="n">vi</span><span class="p">)</span> <span class="o">/</span> <span class="n">va</span><span class="p">)</span>
-<span class="n">vi</span><span class="p">]</span> <span class="o">/</span> <span class="n">va</span><span class="p">]</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span>viw / viW ; 可视化选择整个单词
+vw / vW   ; 可视化选择光标到单词末尾
+vi&quot; / va&quot; ; 可视化选择整个字符串
+vi) / va)
+vi] / va]
+vNlgU / vNlgu   ; 可视化选择一段文本，然后变成大写/小写
 </pre></div>
 </div>
 </div>
-<div class="section" id="id9">
-<h3>9.4.2. 列模式操作<a class="headerlink" href="#id9" title="Permalink to this headline">¶</a></h3>
-<p>该操作一般在写代码时添加多行注释, 多列删除：</p>
-<ul class="simple">
-<li>ctrl +v</li>
-<li>I / x</li>
-<li># &lt;esc&gt;</li>
-</ul>
-</div>
-</div>
 <div class="section" id="id10">
-<h2>9.5. 其他<a class="headerlink" href="#id10" title="Permalink to this headline">¶</a></h2>
+<h3><a class="toc-backref" href="#id23">9.3.2. 列模式操作</a><a class="headerlink" href="#id10" title="Permalink to this headline">¶</a></h3>
+<p>该操作一般在写代码时添加多行注释, 多列删除：</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">ctrl</span> <span class="o">+</span><span class="n">v</span> <span class="p">;</span> <span class="n">进入可视化模式</span>
+<span class="n">Nj</span>      <span class="p">;</span> <span class="n">向下移动光标N次</span>
+<span class="n">I</span> <span class="o">/</span> <span class="n">x</span>   <span class="p">;</span> <span class="n">插入命令</span>
+<span class="c1"># &lt;esc&gt; ; 插入Python注释符</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="id11">
+<h2><a class="toc-backref" href="#id24">9.4. 末行命令</a><a class="headerlink" href="#id11" title="Permalink to this headline">¶</a></h2>
+<p>删除行末所有空格：</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span>:%s/\s\+$//
+:%s/\s\+$//gc
+</pre></div>
+</div>
+<ul class="simple">
+<li>开头的 % 代表匹配当前文件的所有行；</li>
+<li>s 代表匹配空格字符，即空格符(Space)和制表符(Tab)；</li>
+<li>+ 用于匹配一个及多个。故 s+ 代表匹配一个或多个空格字符；</li>
+<li>$ 代表匹配行末；</li>
+<li>gc确认操作；</li>
+</ul>
+<p>TAB替换为空格:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span>:set ts=4
+:set expandtab
+:%retab!
+</pre></div>
+</div>
 <p>统计字符串出现个数:</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="p">:</span><span class="o">%</span><span class="n">s</span><span class="o">/</span><span class="n">context</span><span class="o">/&amp;/</span><span class="n">ng</span>
 <span class="p">:</span><span class="o">%</span><span class="n">s</span><span class="o">/</span><span class="n">context</span><span class="o">//</span><span class="n">ng</span>
 </pre></div>
 </div>
-<table class="docutils footnote" frame="void" id="id11" rules="none">
+<p>其他简单末行命令：</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span>:x
+:w / :wq
+:q! / :q
+:help
+:bn / :bp
+</pre></div>
+</div>
+</div>
+<div class="section" id="id12">
+<h2><a class="toc-backref" href="#id25">9.5. 其他</a><a class="headerlink" href="#id12" title="Permalink to this headline">¶</a></h2>
+<p><strong>打开目录：</strong></p>
+<p>这种方式在浏览陈皓博客时学到。之前自己需要编辑多个文件时，一般都是利用vim
+同时打开，然后使用 :bn/:bp 来进行文件切换。</p>
+<p>实际上可以直接打开一个目录：</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span>vim dir ; 打开一个目录
+vim , 然后输入 :E ; 打开当前目录， 然后就可以愉快的编辑多个文件了。
+</pre></div>
+</div>
+<table class="docutils footnote" frame="void" id="id13" rules="none">
 <colgroup><col class="label" /><col /></colgroup>
 <tbody valign="top">
 <tr><td class="label">[1]</td><td><a class="reference external" href="HTTP://coolshell.cn/articles/5426.html">HTTP://coolshell.cn/articles/5426.html</a></td></tr>

@@ -125,7 +125,7 @@
 </li>
 <li class="toctree-l2"><a class="reference internal" href="kombu.html">19. kombu和消息队列总结</a></li>
 <li class="toctree-l2"><a class="reference internal" href="openstack_debug.html">20. OpenStack 调试</a></li>
-<li class="toctree-l2"><a class="reference internal" href="nova_rpcserver_start.html">21. nova RPC服务启动分析</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nova_rpcserver_start.html">21. nova rpc服务启动分析</a></li>
 <li class="toctree-l2"><a class="reference internal" href="periodic_task.html">22. OpenStack周期性任务分析</a></li>
 <li class="toctree-l2"><a class="reference internal" href="nova_log.html">23. OpenStack 日志模块分析</a></li>
 <li class="toctree-l2"><a class="reference internal" href="qemu_kvm.html">24. qemu/kvm学习笔记</a></li>
@@ -209,10 +209,7 @@
 </ul>
 </div>
 <hr class="docutils" />
-<p>分析OpenStack源码过程中，它使用了很多很多的库，假如不了解这些库的用法，
-代码会非常难以理解。oslo作为OpenStack的通用组件，在每一个项目中都有
-用到，现在对子项目 <code class="docutils literal"><span class="pre">oslo.config</span></code> 用法做一个总结！由于 oslo.config
-支持的功能非常的多，因此这里可能只会列出常用的用法。</p>
+<p>OpenStack源码中使用了很多的标准库和第三方库，假如不熟悉这些库的用法，分析代码时往往会事倍功半。oslo作为OpenStack的通用组件，在每一个项目中都有用到，现在对子项目 <code class="docutils literal"><span class="pre">oslo.config</span></code> 用法做一个总结！由于oslo.config支持的功能非常的多，因此这里可能只会列出常用的用法。</p>
 <p>代码版本为 OpenStack juno！</p>
 <div class="section" id="id2">
 <h2><a class="toc-backref" href="#id26">18.1. 配置项</a><a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
