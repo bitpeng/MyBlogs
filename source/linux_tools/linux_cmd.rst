@@ -129,7 +129,7 @@ shell 脚本中流重定向方式 ``>&2`` 参考于 service 命令源码。
    :align: center
 
    管道测试
-   
+
 **根据grep高亮显示可以知道，默认情况下只有 stdout (标准输出流)重定向到管道；
 标准错误流没有重定向到管道。**
 
@@ -315,6 +315,21 @@ apt-get
 ::
 
     apt-get upgrade
+
+搜索包：
+
+::
+
+    apt-cache search lvm
+
+获取包的相关信息：
+
+::
+
+    apt-cache show lvm2
+
+.. [#] http://os.51cto.com/art/200802/65583.htm
+.. [#] http://wiki.ubuntu.org.cn/Apt%E5%92%8Cdpkg%E5%BF%AB%E9%80%9F%E5%8F%82%E8%80%83
 
 awk
 +++
