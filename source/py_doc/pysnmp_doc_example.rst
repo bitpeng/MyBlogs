@@ -16,21 +16,25 @@ PySNMP获取设备信息
 
 首先, 可以获取的mib信息，都在网站\ `mibs.snmplabs.com <http://mibs.snmplabs.com/asn1/>`__\ 可以找到，比如，我们需要查询cpu的某些信息。
 
-.. code:: powershell
+.. code-block:: console
 
     root@ubuntu:/smbshare# snmpwalk -v 2c -c public 10.11.113.150 ssCpuIdle
     UCD-SNMP-MIB::ssCpuIdle.0 = INTEGER: 93
 
 然后打开UCD-SNMP-MIB目录，可以找到cpu相关的mib对象。
 
-.. figure:: http://images2015.cnblogs.com/blog/801114/201605/801114-20160531110607696-1312294612.png
-   :alt: ucd
+.. figure:: /_static/images/snmp_ucd.png
+   :scale: 100
+   :align: center
 
    ucd
-.. figure:: http://images2015.cnblogs.com/blog/801114/201605/801114-20160531110745414-934932437.png
-   :alt: sscpu
+
+.. figure:: /_static/images/snmp_sscpu.png
+   :scale: 100
+   :align: center
 
    sscpu
+
 在description里有关于对象信息的详细解释。
 
 cpu信息

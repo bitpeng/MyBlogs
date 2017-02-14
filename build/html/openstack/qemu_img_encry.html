@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>26. nova虚机加密总结 &mdash; Welcome to Sitian&#39;s Blog 0.1 documentation</title>
+  <title>26. nova虚机加密总结 &mdash; Welcome to Sitian&#39;s Blog 1.0 documentation</title>
   
 
   
@@ -30,9 +30,9 @@
   
 
   
-    <link rel="top" title="Welcome to Sitian&#39;s Blog 0.1 documentation" href="../index.html"/>
+    <link rel="top" title="Welcome to Sitian&#39;s Blog 1.0 documentation" href="../index.html"/>
         <link rel="up" title="OpenStack Note" href="index.html"/>
-        <link rel="next" title="杂项讨论" href="../others/index.html"/>
+        <link rel="next" title="27. nova组件间交互总结" href="nova_interact.html"/>
         <link rel="prev" title="25. 虚拟化相关命令" href="virt_cmd.html"/> 
 
   
@@ -61,7 +61,7 @@
             
             
               <div class="version">
-                0.1
+                1.0
               </div>
             
           
@@ -103,10 +103,10 @@
 <li class="toctree-l2"><a class="reference internal" href="opengrok_xp.html">15. OpenGrok代码浏览环境搭建</a></li>
 <li class="toctree-l2"><a class="reference internal" href="nova_api.html">16. nova-api分析</a></li>
 <li class="toctree-l2"><a class="reference internal" href="nova_smd.html">17. [翻译] nova：Services、Managers and Drivers</a></li>
-<li class="toctree-l2"><a class="reference internal" href="oslo_cfg.html">18. oslo.config 库学习</a></li>
+<li class="toctree-l2"><a class="reference internal" href="oslo_cfg.html">18. oslo.config 用法总结</a></li>
 <li class="toctree-l2"><a class="reference internal" href="kombu.html">19. kombu和消息队列总结</a></li>
 <li class="toctree-l2"><a class="reference internal" href="openstack_debug.html">20. OpenStack 调试</a></li>
-<li class="toctree-l2"><a class="reference internal" href="nova_rpcserver_start.html">21. nova RPC服务启动分析</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nova_rpcserver_start.html">21. nova rpc服务启动分析</a></li>
 <li class="toctree-l2"><a class="reference internal" href="periodic_task.html">22. OpenStack周期性任务分析</a></li>
 <li class="toctree-l2"><a class="reference internal" href="nova_log.html">23. OpenStack 日志模块分析</a></li>
 <li class="toctree-l2"><a class="reference internal" href="qemu_kvm.html">24. qemu/kvm学习笔记</a></li>
@@ -123,6 +123,8 @@
 <li class="toctree-l3"><a class="reference internal" href="#id4">26.3. 附录：实验步骤</a></li>
 </ul>
 </li>
+<li class="toctree-l2"><a class="reference internal" href="nova_interact.html">27. nova组件间交互总结</a></li>
+<li class="toctree-l2"><a class="reference internal" href="juno_neutron-meter-agent_install.html">28. juno安装neutron-meter-agent</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../others/index.html">杂项讨论</a></li>
@@ -413,7 +415,7 @@ virsh secret-set-value <span class="nv">$secret_uuid</span> <span class="k">$(</
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="../others/index.html" class="btn btn-neutral float-right" title="杂项讨论" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="nova_interact.html" class="btn btn-neutral float-right" title="27. nova组件间交互总结" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
         <a href="virt_cmd.html" class="btn btn-neutral" title="25. 虚拟化相关命令" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
@@ -447,7 +449,7 @@ virsh secret-set-value <span class="nv">$secret_uuid</span> <span class="k">$(</
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../',
-            VERSION:'0.1',
+            VERSION:'1.0',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true

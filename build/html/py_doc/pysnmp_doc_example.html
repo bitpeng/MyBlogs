@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>2. PySNMP获取设备信息 &mdash; Welcome to Sitian&#39;s Blog 0.1 documentation</title>
+  <title>2. PySNMP获取设备信息 &mdash; Welcome to Sitian&#39;s Blog 1.0 documentation</title>
   
 
   
@@ -30,10 +30,10 @@
   
 
   
-    <link rel="top" title="Welcome to Sitian&#39;s Blog 0.1 documentation" href="../index.html"/>
-        <link rel="up" title="Hack Python" href="index.html"/>
-        <link rel="next" title="3. Python正则表达式" href="re_doc.html"/>
-        <link rel="prev" title="1. PySNMP教程" href="pysnmp_doc.html"/> 
+    <link rel="top" title="Welcome to Sitian&#39;s Blog 1.0 documentation" href="../index.html"/>
+        <link rel="up" title="Python Note" href="index.html"/>
+        <link rel="next" title="3. [翻译] Python正则表达式" href="re_doc.html"/>
+        <link rel="prev" title="1. [翻译] PySNMP教程" href="pysnmp_doc.html"/> 
 
   
   <script src="../_static/js/modernizr.min.js"></script>
@@ -61,7 +61,7 @@
             
             
               <div class="version">
-                0.1
+                1.0
               </div>
             
           
@@ -83,8 +83,8 @@
             
             
                 <ul class="current">
-<li class="toctree-l1 current"><a class="reference internal" href="index.html">Hack Python</a><ul class="current">
-<li class="toctree-l2"><a class="reference internal" href="pysnmp_doc.html">1. PySNMP教程</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Python Note</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="pysnmp_doc.html">1. [翻译] PySNMP教程</a></li>
 <li class="toctree-l2 current"><a class="current reference internal" href="#">2. PySNMP获取设备信息</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#cpu">2.1. cpu信息</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#id2">2.2. 内存信息</a></li>
@@ -93,16 +93,22 @@
 <li class="toctree-l3"><a class="reference internal" href="#id4">2.5. 总结</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="re_doc.html">3. Python正则表达式</a></li>
-<li class="toctree-l2"><a class="reference internal" href="wsgi.html">4. wsgi基础</a></li>
+<li class="toctree-l2"><a class="reference internal" href="re_doc.html">3. [翻译] Python正则表达式</a></li>
+<li class="toctree-l2"><a class="reference internal" href="wsgi.html">4. WSGI基础</a></li>
 <li class="toctree-l2"><a class="reference internal" href="re_analysis.html">5. Python正则表达式分析利器</a></li>
 <li class="toctree-l2"><a class="reference internal" href="python_descriptor.html">6. Python描述器</a></li>
 <li class="toctree-l2"><a class="reference internal" href="python_notebook.html">7. Python学习总结</a></li>
+<li class="toctree-l2"><a class="reference internal" href="python_coding.html">8. Python 编码问题总结</a></li>
+<li class="toctree-l2"><a class="reference internal" href="dec_logic.html">9. Python 装饰器、闭包</a></li>
+<li class="toctree-l2"><a class="reference internal" href="webob_analysis.html">10. webob库简单分析</a></li>
+<li class="toctree-l2"><a class="reference internal" href="metaclass_intro.html">11. Python元类</a></li>
+<li class="toctree-l2"><a class="reference internal" href="inspect_intro.html">12. python inspect 模块</a></li>
+<li class="toctree-l2"><a class="reference internal" href="log_summary.html">13. logging 模块总结</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../linux_tools/index.html">Hack Linux</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../openstack/index.html">Hack OpenStack</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../others/index.html">其他杂项</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../openstack/index.html">OpenStack Note</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../others/index.html">杂项讨论</a></li>
 </ul>
 
             
@@ -133,7 +139,7 @@
   <ul class="wy-breadcrumbs">
     <li><a href="../index.html">Docs</a> &raquo;</li>
       
-          <li><a href="index.html">Hack Python</a> &raquo;</li>
+          <li><a href="index.html">Python Note</a> &raquo;</li>
       
     <li>2. PySNMP获取设备信息</li>
       <li class="wy-breadcrumbs-aside">
@@ -171,17 +177,17 @@
 </div>
 <hr class="docutils" />
 <p>首先, 可以获取的mib信息，都在网站<a class="reference external" href="http://mibs.snmplabs.com/asn1/">mibs.snmplabs.com</a>可以找到，比如，我们需要查询cpu的某些信息。</p>
-<div class="code powershell highlight-default"><div class="highlight"><pre><span></span><span class="n">root</span><span class="nd">@ubuntu</span><span class="p">:</span><span class="o">/</span><span class="n">smbshare</span><span class="c1"># snmpwalk -v 2c -c public 10.11.113.150 ssCpuIdle</span>
-<span class="n">UCD</span><span class="o">-</span><span class="n">SNMP</span><span class="o">-</span><span class="n">MIB</span><span class="p">::</span><span class="n">ssCpuIdle</span><span class="o">.</span><span class="mi">0</span> <span class="o">=</span> <span class="n">INTEGER</span><span class="p">:</span> <span class="mi">93</span>
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">root@ubuntu:/smbshare#</span> snmpwalk -v 2c -c public 10.11.113.150 ssCpuIdle
+<span class="go">UCD-SNMP-MIB::ssCpuIdle.0 = INTEGER: 93</span>
 </pre></div>
 </div>
 <p>然后打开UCD-SNMP-MIB目录，可以找到cpu相关的mib对象。</p>
-<div class="figure" id="id5">
-<img alt="ucd" src="http://images2015.cnblogs.com/blog/801114/201605/801114-20160531110607696-1312294612.png" />
+<div class="figure align-center" id="id5">
+<a class="reference internal image-reference" href="../_images/snmp_ucd.png"><img alt="../_images/snmp_ucd.png" src="../_images/snmp_ucd.png" style="width: 809.0px; height: 500.0px;" /></a>
 <p class="caption"><span class="caption-text">ucd</span></p>
 </div>
-<div class="figure" id="id6">
-<img alt="sscpu" src="http://images2015.cnblogs.com/blog/801114/201605/801114-20160531110745414-934932437.png" />
+<div class="figure align-center" id="id6">
+<a class="reference internal image-reference" href="../_images/snmp_sscpu.png"><img alt="../_images/snmp_sscpu.png" src="../_images/snmp_sscpu.png" style="width: 717.0px; height: 536.0px;" /></a>
 <p class="caption"><span class="caption-text">sscpu</span></p>
 </div>
 <p>在description里有关于对象信息的详细解释。</p>
@@ -410,10 +416,10 @@ name，可以很容易看出其意思，下面的代码可以用来获取disk的
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="re_doc.html" class="btn btn-neutral float-right" title="3. Python正则表达式" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="re_doc.html" class="btn btn-neutral float-right" title="3. [翻译] Python正则表达式" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="pysnmp_doc.html" class="btn btn-neutral" title="1. PySNMP教程" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="pysnmp_doc.html" class="btn btn-neutral" title="1. [翻译] PySNMP教程" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   
@@ -444,7 +450,7 @@ name，可以很容易看出其意思，下面的代码可以用来获取disk的
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../',
-            VERSION:'0.1',
+            VERSION:'1.0',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true

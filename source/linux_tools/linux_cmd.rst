@@ -328,6 +328,12 @@ apt-get
 
     apt-cache show lvm2
 
+安装特定版本：
+
+::
+
+    apt-get --reinstall install neutron-common=1:2014.1.3-0ubuntu1.1
+
 .. [#] http://os.51cto.com/art/200802/65583.htm
 .. [#] http://wiki.ubuntu.org.cn/Apt%E5%92%8Cdpkg%E5%BF%AB%E9%80%9F%E5%8F%82%E8%80%83
 
@@ -386,6 +392,12 @@ dpkg
 
     dpkg -L lvm2
 
+
+手动安装deb包：
+
+::
+
+    dpkg -i neutron-metering-agent_2014.2.1-0ubuntu1-cloud0_all.deb
 
 wget
 ++++
