@@ -1,6 +1,7 @@
 
-杂项讨论
-==========
+
+未分类
+============
 
 .. tip::
 
@@ -17,5 +18,6 @@
     mark_lan
     tools
     keep_writting
+    good_blog
 
 ..    sphinx_doc
