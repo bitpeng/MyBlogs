@@ -1,0 +1,363 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>8. iptables 学习总结 &mdash; Welcome to Sitian&#39;s Blog 1.0 documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+    <link rel="top" title="Welcome to Sitian&#39;s Blog 1.0 documentation" href="../index.html"/>
+        <link rel="up" title="未分类" href="index.html"/>
+        <link rel="prev" title="7. 推荐博客和链接" href="good_blog.html"/> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> Welcome to Sitian's Blog
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../py_doc/index.html">Python Note</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../linux_tools/index.html">Hack Linux</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../openstack/index.html">OpenStack Note</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">未分类</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="rst_template.html">1. reStructuredText简明教程</a></li>
+<li class="toctree-l2"><a class="reference internal" href="rst_usage.html">2. rst 用法总结</a></li>
+<li class="toctree-l2"><a class="reference internal" href="store_intro.html">3. ceph与分布式存储入门</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mark_lan.html">4. 附录：轻量级标记语言</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tools.html">5. 软件和工具</a></li>
+<li class="toctree-l2"><a class="reference internal" href="keep_writting.html">6. 不忘初心，坚持</a></li>
+<li class="toctree-l2"><a class="reference internal" href="good_blog.html">7. 推荐博客和链接</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">8. iptables 学习总结</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id2">8.1. 命令格式</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id4">8.2. 常用扩展</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#connlimit">8.2.1. connlimit</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#id5">8.3. iptables常用实例收集</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#ip">8.3.1. 限制每个ip的连接数量</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id7">8.3.2. 限制每个ip的连接速率</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../index.html">Welcome to Sitian's Blog</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+ 
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../index.html">Docs</a> &raquo;</li>
+      
+          <li><a href="index.html">未分类</a> &raquo;</li>
+      
+    <li>8. iptables 学习总结</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="../_sources/others/iptables_sum.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="iptables">
+<span id="iptables-sum"></span><h1><a class="toc-backref" href="#id10">8. iptables 学习总结</a><a class="headerlink" href="#iptables" title="Permalink to this headline">¶</a></h1>
+<p><strong>date: 2017-02-17 10:30</strong></p>
+<div class="contents topic" id="id1">
+<p class="topic-title first">目录</p>
+<ul class="simple">
+<li><a class="reference internal" href="#iptables" id="id10">iptables 学习总结</a><ul>
+<li><a class="reference internal" href="#id2" id="id11">命令格式</a></li>
+<li><a class="reference internal" href="#id4" id="id12">常用扩展</a><ul>
+<li><a class="reference internal" href="#connlimit" id="id13">connlimit</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#id5" id="id14">iptables常用实例收集</a><ul>
+<li><a class="reference internal" href="#ip" id="id15">限制每个ip的连接数量</a></li>
+<li><a class="reference internal" href="#id7" id="id16">限制每个ip的连接速率</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+<hr class="docutils" />
+<p>近期调研neutron-metering-agent组件，需要事先熟悉下iptables，把自己学习iptables的相关知识点记录下来，以供参考。</p>
+<div class="figure align-center" id="id9">
+<a class="reference internal image-reference" href="../_images/kvm_error.png"><img alt="../_images/kvm_error.png" src="../_images/kvm_error.png" style="width: 839.0px; height: 145.0px;" /></a>
+<p class="caption"><span class="caption-text">KVM启动虚拟机错误</span></p>
+</div>
+<div class="section" id="id2">
+<h2><a class="toc-backref" href="#id11">8.1. 命令格式</a><a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
+<p>iptables操作规则的命令格式如下：</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">iptables</span> <span class="p">[</span><span class="o">-</span><span class="n">t</span> <span class="n">表名</span><span class="p">]</span> <span class="o">&lt;-</span><span class="n">A</span><span class="o">/</span><span class="n">I</span><span class="o">/</span><span class="n">D</span><span class="o">/</span><span class="n">R</span><span class="o">&gt;</span> <span class="n">规则链名</span> <span class="p">[</span><span class="n">规则号</span><span class="p">]</span> \
+         <span class="o">&lt;-</span><span class="n">i</span><span class="o">/</span><span class="n">o</span> <span class="n">网卡名</span><span class="o">&gt;</span> <span class="o">-</span><span class="n">p</span> <span class="n">协议名</span> <span class="o">&lt;-</span><span class="n">s</span> <span class="n">源IP</span><span class="o">/</span><span class="n">源子网</span><span class="o">&gt;</span> \
+         <span class="o">--</span><span class="n">sport</span> <span class="n">源端口</span> <span class="o">&lt;-</span><span class="n">d</span> <span class="n">目标IP</span><span class="o">/</span><span class="n">目标子网</span><span class="o">&gt;</span> <span class="o">--</span><span class="n">dport</span> <span class="n">目标端口</span> \
+         <span class="p">[</span><span class="o">-</span><span class="n">m</span> <span class="n">扩展模块</span> <span class="n">匹配条件</span><span class="p">]</span>
+         <span class="o">-</span><span class="n">j</span> <span class="n">动作</span>
+</pre></div>
+</div>
+<p>其中， <strong>表名包括：</strong></p>
+<ul class="simple">
+<li>raw：高级功能，如：网址过滤。</li>
+<li>mangle：数据包修改（QOS），用于实现服务质量。</li>
+<li>net：地址转换，用于网关路由器。</li>
+<li>filter：包过滤，用于防火墙规则。</li>
+</ul>
+<p><em>假如表名没有指定的话，则默认是filter</em></p>
+<p><strong>规则链包括：</strong></p>
+<ul class="simple">
+<li>INPUT链：处理输入数据包。</li>
+<li>OUTPUT链：处理输出数据包。</li>
+<li>PORWARD链：处理转发数据包。</li>
+<li>PREROUTING链：用于目标地址转换(DNAT)。</li>
+<li>POSTOUTING链：用于源地址转换(SNAT)。</li>
+<li>自定义的规则链。</li>
+</ul>
+<table class="docutils footnote" frame="void" id="id3" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label">[1]</td><td><a class="reference external" href="http://man.linuxde.net/iptables">http://man.linuxde.net/iptables</a></td></tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="id4">
+<h2><a class="toc-backref" href="#id12">8.2. 常用扩展</a><a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h2>
+<p>可以使用如下命令查看支持的扩展：</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span>man iptables-extensions
+
+# 查看可用的内核模块
+ls /lib/modules/`uname -r`/kernel/net/netfilter/
+
+# 查看可用的iptables扩展
+# 在我的ubuntu-14.04系统上，提示没有该目录
+ls /usr/lib/iptables/
+</pre></div>
+</div>
+<div class="section" id="connlimit">
+<h3><a class="toc-backref" href="#id13">8.2.1. connlimit</a><a class="headerlink" href="#connlimit" title="Permalink to this headline">¶</a></h3>
+<p>限制某个IP或者IP段对本机的并行连接数量。</p>
+<p>选项解释(可以通过man iptables或者man iptables-extensions 查看每个选项具体含义)：</p>
+<ul class="simple">
+<li><code class="docutils literal"><span class="pre">--syn</span></code>: 表示该报文为syn报文，只针对TCP协议有效；</li>
+<li><code class="docutils literal"><span class="pre">--connlimit-above</span></code>: 已连接数量超过N时，则匹配；</li>
+<li><code class="docutils literal"><span class="pre">--reject-with</span></code>: 给匹配的包返回error packet响应；</li>
+</ul>
+</div>
+</div>
+<div class="section" id="id5">
+<h2><a class="toc-backref" href="#id14">8.3. iptables常用实例收集</a><a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h2>
+<p>陆续收集和更新中……</p>
+<div class="section" id="ip">
+<h3><a class="toc-backref" href="#id15">8.3.1. 限制每个ip的连接数量</a><a class="headerlink" href="#ip" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-default"><div class="highlight"><pre><span></span># 通用语法
+iptables -A INPUT -p tcp --syn --dport $port -m connlimit --connlimit-above N -j REJECT --reject-with tcp-reset
+# 限制每个IP的ssh连接数量为三个！
+iptables -A INPUT -p tcp --syn --dport 22 -m connlimit --connlimit-above 3 -j REJECT
+
+# 限制http连接数量为20个！
+iptables -A INPUT -p tcp --syn --dport 80 -m connlimit --connlimit-above 20 -j REJECT --reject-with tcp-reset
+
+# 对上一条规则的优化，由于可能存在代理服务器，假设代理服务器ip为1.2.3.4，因此可用用 -d ! 忽略。
+iptables -A INPUT -p tcp --syn --dport 80 -d ! 1.2.3.4 -m connlimit --connlimit-above 20 -j REJECT --reject-with tcp-reset
+
+# 限制C类地址的HTTP连接数量为20个。
+iptables  -A INPUT -p tcp --syn --dport 80 -m connlimit --connlimit-above 20 --connlimit-mask 24 -j REJECT --reject-with tcp-reset
+</pre></div>
+</div>
+<table class="docutils footnote" frame="void" id="id6" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label">[2]</td><td><a class="reference external" href="https://www.cyberciti.biz/faq/iptables-connection-limits-howto/">https://www.cyberciti.biz/faq/iptables-connection-limits-howto/</a></td></tr>
+</tbody>
+</table>
+<p>解释：对某个特定IP，对本机某端口的TCP连接syn报文，如果已连接数量超过N，则丢弃syn连接报文，并返回tcp-reset报文！</p>
+</div>
+<div class="section" id="id7">
+<h3><a class="toc-backref" href="#id16">8.3.2. 限制每个ip的连接速率</a><a class="headerlink" href="#id7" title="Permalink to this headline">¶</a></h3>
+<p>以下这个脚本限制每个IP在100s的时间间隔内发起的http连接数量为10。</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span>#!/bin/bash
+IPT=/sbin/iptables
+# Max connection in seconds
+SECONDS=100
+# Max connections per IP
+BLOCKCOUNT=10
+# ....
+# ..
+# default action can be DROP or REJECT
+DACTION=&quot;DROP&quot;
+$IPT -A INPUT -p tcp --dport 80 -i eth0 -m state --state NEW -m recent --set
+$IPT -A INPUT -p tcp --dport 80 -i eth0 -m state --state NEW -m recent --update --seconds ${SECONDS} --hitcount ${BLOCKCOUNT} -j ${DACTION}
+</pre></div>
+</div>
+<table class="docutils footnote" frame="void" id="id8" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label">[3]</td><td><a class="reference external" href="https://www.cyberciti.biz/faq/iptables-connection-limits-howto/">https://www.cyberciti.biz/faq/iptables-connection-limits-howto/</a></td></tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+
+
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+      
+        <a href="good_blog.html" class="btn btn-neutral" title="7. 推荐博客和链接" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2016, chenshiqiang.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'1.0',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>
