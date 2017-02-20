@@ -97,6 +97,9 @@
 <li class="toctree-l3"><a class="reference internal" href="#id2">8.1. 命令格式</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#id4">8.2. 常用扩展</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#connlimit">8.2.1. connlimit</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#limit">8.2.2. limit</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#recent">8.2.3. recent</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#string">8.2.4. string</a></li>
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="#id5">8.3. iptables常用实例收集</a><ul>
@@ -164,11 +167,14 @@
 <li><a class="reference internal" href="#id2" id="id11">命令格式</a></li>
 <li><a class="reference internal" href="#id4" id="id12">常用扩展</a><ul>
 <li><a class="reference internal" href="#connlimit" id="id13">connlimit</a></li>
+<li><a class="reference internal" href="#limit" id="id14">limit</a></li>
+<li><a class="reference internal" href="#recent" id="id15">recent</a></li>
+<li><a class="reference internal" href="#string" id="id16">string</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#id5" id="id14">iptables常用实例收集</a><ul>
-<li><a class="reference internal" href="#ip" id="id15">限制每个ip的连接数量</a></li>
-<li><a class="reference internal" href="#id7" id="id16">限制每个ip的连接速率</a></li>
+<li><a class="reference internal" href="#id5" id="id17">iptables常用实例收集</a><ul>
+<li><a class="reference internal" href="#ip" id="id18">限制每个ip的连接数量</a></li>
+<li><a class="reference internal" href="#id7" id="id19">限制每个ip的连接速率</a></li>
 </ul>
 </li>
 </ul>
@@ -238,12 +244,34 @@ ls /usr/lib/iptables/
 <li><code class="docutils literal"><span class="pre">--reject-with</span></code>: 给匹配的包返回error packet响应；</li>
 </ul>
 </div>
+<div class="section" id="limit">
+<h3><a class="toc-backref" href="#id14">8.2.2. limit</a><a class="headerlink" href="#limit" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="recent">
+<h3><a class="toc-backref" href="#id15">8.2.3. recent</a><a class="headerlink" href="#recent" title="Permalink to this headline">¶</a></h3>
+<p>recent模块可以看作iptables里面维护了一个地址列表，这个地址列表可以通过:</p>
+<ul class="simple">
+<li><code class="docutils literal"><span class="pre">--set</span></code>: (将地址和时间戳添加进列表)</li>
+<li><code class="docutils literal"><span class="pre">--update</span></code>: (刷新时间戳)</li>
+<li><code class="docutils literal"><span class="pre">--rcheck</span></code>: (检查地址是否在列表)</li>
+<li><code class="docutils literal"><span class="pre">--remove</span></code>: (删除)四种方法来修改列表，每次使用时只能选用一种。</li>
+</ul>
+<p>该模块还可附带:</p>
+<ul class="simple">
+<li><code class="docutils literal"><span class="pre">--name</span></code>: 参数来指定列表的名字(默认为DEFAULT)，</li>
+<li><code class="docutils literal"><span class="pre">--rsource/--rdest</span></code>: 指示当前方法应用到数据包的源地址还是目的地址（默认是前者）。</li>
+</ul>
+<p>recent语句都带有布尔型返回值，每次(匹配)执行若结果为真，则会执行后续的语句(action)，比如 <code class="docutils literal"><span class="pre">-j</span> <span class="pre">ACCEPT</span></code> 之类的。</p>
+</div>
+<div class="section" id="string">
+<h3><a class="toc-backref" href="#id16">8.2.4. string</a><a class="headerlink" href="#string" title="Permalink to this headline">¶</a></h3>
+</div>
 </div>
 <div class="section" id="id5">
-<h2><a class="toc-backref" href="#id14">8.3. iptables常用实例收集</a><a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id17">8.3. iptables常用实例收集</a><a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h2>
 <p>陆续收集和更新中……</p>
 <div class="section" id="ip">
-<h3><a class="toc-backref" href="#id15">8.3.1. 限制每个ip的连接数量</a><a class="headerlink" href="#ip" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id18">8.3.1. 限制每个ip的连接数量</a><a class="headerlink" href="#ip" title="Permalink to this headline">¶</a></h3>
 <div class="highlight-default"><div class="highlight"><pre><span></span># 通用语法
 iptables -A INPUT -p tcp --syn --dport $port -m connlimit --connlimit-above N -j REJECT --reject-with tcp-reset
 # 限制每个IP的ssh连接数量为三个！
@@ -268,7 +296,7 @@ iptables  -A INPUT -p tcp --syn --dport 80 -m connlimit --connlimit-above 20 --c
 <p>解释：对某个特定IP，对本机某端口的TCP连接syn报文，如果已连接数量超过N，则丢弃syn连接报文，并返回tcp-reset报文！</p>
 </div>
 <div class="section" id="id7">
-<h3><a class="toc-backref" href="#id16">8.3.2. 限制每个ip的连接速率</a><a class="headerlink" href="#id7" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id19">8.3.2. 限制每个ip的连接速率</a><a class="headerlink" href="#id7" title="Permalink to this headline">¶</a></h3>
 <p>以下这个脚本限制每个IP在100s的时间间隔内发起的http连接数量为10。</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span>#!/bin/bash
 IPT=/sbin/iptables
