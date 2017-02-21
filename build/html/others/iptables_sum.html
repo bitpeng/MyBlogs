@@ -407,6 +407,7 @@ iptables  -A INPUT -p tcp --syn --dport 80 -m connlimit --connlimit-above 20 --c
 </div>
 <div class="section" id="id11">
 <h3><a class="toc-backref" href="#id34">8.4.2. 限制每个ip的连接速率</a><a class="headerlink" href="#id11" title="Permalink to this headline">¶</a></h3>
+<p>以下这个脚本限制每个IP在100s的时间间隔内发起的http连接数量为10。</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span>#!/bin/bash
 IPT=/sbin/iptables
 # Max connection in seconds
