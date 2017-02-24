@@ -33,6 +33,7 @@
     py_doc/index
     linux_tools/index
     openstack/index
+    network/index
     others/index
 
 ..    web/index

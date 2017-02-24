@@ -1,0 +1,314 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>1. 网络各层设备简介 &mdash; Welcome to Sitian&#39;s Blog 1.0 documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+    <link rel="top" title="Welcome to Sitian&#39;s Blog 1.0 documentation" href="../index.html"/>
+        <link rel="up" title="网络技术/neutron" href="index.html"/>
+        <link rel="next" title="未分类" href="../others/index.html"/>
+        <link rel="prev" title="网络技术/neutron" href="index.html"/> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> Welcome to Sitian's Blog
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../py_doc/index.html">Python Note</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../linux_tools/index.html">Hack Linux</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../openstack/index.html">OpenStack Note</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">网络技术/neutron</a><ul class="current">
+<li class="toctree-l2 current"><a class="current reference internal" href="#">1. 网络各层设备简介</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id5">1.1. 物理层</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id6">1.2. 数据链路层</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id7">1.3. 网络层</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id8">1.4. 其他网络设备</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#gateway">1.4.1. gateway</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#modems">1.4.2. Modems</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../others/index.html">未分类</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../index.html">Welcome to Sitian's Blog</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+ 
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../index.html">Docs</a> &raquo;</li>
+      
+          <li><a href="index.html">网络技术/neutron</a> &raquo;</li>
+      
+    <li>1. 网络各层设备简介</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="../_sources/network/net_dev.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="net-dev">
+<span id="id1"></span><h1><a class="toc-backref" href="#id10">1. 网络各层设备简介</a><a class="headerlink" href="#net-dev" title="Permalink to this headline">¶</a></h1>
+<div class="contents topic" id="id2">
+<p class="topic-title first">目录</p>
+<ul class="simple">
+<li><a class="reference internal" href="#net-dev" id="id10">网络各层设备简介</a><ul>
+<li><a class="reference internal" href="#id5" id="id11">物理层</a></li>
+<li><a class="reference internal" href="#id6" id="id12">数据链路层</a></li>
+<li><a class="reference internal" href="#id7" id="id13">网络层</a></li>
+<li><a class="reference internal" href="#id8" id="id14">其他网络设备</a><ul>
+<li><a class="reference internal" href="#gateway" id="id15">gateway</a></li>
+<li><a class="reference internal" href="#modems" id="id16">Modems</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+<hr class="docutils" />
+<p><cite>neutron无非就是将传统的物理硬件设备(如网线、网卡、服务器、交换机、路由器等)按照TCP/IP的四个层次架构
+(数据链路层、网络层、传输层、应用层)，通过软件编程的方式，予以全部虚拟化、软件化和抽象化。</cite> <a class="footnote-reference" href="#id4" id="id3">[1]</a></p>
+<table class="docutils footnote" frame="void" id="id4" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id3">[1]</a></td><td><a class="reference external" href="http://www.openstack.cn/?p=4527">http://www.openstack.cn/?p=4527</a></td></tr>
+</tbody>
+</table>
+<p>鉴于此，我们先来了解下传统的TCP/IP网络架构各层设备及其功能、特点等。</p>
+<p>得益于自己之前还算不错的TCP/IP网络基础知识(TCP/IP详解读了5+遍吧)，
+有些东西虽然遗忘了点，但是看到相关概念或者阐述还是能很快回忆和理解！</p>
+<p>下图是典型的OSI七层模型图：</p>
+<div class="figure align-center" id="id9">
+<a class="reference internal image-reference" href="../_images/osi_layer.png"><img alt="../_images/osi_layer.png" src="../_images/osi_layer.png" style="width: 500.0px; height: 354.0px;" /></a>
+<p class="caption"><span class="caption-text">OSI七层模型</span></p>
+</div>
+<div class="section" id="id5">
+<h2><a class="toc-backref" href="#id11">1.1. 物理层</a><a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h2>
+<p>物理层发送的是bit串！</p>
+<p>物理层对应的主要设备有：HUB，中继器，网线(如果也算的话)等。</p>
+<ul class="simple">
+<li>中继器： 将信号放大再调整传输，防止网络早期远距离传输的信号衰减。</li>
+<li>HUB：HUB模式下，某主机A向连在同一个HUB的主机B发送bits时，是先将bits发给HUB，然后HUB直接发送给与该HUB相连接的每一个机器；
+HUB中若有有多个主机想发送bits，那么冲突可能会相当严重。因此后来引入了Ethernet HUB，它有一个所谓的CSMA/CD检测算法，
+用来解决HUB的冲突问题。<strong>半双工传输！</strong></li>
+</ul>
+</div>
+<div class="section" id="id6">
+<h2><a class="toc-backref" href="#id12">1.2. 数据链路层</a><a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h2>
+<p>主要功能是数据包分帧，物理寻址等。该层的主要设备有：</p>
+<ul>
+<li><p class="first">网卡：又称NIC卡，用于计算机和局域网的通信。</p>
+</li>
+<li><p class="first">L2-switch：交换机和HUB有一点相似，和计算机之间都使用双绞线连接，但是又有如下重要不同。</p>
+<ul class="simple">
+<li>L2-switch全双工传输，可以同时收发数据；</li>
+<li>内置MAC学习机制，只把数据包发给和他相连接的目的设备；而HUB收到数据包会发给相连接的每一台设备；</li>
+<li>传输数据更快，性能更高；</li>
+</ul>
+</li>
+<li><p class="first">网桥：用于在数据链路层扩展以太网，根据MAC帧的目的地址对收到的帧进行转发和过滤。
+含有转发表。它隔离了冲突域，但不隔离广播域。</p>
+<p>另外需要注意的是：bridge所连接的两个LAN需要使用的是同样的协议。并且birdge在每一划分子网的情况下，
+将物理网络分成两个相对独立网络。<strong>网桥通过学习每个网络接口上的MAC层地址 (以太网地址) 工作。
+只当数据包的源地址和目标地址处于不同的网络时， 网桥才进行转发。</strong>
+因此在很多方面，网桥就像一个带有很少端口的以太网交换机。</p>
+</li>
+</ul>
+</div>
+<div class="section" id="id7">
+<h2><a class="toc-backref" href="#id13">1.3. 网络层</a><a class="headerlink" href="#id7" title="Permalink to this headline">¶</a></h2>
+<p>主要功能是对IP数据包进行IP选路。</p>
+<ul class="simple">
+<li>路由器：连接不同局域网，广域网，在不同网络间转发IP分组。</li>
+<li>L3-switch：具有路由功能的交换机。</li>
+</ul>
+</div>
+<div class="section" id="id8">
+<h2><a class="toc-backref" href="#id14">1.4. 其他网络设备</a><a class="headerlink" href="#id8" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="gateway">
+<h3><a class="toc-backref" href="#id15">1.4.1. gateway</a><a class="headerlink" href="#gateway" title="Permalink to this headline">¶</a></h3>
+<p><cite>Gateway is a device which is used to connect multiple networks and passes packets from one packet to the other network. Acting as the ‘gateway’ between different networking systems or computer programs, a gateway is a device which forms a link between them. It allows the computer programs, either on the same computer or on different computers to share information across the network through protocols. A router is also a gateway, since it interprets data from one network protocol to another.</cite></p>
+<p><cite>Others such as bridge converts the data into different forms between two networking systems. Then a software application converts the data from one format into another. Gateway is a viable tool to translate the data format, although the data itself remains unchanged. Gateway might be installed in some other device to add its functionality into another.</cite></p>
+<p>关于网关，上面的解释有点晦涩，实际上网关可以认为是起着协议转换的作用。举个简单例子：
+我们在浏览网页时，有时可以在页面上看到FTP连接，然后我们点击FTP链接，就可以直接下载文件，
+点击页面链接时发起的是HTTP请求，HTTP请求经过网关处理，转换成对FTP服务器的下载文件请求，文件下载完成后，
+网关又把FTP文件当成HTTP报文内容，返回HTTP response。这样，我们就收到下载好的FTP文件了！
+所以在这个例子中，网关转换我们的HTTP请求为FTP请求，并包装FTP文件返回HTTP响应。</p>
+</div>
+<div class="section" id="modems">
+<h3><a class="toc-backref" href="#id16">1.4.2. Modems</a><a class="headerlink" href="#modems" title="Permalink to this headline">¶</a></h3>
+<p>调制解调器，俗称猫。把计算机产生的数字信号转换成模拟信号，以便信号通过电话线传输！
+在云计算网络中没有对应虚拟化设备，了解即可。</p>
+</div>
+</div>
+</div>
+
+
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../others/index.html" class="btn btn-neutral float-right" title="未分类" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="index.html" class="btn btn-neutral" title="网络技术/neutron" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2016, chenshiqiang.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'1.0',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>
