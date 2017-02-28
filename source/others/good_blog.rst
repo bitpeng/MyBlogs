@@ -23,7 +23,7 @@ openstack
 - `popsuper1982 <http://www.cnblogs.com/popsuper1982/p/3800540.html>`_ ：nova/neutron等，创建虚机的100个知识点！
 - `孔令贤 <http://lingxiankong.github.io/blog/2014/03/25/metadata/>`_ ：heat PTL, core member。
 
-  另外，孔令贤有如下两个博客：尤其从他的iteye博客可以看出，他从2012年接触OpenStack时，还没有任何基础，甚至连Python都不会。可是一年半后，他已经是OpenStack core member了。并且16年通过技术一名新西兰，多么励志的故事！
+  另外，孔令贤有如下两个博客：尤其从他的iteye博客可以看出，他从2012年接触OpenStack时，还没有任何基础，甚至连Python都不会。可是一年半后，他已经是OpenStack core member了。并且16年通过技术移民新西兰，多么励志的故事！
 
   .. [#] http://blog.csdn.net/lynn_kong
   .. [#] http://lynnkong.iteye.com/

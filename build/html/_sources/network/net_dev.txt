@@ -12,7 +12,6 @@
 `neutron无非就是将传统的物理硬件设备(如网线、网卡、服务器、交换机、路由器等)按照TCP/IP的四个层次架构
 (数据链路层、网络层、传输层、应用层)，通过软件编程的方式，予以全部虚拟化、软件化和抽象化。` [1]_
 
-.. [1] http://www.openstack.cn/?p=4527
 
 鉴于此，我们先来了解下传统的TCP/IP网络架构各层设备及其功能、特点等。
 
@@ -90,3 +89,13 @@ Modems
 
 调制解调器，俗称猫。把计算机产生的数字信号转换成模拟信号，以便信号通过电话线传输！
 在云计算网络中没有对应虚拟化设备，了解即可。
+
+参考
+=====
+
+.. [1] 比较好的介绍了OpenStack网络虚拟化的基本原理。网址：http://www.openstack.cn/?p=4527
+.. [#] 对TCP/IP架构各层网络设备有比较全面的介绍。网址：http://www.certiology.com/computing/computer-networking/network-devices.html
+.. [#] freebsd手册，介绍了网桥的基本概念和相关命令和用法。\
+       网址：https://www.freebsd.org/doc/zh_CN.UTF-8/books/handbook/network-bridging.html
+.. [#] freebsd手册，介绍网络路由器。网址：https://www.freebsd.org/doc/zh_CN.UTF-8/books/handbook/network-routing.html
+.. [#] 介绍了混杂模式，集线器，交换机等，非常清晰！网址：http://book.51cto.com/art/201202/316585.htm

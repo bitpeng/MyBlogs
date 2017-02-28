@@ -88,14 +88,15 @@
 <li class="toctree-l1"><a class="reference internal" href="../openstack/index.html">OpenStack Note</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="index.html">网络技术/neutron</a><ul class="current">
 <li class="toctree-l2 current"><a class="current reference internal" href="#">1. 网络各层设备简介</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#id5">1.1. 物理层</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#id6">1.2. 数据链路层</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#id7">1.3. 网络层</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#id8">1.4. 其他网络设备</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id4">1.1. 物理层</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id5">1.2. 数据链路层</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id6">1.3. 网络层</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id7">1.4. 其他网络设备</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#gateway">1.4.1. gateway</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#modems">1.4.2. Modems</a></li>
 </ul>
 </li>
+<li class="toctree-l3"><a class="reference internal" href="#id8">1.5. 参考</a></li>
 </ul>
 </li>
 </ul>
@@ -148,42 +149,37 @@
            <div itemprop="articleBody">
             
   <div class="section" id="net-dev">
-<span id="id1"></span><h1><a class="toc-backref" href="#id10">1. 网络各层设备简介</a><a class="headerlink" href="#net-dev" title="Permalink to this headline">¶</a></h1>
+<span id="id1"></span><h1><a class="toc-backref" href="#id15">1. 网络各层设备简介</a><a class="headerlink" href="#net-dev" title="Permalink to this headline">¶</a></h1>
 <div class="contents topic" id="id2">
 <p class="topic-title first">目录</p>
 <ul class="simple">
-<li><a class="reference internal" href="#net-dev" id="id10">网络各层设备简介</a><ul>
-<li><a class="reference internal" href="#id5" id="id11">物理层</a></li>
-<li><a class="reference internal" href="#id6" id="id12">数据链路层</a></li>
-<li><a class="reference internal" href="#id7" id="id13">网络层</a></li>
-<li><a class="reference internal" href="#id8" id="id14">其他网络设备</a><ul>
-<li><a class="reference internal" href="#gateway" id="id15">gateway</a></li>
-<li><a class="reference internal" href="#modems" id="id16">Modems</a></li>
+<li><a class="reference internal" href="#net-dev" id="id15">网络各层设备简介</a><ul>
+<li><a class="reference internal" href="#id4" id="id16">物理层</a></li>
+<li><a class="reference internal" href="#id5" id="id17">数据链路层</a></li>
+<li><a class="reference internal" href="#id6" id="id18">网络层</a></li>
+<li><a class="reference internal" href="#id7" id="id19">其他网络设备</a><ul>
+<li><a class="reference internal" href="#gateway" id="id20">gateway</a></li>
+<li><a class="reference internal" href="#modems" id="id21">Modems</a></li>
 </ul>
 </li>
+<li><a class="reference internal" href="#id8" id="id22">参考</a></li>
 </ul>
 </li>
 </ul>
 </div>
 <hr class="docutils" />
 <p><cite>neutron无非就是将传统的物理硬件设备(如网线、网卡、服务器、交换机、路由器等)按照TCP/IP的四个层次架构
-(数据链路层、网络层、传输层、应用层)，通过软件编程的方式，予以全部虚拟化、软件化和抽象化。</cite> <a class="footnote-reference" href="#id4" id="id3">[1]</a></p>
-<table class="docutils footnote" frame="void" id="id4" rules="none">
-<colgroup><col class="label" /><col /></colgroup>
-<tbody valign="top">
-<tr><td class="label"><a class="fn-backref" href="#id3">[1]</a></td><td><a class="reference external" href="http://www.openstack.cn/?p=4527">http://www.openstack.cn/?p=4527</a></td></tr>
-</tbody>
-</table>
+(数据链路层、网络层、传输层、应用层)，通过软件编程的方式，予以全部虚拟化、软件化和抽象化。</cite> <a class="footnote-reference" href="#id9" id="id3">[1]</a></p>
 <p>鉴于此，我们先来了解下传统的TCP/IP网络架构各层设备及其功能、特点等。</p>
 <p>得益于自己之前还算不错的TCP/IP网络基础知识(TCP/IP详解读了5+遍吧)，
 有些东西虽然遗忘了点，但是看到相关概念或者阐述还是能很快回忆和理解！</p>
 <p>下图是典型的OSI七层模型图：</p>
-<div class="figure align-center" id="id9">
+<div class="figure align-center" id="id14">
 <a class="reference internal image-reference" href="../_images/osi_layer.png"><img alt="../_images/osi_layer.png" src="../_images/osi_layer.png" style="width: 500.0px; height: 354.0px;" /></a>
 <p class="caption"><span class="caption-text">OSI七层模型</span></p>
 </div>
-<div class="section" id="id5">
-<h2><a class="toc-backref" href="#id11">1.1. 物理层</a><a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id4">
+<h2><a class="toc-backref" href="#id16">1.1. 物理层</a><a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h2>
 <p>物理层发送的是bit串！</p>
 <p>物理层对应的主要设备有：HUB，中继器，网线(如果也算的话)等。</p>
 <ul class="simple">
@@ -193,8 +189,8 @@ HUB中若有有多个主机想发送bits，那么冲突可能会相当严重。�
 用来解决HUB的冲突问题。<strong>半双工传输！</strong></li>
 </ul>
 </div>
-<div class="section" id="id6">
-<h2><a class="toc-backref" href="#id12">1.2. 数据链路层</a><a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id5">
+<h2><a class="toc-backref" href="#id17">1.2. 数据链路层</a><a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h2>
 <p>主要功能是数据包分帧，物理寻址等。该层的主要设备有：</p>
 <ul>
 <li><p class="first">网卡：又称NIC卡，用于计算机和局域网的通信。</p>
@@ -215,18 +211,18 @@ HUB中若有有多个主机想发送bits，那么冲突可能会相当严重。�
 </li>
 </ul>
 </div>
-<div class="section" id="id7">
-<h2><a class="toc-backref" href="#id13">1.3. 网络层</a><a class="headerlink" href="#id7" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id6">
+<h2><a class="toc-backref" href="#id18">1.3. 网络层</a><a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h2>
 <p>主要功能是对IP数据包进行IP选路。</p>
 <ul class="simple">
 <li>路由器：连接不同局域网，广域网，在不同网络间转发IP分组。</li>
 <li>L3-switch：具有路由功能的交换机。</li>
 </ul>
 </div>
-<div class="section" id="id8">
-<h2><a class="toc-backref" href="#id14">1.4. 其他网络设备</a><a class="headerlink" href="#id8" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id7">
+<h2><a class="toc-backref" href="#id19">1.4. 其他网络设备</a><a class="headerlink" href="#id7" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="gateway">
-<h3><a class="toc-backref" href="#id15">1.4.1. gateway</a><a class="headerlink" href="#gateway" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id20">1.4.1. gateway</a><a class="headerlink" href="#gateway" title="Permalink to this headline">¶</a></h3>
 <p><cite>Gateway is a device which is used to connect multiple networks and passes packets from one packet to the other network. Acting as the ‘gateway’ between different networking systems or computer programs, a gateway is a device which forms a link between them. It allows the computer programs, either on the same computer or on different computers to share information across the network through protocols. A router is also a gateway, since it interprets data from one network protocol to another.</cite></p>
 <p><cite>Others such as bridge converts the data into different forms between two networking systems. Then a software application converts the data from one format into another. Gateway is a viable tool to translate the data format, although the data itself remains unchanged. Gateway might be installed in some other device to add its functionality into another.</cite></p>
 <p>关于网关，上面的解释有点晦涩，实际上网关可以认为是起着协议转换的作用。举个简单例子：
@@ -236,10 +232,43 @@ HUB中若有有多个主机想发送bits，那么冲突可能会相当严重。�
 所以在这个例子中，网关转换我们的HTTP请求为FTP请求，并包装FTP文件返回HTTP响应。</p>
 </div>
 <div class="section" id="modems">
-<h3><a class="toc-backref" href="#id16">1.4.2. Modems</a><a class="headerlink" href="#modems" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id21">1.4.2. Modems</a><a class="headerlink" href="#modems" title="Permalink to this headline">¶</a></h3>
 <p>调制解调器，俗称猫。把计算机产生的数字信号转换成模拟信号，以便信号通过电话线传输！
 在云计算网络中没有对应虚拟化设备，了解即可。</p>
 </div>
+</div>
+<div class="section" id="id8">
+<h2><a class="toc-backref" href="#id22">1.5. 参考</a><a class="headerlink" href="#id8" title="Permalink to this headline">¶</a></h2>
+<table class="docutils footnote" frame="void" id="id9" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id3">[1]</a></td><td>比较好的介绍了OpenStack网络虚拟化的基本原理。网址：<a class="reference external" href="http://www.openstack.cn/?p=4527">http://www.openstack.cn/?p=4527</a></td></tr>
+</tbody>
+</table>
+<table class="docutils footnote" frame="void" id="id10" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label">[2]</td><td>对TCP/IP架构各层网络设备有比较全面的介绍。网址：<a class="reference external" href="http://www.certiology.com/computing/computer-networking/network-devices.html">http://www.certiology.com/computing/computer-networking/network-devices.html</a></td></tr>
+</tbody>
+</table>
+<table class="docutils footnote" frame="void" id="id11" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label">[3]</td><td>freebsd手册，介绍了网桥的基本概念和相关命令和用法。网址：<a class="reference external" href="https://www.freebsd.org/doc/zh_CN.UTF-8/books/handbook/network-bridging.html">https://www.freebsd.org/doc/zh_CN.UTF-8/books/handbook/network-bridging.html</a></td></tr>
+</tbody>
+</table>
+<table class="docutils footnote" frame="void" id="id12" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label">[4]</td><td>freebsd手册，介绍网络路由器。网址：<a class="reference external" href="https://www.freebsd.org/doc/zh_CN.UTF-8/books/handbook/network-routing.html">https://www.freebsd.org/doc/zh_CN.UTF-8/books/handbook/network-routing.html</a></td></tr>
+</tbody>
+</table>
+<table class="docutils footnote" frame="void" id="id13" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label">[5]</td><td>介绍了混杂模式，集线器，交换机等，非常清晰！网址：<a class="reference external" href="http://book.51cto.com/art/201202/316585.htm">http://book.51cto.com/art/201202/316585.htm</a></td></tr>
+</tbody>
+</table>
 </div>
 </div>
 
