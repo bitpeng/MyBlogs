@@ -1,0 +1,330 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>2. neutron虚机网络流分析 &mdash; Welcome to Sitian&#39;s Blog 1.0 documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+    <link rel="top" title="Welcome to Sitian&#39;s Blog 1.0 documentation" href="../index.html"/>
+        <link rel="up" title="网络技术/neutron" href="index.html"/>
+        <link rel="next" title="未分类" href="../others/index.html"/>
+        <link rel="prev" title="1. 网络各层设备简介" href="net_dev.html"/> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> Welcome to Sitian's Blog
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../py_doc/index.html">Python Note</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../linux_tools/index.html">Hack Linux</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../openstack/index.html">OpenStack Note</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">网络技术/neutron</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="net_dev.html">1. 网络各层设备简介</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">2. neutron虚机网络流分析</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id2">2.1. 基础概念</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#veth">2.1.1. veth</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#namespace">2.1.2. namespace</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#id3">2.2. 问题</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#qbr-xxx">2.2.1. 虚机到底如何连接到qbr-xxx网桥</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#qbrxxx">2.2.2. 虚机如何和qbrxxx网桥通信</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#id5">2.3. 参考</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../others/index.html">未分类</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../index.html">Welcome to Sitian's Blog</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+ 
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../index.html">Docs</a> &raquo;</li>
+      
+          <li><a href="index.html">网络技术/neutron</a> &raquo;</li>
+      
+    <li>2. neutron虚机网络流分析</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="../_sources/network/neutron_intro.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="neutron">
+<span id="neutron-intro"></span><h1><a class="toc-backref" href="#id13">2. neutron虚机网络流分析</a><a class="headerlink" href="#neutron" title="Permalink to this headline">¶</a></h1>
+<p><strong>date: 2017-3-1 15:00</strong></p>
+<div class="contents topic" id="id1">
+<p class="topic-title first">目录</p>
+<ul class="simple">
+<li><a class="reference internal" href="#neutron" id="id13">neutron虚机网络流分析</a><ul>
+<li><a class="reference internal" href="#id2" id="id14">基础概念</a><ul>
+<li><a class="reference internal" href="#veth" id="id15">veth</a></li>
+<li><a class="reference internal" href="#namespace" id="id16">namespace</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#id3" id="id17">问题</a><ul>
+<li><a class="reference internal" href="#qbr-xxx" id="id18">虚机到底如何连接到qbr-xxx网桥</a></li>
+<li><a class="reference internal" href="#qbrxxx" id="id19">虚机如何和qbrxxx网桥通信</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#id5" id="id20">参考</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<hr class="docutils" />
+<p>这段时间一直在分析OpenStack虚机数据流，初次接触，感觉非常的复杂。通过一段时间的整理学习，也慢慢有了头绪，现在对相关问题，结合公司实际部署云平台做一下总结！</p>
+<div class="section" id="id2">
+<h2><a class="toc-backref" href="#id14">2.1. 基础概念</a><a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
+<p>neutron充分利用了Linux的相关网络技术，让我们先来了解下相关概念。</p>
+<div class="section" id="veth">
+<h3><a class="toc-backref" href="#id15">2.1.1. veth</a><a class="headerlink" href="#veth" title="Permalink to this headline">¶</a></h3>
+<p>以veth pair形式出现，从一端发送的数据会被另一端接收。</p>
+</div>
+<div class="section" id="namespace">
+<h3><a class="toc-backref" href="#id16">2.1.2. namespace</a><a class="headerlink" href="#namespace" title="Permalink to this headline">¶</a></h3>
+<p>neutron涉及到的主要是网络命名空间，network namespace又如下特点。</p>
+<ul>
+<li><p class="first">具有独立的设备，地址，端口，路由，防火墙规则等；</p>
+</li>
+<li><p class="first">新建的命名空间默认具有lo设备，并且除了lo设备，任何其他设备(包括物理的和虚拟的)都只能存在一个网络命名空间中；</p>
+</li>
+<li><p class="first">物理网络设备(真实硬件)只能存在于root网络命名空间(默认网络命名空间)；</p>
+<p><strong>经过命令测试，发现这个说法不对。可能由于内核升级，在我的ubuntu-14.04-LTS系统上，物理设备是可能加入到非root命名空间的。</strong></p>
+<div class="figure align-center" id="id8">
+<a class="reference internal image-reference" href="../_images/set_eth1_on_ns1.png"><img alt="../_images/set_eth1_on_ns1.png" src="../_images/set_eth1_on_ns1.png" style="width: 939.0px; height: 318.0px;" /></a>
+<p class="caption"><span class="caption-text">把eth1物理网卡加入ns1命名空间</span></p>
+</div>
+</li>
+<li><p class="first">虚拟设备(如veth)可以被创建且加入到一个网络命名空间；</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="section" id="id3">
+<h2><a class="toc-backref" href="#id17">2.2. 问题</a><a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="qbr-xxx">
+<h3><a class="toc-backref" href="#id18">2.2.1. 虚机到底如何连接到qbr-xxx网桥</a><a class="headerlink" href="#qbr-xxx" title="Permalink to this headline">¶</a></h3>
+<p>参考了网络上无数的文章，包括一些大牛写的如 <a class="reference external" href="https://yeasy.gitbooks.io/openstack_understand_neutron/content/">理解neutron</a>，
+基本都不约而同的提到: <cite>虚机vm是通过veth pair连接到qbr-xx网桥的。其中vm端接口是tapxxx，
+而qbrxxx端接口是vnet0。tapxxx和vnet0是veth pair对！</cite></p>
+<p>实际上，我对这种说法持怀疑态度，为此纠结了很久并搜索了大量的资料。首先，假如tapxxx是veth，那么另一端vnet0在哪里，我试了很多命令，
+都没有找出这个vnet0设备。如下图所示：qvoxxx和qvbxxx是veth pair，通过ethtool命令也能正常显示对端设备ID，
+可是tapxxx不能！</p>
+<div class="figure align-center" id="id9">
+<a class="reference internal image-reference" href="../_images/find_vnet0.png"><img alt="../_images/find_vnet0.png" src="../_images/find_vnet0.png" style="width: 753.0px; height: 388.0px;" /></a>
+<p class="caption"><span class="caption-text">查找vnet0设备，tapxxx另一端</span></p>
+</div>
+<p>另外，我们可以直接使用ip link命令，显示tapxxxx类型不是veth。</p>
+<div class="figure align-center" id="id10">
+<a class="reference internal image-reference" href="../_images/show_tap_type.png"><img alt="../_images/show_tap_type.png" src="../_images/show_tap_type.png" style="width: 744.0px; height: 662.0px;" /></a>
+<p class="caption"><span class="caption-text">ip link命令显示tap设备类型</span></p>
+</div>
+<p>其次，在OpenStack Admin Guide文档中，对于tap设备和veth pair设备，也使用的不同颜色的标记。这是不是也印证了，tapxxx并不是所谓的veth设备呢？
+在该图中，tap设备veth pair分别使用了不同的颜色标记。由于这是官网文档，因此基本可以认为，虚机tapxxx接口不是通过所谓的veth pair连接到
+qbrxxx的。</p>
+<div class="figure align-center" id="id11">
+<a class="reference internal image-reference" href="../_images/tap_veth.png"><img alt="../_images/tap_veth.png" src="../_images/tap_veth.png" style="width: 834.0px; height: 553.0px;" /></a>
+<p class="caption"><span class="caption-text">GRE模式虚机网络拓扑</span></p>
+</div>
+</div>
+<div class="section" id="qbrxxx">
+<h3><a class="toc-backref" href="#id19">2.2.2. 虚机如何和qbrxxx网桥通信</a><a class="headerlink" href="#qbrxxx" title="Permalink to this headline">¶</a></h3>
+<p>通过上面的阐述，tapxxx可不是什么veth。然而新的问题来了，虚机接口tapxxx如何和Linux bridge qbrxxxx通信呢？</p>
+<div class="figure align-center" id="id12">
+<a class="reference internal image-reference" href="../_images/brctl_show.png"><img alt="../_images/brctl_show.png" src="../_images/brctl_show.png" style="width: 827.0px; height: 119.0px;" /></a>
+<p class="caption"><span class="caption-text">查看Linux bridge及其接口</span></p>
+</div>
+<p>通过brctl show命令，可以看出tapxxx设备是直接连到Linux bridge接口上的(这样更加证明不是通过什么tapxxx/vnet0 veth-pair连接到Linux网桥)。
+参考相关资料，可知这是通过程序逻辑实现的。 <strong>启动虚机时libvirt使用tapxxx设备创建一个文件描述符fd，
+然后Linux bridge给tap设备发送以太网帧时，它也相当于给fd发送了。
+然后Qemu模拟器读取fd并把读取内容发送给客户机系统，从而实现虚机(客户机OS)和Linux网桥通信！</strong></p>
+</div>
+</div>
+<div class="section" id="id5">
+<h2><a class="toc-backref" href="#id20">2.3. 参考</a><a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h2>
+<table class="docutils footnote" frame="void" id="id6" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label">[1]</td><td>对网络虚拟化有非常精彩的阐述，解决了很多困惑。网址：<a class="reference external" href="http://www.innervoice.in/blogs/2013/12/08/tap-interfaces-linux-bridge/">http://www.innervoice.in/blogs/2013/12/08/tap-interfaces-linux-bridge/</a></td></tr>
+</tbody>
+</table>
+<table class="docutils footnote" frame="void" id="id7" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label">[2]</td><td>介绍了网络命名空间，veth设备等。网址：<a class="reference external" href="https://lwn.net/Articles/580893/">https://lwn.net/Articles/580893/</a></td></tr>
+</tbody>
+</table>
+</div>
+</div>
+
+
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../others/index.html" class="btn btn-neutral float-right" title="未分类" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="net_dev.html" class="btn btn-neutral" title="1. 网络各层设备简介" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2016, chenshiqiang.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'1.0',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

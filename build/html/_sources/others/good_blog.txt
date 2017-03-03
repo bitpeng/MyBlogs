@@ -29,4 +29,12 @@ openstack
   .. [#] http://lynnkong.iteye.com/
 
 
-- `徐超笔记 <http://1.chaoxu.sinaapp.com/>`_ ：专注于OpenStack测试。
+- `徐超笔记 <http://1.chaoxu.sinaapp.com/>`_ ：专注于OpenStack测试，neutron项目等！
+
+neutron网络系列
+===============
+
+- `neutron网络基础系列 <http://www.aboutyun.com/thread-9666-1-1.html>`_ ：neutron项目相关概念介绍！
+- `neutron网络架构系列 <http://www.aboutyun.com/thread-11769-1-2.html>`_ ：neutron项目架构简单介绍!
+- `Blogs about cloud <http://www.innervoice.in/blogs/category/technology/page/3/>`_ ：老外的博客，专注于云计算，虚拟化等，
+  对网络虚拟化有很多精彩的描述，英文写的也很是通俗易懂！强烈推荐。
