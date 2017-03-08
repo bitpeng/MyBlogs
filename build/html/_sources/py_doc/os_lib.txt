@@ -118,6 +118,7 @@ proxy创建一个用弱引用实现的代理对象，参数同上。
 
 .. code-block:: console
 
+    root@allinone-v2:~# python /smbshare/weakref_test.py
     <weakref at 0x7f6c1a18af70; to 'TestObj' at 0x7f6c1a19add0>
 
     aaa

@@ -88,7 +88,7 @@
 <li class="toctree-l1 current"><a class="reference internal" href="index.html">OpenStack Note</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="horizon_develop.html">1. Horizon 二次开发指南</a></li>
 <li class="toctree-l2"><a class="reference internal" href="image-create-guide.html">2. OpenStack镜像制作</a></li>
-<li class="toctree-l2"><a class="reference internal" href="deploy_synopsis.html">3. openstack 部署实践</a></li>
+<li class="toctree-l2"><a class="reference internal" href="deploy_synopsis.html">3. OpenStack 部署实践</a></li>
 <li class="toctree-l2"><a class="reference internal" href="centos_vm_netconf.html">4. Centos虚拟机联网配置</a></li>
 <li class="toctree-l2"><a class="reference internal" href="lanch_instance_failure.html">5. OpenStack 启动虚拟机失败分析</a></li>
 <li class="toctree-l2"><a class="reference internal" href="rabbitmq_doc.html">6. [翻译] rabbitmq教程</a></li>
@@ -126,7 +126,8 @@
 <li class="toctree-l2"><a class="reference internal" href="juno_neutron-meter-agent_install.html">28. juno安装neutron-meter-agent</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="../others/index.html">杂项讨论</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../network/index.html">网络技术/neutron</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../others/index.html">未分类</a></li>
 </ul>
 
             
@@ -243,6 +244,8 @@ OpenStack logging 模块提供了丰富的和日志相关的配置项，详情�
 查看 stack 片段和动态修改变量的值等功能，根据个人经验，使用 pdb 调试 OpenStack
 使用到的主要命令包括：</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">b</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">python2</span><span class="o">.</span><span class="mi">7</span><span class="o">/</span><span class="n">dist</span><span class="o">-</span><span class="n">packages</span><span class="o">/</span><span class="n">nova</span><span class="o">/</span><span class="n">virt</span><span class="o">/</span><span class="n">libvirt</span><span class="o">/</span><span class="n">driver</span><span class="o">.</span><span class="n">py</span><span class="p">:</span><span class="mi">6046</span> <span class="c1"># 设置断点</span>
+<span class="n">b</span>    <span class="c1"># 列出断点</span>
+<span class="n">cl</span> <span class="mi">2</span> <span class="c1"># 删除第二个断点</span>
 <span class="n">c</span> <span class="c1"># 继续执行程序直到下一个断点</span>
 <span class="n">n</span> <span class="c1"># 继续执行下一行代码</span>
 <span class="n">l</span> <span class="c1"># 列出当前代码</span>

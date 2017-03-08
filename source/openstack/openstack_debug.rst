@@ -77,6 +77,8 @@ Pdb 是 python 自带的库，它支持设置断点、单步调试源码、查�
 ::
 
     b /usr/lib/python2.7/dist-packages/nova/virt/libvirt/driver.py:6046 # 设置断点
+    b    # 列出断点
+    cl 2 # 删除第二个断点
     c # 继续执行程序直到下一个断点
     n # 继续执行下一行代码
     l # 列出当前代码
