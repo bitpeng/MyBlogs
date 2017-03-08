@@ -98,12 +98,14 @@
 <li class="toctree-l3"><a class="reference internal" href="#centos-vmware">10.1. centos VMware复制后无法上网</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#openstack-centosip">10.2. openstack centos镜像自动获取IP</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#vmware">10.3. VMware 联网问题</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#ubuntu">10.4. ubuntu无法联网</a></li>
 </ul>
 </li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../openstack/index.html">OpenStack Note</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../others/index.html">杂项讨论</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../network/index.html">网络技术/neutron</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../others/index.html">未分类</a></li>
 </ul>
 
             
@@ -165,6 +167,7 @@ centos的原因。之前已经写过一篇 openstack centos实例联网配置的
 <li><a class="reference internal" href="#centos-vmware" id="id3">centos VMware复制后无法上网</a></li>
 <li><a class="reference internal" href="#openstack-centosip" id="id4">openstack centos镜像自动获取IP</a></li>
 <li><a class="reference internal" href="#vmware" id="id5">VMware 联网问题</a></li>
+<li><a class="reference internal" href="#ubuntu" id="id6">ubuntu无法联网</a></li>
 </ul>
 </li>
 </ul>
@@ -237,6 +240,16 @@ sudo rm -rf /etc/udev/rules.d/70-persistent-net.rules</p>
 </pre></div>
 </div>
 <p>把网关改成 192.168.159.2即可！</p>
+</div>
+<div class="section" id="ubuntu">
+<h2><a class="toc-backref" href="#id6">10.4. ubuntu无法联网</a><a class="headerlink" href="#ubuntu" title="Permalink to this headline">¶</a></h2>
+<p>今天安装好ubuntu系统后，总是无法联网，重启多次都不行。</p>
+<p>后来查看/etc/network/interfaces文件，发现只有lo设备配置。
+因此在该文件最后两行加上eth0自动获取IP即可！</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">auto</span> <span class="n">eth0</span>
+<span class="n">iface</span> <span class="n">eth0</span> <span class="n">inet</span> <span class="n">dhcp</span>
+</pre></div>
+</div>
 </div>
 </div>
 

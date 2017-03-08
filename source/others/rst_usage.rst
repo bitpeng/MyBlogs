@@ -65,7 +65,7 @@ rst 用法总结
 
     .. code-block:: python|console
         :linenos:
-    
+
         import sys
         from mod import main
         if __name__ == "__main__":

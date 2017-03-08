@@ -1,7 +1,7 @@
-.. os_deploy:
+.. _os_deploy:
 
 ###################
-openstack 部署实践
+OpenStack 部署实践
 ###################
 
 .. tip::
@@ -41,6 +41,12 @@ raid 管理
 
 2. 配置root，允许permitrootlogin
 
+   ::
+
+     sudo passwd/passwd root
+     vim /etc/ssh/sshd_config :28 PermitRootLogin yes
+     service ssh restart
+
 3. 添加三块网卡，四块硬盘。
 
 
@@ -62,7 +68,7 @@ allinone方式部署
 
 ::
 
-    setup.sh
+    setup.sh allinone
 
 
 安装ceph
@@ -72,6 +78,7 @@ allinone方式部署
 
 - 配置文件preconf;
 - ceph 安装：
+
   ::
 
     ./ceph_install.sh
@@ -114,6 +121,19 @@ nova设置secret
 .. literalinclude:: /_static/src/nova-set-secret.sh
    :language: sh
    :linenos:
+
+配置文件修改
++++++++++++++
+
+然后使用virsh secret-list的uuid依次替换/etc/nova/nova.conf和/etc/cinder/cinder.conf值。
+然后重启nova/cinder服务，即可！
+
+注意事项
++++++++++
+
+allinone方式部署时，尽量先执行./setup.sh allinone脚本安装juno相关服务。
+因为后面安装ceph时依赖于前面的安装步骤(配置数据通路网卡)，假如先安装ceph并且网卡没有配置，
+那么ceph状态肯定异常！
 
 
 创建虚拟机流程

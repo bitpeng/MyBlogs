@@ -26,7 +26,7 @@ Python Note
     dec_logic
     webob_analysis
     metaclass_intro
-    inspect_intro
+    os_lib
     log_summary
 
 ..    django_note

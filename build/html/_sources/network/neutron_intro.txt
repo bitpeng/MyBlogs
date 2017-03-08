@@ -43,8 +43,14 @@ neutron涉及到的主要是网络命名空间，network namespace又如下特�
 
      把eth1物理网卡加入ns1命名空间
 
-
 - 虚拟设备(如veth)可以被创建且加入到一个网络命名空间；
+
+可以通过下面的命令，进入到一个网络命名空间shell：
+
+::
+
+    # 进入命名空间ns1, 避免每次输入相关命令前缀ip netns exec <namespace>
+    ip netns exec ns1 /bin/bash --rcfile <(echo "PS1=\"namespace ns1> \"")
 
 问题
 =====

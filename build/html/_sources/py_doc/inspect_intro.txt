@@ -1,33 +1,35 @@
-.. _inspect_intro:
+.. _os_lib:
 
 
 ########################
-python inspect 模块
+Python Library
 ########################
 
-**date: 2016/12/26-14-40**
 
 .. contents:: 目录
 
 --------------------------
 
+OpenStack各组件使用了非常多的python库，包括标准模块和第三方模块。
+之前自己在分析源码时，遇到不熟悉的库，总想把该库的方方面面都弄清楚，
+结果这就造成自己分析nova组件的进度非常之慢。因此尝试换一种方式，
+对于不熟悉的模块，把该模块在OpenStack组件中涉及到的用法熟悉一下，后续有机会再补充完整。
 
+对于比较复杂的库，或者笔记篇幅大的，则应该会在单独的blog中记录下来！
 
-这里简要记录下 Python inspect 模块的用法。
+inspect
+===========
 
-OpenStack 组件使用了非常多的python库，包括标准模块和第三方模块。
-之前自己在分析源码时，遇到不熟悉的库，总想把该库的方方面面都弄
-清楚，结果这就造成自己分析 nova 组件的进度非常之慢。因此尝试换
-一种方式，对于不熟悉的模块，把该模块在OpenStack组件中涉及到的用法
-熟悉一下，后续有机会再补充完整。
+**date: 2016/12/26-14-40**
 
+这里简要记录下Python inspect模块的用法。
 
 inspect.stack
-=============
+++++++++++++++
 
 对于 nova 组件，在 /var/log/nova 目录下都会有对应的 nova-\*.log 日志文件，
-分析 nova/openstack/common/log.py 组件时，这是通过 :func:`inspect.stack`
-实现的。来看源码(为了方便输出调试信息，我对源码进行了更改！):
+分析nova/openstack/common/log.py源码可以知道，这是通过 :func:`inspect.stack`
+实现的。来看源码(为了方便输出调试信息，我对源码进行了更改！)：
 
 ::
 
@@ -58,7 +60,7 @@ inspect.stack
     (frame_obj, 模块字符串, 调用行号, 函数， 语句信息)
 
 因此，可以通过 inspect.stack()[-1][1] 获取服务启动时的服务名 ``nova-scheduler``
- 
+
 关于 inspect 模块的更多用法，可以参考:
 
 .. [#] http://www.programcreek.com/python/example/737/inspect.stack

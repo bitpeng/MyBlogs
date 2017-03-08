@@ -112,3 +112,16 @@ VMware 联网问题
 		dns-nameservers 8.8.8.8
 
 把网关改成 192.168.159.2即可！
+
+ubuntu无法联网
+===============
+
+今天安装好ubuntu系统后，总是无法联网，重启多次都不行。
+
+后来查看/etc/network/interfaces文件，发现只有lo设备配置。
+因此在该文件最后两行加上eth0自动获取IP即可！
+
+::
+
+    auto eth0
+    iface eth0 inet dhcp

@@ -200,6 +200,11 @@
 <li><p class="first">虚拟设备(如veth)可以被创建且加入到一个网络命名空间；</p>
 </li>
 </ul>
+<p>可以通过下面的命令，进入到一个网络命名空间shell：</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="c1"># 进入命名空间ns1, 避免每次输入相关命令前缀ip netns exec &lt;namespace&gt;</span>
+<span class="n">ip</span> <span class="n">netns</span> <span class="n">exec</span> <span class="n">ns1</span> <span class="o">/</span><span class="nb">bin</span><span class="o">/</span><span class="n">bash</span> <span class="o">--</span><span class="n">rcfile</span> <span class="o">&lt;</span><span class="p">(</span><span class="n">echo</span> <span class="s2">&quot;PS1=</span><span class="se">\&quot;</span><span class="s2">namespace ns1&gt; </span><span class="se">\&quot;</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
 </div>
 </div>
 <div class="section" id="id3">

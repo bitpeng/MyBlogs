@@ -133,7 +133,8 @@
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../openstack/index.html">OpenStack Note</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../others/index.html">杂项讨论</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../network/index.html">网络技术/neutron</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../others/index.html">未分类</a></li>
 </ul>
 
             
@@ -734,7 +735,8 @@ echo ${SERVICE_ENDPOINT##*/}
 <div class="section" id="grep">
 <h3><a class="toc-backref" href="#id54">4.4.16. grep</a><a class="headerlink" href="#grep" title="Permalink to this headline">¶</a></h3>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="c1"># -P: 使用 pcre 模式搜索</span>
-<span class="c1"># -v: 表示搜索不匹配的！</span>
+<span class="c1"># -v: 表示搜索不匹配的</span>
+<span class="c1"># -i: 忽略大小写</span>
 <span class="n">git</span> <span class="n">status</span> <span class="o">|</span> <span class="n">grep</span> <span class="o">-</span><span class="n">Pv</span> <span class="s1">&#39;\.pyc$&#39;</span>
 
 <span class="c1"># 搜索固定字符串, 否则 + 会被当成元字符</span>
