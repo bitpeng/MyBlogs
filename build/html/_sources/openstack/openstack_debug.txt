@@ -67,15 +67,16 @@ nova组件的默认日志等级是 ``INFO`` ，我们可以开启 ``--debug`` �
     tail -f /var/log/nova/nova-conductor.log | fgrep "+++===+++"
 
 
-pdb
-=====
+pdb/ipdb
+=========
 
-Pdb 是 python 自带的库，它支持设置断点、单步调试源码、查看当前代码、
+pdb 是 python 自带的库，它支持设置断点、单步调试源码、查看当前代码、
 查看 stack 片段和动态修改变量的值等功能，根据个人经验，使用 pdb 调试 OpenStack
 使用到的主要命令包括：
 
 ::
 
+    b 10
     b /usr/lib/python2.7/dist-packages/nova/virt/libvirt/driver.py:6046 # 设置断点
     b    # 列出断点
     cl 2 # 删除第二个断点
@@ -83,11 +84,14 @@ Pdb 是 python 自带的库，它支持设置断点、单步调试源码、查�
     n # 继续执行下一行代码
     l # 列出当前代码
     p # 打印变量信息
+    pp locals() # 美观打印
     s # 进入函数，该选项对于跨模块调试非常有用！
     r # 执行代码直到从当前函数返回
     q # 退出调试
     a # 列出函数所有参数
     ctrl + c # 重新开始调试
+    restart  # 重新开始调试
+    <enter>  # 重复上条命令
 
 set_trace
 ++++++++++

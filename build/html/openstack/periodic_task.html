@@ -88,7 +88,7 @@
 <li class="toctree-l1 current"><a class="reference internal" href="index.html">OpenStack Note</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="horizon_develop.html">1. Horizon 二次开发指南</a></li>
 <li class="toctree-l2"><a class="reference internal" href="image-create-guide.html">2. OpenStack镜像制作</a></li>
-<li class="toctree-l2"><a class="reference internal" href="deploy_synopsis.html">3. openstack 部署实践</a></li>
+<li class="toctree-l2"><a class="reference internal" href="deploy_synopsis.html">3. OpenStack 部署实践</a></li>
 <li class="toctree-l2"><a class="reference internal" href="centos_vm_netconf.html">4. Centos虚拟机联网配置</a></li>
 <li class="toctree-l2"><a class="reference internal" href="lanch_instance_failure.html">5. OpenStack 启动虚拟机失败分析</a></li>
 <li class="toctree-l2"><a class="reference internal" href="rabbitmq_doc.html">6. [翻译] rabbitmq教程</a></li>
@@ -120,7 +120,8 @@
 <li class="toctree-l2"><a class="reference internal" href="juno_neutron-meter-agent_install.html">28. juno安装neutron-meter-agent</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="../others/index.html">杂项讨论</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../network/index.html">网络技术/neutron</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../others/index.html">未分类</a></li>
 </ul>
 
             
@@ -324,7 +325,7 @@ B把事情做好后运行evt.send(XXX) [注意，由于都在一个线程中，�
 </div>
 <ul class="simple">
 <li>首先，实例化 <code class="xref py py-class docutils literal"><span class="pre">FixedIntervalLoopingCall</span></code> 对象，保存协程要执行的函数，函数参数等；</li>
-<li>然后执行 <code class="xref py py-func docutils literal"><span class="pre">periodic.start(1,</span> <span class="pre">2)()</span></code> , 注意，执行该函数时，只是设置 interval, initial_delay
+<li>然后执行 <code class="docutils literal"><span class="pre">periodic.start(1,</span> <span class="pre">2)</span></code> , 注意，执行该函数时，只是设置 interval, initial_delay
 参数，并利用闭包函数新建一个协程。此时，inner 函数还并没有机会投入运行！</li>
 <li>主控程序 periodic.wait(), 让出CPU，接下来的 _inner 函数有机会执行，并统计函数执行时间，
 依据时间差进入睡眠状态，等待下一次调度执行！</li>

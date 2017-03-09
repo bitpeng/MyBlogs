@@ -168,7 +168,7 @@ B把事情做好后运行evt.send(XXX) [注意，由于都在一个线程中，�
             return self.done
 
 - 首先，实例化 :class:`FixedIntervalLoopingCall` 对象，保存协程要执行的函数，函数参数等；
-- 然后执行 :func:`periodic.start(1, 2)` , 注意，执行该函数时，只是设置 interval, initial_delay
+- 然后执行 ``periodic.start(1, 2)`` , 注意，执行该函数时，只是设置 interval, initial_delay
   参数，并利用闭包函数新建一个协程。此时，inner 函数还并没有机会投入运行！
 - 主控程序 periodic.wait(), 让出CPU，接下来的 _inner 函数有机会执行，并统计函数执行时间，
   依据时间差进入睡眠状态，等待下一次调度执行！

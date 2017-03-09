@@ -34,6 +34,8 @@ curl  "http://100.100.100.254:8774/v2/$tenant_id/servers/$a_instance_id" -X GET 
 
 ###############################################################
 
+# 获取neutron版本信息
+curl -i -X GET http://10.10.10.10:9696/ -H "User-Agent: python-neutronclient" -H "X-Auth-Token: $token_id"
 
 
 #curl  "http://100.100.100.254:8774/v2/$tenant_id/servers/06419e7c-762c-41d7-89ad-a5956ff4deb3" -X GET -H "Accept: application/json" -H "User-Agent: python-novaclient" -H "X-Auth-Project-Id: $OS_TENANT_NAME" -H "X-Auth-Token:$token_id" 
