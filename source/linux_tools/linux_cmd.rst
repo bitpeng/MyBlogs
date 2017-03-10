@@ -596,12 +596,18 @@ ln命令需要特别注意如下几点：
 grep
 ++++
 
+grep命令有很多选项，支持的正则表达式流派也很多。个人对prce流派正则比较熟悉，
+日常中使用也主要是使用 ``-P`` 选项使用prce模式进行匹配！
+
 ::
 
     # -P: 使用 pcre 模式搜索
     # -v: 表示搜索不匹配的
     # -i: 忽略大小写
     git status | grep -Pv '\.pyc$'
+
+    # 使用-b零宽断言搜索整个单词
+    grep -P '\bMeteringPlugin\b' . -rn
 
     # 搜索固定字符串, 否则 + 会被当成元字符
     fgrep '+++===+++' /var/log/apache2/error.log
