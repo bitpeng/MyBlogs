@@ -634,6 +634,52 @@ pkill
 
     pkill nova-api
 
+crontab
+++++++++
+
+准确来说，这并不是一个命令，而是Linux系统的一个定时服务！
+
+通过编辑/etc/crontab文件，添加如下格式行，然后 ``service cron restart`` 重启cron服务，
+定时任务就可以生效了。
+
+::
+
+    minute hour day month week user cmd
+
+每一列分别表示：分、小时、天、月、星期、用户、定时任务。
+
+来看一个简单的需求。同事曾经编写的一个服务，总是会过一段时间异常退出，定位了很久无法解决。
+最后要求我能不能用某种方式，定时判断服务是否关闭，如果关闭则重启。
+
+这里以ssh服务类比为例，来满足这个需求。当然，最正确的方式，肯定是直接debug！
+
+首先简单写一个脚本，判断ssh服务是否在运行，否则重启服务！
+
+::
+
+    #! /usr/bin/env bash
+
+    num=`netstat -pltna | grep -P :22 | grep ssh | wc -l`
+    # 利用ps -ef | grep sshd 命令应该也可以。
+
+    #echo "num is, ", $num
+
+    if [[ $num -ge 1 ]]; then
+        :
+        #echo "IN IF: num is, ", $num
+    else
+        service ssh restart
+    fi
+
+然后编辑/etc/crontab文件，追加上：
+
+::
+
+    */30 * * * * root bash /smbshare/ssh_restart.sh
+
+然后重启cron服务就可以了。
+
+
 系统和内核信息
 ++++++++++++++
 

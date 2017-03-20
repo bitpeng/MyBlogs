@@ -118,8 +118,9 @@
 <li class="toctree-l4"><a class="reference internal" href="#grep">4.4.16. grep</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#pgrep">4.4.17. pgrep</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#pkill">4.4.18. pkill</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#id19">4.4.19. 系统和内核信息</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#id20">4.4.20. 查看系统启动服务</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#crontab">4.4.19. crontab</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id19">4.4.20. 系统和内核信息</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id20">4.4.21. 查看系统启动服务</a></li>
 </ul>
 </li>
 </ul>
@@ -221,8 +222,9 @@
 <li><a class="reference internal" href="#grep" id="id54">grep</a></li>
 <li><a class="reference internal" href="#pgrep" id="id55">pgrep</a></li>
 <li><a class="reference internal" href="#pkill" id="id56">pkill</a></li>
-<li><a class="reference internal" href="#id19" id="id57">系统和内核信息</a></li>
-<li><a class="reference internal" href="#id20" id="id58">查看系统启动服务</a></li>
+<li><a class="reference internal" href="#crontab" id="id57">crontab</a></li>
+<li><a class="reference internal" href="#id19" id="id58">系统和内核信息</a></li>
+<li><a class="reference internal" href="#id20" id="id59">查看系统启动服务</a></li>
 </ul>
 </li>
 </ul>
@@ -767,8 +769,42 @@ echo ${SERVICE_ENDPOINT##*/}
 </pre></div>
 </div>
 </div>
+<div class="section" id="crontab">
+<h3><a class="toc-backref" href="#id57">4.4.19. crontab</a><a class="headerlink" href="#crontab" title="Permalink to this headline">¶</a></h3>
+<p>准确来说，这并不是一个命令，而是Linux系统的一个定时服务！</p>
+<p>通过编辑/etc/crontab文件，添加如下格式行，然后 <code class="docutils literal"><span class="pre">service</span> <span class="pre">cron</span> <span class="pre">restart</span></code> 重启cron服务，
+定时任务就可以生效了。</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">minute</span> <span class="n">hour</span> <span class="n">day</span> <span class="n">month</span> <span class="n">week</span> <span class="n">user</span> <span class="n">cmd</span>
+</pre></div>
+</div>
+<p>每一列分别表示：分、小时、天、月、星期、用户、定时任务。</p>
+<p>来看一个简单的需求。同事曾经编写的一个服务，总是会过一段时间异常退出，定位了很久无法解决。
+最后要求我能不能用某种方式，定时判断服务是否关闭，如果关闭则重启。</p>
+<p>这里以ssh服务类比为例，来满足这个需求。当然，最正确的方式，肯定是直接debug！</p>
+<p>首先简单写一个脚本，判断ssh服务是否在运行，否则重启服务！</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span>#! /usr/bin/env bash
+
+num=`netstat -pltna | grep -P :22 | grep ssh | wc -l`
+# 利用ps -ef | grep sshd 命令应该也可以。
+
+#echo &quot;num is, &quot;, $num
+
+if [[ $num -ge 1 ]]; then
+    :
+    #echo &quot;IN IF: num is, &quot;, $num
+else
+    service ssh restart
+fi
+</pre></div>
+</div>
+<p>然后编辑/etc/crontab文件，追加上：</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="o">*/</span><span class="mi">30</span> <span class="o">*</span> <span class="o">*</span> <span class="o">*</span> <span class="o">*</span> <span class="n">root</span> <span class="n">bash</span> <span class="o">/</span><span class="n">smbshare</span><span class="o">/</span><span class="n">ssh_restart</span><span class="o">.</span><span class="n">sh</span>
+</pre></div>
+</div>
+<p>然后重启cron服务就可以了。</p>
+</div>
 <div class="section" id="id19">
-<h3><a class="toc-backref" href="#id57">4.4.19. 系统和内核信息</a><a class="headerlink" href="#id19" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id58">4.4.20. 系统和内核信息</a><a class="headerlink" href="#id19" title="Permalink to this headline">¶</a></h3>
 <p>可以使用下面的命令</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="c1"># 查看操作系统发行版信息</span>
 <span class="n">cat</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">issue</span>
@@ -780,7 +816,7 @@ echo ${SERVICE_ENDPOINT##*/}
 </div>
 </div>
 <div class="section" id="id20">
-<h3><a class="toc-backref" href="#id58">4.4.20. 查看系统启动服务</a><a class="headerlink" href="#id20" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id59">4.4.21. 查看系统启动服务</a><a class="headerlink" href="#id20" title="Permalink to this headline">¶</a></h3>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">initctl</span> <span class="nb">list</span> <span class="o">|</span> <span class="n">grep</span> <span class="n">nova</span>
 </pre></div>
 </div>

@@ -85,6 +85,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../py_doc/index.html">Python Note</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../linux_tools/index.html">Hack Linux</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../openstack/index.html">OpenStack Note</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../network/index.html">网络技术/neutron</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="index.html">未分类</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="rst_template.html">1. reStructuredText简明教程</a></li>
 <li class="toctree-l2"><a class="reference internal" href="rst_usage.html">2. rst 用法总结</a></li>
@@ -111,6 +112,7 @@
 <li class="toctree-l3"><a class="reference internal" href="#id9">8.4. iptables常用规则/命令</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#ip">8.4.1. 限制每个ip的连接数量</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#id11">8.4.2. 限制每个ip的连接速率</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id12">8.4.3. 其他</a></li>
 </ul>
 </li>
 </ul>
@@ -164,32 +166,33 @@
            <div itemprop="articleBody">
             
   <div class="section" id="iptables">
-<span id="iptables-sum"></span><h1><a class="toc-backref" href="#id20">8. iptables 学习总结</a><a class="headerlink" href="#iptables" title="Permalink to this headline">¶</a></h1>
+<span id="iptables-sum"></span><h1><a class="toc-backref" href="#id21">8. iptables 学习总结</a><a class="headerlink" href="#iptables" title="Permalink to this headline">¶</a></h1>
 <p><strong>date: 2017-02-17 10:30</strong></p>
 <div class="contents topic" id="id1">
 <p class="topic-title first">目录</p>
 <ul class="simple">
-<li><a class="reference internal" href="#iptables" id="id20">iptables 学习总结</a><ul>
-<li><a class="reference internal" href="#id2" id="id21">基本原理</a><ul>
-<li><a class="reference internal" href="#id3" id="id22">表</a></li>
-<li><a class="reference internal" href="#id4" id="id23">链和规则</a></li>
-<li><a class="reference internal" href="#id5" id="id24">数据包匹配流程</a></li>
+<li><a class="reference internal" href="#iptables" id="id21">iptables 学习总结</a><ul>
+<li><a class="reference internal" href="#id2" id="id22">基本原理</a><ul>
+<li><a class="reference internal" href="#id3" id="id23">表</a></li>
+<li><a class="reference internal" href="#id4" id="id24">链和规则</a></li>
+<li><a class="reference internal" href="#id5" id="id25">数据包匹配流程</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#id6" id="id25">命令格式</a></li>
-<li><a class="reference internal" href="#id8" id="id26">常用扩展</a><ul>
-<li><a class="reference internal" href="#connlimit" id="id27">connlimit</a></li>
-<li><a class="reference internal" href="#limit" id="id28">limit</a></li>
-<li><a class="reference internal" href="#recent" id="id29">recent</a><ul>
-<li><a class="reference internal" href="#updatercheck" id="id30">update和rcheck选项区别</a></li>
+<li><a class="reference internal" href="#id6" id="id26">命令格式</a></li>
+<li><a class="reference internal" href="#id8" id="id27">常用扩展</a><ul>
+<li><a class="reference internal" href="#connlimit" id="id28">connlimit</a></li>
+<li><a class="reference internal" href="#limit" id="id29">limit</a></li>
+<li><a class="reference internal" href="#recent" id="id30">recent</a><ul>
+<li><a class="reference internal" href="#updatercheck" id="id31">update和rcheck选项区别</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#string" id="id31">string</a></li>
+<li><a class="reference internal" href="#string" id="id32">string</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#id9" id="id32">iptables常用规则/命令</a><ul>
-<li><a class="reference internal" href="#ip" id="id33">限制每个ip的连接数量</a></li>
-<li><a class="reference internal" href="#id11" id="id34">限制每个ip的连接速率</a></li>
+<li><a class="reference internal" href="#id9" id="id33">iptables常用规则/命令</a><ul>
+<li><a class="reference internal" href="#ip" id="id34">限制每个ip的连接数量</a></li>
+<li><a class="reference internal" href="#id11" id="id35">限制每个ip的连接速率</a></li>
+<li><a class="reference internal" href="#id12" id="id36">其他</a></li>
 </ul>
 </li>
 </ul>
@@ -199,16 +202,16 @@
 <hr class="docutils" />
 <p>近期调研neutron-metering-agent组件，需要事先熟悉下iptables，把自己学习iptables的相关知识点记录下来，以供参考。</p>
 <div class="section" id="id2">
-<h2><a class="toc-backref" href="#id21">8.1. 基本原理</a><a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id22">8.1. 基本原理</a><a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
 <p>iptables是一个包过滤防火墙，依赖于内核模块netfilter，它根据数据包在Linux TCP/IP内核协议栈中的流动，选取了5个HOOK点，然后数据包依次经过5个HOOK点中的一个或者多个时，根据所预定义的规则进行数据包的匹配并执行相应的动作。iptables就是这样的用户层工具，允许我们自定义匹配规则。请看下面的相关概念：</p>
 <div class="section" id="id3">
-<h3><a class="toc-backref" href="#id22">8.1.1. 表</a><a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id23">8.1.1. 表</a><a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h3>
 <p>iptables根据功能分类，内置有几种不同的表，用来实现数据包过滤(filter)、网络地址转换(nat)、数据包修改(mangle)等。</p>
 </div>
 <div class="section" id="id4">
-<h3><a class="toc-backref" href="#id23">8.1.2. 链和规则</a><a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id24">8.1.2. 链和规则</a><a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h3>
 <p>每个表都内置一组链，此外还允许用户自定义链。</p>
-<div class="figure align-center" id="id12">
+<div class="figure align-center" id="id13">
 <a class="reference internal image-reference" href="../_images/iptables_chains.png"><img alt="../_images/iptables_chains.png" src="../_images/iptables_chains.png" style="width: 777.0px; height: 593.0px;" /></a>
 <p class="caption"><span class="caption-text">iptables链</span></p>
 </div>
@@ -219,13 +222,13 @@
 </ul>
 </div>
 <div class="section" id="id5">
-<h3><a class="toc-backref" href="#id24">8.1.3. 数据包匹配流程</a><a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id25">8.1.3. 数据包匹配流程</a><a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h3>
 <p>关于数据包在iptables中经过的表/链的匹配流程，请看下面的图：</p>
-<div class="figure align-center" id="id13">
+<div class="figure align-center" id="id14">
 <a class="reference internal image-reference" href="../_images/iptables_process.jpg"><img alt="../_images/iptables_process.jpg" src="../_images/iptables_process.jpg" style="width: 788.0px; height: 469.0px;" /></a>
 <p class="caption"><span class="caption-text">iptables表/链匹配流程</span></p>
 </div>
-<div class="figure align-center" id="id14">
+<div class="figure align-center" id="id15">
 <a class="reference internal image-reference" href="../_images/tables_traverse.jpg"><img alt="../_images/tables_traverse.jpg" src="../_images/tables_traverse.jpg" style="width: 647.0px; height: 1100.0px;" /></a>
 <p class="caption"><span class="caption-text">匹配时依次经过的表/链</span></p>
 </div>
@@ -233,7 +236,7 @@
 </div>
 </div>
 <div class="section" id="id6">
-<h2><a class="toc-backref" href="#id25">8.2. 命令格式</a><a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id26">8.2. 命令格式</a><a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h2>
 <p>iptables操作规则的命令格式如下：</p>
 <div class="highlight-sh"><div class="highlight"><pre><span></span>iptables <span class="o">[</span>-t 表名<span class="o">]</span> &lt;-A/I/D/R&gt; 规则链名 <span class="o">[</span>规则号<span class="o">]</span> <span class="se">\</span>
          &lt;-i/o 网卡名&gt; -p 协议名 &lt;-s 源IP/源子网&gt; <span class="se">\</span>
@@ -272,7 +275,7 @@
 <p><strong>由于一般个人主机很少当做路由器使用，不会涉及到FORWARD链，因此，绝大部分的规则涉及到的表都是filter表，涉及到的链是INPUT和OUTPUT链。</strong></p>
 </div>
 <div class="section" id="id8">
-<h2><a class="toc-backref" href="#id26">8.3. 常用扩展</a><a class="headerlink" href="#id8" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id27">8.3. 常用扩展</a><a class="headerlink" href="#id8" title="Permalink to this headline">¶</a></h2>
 <p>可以使用如下命令查看支持的扩展：</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span>man iptables-extensions
 
@@ -285,7 +288,7 @@ ls /usr/lib/iptables/
 </pre></div>
 </div>
 <div class="section" id="connlimit">
-<h3><a class="toc-backref" href="#id27">8.3.1. connlimit</a><a class="headerlink" href="#connlimit" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id28">8.3.1. connlimit</a><a class="headerlink" href="#connlimit" title="Permalink to this headline">¶</a></h3>
 <p>限制某个IP或者IP段对本机的并行连接数量。</p>
 <p>选项解释(可以通过man iptables或者man iptables-extensions 查看每个选项具体含义)：</p>
 <ul class="simple">
@@ -295,7 +298,7 @@ ls /usr/lib/iptables/
 </ul>
 </div>
 <div class="section" id="limit">
-<h3><a class="toc-backref" href="#id28">8.3.2. limit</a><a class="headerlink" href="#limit" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id29">8.3.2. limit</a><a class="headerlink" href="#limit" title="Permalink to this headline">¶</a></h3>
 <p>limi模块最初是用来限制日志记录速率，防止日志文件过大的。它也具有一定的限制包速率的功能。</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">iptables</span> <span class="o">-</span><span class="n">A</span> <span class="n">INPUT</span> <span class="o">-</span><span class="n">p</span> <span class="n">tcp</span> <span class="o">--</span><span class="n">dport</span> <span class="mi">80</span> <span class="o">-</span><span class="n">m</span> <span class="n">limit</span> <span class="o">--</span><span class="n">limit</span> <span class="mi">10</span><span class="o">/</span><span class="n">minute</span> <span class="o">--</span><span class="n">limit</span><span class="o">-</span><span class="n">burst</span> <span class="mi">100</span> <span class="o">-</span><span class="n">j</span> <span class="n">ACCEPT</span>
 </pre></div>
@@ -316,13 +319,13 @@ ls /usr/lib/iptables/
 </div>
 <p>另外需要注意：由于INPUT默认是ACCEPT策略，因此需要增加 <code class="docutils literal"><span class="pre">-A</span> <span class="pre">INPUT</span> <span class="pre">-p</span> <span class="pre">icmp</span> <span class="pre">-j</span> <span class="pre">DROP</span></code> 规则，否则对于不匹配的ICMP包，都会使用默认策略，
 ping都可以收到回应！</p>
-<div class="figure align-center" id="id15">
+<div class="figure align-center" id="id16">
 <a class="reference internal image-reference" href="../_images/ping_limit.png"><img alt="../_images/ping_limit.png" src="../_images/ping_limit.png" style="width: 697.0px; height: 570.0px;" /></a>
 <p class="caption"><span class="caption-text">ping测试limit扩展, 每6个ping包只有一个收到回应</span></p>
 </div>
 </div>
 <div class="section" id="recent">
-<h3><a class="toc-backref" href="#id29">8.3.3. recent</a><a class="headerlink" href="#recent" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id30">8.3.3. recent</a><a class="headerlink" href="#recent" title="Permalink to this headline">¶</a></h3>
 <p>recent模块可以看作iptables里面维护了一个地址列表，这个地址列表可以通过:</p>
 <ul class="simple">
 <li><code class="docutils literal"><span class="pre">--set</span></code>: 将地址和时间戳添加进列表;</li>
@@ -337,27 +340,27 @@ ping都可以收到回应！</p>
 </ul>
 <p>recent语句都带有布尔型返回值，每次(匹配)执行若结果为真，则会执行后续的语句(action)，比如 <code class="docutils literal"><span class="pre">-j</span> <span class="pre">ACCEPT</span></code> 之类的。</p>
 <div class="section" id="updatercheck">
-<h4><a class="toc-backref" href="#id30">update和rcheck选项区别</a><a class="headerlink" href="#updatercheck" title="Permalink to this headline">¶</a></h4>
+<h4><a class="toc-backref" href="#id31">update和rcheck选项区别</a><a class="headerlink" href="#updatercheck" title="Permalink to this headline">¶</a></h4>
 <p>在man手册页中，只是简单提到 <code class="docutils literal"><span class="pre">--update</span></code> 和 <code class="docutils literal"><span class="pre">--rcheck</span></code> 选项类似，除了更新时间戳之外。但是，
 对两者的区别还是感到非常的疑惑，后来不断参阅资料、做实验，现在把自己理解的记录下来。</p>
-<div class="figure align-center" id="id16">
+<div class="figure align-center" id="id17">
 <a class="reference internal image-reference" href="../_images/update_rcheck_diff.png"><img alt="../_images/update_rcheck_diff.png" src="../_images/update_rcheck_diff.png" style="width: 1049.0px; height: 287.0px;" /></a>
 <p class="caption"><span class="caption-text">update和rcheck选项区别测试</span></p>
 </div>
 <p>根据写的规则，先使用rcheck选项，进行ping测试；然后清空规则，然后使用update选项进行ping测试！</p>
 <p>写的规则语义是：在10s钟内，最多允许有5个ICMP报文流进本机。</p>
-<div class="figure align-center" id="id17">
+<div class="figure align-center" id="id18">
 <a class="reference internal image-reference" href="../_images/rcheck_ping.png"><img alt="../_images/rcheck_ping.png" src="../_images/rcheck_ping.png" style="width: 666.0px; height: 464.0px;" /></a>
 <p class="caption"><span class="caption-text">rcheck选项ping测试</span></p>
 </div>
 <p>根据ping结果，很显然，rcheck选项首先允许5个ICMP包通过，然后后面的包丢弃；然后在下一个10s内，又允许5个ICMP包通过，一如此类。</p>
-<div class="figure align-center" id="id18">
+<div class="figure align-center" id="id19">
 <a class="reference internal image-reference" href="../_images/update_ping1.png"><img alt="../_images/update_ping1.png" src="../_images/update_ping1.png" style="width: 641.0px; height: 165.0px;" /></a>
 <p class="caption"><span class="caption-text">update选项ping测试</span></p>
 </div>
 <p>而在update选项中，只允许五个数据包通过，后面所有的ICMP包一律丢弃。</p>
 <p>然后再来看另外一种测试方式，在这种方式中，我设置了ping的时间间隔，并在输出中显示时间戳。</p>
-<div class="figure align-center" id="id19">
+<div class="figure align-center" id="id20">
 <a class="reference internal image-reference" href="../_images/update_ping2.png"><img alt="../_images/update_ping2.png" src="../_images/update_ping2.png" style="width: 1170.0px; height: 515.0px;" /></a>
 <p class="caption"><span class="caption-text">update选项ping测试2</span></p>
 </div>
@@ -369,7 +372,7 @@ ping都可以收到回应！</p>
 </div>
 </div>
 <div class="section" id="string">
-<h3><a class="toc-backref" href="#id31">8.3.4. string</a><a class="headerlink" href="#string" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id32">8.3.4. string</a><a class="headerlink" href="#string" title="Permalink to this headline">¶</a></h3>
 <p>对数据包内容执行字符串匹配。</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="c1"># 该条规则表示，对于所有报文，如果报文内容有stack字符串，则丢弃报文。字符串匹配算法采用的是bm算法！</span>
 <span class="n">iptables</span> <span class="o">-</span><span class="n">R</span> <span class="n">INPUT</span> <span class="o">-</span><span class="n">p</span> <span class="nb">all</span> <span class="o">-</span><span class="n">m</span> <span class="n">string</span> <span class="o">--</span><span class="n">algo</span> <span class="n">bm</span> <span class="o">--</span><span class="n">string</span> <span class="s2">&quot;stack&quot;</span> <span class="o">-</span><span class="n">j</span> <span class="n">DROP</span>
@@ -378,10 +381,10 @@ ping都可以收到回应！</p>
 </div>
 </div>
 <div class="section" id="id9">
-<h2><a class="toc-backref" href="#id32">8.4. iptables常用规则/命令</a><a class="headerlink" href="#id9" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id33">8.4. iptables常用规则/命令</a><a class="headerlink" href="#id9" title="Permalink to this headline">¶</a></h2>
 <p>陆续收集和更新中……</p>
 <div class="section" id="ip">
-<h3><a class="toc-backref" href="#id33">8.4.1. 限制每个ip的连接数量</a><a class="headerlink" href="#ip" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id34">8.4.1. 限制每个ip的连接数量</a><a class="headerlink" href="#ip" title="Permalink to this headline">¶</a></h3>
 <div class="highlight-default"><div class="highlight"><pre><span></span># 通用语法
 iptables -A INPUT -p tcp --syn --dport $port -m connlimit --connlimit-above N -j REJECT --reject-with tcp-reset
 # 限制每个IP的ssh连接数量为三个！
@@ -406,7 +409,7 @@ iptables  -A INPUT -p tcp --syn --dport 80 -m connlimit --connlimit-above 20 --c
 <p>解释：对某个特定IP，对本机某端口的TCP连接syn报文，如果已连接数量超过N，则丢弃syn连接报文，并返回tcp-reset报文！</p>
 </div>
 <div class="section" id="id11">
-<h3><a class="toc-backref" href="#id34">8.4.2. 限制每个ip的连接速率</a><a class="headerlink" href="#id11" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id35">8.4.2. 限制每个ip的连接速率</a><a class="headerlink" href="#id11" title="Permalink to this headline">¶</a></h3>
 <p>以下这个脚本限制每个IP在100s的时间间隔内发起的http连接数量为10。</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span>#!/bin/bash
 IPT=/sbin/iptables
@@ -420,6 +423,24 @@ BLOCKCOUNT=10
 DACTION=&quot;DROP&quot;
 $IPT -A INPUT -p tcp --dport 80 -i eth0 -m state --state NEW -m recent --set
 $IPT -A INPUT -p tcp --dport 80 -i eth0 -m state --state NEW -m recent --update --seconds ${SECONDS} --hitcount ${BLOCKCOUNT} -j ${DACTION}
+</pre></div>
+</div>
+</div>
+<div class="section" id="id12">
+<h3><a class="toc-backref" href="#id36">8.4.3. 其他</a><a class="headerlink" href="#id12" title="Permalink to this headline">¶</a></h3>
+<p>其他常用命令收集！</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="c1"># 设置INPUT/OUTPUT默认策略为丢弃</span>
+<span class="n">iptables</span> <span class="o">-</span><span class="n">P</span> <span class="n">INPUT</span><span class="o">/</span><span class="n">OUTPUT</span> <span class="n">DROP</span>
+<span class="c1"># 允许ssh远程登录</span>
+<span class="n">iptables</span> <span class="o">-</span><span class="n">A</span> <span class="n">INPUT</span><span class="o">/</span><span class="n">OUTPUT</span> <span class="o">-</span><span class="n">p</span> <span class="n">tcp</span> <span class="o">-</span><span class="n">m</span> <span class="n">multiport</span> <span class="o">--</span><span class="n">ports</span> <span class="mi">22</span> <span class="o">-</span><span class="n">j</span> <span class="n">ACCEPT</span>
+
+<span class="c1"># 允许samba共享, 首先查找samba相关服务端口</span>
+<span class="n">netstat</span> <span class="o">-</span><span class="n">platn</span> <span class="o">|</span> <span class="n">grep</span> <span class="o">-</span><span class="n">P</span> <span class="s1">&#39;smb|samba&#39;</span>
+<span class="n">iptables</span> <span class="o">-</span><span class="n">A</span> <span class="n">INPUT</span><span class="o">/</span><span class="n">OUTPUT</span> <span class="o">-</span><span class="n">p</span> <span class="n">tcp</span> <span class="o">-</span><span class="n">m</span> <span class="n">multiport</span> <span class="o">--</span><span class="n">ports</span> <span class="mi">445</span><span class="p">,</span><span class="mi">139</span> <span class="o">-</span><span class="n">j</span> <span class="n">ACCEPT</span>
+
+<span class="c1"># 查看iptables规则</span>
+<span class="n">iptables</span> <span class="o">-</span><span class="n">S</span>
+<span class="n">iptables</span> <span class="o">-</span><span class="n">nvL</span> <span class="o">--</span><span class="n">line</span><span class="o">-</span><span class="n">number</span>
 </pre></div>
 </div>
 </div>

@@ -285,3 +285,24 @@ iptables常用规则/命令
     DACTION="DROP"
     $IPT -A INPUT -p tcp --dport 80 -i eth0 -m state --state NEW -m recent --set
     $IPT -A INPUT -p tcp --dport 80 -i eth0 -m state --state NEW -m recent --update --seconds ${SECONDS} --hitcount ${BLOCKCOUNT} -j ${DACTION}
+
+
+其他
+++++++++++
+
+其他常用命令收集！
+
+::
+
+    # 设置INPUT/OUTPUT默认策略为丢弃
+    iptables -P INPUT/OUTPUT DROP
+    # 允许ssh远程登录
+    iptables -A INPUT/OUTPUT -p tcp -m multiport --ports 22 -j ACCEPT
+
+    # 允许samba共享, 首先查找samba相关服务端口
+    netstat -platn | grep -P 'smb|samba'
+    iptables -A INPUT/OUTPUT -p tcp -m multiport --ports 445,139 -j ACCEPT
+
+    # 查看iptables规则
+    iptables -S
+    iptables -nvL --line-number
