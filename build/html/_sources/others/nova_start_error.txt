@@ -96,8 +96,58 @@ Nova服务无法启动,日志,权限和异常处理
 这种方式修改了所有服务入口，并且在服务终止后在syslog中打印服务终止信息，但是这种方式，
 使得真正出问题的异常信息都被忽略掉，反而加大了定位问题的难度！
 
+.. figure:: /_static/images/catch_exception.png
+   :scale: 100
+   :align: center
+
+   捕获异常
+
+然后再次重启服务试一试，异常信息一目了然，因此定位问题就很简单了！
+
+.. figure:: /_static/images/exception_info.png
+   :scale: 100
+   :align: center
+
+   syslog日志异常信息
 
 Linux Log
 ==========
 
+另外，在折腾这个问题的过程中，我还发现一些有趣的现象。
 
+daemon.log日志
++++++++++++++++
+
+首先，Python Logging模块增加syslog handler之后，异常信息不光会记录下/var/log/syslog中，
+其他的一些日志文件也会有相关日志。如：/var/log/error；/var/log/daemon.log等。
+
+.. figure:: /_static/images/daemon_log.png
+   :scale: 100
+   :align: center
+
+.. figure:: /_static/images/error_log.png
+   :scale: 100
+   :align: center
+
+原来，以service命令启动的服务，实际上一个守护进程，因此出错信息会记录在/var/log/daemon.log文件中！
+
+upstart日志
++++++++++++
+
+其次，部分相关日志信息还会记录进/var/log/upstart/<file>.log中，经过研究，发现有两类日志会记录相应upstart日志中。
+下面以nova-scheduler为例进行说明：
+
+- nova-scheduler进程正常产生的日志，应该写进nova-scheduler.log文件中，由于没有写权限，日志会写进/var/log/upstart/nova-scheduler.log中。
+
+- 进程产生异常后，一直进行异常回溯都没有被捕获，那么异常信息就会写入/var/log/upstart/<file>.log中。
+
+比如heat-api服务，服务启动时尝试打开/var/log/heat/heat.log，没有权限，发生异常，异常回溯直到退出都没有被捕获，
+因此最后把异常信息写进了/var/log/upstart/heat-api.log文件中！
+
+.. figure:: /_static/images/upstart_heat_log.png
+   :scale: 100
+   :align: center
+
+   upstart日志文件
+
+日志是一个重要的主题，有时间抽空好好研究Linux平台的日志系统！
