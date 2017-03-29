@@ -113,13 +113,14 @@
 <li class="toctree-l2"><a class="reference internal" href="dec_logic.html">9. Python 装饰器、闭包</a></li>
 <li class="toctree-l2"><a class="reference internal" href="webob_analysis.html">10. webob库简单分析</a></li>
 <li class="toctree-l2"><a class="reference internal" href="metaclass_intro.html">11. Python元类</a></li>
-<li class="toctree-l2"><a class="reference internal" href="inspect_intro.html">12. python inspect 模块</a></li>
+<li class="toctree-l2"><a class="reference internal" href="os_lib.html">12. Python Library</a></li>
 <li class="toctree-l2"><a class="reference internal" href="log_summary.html">13. logging 模块总结</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../linux_tools/index.html">Hack Linux</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../openstack/index.html">OpenStack Note</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../others/index.html">杂项讨论</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../network/index.html">网络技术/neutron</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../others/index.html">未分类</a></li>
 </ul>
 
             
@@ -194,7 +195,9 @@
 </ul>
 </div>
 <hr class="docutils" />
-<p>Python蛋疼的编码问题，陆陆续续遇到过很多次了。原来在爬取网页时，就遇到过网页乱码；最近测试wsgi程序时，又遇到`AssertionError: write() argument must be string`问题。原来Python编码问题就做过相关总结，今天又探索了一番，记录下来，以作参考。</p>
+<p>Python蛋疼的编码问题，陆陆续续遇到过很多次了。原来在爬取网页时，
+就遇到过网页乱码；最近测试wsgi程序时，又遇到 <cite>AssertionError: write() argument must be string</cite> 问题。
+原来Python编码问题就做过相关总结，今天又探索了一番，记录下来，以作参考。</p>
 <div class="section" id="id2">
 <h2><a class="toc-backref" href="#id16">8.1. 系统默认编码</a><a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
 <p>Python2.x 中有多个不同的系统默认编码。</p>
@@ -227,7 +230,7 @@
 </div>
 <div class="section" id="sys-getdefaultencoding">
 <h3><a class="toc-backref" href="#id19">8.1.3. sys.getdefaultencoding()</a><a class="headerlink" href="#sys-getdefaultencoding" title="Permalink to this headline">¶</a></h3>
-<p><strong>在Python2.x中：只有unicode对象才是真正意义的文本串，str类型表示的字节序列</strong>。Python2文本串和字节序列可以进行拼接、格式化等混合操作。混合操作过程不可编码的涉及到编码转换(Python解释器隐式进行)，因此Python2中，涉及到编码隐式转换的，都会使用sys.getdefaultencoding()进行.【参考stackoverflow，再加上个人理解！】</p>
+<p><strong>在Python2.x中：只有unicode对象才是真正意义的文本串，str类型表示的字节序列</strong> 。Python2文本串和字节序列可以进行拼接、格式化等混合操作。混合操作过程不可编码的涉及到编码转换(Python解释器隐式进行)，因此Python2中，涉及到编码隐式转换的，都会使用sys.getdefaultencoding()进行.【参考stackoverflow，再加上个人理解！】</p>
 <p><cite>sys.getdefaultencoding() is used on Python 2 for implicit conversions (when the encoding is not set explicitly) i.e., Python 2 may mix ascii-only bytestrings and Unicode strings together e.g., xml.etree.ElementTree stores text in ascii range as bytestrings or json.dumps() returns an ascii-only bytestring instead of Unicode in Python 2 — perhaps due to performance — bytes were cheaper than Unicode for representing ascii characters. Implicit conversions are forbidden in Python 3.</cite></p>
 <table class="docutils footnote" frame="void" id="id5" rules="none">
 <colgroup><col class="label" /><col /></colgroup>

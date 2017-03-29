@@ -703,8 +703,17 @@ echo ${SERVICE_ENDPOINT##*/}
 
 <span class="c1"># 查看文件别哪些进程打开</span>
 <span class="n">lsof</span> <span class="o">/</span><span class="n">smbshare</span><span class="o">/</span><span class="n">csq</span><span class="o">.</span><span class="n">log</span>
+
+<span class="c1"># 查看进程打开哪些文件</span>
+<span class="n">ps</span> <span class="o">-</span><span class="n">ef</span> <span class="o">|</span> <span class="n">grep</span> <span class="n">nova</span><span class="o">-</span><span class="n">sch</span>
+<span class="n">lsof</span> <span class="o">-</span><span class="n">p</span> <span class="n">pid</span>
+
+<span class="c1"># 获取网络连接，查看所有的监听套接字和已连接套接字</span>
+<span class="n">lsof</span> <span class="o">-</span><span class="n">i</span> <span class="o">-</span><span class="n">P</span> <span class="o">-</span><span class="n">n</span>
 </pre></div>
 </div>
+<p>这里需要解释下，服务端调用listen后，返回的是 <strong>监听套接字</strong> ，然后客户端主动发起connect连接，
+服务端accept后，返回 <strong>已连接套接字</strong> 。两者都可以通过lsof命令列出来！</p>
 <p>lsof 还有很多其他的高级用法，可以参考：</p>
 <table class="docutils footnote" frame="void" id="id18" rules="none">
 <colgroup><col class="label" /><col /></colgroup>

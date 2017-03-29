@@ -561,6 +561,16 @@ lsof
     # 查看文件别哪些进程打开
     lsof /smbshare/csq.log
 
+    # 查看进程打开哪些文件
+    ps -ef | grep nova-sch
+    lsof -p pid
+
+    # 获取网络连接，查看所有的监听套接字和已连接套接字
+    lsof -i -P -n
+
+这里需要解释下，服务端调用listen后，返回的是 **监听套接字** ，然后客户端主动发起connect连接，
+服务端accept后，返回 **已连接套接字** 。两者都可以通过lsof命令列出来！
+
 lsof 还有很多其他的高级用法，可以参考：
 
 .. [#] https://linux.cn/article-4099-1.html

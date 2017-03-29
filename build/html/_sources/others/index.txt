@@ -20,5 +20,6 @@
     keep_writting
     good_blog
     iptables_sum
+    nova_start_error
 
 ..    sphinx_doc

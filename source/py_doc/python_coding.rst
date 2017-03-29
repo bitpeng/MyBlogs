@@ -10,7 +10,9 @@ Python 编码问题总结
 
 -----------------
 
-Python蛋疼的编码问题，陆陆续续遇到过很多次了。原来在爬取网页时，就遇到过网页乱码；最近测试wsgi程序时，又遇到`AssertionError: write() argument must be string`问题。原来Python编码问题就做过相关总结，今天又探索了一番，记录下来，以作参考。
+Python蛋疼的编码问题，陆陆续续遇到过很多次了。原来在爬取网页时，
+就遇到过网页乱码；最近测试wsgi程序时，又遇到 `AssertionError: write() argument must be string` 问题。
+原来Python编码问题就做过相关总结，今天又探索了一番，记录下来，以作参考。
 
 系统默认编码
 ============
@@ -28,7 +30,7 @@ Python2.x 中有多个不同的系统默认编码。
 
     #coding:utf-8
     #coding=utf-8
-    
+
 来设置当源文件中有飞拉丁字符时的情况(如中文注释)。如果没有指定，系统就会默认使用ascii对源文件编码，会出现不能识别中文的情况。
 
 sys.stdin.encoding和sys.stdout.encoding
@@ -48,7 +50,7 @@ sdtin和stdout输入输出使用的编码，包括命令行参数和print输出�
 sys.getdefaultencoding()
 +++++++++++++++++++++++++
 
-**在Python2.x中：只有unicode对象才是真正意义的文本串，str类型表示的字节序列**。Python2文本串和字节序列可以进行拼接、格式化等混合操作。混合操作过程不可编码的涉及到编码转换(Python解释器隐式进行)，因此Python2中，涉及到编码隐式转换的，都会使用sys.getdefaultencoding()进行.【参考stackoverflow，再加上个人理解！】
+**在Python2.x中：只有unicode对象才是真正意义的文本串，str类型表示的字节序列** 。Python2文本串和字节序列可以进行拼接、格式化等混合操作。混合操作过程不可编码的涉及到编码转换(Python解释器隐式进行)，因此Python2中，涉及到编码隐式转换的，都会使用sys.getdefaultencoding()进行.【参考stackoverflow，再加上个人理解！】
 
 `sys.getdefaultencoding() is used on Python 2 for implicit conversions (when the encoding is not set explicitly) i.e., Python 2 may mix ascii-only bytestrings and Unicode strings together e.g., xml.etree.ElementTree stores text in ascii range as bytestrings or json.dumps() returns an ascii-only bytestring instead of Unicode in Python 2 — perhaps due to performance — bytes were cheaper than Unicode for representing ascii characters. Implicit conversions are forbidden in Python 3.`
 
@@ -184,7 +186,7 @@ simple_app返回的可迭代对象元素是unicode类型，因此curl请求时�
         assert type(data) is StringType,"write() argument must be string"
     AssertionError: write() argument must be string
     127.0.0.1 - - [20/Nov/2016 20:24:40] "GET / HTTP/1.1" 500 59
-     
+
 请看pep-3333 wsgi规范关于unicode 的描述：
 
 HTTP does not directly support Unicode, and neither does this interface. All encoding/decoding must be handled by the application; all strings passed to or from the server must be of type str or bytes , never unicode . The result of using a unicode object where a string object is required, is undefined.
