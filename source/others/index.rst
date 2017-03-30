@@ -21,5 +21,6 @@
     good_blog
     iptables_sum
     nova_start_error
+    horizon_rabbitmq
 
 ..    sphinx_doc
