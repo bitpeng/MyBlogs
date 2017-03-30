@@ -114,13 +114,16 @@
 <li class="toctree-l4"><a class="reference internal" href="#df-du">4.4.12. df/du</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#find-xargs">4.4.13. find/xargs</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#lsof">4.4.14. lsof</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#ln">4.4.15. ln</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#grep">4.4.16. grep</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#pgrep">4.4.17. pgrep</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#pkill">4.4.18. pkill</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#crontab">4.4.19. crontab</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#id19">4.4.20. 系统和内核信息</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#id20">4.4.21. 查看系统启动服务</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#netstat">4.4.15. netstat</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#nmap">4.4.16. nmap</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#ss">4.4.17. ss</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#ln">4.4.18. ln</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#grep">4.4.19. grep</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pgrep">4.4.20. pgrep</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pkill">4.4.21. pkill</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#crontab">4.4.22. crontab</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id19">4.4.23. 系统和内核信息</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id20">4.4.24. 查看系统启动服务</a></li>
 </ul>
 </li>
 </ul>
@@ -218,13 +221,16 @@
 <li><a class="reference internal" href="#df-du" id="id50">df/du</a></li>
 <li><a class="reference internal" href="#find-xargs" id="id51">find/xargs</a></li>
 <li><a class="reference internal" href="#lsof" id="id52">lsof</a></li>
-<li><a class="reference internal" href="#ln" id="id53">ln</a></li>
-<li><a class="reference internal" href="#grep" id="id54">grep</a></li>
-<li><a class="reference internal" href="#pgrep" id="id55">pgrep</a></li>
-<li><a class="reference internal" href="#pkill" id="id56">pkill</a></li>
-<li><a class="reference internal" href="#crontab" id="id57">crontab</a></li>
-<li><a class="reference internal" href="#id19" id="id58">系统和内核信息</a></li>
-<li><a class="reference internal" href="#id20" id="id59">查看系统启动服务</a></li>
+<li><a class="reference internal" href="#netstat" id="id53">netstat</a></li>
+<li><a class="reference internal" href="#nmap" id="id54">nmap</a></li>
+<li><a class="reference internal" href="#ss" id="id55">ss</a></li>
+<li><a class="reference internal" href="#ln" id="id56">ln</a></li>
+<li><a class="reference internal" href="#grep" id="id57">grep</a></li>
+<li><a class="reference internal" href="#pgrep" id="id58">pgrep</a></li>
+<li><a class="reference internal" href="#pkill" id="id59">pkill</a></li>
+<li><a class="reference internal" href="#crontab" id="id60">crontab</a></li>
+<li><a class="reference internal" href="#id19" id="id61">系统和内核信息</a></li>
+<li><a class="reference internal" href="#id20" id="id62">查看系统启动服务</a></li>
 </ul>
 </li>
 </ul>
@@ -710,6 +716,10 @@ echo ${SERVICE_ENDPOINT##*/}
 
 <span class="c1"># 获取网络连接，查看所有的监听套接字和已连接套接字</span>
 <span class="n">lsof</span> <span class="o">-</span><span class="n">i</span> <span class="o">-</span><span class="n">P</span> <span class="o">-</span><span class="n">n</span>
+
+<span class="c1"># 其他</span>
+<span class="n">lsof</span> <span class="o">-</span><span class="n">i</span><span class="nd">@192</span><span class="o">.</span><span class="mf">168.159</span><span class="o">.</span><span class="mi">1</span> <span class="o">-</span><span class="n">P</span> <span class="o">-</span><span class="n">n</span>
+<span class="n">lsof</span> <span class="o">-</span><span class="n">i</span><span class="nd">@192</span><span class="o">.</span><span class="mf">168.159</span><span class="o">.</span><span class="mi">1</span><span class="p">:</span><span class="mi">22</span> <span class="o">-</span><span class="n">P</span> <span class="o">-</span><span class="n">n</span>
 </pre></div>
 </div>
 <p>这里需要解释下，服务端调用listen后，返回的是 <strong>监听套接字</strong> ，然后客户端主动发起connect连接，
@@ -722,8 +732,17 @@ echo ${SERVICE_ENDPOINT##*/}
 </tbody>
 </table>
 </div>
+<div class="section" id="netstat">
+<h3><a class="toc-backref" href="#id53">4.4.15. netstat</a><a class="headerlink" href="#netstat" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="nmap">
+<h3><a class="toc-backref" href="#id54">4.4.16. nmap</a><a class="headerlink" href="#nmap" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="ss">
+<h3><a class="toc-backref" href="#id55">4.4.17. ss</a><a class="headerlink" href="#ss" title="Permalink to this headline">¶</a></h3>
+</div>
 <div class="section" id="ln">
-<h3><a class="toc-backref" href="#id53">4.4.15. ln</a><a class="headerlink" href="#ln" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id56">4.4.18. ln</a><a class="headerlink" href="#ln" title="Permalink to this headline">¶</a></h3>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="c1"># 建立硬链接</span>
 <span class="n">ln</span> <span class="n">srcfile</span> <span class="n">dstfile</span>
 <span class="c1"># 建立软连接</span>
@@ -744,7 +763,7 @@ echo ${SERVICE_ENDPOINT##*/}
 </ul>
 </div>
 <div class="section" id="grep">
-<h3><a class="toc-backref" href="#id54">4.4.16. grep</a><a class="headerlink" href="#grep" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id57">4.4.19. grep</a><a class="headerlink" href="#grep" title="Permalink to this headline">¶</a></h3>
 <p>grep命令有很多选项，支持的正则表达式流派也很多。个人对prce流派正则比较熟悉，
 日常中使用也主要是使用 <code class="docutils literal"><span class="pre">-P</span></code> 选项使用prce模式进行匹配！</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="c1"># -P: 使用 pcre 模式搜索</span>
@@ -765,21 +784,21 @@ echo ${SERVICE_ENDPOINT##*/}
 </div>
 </div>
 <div class="section" id="pgrep">
-<h3><a class="toc-backref" href="#id55">4.4.17. pgrep</a><a class="headerlink" href="#pgrep" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id58">4.4.20. pgrep</a><a class="headerlink" href="#pgrep" title="Permalink to this headline">¶</a></h3>
 <p>搜索进程名称包含 name 的进程；该命令还有其他的选项。</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">pgrep</span> <span class="n">nova</span><span class="o">-</span><span class="n">scheduler</span>
 </pre></div>
 </div>
 </div>
 <div class="section" id="pkill">
-<h3><a class="toc-backref" href="#id56">4.4.18. pkill</a><a class="headerlink" href="#pkill" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id59">4.4.21. pkill</a><a class="headerlink" href="#pkill" title="Permalink to this headline">¶</a></h3>
 <p>根据 name 名称杀死进程：</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">pkill</span> <span class="n">nova</span><span class="o">-</span><span class="n">api</span>
 </pre></div>
 </div>
 </div>
 <div class="section" id="crontab">
-<h3><a class="toc-backref" href="#id57">4.4.19. crontab</a><a class="headerlink" href="#crontab" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id60">4.4.22. crontab</a><a class="headerlink" href="#crontab" title="Permalink to this headline">¶</a></h3>
 <p>准确来说，这并不是一个命令，而是Linux系统的一个定时服务！</p>
 <p>通过编辑/etc/crontab文件，添加如下格式行，然后 <code class="docutils literal"><span class="pre">service</span> <span class="pre">cron</span> <span class="pre">restart</span></code> 重启cron服务，
 定时任务就可以生效了。</p>
@@ -813,7 +832,7 @@ fi
 <p>然后重启cron服务就可以了。</p>
 </div>
 <div class="section" id="id19">
-<h3><a class="toc-backref" href="#id58">4.4.20. 系统和内核信息</a><a class="headerlink" href="#id19" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id61">4.4.23. 系统和内核信息</a><a class="headerlink" href="#id19" title="Permalink to this headline">¶</a></h3>
 <p>可以使用下面的命令</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="c1"># 查看操作系统发行版信息</span>
 <span class="n">cat</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">issue</span>
@@ -825,7 +844,7 @@ fi
 </div>
 </div>
 <div class="section" id="id20">
-<h3><a class="toc-backref" href="#id59">4.4.21. 查看系统启动服务</a><a class="headerlink" href="#id20" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id62">4.4.24. 查看系统启动服务</a><a class="headerlink" href="#id20" title="Permalink to this headline">¶</a></h3>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">initctl</span> <span class="nb">list</span> <span class="o">|</span> <span class="n">grep</span> <span class="n">nova</span>
 </pre></div>
 </div>
