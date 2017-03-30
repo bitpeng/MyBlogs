@@ -577,6 +577,9 @@ lsof
     ps -ef | grep rabbit
     lsof -u rabbitmq -a -i -P -n
 
+    # 列出某进程的所有网络连接
+    lsof -p <pid> -a -i -P -n
+
 这里需要解释下，服务端调用listen后，返回的是 **监听套接字** ，然后客户端主动发起connect连接，
 服务端accept后，返回 **已连接套接字** 。两者都可以通过lsof命令列出来！
 

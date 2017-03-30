@@ -725,6 +725,9 @@ echo ${SERVICE_ENDPOINT##*/}
 <span class="c1"># lsof 命令选项组合一般是或关系，所以需要使用 -a 选项变成 and关系！</span>
 <span class="n">ps</span> <span class="o">-</span><span class="n">ef</span> <span class="o">|</span> <span class="n">grep</span> <span class="n">rabbit</span>
 <span class="n">lsof</span> <span class="o">-</span><span class="n">u</span> <span class="n">rabbitmq</span> <span class="o">-</span><span class="n">a</span> <span class="o">-</span><span class="n">i</span> <span class="o">-</span><span class="n">P</span> <span class="o">-</span><span class="n">n</span>
+
+<span class="c1"># 列出某进程的所有网络连接</span>
+<span class="n">lsof</span> <span class="o">-</span><span class="n">p</span> <span class="o">&lt;</span><span class="n">pid</span><span class="o">&gt;</span> <span class="o">-</span><span class="n">a</span> <span class="o">-</span><span class="n">i</span> <span class="o">-</span><span class="n">P</span> <span class="o">-</span><span class="n">n</span>
 </pre></div>
 </div>
 <p>这里需要解释下，服务端调用listen后，返回的是 <strong>监听套接字</strong> ，然后客户端主动发起connect连接，
