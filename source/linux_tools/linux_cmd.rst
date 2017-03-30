@@ -572,6 +572,11 @@ lsof
     lsof -i@192.168.159.1 -P -n
     lsof -i@192.168.159.1:22 -P -n
 
+    # 列出rabbitmq用户的所有网络连接！
+    # lsof 命令选项组合一般是或关系，所以需要使用 -a 选项变成 and关系！
+    ps -ef | grep rabbit
+    lsof -u rabbitmq -a -i -P -n
+
 这里需要解释下，服务端调用listen后，返回的是 **监听套接字** ，然后客户端主动发起connect连接，
 服务端accept后，返回 **已连接套接字** 。两者都可以通过lsof命令列出来！
 
