@@ -31,6 +31,7 @@ openstack
 
 - `徐超笔记 <http://1.chaoxu.sinaapp.com/>`_ ：专注于OpenStack测试，neutron项目等！
 - `右转 <http://xiaofandh12.github.io/>`_ ：neutron部分好文！
+- `360-ops <https://addops.cn/post/network-isolation-in-openstack.html>`_ ：奇虎360运维团队。
 
 neutron网络系列
 ===============
