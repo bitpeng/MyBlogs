@@ -150,6 +150,15 @@ horizon 项目基于apache部署时，假如开发过程horizon代码发生
     cd /usr/share/openstack_dashboard
     python manage.py runserver 0.0.0.0:80
 
+也可以不用关闭apache2服务器，只需要用另外一个没有使用的端口即可！
+这种方式，在浏览器中输入ip:8080进行访问。
+
+::
+
+    cd /usr/share/openstack_dashboard
+    lsof -i :8080
+    python manage.py runserver 0.0.0.0:8080
+
 通过 ``python manage.py runserver 0.0.0.0:80`` 启动服务，
 终端会输出很多的信息。不方便查看，因此，我们可以把所以
 输出重定向到一个文件，然后进行过滤查看即可！(个人开发时

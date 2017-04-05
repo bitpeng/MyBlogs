@@ -104,7 +104,7 @@
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="image-create-guide.html">2. OpenStack镜像制作</a></li>
-<li class="toctree-l2"><a class="reference internal" href="deploy_synopsis.html">3. openstack 部署实践</a></li>
+<li class="toctree-l2"><a class="reference internal" href="deploy_synopsis.html">3. OpenStack 部署实践</a></li>
 <li class="toctree-l2"><a class="reference internal" href="centos_vm_netconf.html">4. Centos虚拟机联网配置</a></li>
 <li class="toctree-l2"><a class="reference internal" href="lanch_instance_failure.html">5. OpenStack 启动虚拟机失败分析</a></li>
 <li class="toctree-l2"><a class="reference internal" href="rabbitmq_doc.html">6. [翻译] rabbitmq教程</a></li>
@@ -132,7 +132,8 @@
 <li class="toctree-l2"><a class="reference internal" href="juno_neutron-meter-agent_install.html">28. juno安装neutron-meter-agent</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="../others/index.html">杂项讨论</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../network/index.html">网络技术/neutron</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../others/index.html">未分类</a></li>
 </ul>
 
             
@@ -298,6 +299,13 @@
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">service</span> <span class="n">apache2</span> <span class="n">stop</span>
 <span class="n">cd</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">share</span><span class="o">/</span><span class="n">openstack_dashboard</span>
 <span class="n">python</span> <span class="n">manage</span><span class="o">.</span><span class="n">py</span> <span class="n">runserver</span> <span class="mf">0.0</span><span class="o">.</span><span class="mf">0.0</span><span class="p">:</span><span class="mi">80</span>
+</pre></div>
+</div>
+<p>也可以不用关闭apache2服务器，只需要用另外一个没有使用的端口即可！
+这种方式，在浏览器中输入ip:8080进行访问。</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">cd</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">share</span><span class="o">/</span><span class="n">openstack_dashboard</span>
+<span class="n">lsof</span> <span class="o">-</span><span class="n">i</span> <span class="p">:</span><span class="mi">8080</span>
+<span class="n">python</span> <span class="n">manage</span><span class="o">.</span><span class="n">py</span> <span class="n">runserver</span> <span class="mf">0.0</span><span class="o">.</span><span class="mf">0.0</span><span class="p">:</span><span class="mi">8080</span>
 </pre></div>
 </div>
 <p>通过 <code class="docutils literal"><span class="pre">python</span> <span class="pre">manage.py</span> <span class="pre">runserver</span> <span class="pre">0.0.0.0:80</span></code> 启动服务，

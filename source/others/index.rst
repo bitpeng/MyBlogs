@@ -22,5 +22,6 @@
     iptables_sum
     nova_start_error
     horizon_rabbitmq
+    html_note
 
 ..    sphinx_doc
