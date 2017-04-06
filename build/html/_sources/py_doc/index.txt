@@ -28,5 +28,4 @@ Python Note
     metaclass_intro
     os_lib
     log_summary
-
-..    django_note
+    django_note

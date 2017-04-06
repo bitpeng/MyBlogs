@@ -31,6 +31,15 @@ partition和rpartition
     ('nova', '.', 'scheduler.manager.SchedulerManager')
 
 
+startswith
+^^^^^^^^^^
+
+::
+
+    s = "ceil-meter"
+    s.startswith("ceil")
+
+
 dict
 ~~~~~~~~
 

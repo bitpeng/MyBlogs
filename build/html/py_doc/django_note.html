@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>django笔记 &mdash; Welcome to Sitian&#39;s Blog 1.0 documentation</title>
+  <title>14. django笔记 &mdash; Welcome to Sitian&#39;s Blog 1.0 documentation</title>
   
 
   
@@ -30,7 +30,10 @@
   
 
   
-    <link rel="top" title="Welcome to Sitian&#39;s Blog 1.0 documentation" href="../index.html"/> 
+    <link rel="top" title="Welcome to Sitian&#39;s Blog 1.0 documentation" href="../index.html"/>
+        <link rel="up" title="Python Note" href="index.html"/>
+        <link rel="next" title="Hack Linux" href="../linux_tools/index.html"/>
+        <link rel="prev" title="13. logging 模块总结" href="log_summary.html"/> 
 
   
   <script src="../_static/js/modernizr.min.js"></script>
@@ -79,8 +82,32 @@
           
             
             
-                <ul>
-<li class="toctree-l1"><a class="reference internal" href="index.html">Python Note</a></li>
+                <ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Python Note</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="pysnmp_doc.html">1. [翻译] PySNMP教程</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pysnmp_doc_example.html">2. PySNMP获取设备信息</a></li>
+<li class="toctree-l2"><a class="reference internal" href="re_doc.html">3. [翻译] Python正则表达式</a></li>
+<li class="toctree-l2"><a class="reference internal" href="wsgi.html">4. WSGI基础</a></li>
+<li class="toctree-l2"><a class="reference internal" href="re_analysis.html">5. Python正则表达式分析利器</a></li>
+<li class="toctree-l2"><a class="reference internal" href="python_descriptor.html">6. Python描述器</a></li>
+<li class="toctree-l2"><a class="reference internal" href="python_notebook.html">7. Python学习总结</a></li>
+<li class="toctree-l2"><a class="reference internal" href="python_coding.html">8. Python 编码问题总结</a></li>
+<li class="toctree-l2"><a class="reference internal" href="dec_logic.html">9. Python 装饰器、闭包</a></li>
+<li class="toctree-l2"><a class="reference internal" href="webob_analysis.html">10. webob库简单分析</a></li>
+<li class="toctree-l2"><a class="reference internal" href="metaclass_intro.html">11. Python元类</a></li>
+<li class="toctree-l2"><a class="reference internal" href="os_lib.html">12. Python Library</a></li>
+<li class="toctree-l2"><a class="reference internal" href="log_summary.html">13. logging 模块总结</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">14. django笔记</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#httprequest">14.1. HttpRequest对象</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id2">14.2. 模型</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#id3">14.2.1. 数据查询</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#id5">14.3. 参考</a></li>
+</ul>
+</li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="../linux_tools/index.html">Hack Linux</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../openstack/index.html">OpenStack Note</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../network/index.html">网络技术/neutron</a></li>
@@ -115,7 +142,9 @@
   <ul class="wy-breadcrumbs">
     <li><a href="../index.html">Docs</a> &raquo;</li>
       
-    <li>django笔记</li>
+          <li><a href="index.html">Python Note</a> &raquo;</li>
+      
+    <li>14. django笔记</li>
       <li class="wy-breadcrumbs-aside">
         
           
@@ -130,37 +159,75 @@
            <div itemprop="articleBody">
             
   <div class="section" id="django">
-<span id="django-note"></span><h1><a class="toc-backref" href="#id5">django笔记</a><a class="headerlink" href="#django" title="Permalink to this headline">¶</a></h1>
-<div class="admonition tip">
-<p class="first admonition-title">Tip</p>
-<p class="last">django学习过程和阅读代码相关过程笔记，防止遗忘。</p>
-</div>
+<span id="django-note"></span><h1><a class="toc-backref" href="#id8">14. django笔记</a><a class="headerlink" href="#django" title="Permalink to this headline">¶</a></h1>
+<p>django学习/阅读代码/horizon开发相关过程笔记，防止遗忘。</p>
 <div class="contents topic" id="id1">
 <p class="topic-title first">目录</p>
 <ul class="simple">
-<li><a class="reference internal" href="#django" id="id5">django笔记</a><ul>
-<li><a class="reference internal" href="#httprequest" id="id6">HttpRequest对象</a></li>
-<li><a class="reference internal" href="#id2" id="id7">参考</a></li>
+<li><a class="reference internal" href="#django" id="id8">django笔记</a><ul>
+<li><a class="reference internal" href="#httprequest" id="id9">HttpRequest对象</a></li>
+<li><a class="reference internal" href="#id2" id="id10">模型</a><ul>
+<li><a class="reference internal" href="#id3" id="id11">数据查询</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#id5" id="id12">参考</a></li>
 </ul>
 </li>
 </ul>
 </div>
 <hr class="docutils" />
 <div class="section" id="httprequest">
-<h2><a class="toc-backref" href="#id6">HttpRequest对象</a><a class="headerlink" href="#httprequest" title="Permalink to this headline">¶</a></h2>
-<p>allinone环境下，安装了qemu-kvm命令后，启动虚拟机，提示错误。</p>
-<div class="figure align-center" id="id4">
+<h2><a class="toc-backref" href="#id9">14.1. HttpRequest对象</a><a class="headerlink" href="#httprequest" title="Permalink to this headline">¶</a></h2>
+<p>待补充</p>
+<div class="figure align-center" id="id7">
 <a class="reference internal image-reference" href="../_images/kvm_error.png"><img alt="../_images/kvm_error.png" src="../_images/kvm_error.png" style="width: 839.0px; height: 145.0px;" /></a>
-<p class="caption"><span class="caption-text">KVM启动虚拟机错误</span></p>
+<p class="caption"><span class="caption-text">待插图</span></p>
+</div>
+</div>
+<div class="section" id="id2">
+<h2><a class="toc-backref" href="#id10">14.2. 模型</a><a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
+<p>django模型，是在django项目中定义类对象(一般在models.py文件中)，然后通过 <code class="docutils literal"><span class="pre">python</span> <span class="pre">manage.py</span> <span class="pre">syncdb</span></code> 命令，生成数据库表。</p>
+<p>我们也可以利用已有的数据库。在django book集成已有的数据库一章中提到，通过配置django项目setting.py文件，
+具体来说，主要是DATABASE_NAME，DATABASE_ENGINE，DATABASE_USER，DATABASE_PASSWORD，
+DATABASE_HOST，和DATABASE_PORT这些配置信息，然后使用如下的命令生成自省模型。</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">python</span> <span class="n">manage</span><span class="o">.</span><span class="n">py</span> <span class="n">inspectdb</span> <span class="o">&gt;</span> <span class="n">mysite</span><span class="o">/</span><span class="n">myapp</span><span class="o">/</span><span class="n">models</span><span class="o">.</span><span class="n">py</span>
+</pre></div>
+</div>
+<p>可是OpenStack Horizon项目来说，我在setting.py配置文件中并没有找到相关上述配置项信息。但是，
+对于数据库名为openstack_dashboard中的表，的确可以通过上述命令生成相应的models.py。看来，
+上述配置项应该在其他地方，可惜我并没有找到！</p>
+<div class="section" id="id3">
+<h3><a class="toc-backref" href="#id11">14.2.1. 数据查询</a><a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h3>
+<p>获取表所有记录：</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">ModelsTable</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">all</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>过滤查询：</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">ModelsTable</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;ceilometer-api&#39;</span><span class="p">)</span>
+
+<span class="c1"># 相当于select from ModelsTable where name like &#39;ceilometer&#39;</span>
+<span class="n">ModelsTable</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">name__contains</span><span class="o">=</span><span class="s1">&#39;ceilometer&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>查询单条记录，假如查询结果有多条，会发生异常：</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">ModelsTable</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+</pre></div>
+</div>
+<table class="docutils footnote" frame="void" id="id4" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label">[1]</td><td>详细论述了django数据查询 网址：<a class="reference external" href="http://python.usyiyi.cn/django/topics/db/queries.html">http://python.usyiyi.cn/django/topics/db/queries.html</a></td></tr>
+</tbody>
+</table>
 </div>
 </div>
 <hr class="docutils" />
-<div class="section" id="id2">
-<h2><a class="toc-backref" href="#id7">参考</a><a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
-<table class="docutils footnote" frame="void" id="id3" rules="none">
+<div class="section" id="id5">
+<h2><a class="toc-backref" href="#id12">14.3. 参考</a><a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h2>
+<table class="docutils footnote" frame="void" id="id6" rules="none">
 <colgroup><col class="label" /><col /></colgroup>
 <tbody valign="top">
-<tr><td class="label">[1]</td><td><a class="reference external" href="http://djangobook.py3k.cn/appendixH/">http://djangobook.py3k.cn/appendixH/</a></td></tr>
+<tr><td class="label">[2]</td><td><a class="reference external" href="http://djangobook.py3k.cn/appendixH/">http://djangobook.py3k.cn/appendixH/</a></td></tr>
 </tbody>
 </table>
 </div>
@@ -170,6 +237,15 @@
            </div>
           </div>
           <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../linux_tools/index.html" class="btn btn-neutral float-right" title="Hack Linux" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="log_summary.html" class="btn btn-neutral" title="13. logging 模块总结" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
   
 
   <hr/>
