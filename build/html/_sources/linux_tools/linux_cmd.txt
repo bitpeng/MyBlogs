@@ -349,6 +349,9 @@ awk
     # 循环把前N列都赋值为空，从第n+1列开始打印所有的列！
     awk '{ for(i=1; i<=n; i++){ $i="" }; print $0 }' urfile
 
+    # 以tab分隔符切割记录，输出也以tab作为分隔符。选择第二个字段为GET的记录！
+    awk -F'\t' -vOFS='\t' '{if ($2=="GET") print $1, $3}' ceph_meter.txt > ceph_meter_get.txt
+
 
 cut
 +++

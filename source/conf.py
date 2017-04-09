@@ -121,6 +121,7 @@ todo_include_todos = False
 #
 #html_theme = 'alabaster'
 html_theme = 'sphinx_rtd_theme'
+#html_theme = 'rux'
 #html_theme = 'sphinxdoc'
 #html_theme = 'Cloud'
 

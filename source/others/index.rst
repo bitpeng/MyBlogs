@@ -23,5 +23,6 @@
     nova_start_error
     horizon_rabbitmq
     html_note
+    tip
 
 ..    sphinx_doc

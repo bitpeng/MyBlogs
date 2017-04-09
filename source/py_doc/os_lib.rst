@@ -17,6 +17,8 @@ OpenStack各组件使用了非常多的python库，包括标准模块和第三�
 
 对于比较复杂的库，或者笔记篇幅大的，则会另起一篇文章在单独的blog中记录下来！
 
+对于日常工作中接触到的Python模块，也是如此处理！
+
 inspect
 ========
 
@@ -138,3 +140,19 @@ proxy创建一个用弱引用实现的代理对象，参数同上。
 
 .. [#] http://blog.csdn.net/iamaiearner/article/details/9371315
 .. [#] http://www.jianshu.com/p/0cecea85ae3b
+
+
+sched
+======
+
+该模块是内置模块，源码也很少，才仅仅130行。是用于实现定时任务的。
+
+读该库源码
+
+
+sh
+===
+
+执行sh命令的库
+
+读该库源码
