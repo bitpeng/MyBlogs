@@ -45,3 +45,4 @@ mount共享
       apt-get install cifs-utils
 
   * **特别注意：挂载在Linux下的挂载目录，挂载成功后，目录下所有东西都将被清空！**
+    这里cifs是一种网络文件系统！可以google获取相关知识。
