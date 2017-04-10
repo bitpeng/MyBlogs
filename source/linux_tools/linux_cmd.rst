@@ -403,6 +403,12 @@ dpkg
 
     dpkg -i neutron-metering-agent_2014.2.1-0ubuntu1-cloud0_all.deb
 
+查看deb包文件内容：
+
+::
+
+    dpkg -c neutron-metering-agent_2014.2.1.deb
+
 wget
 ++++
 

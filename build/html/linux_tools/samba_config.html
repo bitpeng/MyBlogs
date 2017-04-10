@@ -88,6 +88,7 @@
 <li class="toctree-l2"><a class="reference internal" href="git_cmd.html">1. git 版本控制</a></li>
 <li class="toctree-l2 current"><a class="current reference internal" href="#">2. Samba共享访问配置</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#id1">2.1. 自动化脚本</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#mount">2.2. mount共享</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="use_man_page.html">3. 善用Linux man page</a></li>
@@ -101,7 +102,8 @@
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../openstack/index.html">OpenStack Note</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../others/index.html">杂项讨论</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../network/index.html">网络技术/neutron</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../others/index.html">未分类</a></li>
 </ul>
 
             
@@ -238,6 +240,37 @@ smbpasswd -a smbuser1
 /etc/init.d/samba restart
 </pre></div>
 </td></tr></table></div>
+</div>
+<div class="section" id="mount">
+<h2>2.2. mount共享<a class="headerlink" href="#mount" title="Permalink to this headline">¶</a></h2>
+<p>有时因为公司网络访问限制，不允许访问外网，那么samba无法安装，也就无法共享了。
+此时可以退而求其次，通过mount命令，在windows宿主机和vmware中的Linux虚机进行文件共享！</p>
+<ul>
+<li><p class="first">首先，在windows宿主机中创建一个共享文件夹。设置方式为属性-共享-everyone读取/写入；</p>
+</li>
+<li><p class="first">在Linux虚机中创建一个目录 mkdir /winshare</p>
+</li>
+<li><p class="first">执行挂载命令：</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="c1">#mount -t cifs //&lt;win-host-ip&gt;/share /winshare -o username=&lt;win-user-name&gt;,rw</span>
+<span class="n">mount</span> <span class="o">-</span><span class="n">t</span> <span class="n">cifs</span> <span class="o">//</span><span class="mf">10.11</span><span class="o">.</span><span class="mf">113.75</span><span class="o">/</span><span class="n">share</span> <span class="o">/</span><span class="n">winshare</span> <span class="o">-</span><span class="n">o</span> <span class="n">username</span><span class="o">=</span><span class="n">cec</span><span class="p">,</span><span class="n">rw</span>
+</pre></div>
+</div>
+<p>其中share是windows共享文件夹，注意该文件夹要进行共享设置，最好不用密码进行操作！
+挂载后，将要共享的文件夹拷贝到该目录，则宿主机和虚拟机都可以进行查看！</p>
+<p>需要注意如下几点：</p>
+<ul>
+<li><p class="first">如果挂载过程出现 <code class="docutils literal"><span class="pre">mount:</span> <span class="pre">block</span> <span class="pre">device</span> <span class="pre">//xxx</span> <span class="pre">is</span> <span class="pre">write-protected,</span> <span class="pre">mounting</span> <span class="pre">read-only</span></code> 错误，
+则需要安装cits组件。使用安装即可！</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">apt</span><span class="o">-</span><span class="n">cache</span> <span class="n">search</span> <span class="n">cifs</span> <span class="o">|</span> <span class="n">grep</span> <span class="o">-</span><span class="n">i</span> <span class="n">cifs</span>
+<span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="n">install</span> <span class="n">cifs</span><span class="o">-</span><span class="n">utils</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first"><strong>特别注意：挂载在Linux下的挂载目录，挂载成功后，目录下所有东西都将被清空！</strong></p>
+</li>
+</ul>
+</li>
+</ul>
 </div>
 </div>
 
