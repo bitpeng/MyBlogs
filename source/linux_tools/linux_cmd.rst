@@ -321,6 +321,7 @@ apt-get
 ::
 
     apt-cache search lvm
+    apt-cache search cifs | grep -i cifs
 
 获取包的相关信息：
 

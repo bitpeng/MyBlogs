@@ -8,12 +8,12 @@ tips
 
 --------------------------
 
-- Q: Firefox打开httpfox
+- 问：Firefox打开httpfox
 
-  A: 使用快捷键：ctrl+shift+F2
+  答：使用快捷键：ctrl+shift+F2
 
 --------------------------
 
-- Q: ubuntu apt-get下载的deb包目录
+- 问：ubuntu apt-get下载的deb包目录
 
-  A: /var/cache/apt/archives
+  答：/var/cache/apt/archives
