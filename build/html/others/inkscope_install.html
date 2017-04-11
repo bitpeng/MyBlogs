@@ -1,0 +1,501 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>13. Ceph web管理/监控平台Inkscope部署 &mdash; Welcome to Sitian&#39;s Blog 1.0 documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+    <link rel="top" title="Welcome to Sitian&#39;s Blog 1.0 documentation" href="../index.html"/>
+        <link rel="up" title="未分类" href="index.html"/>
+        <link rel="prev" title="12. tips" href="tip.html"/> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> Welcome to Sitian's Blog
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../py_doc/index.html">Python Note</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../linux_tools/index.html">Hack Linux</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../openstack/index.html">OpenStack Note</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../network/index.html">网络技术/neutron</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">未分类</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="rst_template.html">1. reStructuredText简明教程</a></li>
+<li class="toctree-l2"><a class="reference internal" href="rst_usage.html">2. rst 用法总结</a></li>
+<li class="toctree-l2"><a class="reference internal" href="store_intro.html">3. ceph与分布式存储入门</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mark_lan.html">4. 附录：轻量级标记语言</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tools.html">5. 软件和工具</a></li>
+<li class="toctree-l2"><a class="reference internal" href="keep_writting.html">6. 不忘初心，坚持</a></li>
+<li class="toctree-l2"><a class="reference internal" href="good_blog.html">7. 推荐博客和链接</a></li>
+<li class="toctree-l2"><a class="reference internal" href="iptables_sum.html">8. iptables 学习总结</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nova_start_error.html">9. Nova服务无法启动,日志,权限和异常处理</a></li>
+<li class="toctree-l2"><a class="reference internal" href="horizon_rabbitmq.html">10. horizon集成rabbitmq监控</a></li>
+<li class="toctree-l2"><a class="reference internal" href="html_note.html">11. HTML与前端</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tip.html">12. tips</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">13. Ceph web管理/监控平台Inkscope部署</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#deb">13.1. 下载deb包</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id2">13.2. 安装相关依赖</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#apache2">13.3. 配置apache2服务</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#id3">13.3.1. 无法显示页面</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#mongodb">13.4. 开启mongodb远程连接</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#cephprobe">13.5. 安装cephprobe</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#radosgw">13.6. radosgw服务配置</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#sysprobe">13.7. 安装sysprobe</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id4">13.8. 简单原理分析</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../index.html">Welcome to Sitian's Blog</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+ 
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../index.html">Docs</a> &raquo;</li>
+      
+          <li><a href="index.html">未分类</a> &raquo;</li>
+      
+    <li>13. Ceph web管理/监控平台Inkscope部署</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="../_sources/others/inkscope_install.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="ceph-web-inkscope">
+<h1><a class="toc-backref" href="#id9">13. Ceph web管理/监控平台Inkscope部署</a><a class="headerlink" href="#ceph-web-inkscope" title="Permalink to this headline">¶</a></h1>
+<div class="contents topic" id="id1">
+<p class="topic-title first">目录</p>
+<ul class="simple">
+<li><a class="reference internal" href="#ceph-web-inkscope" id="id9">Ceph web管理/监控平台Inkscope部署</a><ul>
+<li><a class="reference internal" href="#deb" id="id10">下载deb包</a></li>
+<li><a class="reference internal" href="#id2" id="id11">安装相关依赖</a></li>
+<li><a class="reference internal" href="#apache2" id="id12">配置apache2服务</a><ul>
+<li><a class="reference internal" href="#id3" id="id13">无法显示页面</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#mongodb" id="id14">开启mongodb远程连接</a></li>
+<li><a class="reference internal" href="#cephprobe" id="id15">安装cephprobe</a></li>
+<li><a class="reference internal" href="#radosgw" id="id16">radosgw服务配置</a></li>
+<li><a class="reference internal" href="#sysprobe" id="id17">安装sysprobe</a></li>
+<li><a class="reference internal" href="#id4" id="id18">简单原理分析</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<hr class="docutils" />
+<ul class="simple">
+<li>Linux环境：ubuntu-14.04-LTS<ul>
+<li>IP：192.168.159.155/20.20.20.20/10.10.10.10</li>
+</ul>
+</li>
+<li>系统环境：juno-all-inone</li>
+<li>ceph集群：<ul>
+<li>一个mon/一个mds/三个osd</li>
+<li>mon-addr: 20.20.20.20:6789</li>
+</ul>
+</li>
+</ul>
+<p>这篇文章主要参考了 <a class="reference external" href="http://cloud.51cto.com/art/201507/486005.htm">inkScope部署手册</a> ；</p>
+<p>基本上，按照该配置教程，基本上就可以安装成功。这篇文章，尝试把安装过程中遇到的问题以及简要安装过程记录下来。</p>
+<div class="section" id="deb">
+<h2><a class="toc-backref" href="#id10">13.1. 下载deb包</a><a class="headerlink" href="#deb" title="Permalink to this headline">¶</a></h2>
+<p>由于是基于ubuntu部署，首先需要下载inkscope相关deb包。
+可以从github上 <a class="reference external" href="https://github.com/inkscope/inkscope-packaging/tree/master/DEBS">inkscope package</a> 直接下载。</p>
+</div>
+<div class="section" id="id2">
+<h2><a class="toc-backref" href="#id11">13.2. 安装相关依赖</a><a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="n">install</span> <span class="n">python</span><span class="o">-</span><span class="n">pip</span> <span class="n">apache2</span> <span class="n">libapache2</span><span class="o">-</span><span class="n">mod</span><span class="o">-</span><span class="n">wsgi</span> <span class="n">mongodb</span> <span class="n">python</span><span class="o">-</span><span class="n">ceph</span>
+<span class="n">pip</span> <span class="n">install</span> <span class="n">flask</span> <span class="n">requests</span> <span class="n">simplejson</span>
+<span class="c1"># 直接安装下载的deb包</span>
+<span class="n">dpkg</span> <span class="o">-</span><span class="n">i</span> <span class="n">inkscope</span><span class="o">-</span><span class="n">admviz_1</span><span class="o">.</span><span class="mf">2.0</span><span class="o">-</span><span class="mf">0.</span><span class="n">deb</span>  <span class="n">inkscope</span><span class="o">-</span><span class="n">common_1</span><span class="o">.</span><span class="mf">2.0</span><span class="o">-</span><span class="mf">0.</span><span class="n">deb</span> <span class="n">inkscope</span><span class="o">-</span><span class="n">sysprobe_1</span><span class="o">.</span><span class="mf">2.0</span><span class="o">-</span><span class="mf">0.</span><span class="n">deb</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="apache2">
+<h2><a class="toc-backref" href="#id12">13.3. 配置apache2服务</a><a class="headerlink" href="#apache2" title="Permalink to this headline">¶</a></h2>
+<p>安装完inkscope-admviz后默认虚拟主机配置文件位于/etc/httpd/conf.d/inkScope.conf，
+将其拷贝到/etc/apache2/sites-available中。修改32行为下面这句，注释掉33行</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">ProxyPass</span> <span class="o">/</span><span class="n">ceph</span><span class="o">-</span><span class="n">rest</span><span class="o">-</span><span class="n">api</span><span class="o">/</span> <span class="n">http</span><span class="p">:</span><span class="o">//</span><span class="mf">20.20</span><span class="o">.</span><span class="mf">20.20</span><span class="p">:</span><span class="mi">5000</span><span class="o">/</span><span class="n">api</span><span class="o">/</span><span class="n">v0</span><span class="o">.</span><span class="mi">1</span><span class="o">/</span>
+<span class="c1">#ProxyPass /shell http://$IP:4200/</span>
+</pre></div>
+</div>
+<p>同时将25和35行的ErrorLog和CustomLog的值里面的httpd修改为apache2，因为apache2的工作路径已经换了。</p>
+<p>修改 /etc/apache2/ports.conf 文件，增加下面</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">Listen</span> <span class="mi">8080</span>
+<span class="n">NameVirtualHost</span> <span class="o">*</span><span class="p">:</span><span class="mi">8080</span>
+</pre></div>
+</div>
+<p>完整inkScope.conf文件如下：</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="o">&lt;</span><span class="n">VirtualHost</span> <span class="o">*</span><span class="p">:</span><span class="mi">8080</span><span class="o">&gt;</span>
+    <span class="n">ServerName</span>  <span class="n">localhost</span>
+    <span class="n">ServerAdmin</span> <span class="n">webmaster</span><span class="nd">@localhost</span>
+
+    <span class="n">DocumentRoot</span> <span class="o">/</span><span class="n">var</span><span class="o">/</span><span class="n">www</span><span class="o">/</span><span class="n">inkscope</span>
+    <span class="o">&lt;</span><span class="n">Directory</span> <span class="s2">&quot;/var/www/inkscope&quot;</span><span class="o">&gt;</span>
+        <span class="n">Options</span> <span class="n">All</span>
+        <span class="n">AllowOverride</span> <span class="n">All</span>
+    <span class="o">&lt;/</span><span class="n">Directory</span><span class="o">&gt;</span>
+
+    <span class="n">ScriptAlias</span> <span class="o">/</span><span class="n">cgi</span><span class="o">-</span><span class="nb">bin</span><span class="o">/</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">cgi</span><span class="o">-</span><span class="nb">bin</span><span class="o">/</span>
+    <span class="o">&lt;</span><span class="n">Directory</span> <span class="s2">&quot;/usr/lib/cgi-bin&quot;</span><span class="o">&gt;</span>
+        <span class="n">AllowOverride</span> <span class="kc">None</span>
+        <span class="n">Options</span> <span class="o">+</span><span class="n">ExecCGI</span> <span class="o">-</span><span class="n">MultiViews</span> <span class="o">+</span><span class="n">SymLinksIfOwnerMatch</span>
+        <span class="n">Order</span> <span class="n">allow</span><span class="p">,</span><span class="n">deny</span>
+        <span class="n">Allow</span> <span class="kn">from</span> <span class="nn">all</span>
+    <span class="o">&lt;/</span><span class="n">Directory</span><span class="o">&gt;</span>
+
+    <span class="n">WSGIScriptAlias</span> <span class="o">/</span><span class="n">inkscopeCtrl</span> <span class="o">/</span><span class="n">var</span><span class="o">/</span><span class="n">www</span><span class="o">/</span><span class="n">inkscope</span><span class="o">/</span><span class="n">inkscopeCtrl</span><span class="o">/</span><span class="n">inkscopeCtrl</span><span class="o">.</span><span class="n">wsgi</span>
+    <span class="o">&lt;</span><span class="n">Directory</span> <span class="s2">&quot;/var/www/inkscope/inkScopeCtrl&quot;</span><span class="o">&gt;</span>
+    <span class="c1">#&lt;Directory &quot;/var/www/inkscope&quot;&gt;</span>
+        <span class="n">Order</span> <span class="n">allow</span><span class="p">,</span><span class="n">deny</span>
+        <span class="n">Allow</span> <span class="kn">from</span> <span class="nn">all</span>
+    <span class="o">&lt;/</span><span class="n">Directory</span><span class="o">&gt;</span>
+
+    <span class="n">ErrorLog</span> <span class="o">/</span><span class="n">var</span><span class="o">/</span><span class="n">log</span><span class="o">/</span><span class="n">apache2</span><span class="o">/</span><span class="n">error_inkscope</span><span class="o">.</span><span class="n">log</span>
+
+    <span class="c1"># Possible values include: debug, info, notice, warn, error, crit,</span>
+    <span class="c1"># alert, emerg.</span>
+    <span class="n">LogLevel</span> <span class="n">warn</span>
+
+    <span class="n">ProxyRequests</span> <span class="n">Off</span>  <span class="c1"># we don&#39;t want a &quot;forward proxy&quot;, but only a &quot;Reverse proxy&quot;</span>
+    <span class="c1">#ProxyPass /ceph-rest-api/ http://20.20.20.20:5000/api/v0.1/</span>
+    <span class="n">ProxyPass</span> <span class="o">/</span><span class="n">ceph</span><span class="o">-</span><span class="n">rest</span><span class="o">-</span><span class="n">api</span><span class="o">/</span> <span class="n">http</span><span class="p">:</span><span class="o">//</span><span class="mf">192.168</span><span class="o">.</span><span class="mf">159.155</span><span class="p">:</span><span class="mi">5050</span><span class="o">/</span><span class="n">api</span><span class="o">/</span><span class="n">v0</span><span class="o">.</span><span class="mi">1</span><span class="o">/</span>
+    <span class="n">ProxyPass</span> <span class="o">/</span><span class="n">mongodb_status</span><span class="o">/</span> <span class="n">http</span><span class="p">:</span><span class="o">//</span><span class="mf">10.10</span><span class="o">.</span><span class="mf">10.10</span><span class="p">:</span><span class="mi">28017</span>
+    <span class="c1">#ProxyPass /shell http://$IP:4200/</span>
+
+    <span class="n">CustomLog</span> <span class="o">/</span><span class="n">var</span><span class="o">/</span><span class="n">log</span><span class="o">/</span><span class="n">apache2</span><span class="o">/</span><span class="n">access</span><span class="o">.</span><span class="n">log</span> <span class="n">combined</span>
+<span class="o">&lt;/</span><span class="n">VirtualHost</span><span class="o">&gt;</span>
+</pre></div>
+</div>
+<p>运行下面的命令，启用apache2的proxy模块和inkScope.conf虚拟主机</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="n">a2enmod</span> <span class="n">proxy_http</span>
+<span class="n">sudo</span> <span class="n">a2ensite</span> <span class="n">inkScope</span><span class="o">.</span><span class="n">conf</span>
+<span class="n">sudo</span> <span class="n">service</span> <span class="n">apache2</span> <span class="n">restart</span>
+</pre></div>
+</div>
+<p>现在打开浏览器访问192.168.159.155:8080/应该就可以看到首页，只是暂时没有ceph集群的相关数据而已。</p>
+<div class="section" id="id3">
+<h3><a class="toc-backref" href="#id13">13.3.1. 无法显示页面</a><a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h3>
+<p>配置上面的过程之后，正常来说，应该是可以看到页面的。当初因为自己的apache2服务器配置原因，
+导致一直出现 <code class="docutils literal"><span class="pre">You</span> <span class="pre">don't</span> <span class="pre">have</span> <span class="pre">permission</span> <span class="pre">to</span> <span class="pre">access</span> <span class="pre">/</span> <span class="pre">on</span> <span class="pre">this</span> <span class="pre">server</span> <span class="pre">ubuntu</span> <span class="pre">14.04</span></code> , 另外，
+服务器日志总是提示如下错误：</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">AH01276</span><span class="p">:</span> <span class="n">Cannot</span> <span class="n">serve</span> <span class="n">directory</span> <span class="o">/</span><span class="n">var</span><span class="o">/</span><span class="n">www</span><span class="o">/</span><span class="p">:</span> <span class="n">No</span> <span class="n">matching</span> <span class="n">DirectoryIndex</span>
+<span class="p">(</span><span class="n">index</span><span class="o">.</span><span class="n">html</span><span class="p">,</span><span class="n">index</span><span class="o">.</span><span class="n">cgi</span><span class="p">,</span><span class="n">index</span><span class="o">.</span><span class="n">pl</span><span class="p">,</span><span class="n">index</span><span class="o">.</span><span class="n">php</span><span class="p">,</span><span class="n">index</span><span class="o">.</span><span class="n">xhtml</span><span class="p">,</span><span class="n">index</span><span class="o">.</span><span class="n">htm</span><span class="p">)</span> <span class="n">found</span><span class="p">,</span>
+<span class="ow">and</span> <span class="n">server</span><span class="o">-</span><span class="n">generated</span>     <span class="n">directory</span> <span class="n">index</span> <span class="n">forbidden</span> <span class="n">by</span> <span class="n">Options</span> <span class="n">directive</span>
+</pre></div>
+</div>
+<p>这个问题其实是由于在apache.conf配置文件中没有开启virtual host configuration引起的。</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">vim</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">apache2</span><span class="o">/</span><span class="n">apache2</span><span class="o">.</span><span class="n">conf</span>
+<span class="c1"># 开启virtual host配置。</span>
+<span class="n">Include</span> <span class="n">sites</span><span class="o">-</span><span class="n">enabled</span><span class="o">/</span>
+
+<span class="c1"># 然后重启apache2服务</span>
+<span class="n">service</span> <span class="n">apache2</span> <span class="n">reload</span>
+<span class="n">service</span> <span class="n">apache2</span> <span class="n">restart</span>
+</pre></div>
+</div>
+<p>开启 <code class="docutils literal"><span class="pre">Include</span> <span class="pre">sites-enabled/</span></code> 配置之前， <code class="docutils literal"><span class="pre">apache2ctl</span> <span class="pre">-S</span></code> 命令只能看到监听的80和443端口，
+inkscope的8080端口一直无法看到。开启该选项后，就可以正常看到了。</p>
+<div class="figure align-center" id="id6">
+<a class="reference internal image-reference" href="../_images/apache2ctl_virtualhost.png"><img alt="../_images/apache2ctl_virtualhost.png" src="../_images/apache2ctl_virtualhost.png" style="width: 976.0px; height: 500.0px;" /></a>
+<p class="caption"><span class="caption-text">查看apache2的virtual host</span></p>
+</div>
+</div>
+</div>
+<div class="section" id="mongodb">
+<h2><a class="toc-backref" href="#id14">13.4. 开启mongodb远程连接</a><a class="headerlink" href="#mongodb" title="Permalink to this headline">¶</a></h2>
+<p>修改/etc/mongodb.conf，将bind_ip修改为0.0.0.0，取消port = 27017 依据前面的注释，如下：</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">bind_ip</span> <span class="o">=</span> <span class="mf">0.0</span><span class="o">.</span><span class="mf">0.0</span>
+<span class="n">port</span> <span class="o">=</span> <span class="mi">27017</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="cephprobe">
+<h2><a class="toc-backref" href="#id15">13.5. 安装cephprobe</a><a class="headerlink" href="#cephprobe" title="Permalink to this headline">¶</a></h2>
+<p>在cephprobe节点主要是提供ceph-rest-api并抓取ceph的信息存入mongodb中。所需软件包及依赖安装如下：</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="n">install</span> <span class="n">python</span><span class="o">-</span><span class="n">dev</span>
+<span class="n">pip</span> <span class="n">install</span> <span class="n">pymongo</span> <span class="n">psutil</span>
+<span class="n">dpkg</span> <span class="o">-</span><span class="n">i</span> <span class="n">inkscope</span><span class="o">-</span><span class="n">common_1</span><span class="o">.</span><span class="mf">2.0</span><span class="o">-</span><span class="mf">0.</span><span class="n">deb</span> <span class="n">inkscope</span><span class="o">-</span><span class="n">sysprobe_1</span><span class="o">.</span><span class="mf">2.0</span><span class="o">-</span><span class="mf">0.</span><span class="n">deb</span> <span class="n">inkscope</span><span class="o">-</span><span class="n">cephrestapi_1</span><span class="o">.</span><span class="mf">2.0</span><span class="o">-</span><span class="mf">0.</span><span class="n">deb</span> <span class="n">inkscope</span><span class="o">-</span><span class="n">cephprobe_1</span><span class="o">.</span><span class="mf">2.0</span><span class="o">-</span><span class="mf">0.</span><span class="n">deb</span>
+</pre></div>
+</div>
+<p>启动ceph-rest-api服务： /etc/init.d/ceph-rest-api start</p>
+<div class="admonition important">
+<p class="first admonition-title">Important</p>
+<p>由于在openstack allinone环境部署inkscope，ceph-rest-api监听的是5000端口，
+和openstack keystone所监听的端口冲突，我们可以修改ceph-rest-api源码，
+把DEFAULT_PORT修改为5050。然后重启ceph-rest-api服务！</p>
+<div class="last highlight-default"><div class="highlight"><pre><span></span><span class="n">vim</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">python2</span><span class="o">.</span><span class="mi">7</span><span class="o">/</span><span class="n">dist</span><span class="o">-</span><span class="n">packages</span><span class="o">/</span><span class="n">ceph_rest_api</span><span class="o">.</span><span class="n">py</span>
+<span class="c1"># 修改DEFAULT_PORT = &#39;5050&#39;</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="radosgw">
+<h2><a class="toc-backref" href="#id16">13.6. radosgw服务配置</a><a class="headerlink" href="#radosgw" title="Permalink to this headline">¶</a></h2>
+<p>在ceph1提供radosgw服务，具体radosgw的安装在这里不做详述，请参见ceph官方文档或者内部手册。
+这里需要新建一个管理用户，并赋予相关权限，以便在界面上直接操作radosgw。</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">radosgw</span><span class="o">-</span><span class="n">admin</span> <span class="n">user</span> <span class="n">create</span> <span class="o">--</span><span class="n">uid</span><span class="o">=</span><span class="n">inkscope</span> <span class="o">--</span><span class="n">display</span><span class="o">-</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;Inkscope admin&quot;</span> \
+                      <span class="o">--</span><span class="n">access</span><span class="o">-</span><span class="n">key</span><span class="o">=</span><span class="n">accesskey</span> <span class="o">--</span><span class="n">secret</span><span class="o">=</span><span class="n">secretkey</span> \
+                      <span class="o">--</span><span class="n">caps</span><span class="o">=</span><span class="s2">&quot;users=*;metadata=*;buckets=*&quot;</span>
+</pre></div>
+</div>
+<p>这里sccess和secret的具体的值可以根据喜好自行修改。</p>
+</div>
+<div class="section" id="sysprobe">
+<h2><a class="toc-backref" href="#id17">13.7. 安装sysprobe</a><a class="headerlink" href="#sysprobe" title="Permalink to this headline">¶</a></h2>
+<p>在其他没有承担特殊任务的节点上安装sysprobe</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="n">install</span> <span class="n">python</span><span class="o">-</span><span class="n">dev</span>
+<span class="n">pip</span> <span class="n">install</span> <span class="n">pymongo</span> <span class="n">psutil</span>
+<span class="n">dpkg</span> <span class="o">-</span><span class="n">i</span> <span class="n">inkscope</span><span class="o">-</span><span class="n">common_1</span><span class="o">.</span><span class="mf">2.0</span><span class="o">-</span><span class="mf">0.</span><span class="n">deb</span> <span class="n">inkscope</span><span class="o">-</span><span class="n">sysprobe_1</span><span class="o">.</span><span class="mf">2.0</span><span class="o">-</span><span class="mf">0.</span><span class="n">deb</span>
+</pre></div>
+</div>
+<p>inkscope的配置文件就一个，位于/opt/inkscope/etc/inkscope.conf，
+最终版如下，需要修改的地方已经单独标出：</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="p">{</span>
+    <span class="s2">&quot;ceph_conf&quot;</span><span class="p">:</span> <span class="s2">&quot;/etc/ceph/ceph.conf&quot;</span><span class="p">,</span>
+    <span class="c1"># 这里</span>
+    <span class="s2">&quot;ceph_rest_api&quot;</span><span class="p">:</span> <span class="s2">&quot;192.168.159.155:8080&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;ceph_rest_api_subfolder&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
+    <span class="c1"># 这里</span>
+    <span class="s2">&quot;mongodb_host&quot;</span> <span class="p">:</span> <span class="s2">&quot;10.10.10.10&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;mongodb_set&quot;</span> <span class="p">:</span> <span class="s2">&quot;mongodb0:27017,mongodb1:27017,mongodb2:27017&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;mongodb_replicaSet&quot;</span> <span class="p">:</span> <span class="s2">&quot;replmongo0&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;mongodb_read_preference&quot;</span> <span class="p">:</span> <span class="s2">&quot;ReadPreference.SECONDARY_PREFERRED&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;mongodb_port&quot;</span> <span class="p">:</span> <span class="mi">27017</span><span class="p">,</span>
+    <span class="s2">&quot;mongodb_user&quot;</span><span class="p">:</span><span class="s2">&quot;ceph&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;mongodb_passwd&quot;</span><span class="p">:</span><span class="s2">&quot;monpassword&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;is_mongo_authenticate&quot;</span> <span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+    <span class="s2">&quot;is_mongo_replicat&quot;</span> <span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+    <span class="s2">&quot;cluster&quot;</span><span class="p">:</span> <span class="s2">&quot;ceph&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;status_refresh&quot;</span><span class="p">:</span> <span class="mi">3</span><span class="p">,</span>
+    <span class="s2">&quot;osd_dump_refresh&quot;</span><span class="p">:</span> <span class="mi">3</span><span class="p">,</span>
+    <span class="s2">&quot;pg_dump_refresh&quot;</span><span class="p">:</span> <span class="mi">60</span><span class="p">,</span>
+    <span class="s2">&quot;crushmap_refresh&quot;</span><span class="p">:</span> <span class="mi">60</span><span class="p">,</span>
+    <span class="s2">&quot;df_refresh&quot;</span><span class="p">:</span> <span class="mi">60</span><span class="p">,</span>
+    <span class="s2">&quot;cluster_window&quot;</span><span class="p">:</span> <span class="mi">1200</span><span class="p">,</span>
+    <span class="s2">&quot;osd_window&quot;</span><span class="p">:</span> <span class="mi">1200</span><span class="p">,</span>
+    <span class="s2">&quot;pool_window&quot;</span><span class="p">:</span> <span class="mi">1200</span><span class="p">,</span>
+    <span class="s2">&quot;mem_refresh&quot;</span><span class="p">:</span> <span class="mi">60</span><span class="p">,</span>
+    <span class="s2">&quot;swap_refresh&quot;</span><span class="p">:</span> <span class="mi">600</span><span class="p">,</span>
+    <span class="s2">&quot;disk_refresh&quot;</span><span class="p">:</span> <span class="mi">60</span><span class="p">,</span>
+    <span class="s2">&quot;partition_refresh&quot;</span><span class="p">:</span> <span class="mi">60</span><span class="p">,</span>
+    <span class="s2">&quot;cpu_refresh&quot;</span><span class="p">:</span> <span class="mi">30</span><span class="p">,</span>
+    <span class="s2">&quot;net_refresh&quot;</span><span class="p">:</span> <span class="mi">30</span><span class="p">,</span>
+    <span class="s2">&quot;mem_window&quot;</span><span class="p">:</span> <span class="mi">1200</span><span class="p">,</span>
+    <span class="s2">&quot;swap_window&quot;</span><span class="p">:</span> <span class="mi">3600</span><span class="p">,</span>
+    <span class="s2">&quot;disk_window&quot;</span><span class="p">:</span> <span class="mi">1200</span><span class="p">,</span>
+    <span class="s2">&quot;partition_window&quot;</span><span class="p">:</span> <span class="mi">1200</span><span class="p">,</span>
+    <span class="s2">&quot;cpu_window&quot;</span><span class="p">:</span> <span class="mi">1200</span><span class="p">,</span>
+    <span class="s2">&quot;net_window&quot;</span><span class="p">:</span> <span class="mi">1200</span><span class="p">,</span>
+    <span class="c1"># 这里</span>
+    <span class="s2">&quot;radosgw_url&quot;</span><span class="p">:</span> <span class="s2">&quot;http://127.0.0.1:80&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;radosgw_admin&quot;</span><span class="p">:</span> <span class="s2">&quot;admin&quot;</span><span class="p">,</span>
+    <span class="c1"># 这里</span>
+    <span class="s2">&quot;radosgw_key&quot;</span><span class="p">:</span> <span class="s2">&quot;accesskey&quot;</span><span class="p">,</span>
+    <span class="c1"># 这里</span>
+    <span class="s2">&quot;radosgw_secret&quot;</span><span class="p">:</span> <span class="s2">&quot;secretkey&quot;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>将该文件拷贝到所有节点的/opt/inkscope/etc/ 目录中，然后重启对应服务：</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">init</span><span class="o">.</span><span class="n">d</span><span class="o">/</span><span class="n">sysprobe</span> <span class="n">start</span>
+<span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">init</span><span class="o">.</span><span class="n">d</span><span class="o">/</span><span class="n">cephprobe</span> <span class="n">start</span>
+<span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">init</span><span class="o">.</span><span class="n">d</span><span class="o">/</span><span class="n">ceph</span><span class="o">-</span><span class="n">rest</span><span class="o">-</span><span class="n">api</span> <span class="n">start</span>
+</pre></div>
+</div>
+<p>对应节点上启动对用服务。此时，应该就可以在页面上看到实时的ceph状态了！</p>
+<div class="figure align-center" id="id7">
+<a class="reference internal image-reference" href="../_images/install_inkscope_success.png"><img alt="../_images/install_inkscope_success.png" src="../_images/install_inkscope_success.png" style="width: 1247.0px; height: 783.0px;" /></a>
+<p class="caption"><span class="caption-text">安装成功</span></p>
+</div>
+</div>
+<div class="section" id="id4">
+<h2><a class="toc-backref" href="#id18">13.8. 简单原理分析</a><a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h2>
+<p>简单浏览了下inkscope的代码架构和抓包分析，inkscope是一个基于apache2部署的flask应用。
+实际上，该flask项目只负责ceph监控页面展示，而实际获取ceph集群状态信息，是通过向ceph-rest-api发起请求实现的。</p>
+<p>然后在页面上对应的js代码中，通过不断的发起ajax请求，获取ceph json状态数据，来更新整个前端显示信息。
+如图所示抓包信息，页面不断发起请求更新ceph显示状态。</p>
+<div class="figure align-center" id="id8">
+<a class="reference internal image-reference" href="../_images/ceph_rest_api_status_json.png"><img alt="../_images/ceph_rest_api_status_json.png" src="../_images/ceph_rest_api_status_json.png" style="width: 1229.0px; height: 359.0px;" /></a>
+<p class="caption"><span class="caption-text">页面不断发起ajax请求更新状态</span></p>
+</div>
+<p>然后在inkscope.conf中，有一条代理设置 <code class="docutils literal"><span class="pre">ProxyPass</span> <span class="pre">/ceph-rest-api/</span> <span class="pre">http://192.168.159.155:5050/api/v0.1/</span></code> ，
+所以所有以/ceph-rest-api开始的url最后都向http://192.168.159.155:5050/api/v0.1/发起请求，正是ceph-rest-api服务，
+然后返回json格式数据。</p>
+<p>抽时间，分析下inkscope项目的源码，也好学习下flask框架！</p>
+<table class="docutils footnote" frame="void" id="id5" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label">[1]</td><td>跟着该博文操作，基本不会出现什么问题。<a class="reference external" href="http://cloud.51cto.com/art/201507/486005.htm">http://cloud.51cto.com/art/201507/486005.htm</a></td></tr>
+</tbody>
+</table>
+</div>
+</div>
+
+
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+      
+        <a href="tip.html" class="btn btn-neutral" title="12. tips" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2016, chenshiqiang.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'1.0',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>
