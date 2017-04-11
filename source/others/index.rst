@@ -23,7 +23,7 @@
     nova_start_error
     horizon_rabbitmq
     html_note
-    tip
     inkscope_install
+    tip
 
 ..    sphinx_doc

@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>12. tips &mdash; Welcome to Sitian&#39;s Blog 1.0 documentation</title>
+  <title>13. tips &mdash; Welcome to Sitian&#39;s Blog 1.0 documentation</title>
   
 
   
@@ -32,7 +32,7 @@
   
     <link rel="top" title="Welcome to Sitian&#39;s Blog 1.0 documentation" href="../index.html"/>
         <link rel="up" title="未分类" href="index.html"/>
-        <link rel="prev" title="11. HTML与前端" href="html_note.html"/> 
+        <link rel="prev" title="12. Ceph web管理/监控平台Inkscope部署" href="inkscope_install.html"/> 
 
   
   <script src="../_static/js/modernizr.min.js"></script>
@@ -98,7 +98,8 @@
 <li class="toctree-l2"><a class="reference internal" href="nova_start_error.html">9. Nova服务无法启动,日志,权限和异常处理</a></li>
 <li class="toctree-l2"><a class="reference internal" href="horizon_rabbitmq.html">10. horizon集成rabbitmq监控</a></li>
 <li class="toctree-l2"><a class="reference internal" href="html_note.html">11. HTML与前端</a></li>
-<li class="toctree-l2 current"><a class="current reference internal" href="#">12. tips</a></li>
+<li class="toctree-l2"><a class="reference internal" href="inkscope_install.html">12. Ceph web管理/监控平台Inkscope部署</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">13. tips</a></li>
 </ul>
 </li>
 </ul>
@@ -133,7 +134,7 @@
       
           <li><a href="index.html">未分类</a> &raquo;</li>
       
-    <li>12. tips</li>
+    <li>13. tips</li>
       <li class="wy-breadcrumbs-aside">
         
           
@@ -148,7 +149,7 @@
            <div itemprop="articleBody">
             
   <div class="section" id="tips">
-<h1>12. tips<a class="headerlink" href="#tips" title="Permalink to this headline">¶</a></h1>
+<h1>13. tips<a class="headerlink" href="#tips" title="Permalink to this headline">¶</a></h1>
 <p>各种各样的tips和乱七八糟的记录！</p>
 <hr class="docutils" />
 <ul>
@@ -162,6 +163,15 @@
 <p>答：/var/cache/apt/archives</p>
 </li>
 </ul>
+<hr class="docutils" />
+<ul>
+<li><p class="first">问：win10系统VMI provide host进程占用CPU过高</p>
+<p>答：网上找了很多，都是千篇一律的关闭windows firewall，实际上根本没用。
+不断搜索，总算找到一个靠谱的解决方案！</p>
+<p>Windows键 +r 打开“启动”，输入services.msc打开“服务”，找到“Windows Management Instrumentation”，
+右键“重新启动”。 <strong>亲测有效</strong> 。具体可以参考： <a class="reference external" href="https://www.zhihu.com/question/48491814">https://www.zhihu.com/question/48491814</a></p>
+</li>
+</ul>
 </div>
 
 
@@ -172,7 +182,7 @@
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
       
-        <a href="html_note.html" class="btn btn-neutral" title="11. HTML与前端" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="inkscope_install.html" class="btn btn-neutral" title="12. Ceph web管理/监控平台Inkscope部署" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   

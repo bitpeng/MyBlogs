@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>13. Ceph web管理/监控平台Inkscope部署 &mdash; Welcome to Sitian&#39;s Blog 1.0 documentation</title>
+  <title>12. Ceph web管理/监控平台Inkscope部署 &mdash; Welcome to Sitian&#39;s Blog 1.0 documentation</title>
   
 
   
@@ -32,7 +32,8 @@
   
     <link rel="top" title="Welcome to Sitian&#39;s Blog 1.0 documentation" href="../index.html"/>
         <link rel="up" title="未分类" href="index.html"/>
-        <link rel="prev" title="12. tips" href="tip.html"/> 
+        <link rel="next" title="13. tips" href="tip.html"/>
+        <link rel="prev" title="11. HTML与前端" href="html_note.html"/> 
 
   
   <script src="../_static/js/modernizr.min.js"></script>
@@ -98,21 +99,21 @@
 <li class="toctree-l2"><a class="reference internal" href="nova_start_error.html">9. Nova服务无法启动,日志,权限和异常处理</a></li>
 <li class="toctree-l2"><a class="reference internal" href="horizon_rabbitmq.html">10. horizon集成rabbitmq监控</a></li>
 <li class="toctree-l2"><a class="reference internal" href="html_note.html">11. HTML与前端</a></li>
-<li class="toctree-l2"><a class="reference internal" href="tip.html">12. tips</a></li>
-<li class="toctree-l2 current"><a class="current reference internal" href="#">13. Ceph web管理/监控平台Inkscope部署</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#deb">13.1. 下载deb包</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#id2">13.2. 安装相关依赖</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#apache2">13.3. 配置apache2服务</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#id3">13.3.1. 无法显示页面</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">12. Ceph web管理/监控平台Inkscope部署</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#deb">12.1. 下载deb包</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id2">12.2. 安装相关依赖</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#apache2">12.3. 配置apache2服务</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#id3">12.3.1. 无法显示页面</a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="#mongodb">13.4. 开启mongodb远程连接</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#cephprobe">13.5. 安装cephprobe</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#radosgw">13.6. radosgw服务配置</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#sysprobe">13.7. 安装sysprobe</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#id4">13.8. 简单原理分析</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#mongodb">12.4. 开启mongodb远程连接</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#cephprobe">12.5. 安装cephprobe</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#radosgw">12.6. radosgw服务配置</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#sysprobe">12.7. 安装sysprobe</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id4">12.8. 简单原理分析</a></li>
 </ul>
 </li>
+<li class="toctree-l2"><a class="reference internal" href="tip.html">13. tips</a></li>
 </ul>
 </li>
 </ul>
@@ -147,7 +148,7 @@
       
           <li><a href="index.html">未分类</a> &raquo;</li>
       
-    <li>13. Ceph web管理/监控平台Inkscope部署</li>
+    <li>12. Ceph web管理/监控平台Inkscope部署</li>
       <li class="wy-breadcrumbs-aside">
         
           
@@ -162,7 +163,7 @@
            <div itemprop="articleBody">
             
   <div class="section" id="ceph-web-inkscope">
-<h1><a class="toc-backref" href="#id9">13. Ceph web管理/监控平台Inkscope部署</a><a class="headerlink" href="#ceph-web-inkscope" title="Permalink to this headline">¶</a></h1>
+<h1><a class="toc-backref" href="#id9">12. Ceph web管理/监控平台Inkscope部署</a><a class="headerlink" href="#ceph-web-inkscope" title="Permalink to this headline">¶</a></h1>
 <div class="contents topic" id="id1">
 <p class="topic-title first">目录</p>
 <ul class="simple">
@@ -198,12 +199,12 @@
 <p>这篇文章主要参考了 <a class="reference external" href="http://cloud.51cto.com/art/201507/486005.htm">inkScope部署手册</a> ；</p>
 <p>基本上，按照该配置教程，基本上就可以安装成功。这篇文章，尝试把安装过程中遇到的问题以及简要安装过程记录下来。</p>
 <div class="section" id="deb">
-<h2><a class="toc-backref" href="#id10">13.1. 下载deb包</a><a class="headerlink" href="#deb" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id10">12.1. 下载deb包</a><a class="headerlink" href="#deb" title="Permalink to this headline">¶</a></h2>
 <p>由于是基于ubuntu部署，首先需要下载inkscope相关deb包。
 可以从github上 <a class="reference external" href="https://github.com/inkscope/inkscope-packaging/tree/master/DEBS">inkscope package</a> 直接下载。</p>
 </div>
 <div class="section" id="id2">
-<h2><a class="toc-backref" href="#id11">13.2. 安装相关依赖</a><a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id11">12.2. 安装相关依赖</a><a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="n">install</span> <span class="n">python</span><span class="o">-</span><span class="n">pip</span> <span class="n">apache2</span> <span class="n">libapache2</span><span class="o">-</span><span class="n">mod</span><span class="o">-</span><span class="n">wsgi</span> <span class="n">mongodb</span> <span class="n">python</span><span class="o">-</span><span class="n">ceph</span>
 <span class="n">pip</span> <span class="n">install</span> <span class="n">flask</span> <span class="n">requests</span> <span class="n">simplejson</span>
 <span class="c1"># 直接安装下载的deb包</span>
@@ -212,7 +213,7 @@
 </div>
 </div>
 <div class="section" id="apache2">
-<h2><a class="toc-backref" href="#id12">13.3. 配置apache2服务</a><a class="headerlink" href="#apache2" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id12">12.3. 配置apache2服务</a><a class="headerlink" href="#apache2" title="Permalink to this headline">¶</a></h2>
 <p>安装完inkscope-admviz后默认虚拟主机配置文件位于/etc/httpd/conf.d/inkScope.conf，
 将其拷贝到/etc/apache2/sites-available中。修改32行为下面这句，注释掉33行</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">ProxyPass</span> <span class="o">/</span><span class="n">ceph</span><span class="o">-</span><span class="n">rest</span><span class="o">-</span><span class="n">api</span><span class="o">/</span> <span class="n">http</span><span class="p">:</span><span class="o">//</span><span class="mf">20.20</span><span class="o">.</span><span class="mf">20.20</span><span class="p">:</span><span class="mi">5000</span><span class="o">/</span><span class="n">api</span><span class="o">/</span><span class="n">v0</span><span class="o">.</span><span class="mi">1</span><span class="o">/</span>
@@ -275,7 +276,7 @@
 </div>
 <p>现在打开浏览器访问192.168.159.155:8080/应该就可以看到首页，只是暂时没有ceph集群的相关数据而已。</p>
 <div class="section" id="id3">
-<h3><a class="toc-backref" href="#id13">13.3.1. 无法显示页面</a><a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id13">12.3.1. 无法显示页面</a><a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h3>
 <p>配置上面的过程之后，正常来说，应该是可以看到页面的。当初因为自己的apache2服务器配置原因，
 导致一直出现 <code class="docutils literal"><span class="pre">You</span> <span class="pre">don't</span> <span class="pre">have</span> <span class="pre">permission</span> <span class="pre">to</span> <span class="pre">access</span> <span class="pre">/</span> <span class="pre">on</span> <span class="pre">this</span> <span class="pre">server</span> <span class="pre">ubuntu</span> <span class="pre">14.04</span></code> , 另外，
 服务器日志总是提示如下错误：</p>
@@ -303,7 +304,7 @@ inkscope的8080端口一直无法看到。开启该选项后，就可以正常�
 </div>
 </div>
 <div class="section" id="mongodb">
-<h2><a class="toc-backref" href="#id14">13.4. 开启mongodb远程连接</a><a class="headerlink" href="#mongodb" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id14">12.4. 开启mongodb远程连接</a><a class="headerlink" href="#mongodb" title="Permalink to this headline">¶</a></h2>
 <p>修改/etc/mongodb.conf，将bind_ip修改为0.0.0.0，取消port = 27017 依据前面的注释，如下：</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">bind_ip</span> <span class="o">=</span> <span class="mf">0.0</span><span class="o">.</span><span class="mf">0.0</span>
 <span class="n">port</span> <span class="o">=</span> <span class="mi">27017</span>
@@ -311,7 +312,7 @@ inkscope的8080端口一直无法看到。开启该选项后，就可以正常�
 </div>
 </div>
 <div class="section" id="cephprobe">
-<h2><a class="toc-backref" href="#id15">13.5. 安装cephprobe</a><a class="headerlink" href="#cephprobe" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id15">12.5. 安装cephprobe</a><a class="headerlink" href="#cephprobe" title="Permalink to this headline">¶</a></h2>
 <p>在cephprobe节点主要是提供ceph-rest-api并抓取ceph的信息存入mongodb中。所需软件包及依赖安装如下：</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="n">install</span> <span class="n">python</span><span class="o">-</span><span class="n">dev</span>
 <span class="n">pip</span> <span class="n">install</span> <span class="n">pymongo</span> <span class="n">psutil</span>
@@ -331,7 +332,7 @@ inkscope的8080端口一直无法看到。开启该选项后，就可以正常�
 </div>
 </div>
 <div class="section" id="radosgw">
-<h2><a class="toc-backref" href="#id16">13.6. radosgw服务配置</a><a class="headerlink" href="#radosgw" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id16">12.6. radosgw服务配置</a><a class="headerlink" href="#radosgw" title="Permalink to this headline">¶</a></h2>
 <p>在ceph1提供radosgw服务，具体radosgw的安装在这里不做详述，请参见ceph官方文档或者内部手册。
 这里需要新建一个管理用户，并赋予相关权限，以便在界面上直接操作radosgw。</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">radosgw</span><span class="o">-</span><span class="n">admin</span> <span class="n">user</span> <span class="n">create</span> <span class="o">--</span><span class="n">uid</span><span class="o">=</span><span class="n">inkscope</span> <span class="o">--</span><span class="n">display</span><span class="o">-</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;Inkscope admin&quot;</span> \
@@ -342,7 +343,7 @@ inkscope的8080端口一直无法看到。开启该选项后，就可以正常�
 <p>这里sccess和secret的具体的值可以根据喜好自行修改。</p>
 </div>
 <div class="section" id="sysprobe">
-<h2><a class="toc-backref" href="#id17">13.7. 安装sysprobe</a><a class="headerlink" href="#sysprobe" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id17">12.7. 安装sysprobe</a><a class="headerlink" href="#sysprobe" title="Permalink to this headline">¶</a></h2>
 <p>在其他没有承担特殊任务的节点上安装sysprobe</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="n">install</span> <span class="n">python</span><span class="o">-</span><span class="n">dev</span>
 <span class="n">pip</span> <span class="n">install</span> <span class="n">pymongo</span> <span class="n">psutil</span>
@@ -410,7 +411,7 @@ inkscope的8080端口一直无法看到。开启该选项后，就可以正常�
 </div>
 </div>
 <div class="section" id="id4">
-<h2><a class="toc-backref" href="#id18">13.8. 简单原理分析</a><a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id18">12.8. 简单原理分析</a><a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h2>
 <p>简单浏览了下inkscope的代码架构和抓包分析，inkscope是一个基于apache2部署的flask应用。
 实际上，该flask项目只负责ceph监控页面展示，而实际获取ceph集群状态信息，是通过向ceph-rest-api发起请求实现的。</p>
 <p>然后在页面上对应的js代码中，通过不断的发起ajax请求，获取ceph json状态数据，来更新整个前端显示信息。
@@ -439,8 +440,10 @@ inkscope的8080端口一直无法看到。开启该选项后，就可以正常�
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
+        <a href="tip.html" class="btn btn-neutral float-right" title="13. tips" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
       
-        <a href="tip.html" class="btn btn-neutral" title="12. tips" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+        <a href="html_note.html" class="btn btn-neutral" title="11. HTML与前端" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   
