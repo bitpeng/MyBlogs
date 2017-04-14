@@ -22,7 +22,7 @@ horizon集成rabbitmq监控
     rabbitmq-plugins list
 
     # 重启rabbitmq服务
-    service rabbitmq restart
+    service rabbitmq-server restart
 
 
 rabbitmq web ui监听的是15672端口，我们可以直接在浏览器中输入http://localhost:15672进行访问。
@@ -68,6 +68,43 @@ rabbitmq web ui监听的是15672端口，我们可以直接在浏览器中输入
 因为： **重定向访问时根本不能发送POST数据。** [3]_
 
 怎么解决这个问题，还没有找到更好的办法！
+
+rabbitmq http-api
+=================
+
+开启rabbitmq_management插件后，可以通过http-api的方式，获取rabbitmq状态数据。
+
+以下是通过curl方式获取json格式数据。
+
+.. code-block:: console
+
+    root@allinone-v2:/opt/cecgw/csmp# curl -u guest:httc123 -H 'content-type:application/json' http://192.168.159.155:15672/api/nodes | python -m json.tool
+    % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                     Dload  Upload   Total   Spent    Left  Speed
+    100  2384  100  2384    0     0  82383      0 --:--:-- --:--:-- --:--:-- 85142
+    [
+        {
+            "applications": [
+                {
+                    "description": "RabbitMQ AMQP Client",
+                    "name": "amqp_client",
+                    "version": "3.2.4"
+                },
+                {
+                    "description": "INETS  CXC 138 49",
+                    "name": "inets",
+                    "version": "5.9.7"
+                },
+    ......省略数据
+
+
+至于rabbitmq-management所提供的api，可以通过http:://192.168.159.155:15672/api页面进行查看。
+
+.. figure:: /_static/images/rabbit_api.png
+   :scale: 100
+   :align: center
+
+   rabbitmq http API列表
 
 参考
 =====

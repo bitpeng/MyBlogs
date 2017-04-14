@@ -32,6 +32,7 @@
   
     <link rel="top" title="Welcome to Sitian&#39;s Blog 1.0 documentation" href="../index.html"/>
         <link rel="up" title="未分类" href="index.html"/>
+        <link rel="next" title="11. HTML与前端" href="html_note.html"/>
         <link rel="prev" title="9. Nova服务无法启动,日志,权限和异常处理" href="nova_start_error.html"/> 
 
   
@@ -102,9 +103,13 @@
 <li class="toctree-l4"><a class="reference internal" href="#id4">10.2.1. 小问题</a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="#id6">10.3. 参考</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#rabbitmq-http-api">10.3. rabbitmq http-api</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id6">10.4. 参考</a></li>
 </ul>
 </li>
+<li class="toctree-l2"><a class="reference internal" href="html_note.html">11. HTML与前端</a></li>
+<li class="toctree-l2"><a class="reference internal" href="inkscope_install.html">12. Ceph web管理/监控平台Inkscope部署</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tip.html">13. tips</a></li>
 </ul>
 </li>
 </ul>
@@ -154,31 +159,32 @@
            <div itemprop="articleBody">
             
   <div class="section" id="horizonrabbitmq">
-<span id="horizon-rabbitmq"></span><h1><a class="toc-backref" href="#id8">10. horizon集成rabbitmq监控</a><a class="headerlink" href="#horizonrabbitmq" title="Permalink to this headline">¶</a></h1>
+<span id="horizon-rabbitmq"></span><h1><a class="toc-backref" href="#id9">10. horizon集成rabbitmq监控</a><a class="headerlink" href="#horizonrabbitmq" title="Permalink to this headline">¶</a></h1>
 <div class="contents topic" id="id1">
 <p class="topic-title first">目录</p>
 <ul class="simple">
-<li><a class="reference internal" href="#horizonrabbitmq" id="id8">horizon集成rabbitmq监控</a><ul>
-<li><a class="reference internal" href="#rabbitmq-web" id="id9">开启rabbitmq web监控</a></li>
-<li><a class="reference internal" href="#horizon" id="id10">集成到horizon</a><ul>
-<li><a class="reference internal" href="#id4" id="id11">小问题</a></li>
+<li><a class="reference internal" href="#horizonrabbitmq" id="id9">horizon集成rabbitmq监控</a><ul>
+<li><a class="reference internal" href="#rabbitmq-web" id="id10">开启rabbitmq web监控</a></li>
+<li><a class="reference internal" href="#horizon" id="id11">集成到horizon</a><ul>
+<li><a class="reference internal" href="#id4" id="id12">小问题</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#id6" id="id12">参考</a></li>
+<li><a class="reference internal" href="#rabbitmq-http-api" id="id13">rabbitmq http-api</a></li>
+<li><a class="reference internal" href="#id6" id="id14">参考</a></li>
 </ul>
 </li>
 </ul>
 </div>
 <hr class="docutils" />
 <div class="section" id="rabbitmq-web">
-<h2><a class="toc-backref" href="#id9">10.1. 开启rabbitmq web监控</a><a class="headerlink" href="#rabbitmq-web" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id10">10.1. 开启rabbitmq web监控</a><a class="headerlink" href="#rabbitmq-web" title="Permalink to this headline">¶</a></h2>
 <p>部署好云平台后，rabbitmq服务也已经成功安装，我们可以启用插件式开启rabbitmq web ui监控！</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">rabbitmq</span><span class="o">-</span><span class="n">plugins</span> <span class="n">enable</span> <span class="n">rabbitmq_management</span>
 <span class="c1"># 查看rabbitmq启用的插件！</span>
 <span class="n">rabbitmq</span><span class="o">-</span><span class="n">plugins</span> <span class="nb">list</span>
 
 <span class="c1"># 重启rabbitmq服务</span>
-<span class="n">service</span> <span class="n">rabbitmq</span> <span class="n">restart</span>
+<span class="n">service</span> <span class="n">rabbitmq</span><span class="o">-</span><span class="n">server</span> <span class="n">restart</span>
 </pre></div>
 </div>
 <p>rabbitmq web ui监听的是15672端口，我们可以直接在浏览器中输入http://localhost:15672进行访问。
@@ -201,7 +207,7 @@
 </table>
 </div>
 <div class="section" id="horizon">
-<h2><a class="toc-backref" href="#id10">10.2. 集成到horizon</a><a class="headerlink" href="#horizon" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id11">10.2. 集成到horizon</a><a class="headerlink" href="#horizon" title="Permalink to this headline">¶</a></h2>
 <p>只需要在horizon某个dashboard中添加panel，然后点击panel链接时，进行url redirect！</p>
 <p>可以参考 <a class="reference internal" href="../openstack/horizon_develop.html#horizon-develop"><span class="std std-ref">horizon二次开发指南</span></a> ，进行panel添加。然后在view处理函数中，
 进行页面重定向！</p>
@@ -218,15 +224,45 @@
 </pre></div>
 </div>
 <div class="section" id="id4">
-<h3><a class="toc-backref" href="#id11">10.2.1. 小问题</a><a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id12">10.2.1. 小问题</a><a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h3>
 <p>这里有一个小问题，通过点击panel连接重定向后，rabbitmq web首先要求进行登录认证。
 本来我的想法是在重定向时通过rabbitm-user/rabbitmq-passwd发送post请求，后来证明这种方法是错误的。
 因为： <strong>重定向访问时根本不能发送POST数据。</strong> <a class="footnote-reference" href="#id7" id="id5">[3]</a></p>
 <p>怎么解决这个问题，还没有找到更好的办法！</p>
 </div>
 </div>
+<div class="section" id="rabbitmq-http-api">
+<h2><a class="toc-backref" href="#id13">10.3. rabbitmq http-api</a><a class="headerlink" href="#rabbitmq-http-api" title="Permalink to this headline">¶</a></h2>
+<p>开启rabbitmq_management插件后，可以通过http-api的方式，获取rabbitmq状态数据。</p>
+<p>以下是通过curl方式获取json格式数据。</p>
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">root@allinone-v2:/opt/cecgw/csmp#</span> curl -u guest:httc123 -H <span class="s1">&#39;content-type:application/json&#39;</span> http://192.168.159.155:15672/api/nodes <span class="p">|</span> python -m json.tool
+<span class="gp">%</span> Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+<span class="go">                                 Dload  Upload   Total   Spent    Left  Speed</span>
+<span class="go">100  2384  100  2384    0     0  82383      0 --:--:-- --:--:-- --:--:-- 85142</span>
+<span class="go">[</span>
+<span class="go">    {</span>
+<span class="go">        &quot;applications&quot;: [</span>
+<span class="go">            {</span>
+<span class="go">                &quot;description&quot;: &quot;RabbitMQ AMQP Client&quot;,</span>
+<span class="go">                &quot;name&quot;: &quot;amqp_client&quot;,</span>
+<span class="go">                &quot;version&quot;: &quot;3.2.4&quot;</span>
+<span class="go">            },</span>
+<span class="go">            {</span>
+<span class="go">                &quot;description&quot;: &quot;INETS  CXC 138 49&quot;,</span>
+<span class="go">                &quot;name&quot;: &quot;inets&quot;,</span>
+<span class="go">                &quot;version&quot;: &quot;5.9.7&quot;</span>
+<span class="go">            },</span>
+<span class="go">......省略数据</span>
+</pre></div>
+</div>
+<p>至于rabbitmq-management所提供的api，可以通过http:://192.168.159.155:15672/api页面进行查看。</p>
+<div class="figure align-center" id="id8">
+<a class="reference internal image-reference" href="../_images/rabbit_api.png"><img alt="../_images/rabbit_api.png" src="../_images/rabbit_api.png" style="width: 1440.0px; height: 712.0px;" /></a>
+<p class="caption"><span class="caption-text">rabbitmq http API列表</span></p>
+</div>
+</div>
 <div class="section" id="id6">
-<h2><a class="toc-backref" href="#id12">10.3. 参考</a><a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id14">10.4. 参考</a><a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h2>
 <table class="docutils footnote" frame="void" id="id7" rules="none">
 <colgroup><col class="label" /><col /></colgroup>
 <tbody valign="top">
@@ -242,6 +278,8 @@
           <footer>
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="html_note.html" class="btn btn-neutral float-right" title="11. HTML与前端" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
         <a href="nova_start_error.html" class="btn btn-neutral" title="9. Nova服务无法启动,日志,权限和异常处理" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>

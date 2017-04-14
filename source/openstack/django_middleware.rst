@@ -237,7 +237,7 @@ Horizon 用户登录流程分析
       也可以使用clean 方法整体校验。
     - 表单校验clean函数，需要返回原始数据(cleaned_data)，否则会发生数据丢失。
 
-- 假如数据校验成功()，则提交表单，根据表单action 属性匹配映射处理函数。
+- 假如数据校验成功，则提交表单，根据表单action 属性匹配映射处理函数。
 
   .. figure:: /_static/images/form_action.png
      :scale: 100

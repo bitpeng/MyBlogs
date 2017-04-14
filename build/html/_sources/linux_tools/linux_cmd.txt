@@ -343,16 +343,23 @@ awk
 
 ::
 
+    awk -v FS=':' '{print $1}' /etc/passwd
     # 打印某一行, 自设定分隔符
-    awk -F: '{print $1}'
+    awk -F: '{print $1}' /etc/passwd
     # 打印除第一行之外的所有行
-    awk '{$1="";print $0}'
+    awk '{$1="";print $0}' file
     # 循环把前N列都赋值为空，从第n+1列开始打印所有的列！
     awk '{ for(i=1; i<=n; i++){ $i="" }; print $0 }' urfile
 
     # 以tab分隔符切割记录，输出也以tab作为分隔符。选择第二个字段为GET的记录！
     awk -F'\t' -vOFS='\t' '{if ($2=="GET") print $1, $3}' ceph_meter.txt > ceph_meter_get.txt
 
+    # 打印每一行记录长度
+    awk '{print length}' df.txt
+    # 打印前两行记录长度
+    awk 'NR<=2{print length}' df.txt
+
+.. [#] 对awk入门有很精彩的描述。http://www.zsythink.net/archives/1336
 
 cut
 +++
