@@ -91,14 +91,15 @@
 <li class="toctree-l3"><a class="reference internal" href="#panel">1.2. 快速生成panel</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#dashboard">1.3. dashboard汉化</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#manage-py">1.4. manage.py文件</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#id3">1.5. 调试</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#id4">1.5.1. 前端调试</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#id5">1.5.2. 后端调试</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#id6">1.5.3. 使用manage.py调试</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#settings-py">1.5. settings.py</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id3">1.6. 调试</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#id4">1.6.1. 前端调试</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id5">1.6.2. 后端调试</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id6">1.6.3. 使用manage.py调试</a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="#id7">1.6. 其他问题</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#id8">1.6.1. 权限错误</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id7">1.7. 其他问题</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#id8">1.7.1. 权限错误</a></li>
 </ul>
 </li>
 </ul>
@@ -195,14 +196,15 @@
 <li><a class="reference internal" href="#panel" id="id19">快速生成panel</a></li>
 <li><a class="reference internal" href="#dashboard" id="id20">dashboard汉化</a></li>
 <li><a class="reference internal" href="#manage-py" id="id21">manage.py文件</a></li>
-<li><a class="reference internal" href="#id3" id="id22">调试</a><ul>
-<li><a class="reference internal" href="#id4" id="id23">前端调试</a></li>
-<li><a class="reference internal" href="#id5" id="id24">后端调试</a></li>
-<li><a class="reference internal" href="#id6" id="id25">使用manage.py调试</a></li>
+<li><a class="reference internal" href="#settings-py" id="id22">settings.py</a></li>
+<li><a class="reference internal" href="#id3" id="id23">调试</a><ul>
+<li><a class="reference internal" href="#id4" id="id24">前端调试</a></li>
+<li><a class="reference internal" href="#id5" id="id25">后端调试</a></li>
+<li><a class="reference internal" href="#id6" id="id26">使用manage.py调试</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#id7" id="id26">其他问题</a><ul>
-<li><a class="reference internal" href="#id8" id="id27">权限错误</a></li>
+<li><a class="reference internal" href="#id7" id="id27">其他问题</a><ul>
+<li><a class="reference internal" href="#id8" id="id28">权限错误</a></li>
 </ul>
 </li>
 </ul>
@@ -270,15 +272,20 @@
 </div>
 <p>manage.py 文件还有一个重要作用是用来调试，是最近才发现的一个新功能！后调试一节中讲解。</p>
 </div>
+<div class="section" id="settings-py">
+<h2><a class="toc-backref" href="#id22">1.5. settings.py</a><a class="headerlink" href="#settings-py" title="Permalink to this headline">¶</a></h2>
+<p>horizon是基于Django的，因此它也有一个最重要的Django文件。公司内基于ubuntu-14.04-LTS部署的juno版openstack，
+settings.py文件绝对目录为：/usr/share/openstack_dashboard/openstack_dashboard/settings.py</p>
+</div>
 <div class="section" id="id3">
-<h2><a class="toc-backref" href="#id22">1.5. 调试</a><a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id23">1.6. 调试</a><a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="id4">
-<h3><a class="toc-backref" href="#id23">1.5.1. 前端调试</a><a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id24">1.6.1. 前端调试</a><a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h3>
 <p>对前端开发不是太熟，在dashboard开发中，我使用的是firebug插件，配合在js文件中使用console打印信息，
 用来跟踪变量，查看变量状态等。</p>
 </div>
 <div class="section" id="id5">
-<h3><a class="toc-backref" href="#id24">1.5.2. 后端调试</a><a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id25">1.6.2. 后端调试</a><a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h3>
 <p>horizon项目中，对于前端发起的http请求，有时要跟踪跟踪后端的处理流，查看变量值等。由于horizon项目
 使用apache2进行部署，apache会把后端的操作记录在相关的日志中，因此我们可以使用log库，配合以下命令，
 跟踪变量状态；但是对于处理流程分析，我目前还没有发现好的方法，都是根据代码逻辑进行分析。</p>
@@ -291,7 +298,7 @@
 </div>
 </div>
 <div class="section" id="id6">
-<h3><a class="toc-backref" href="#id25">1.5.3. 使用manage.py调试</a><a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id26">1.6.3. 使用manage.py调试</a><a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h3>
 <p>horizon 项目基于apache部署时，假如开发过程horizon代码发生
 改动，需要重启apache2服务器，然后刷新页面，不太方便也比较麻烦！</p>
 <p>其实django 框架的manage.py 文件也具有一定的调试功能。
@@ -327,10 +334,10 @@
 </div>
 </div>
 <div class="section" id="id7">
-<h2><a class="toc-backref" href="#id26">1.6. 其他问题</a><a class="headerlink" href="#id7" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id27">1.7. 其他问题</a><a class="headerlink" href="#id7" title="Permalink to this headline">¶</a></h2>
 <p>这一小节对horizon二次开发中常遇到的问题坐下记录。</p>
 <div class="section" id="id8">
-<h3><a class="toc-backref" href="#id27">1.6.1. 权限错误</a><a class="headerlink" href="#id8" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id28">1.7.1. 权限错误</a><a class="headerlink" href="#id8" title="Permalink to this headline">¶</a></h3>
 <p>horizon权限问题遇到多次，具体错误信息可以通过 tail -f /var/log/apache2/error.log 命令查看。
 在测试自己维护的调试信息库，还有snmp监控时都遇到过。使用 chmod 666/777 file/dir -Rn 修改权限，
 错误消失！</p>

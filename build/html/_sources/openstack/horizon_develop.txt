@@ -108,6 +108,11 @@ horizon项目是基于django的，而manage.py文件是django项目的一个重�
 
 manage.py 文件还有一个重要作用是用来调试，是最近才发现的一个新功能！后调试一节中讲解。
 
+settings.py
+=============
+
+horizon是基于Django的，因此它也有一个最重要的Django文件。公司内基于ubuntu-14.04-LTS部署的juno版openstack，
+settings.py文件绝对目录为：/usr/share/openstack_dashboard/openstack_dashboard/settings.py
 
 调试
 =====

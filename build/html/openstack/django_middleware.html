@@ -103,8 +103,8 @@
 </li>
 <li class="toctree-l3"><a class="reference internal" href="#id5">9.3. 代码细节</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#horizon">9.4. Horizon 用户登录流程分析</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#id6">9.5. 流程图</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#id7">9.6. 参考</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id7">9.5. 流程图</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id8">9.6. 参考</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="horizon_workflows_analysis.html">10. [翻译] horizon workflows分析</a></li>
@@ -177,7 +177,7 @@
            <div itemprop="articleBody">
             
   <div class="section" id="djangoopenstack">
-<span id="django-middleware"></span><h1><a class="toc-backref" href="#id30">9. django中间件和openstack用户重登录分析</a><a class="headerlink" href="#djangoopenstack" title="Permalink to this headline">¶</a></h1>
+<span id="django-middleware"></span><h1><a class="toc-backref" href="#id32">9. django中间件和openstack用户重登录分析</a><a class="headerlink" href="#djangoopenstack" title="Permalink to this headline">¶</a></h1>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
 <p class="last">这一部分，分析的是openstack的用户重登录机制：简而言之，在规定的未使用时限后，
@@ -186,26 +186,26 @@
 <div class="contents topic" id="id1">
 <p class="topic-title first">目录</p>
 <ul class="simple">
-<li><a class="reference internal" href="#djangoopenstack" id="id30">django中间件和openstack用户重登录分析</a><ul>
-<li><a class="reference internal" href="#id2" id="id31">代码定位</a></li>
-<li><a class="reference internal" href="#django" id="id32">django中间件原理</a><ul>
-<li><a class="reference internal" href="#id3" id="id33">安装中间件</a></li>
-<li><a class="reference internal" href="#id4" id="id34">中间件方法</a></li>
+<li><a class="reference internal" href="#djangoopenstack" id="id32">django中间件和openstack用户重登录分析</a><ul>
+<li><a class="reference internal" href="#id2" id="id33">代码定位</a></li>
+<li><a class="reference internal" href="#django" id="id34">django中间件原理</a><ul>
+<li><a class="reference internal" href="#id3" id="id35">安装中间件</a></li>
+<li><a class="reference internal" href="#id4" id="id36">中间件方法</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#id5" id="id35">代码细节</a></li>
-<li><a class="reference internal" href="#horizon" id="id36">Horizon 用户登录流程分析</a></li>
-<li><a class="reference internal" href="#id6" id="id37">流程图</a></li>
-<li><a class="reference internal" href="#id7" id="id38">参考</a></li>
+<li><a class="reference internal" href="#id5" id="id37">代码细节</a></li>
+<li><a class="reference internal" href="#horizon" id="id38">Horizon 用户登录流程分析</a></li>
+<li><a class="reference internal" href="#id7" id="id39">流程图</a></li>
+<li><a class="reference internal" href="#id8" id="id40">参考</a></li>
 </ul>
 </li>
 </ul>
 </div>
 <hr class="docutils" />
 <div class="section" id="id2">
-<h2><a class="toc-backref" href="#id31">9.1. 代码定位</a><a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id33">9.1. 代码定位</a><a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
 <p>以下是系统超时自动退出时的提示：</p>
-<div class="figure align-center" id="id13">
+<div class="figure align-center" id="id14">
 <a class="reference internal image-reference" href="../_images/timeout_logout.png"><img alt="../_images/timeout_logout.png" src="../_images/timeout_logout.png" style="width: 468.0px; height: 256.0px;" /></a>
 <p class="caption"><span class="caption-text">超时自动退出</span></p>
 </div>
@@ -213,19 +213,19 @@
 <div class="figure align-center">
 <a class="reference internal image-reference" href="../_images/find_timeout.png"><img alt="../_images/find_timeout.png" src="../_images/find_timeout.png" style="width: 695.0px; height: 105.0px;" /></a>
 </div>
-<div class="figure align-center" id="id14">
+<div class="figure align-center" id="id15">
 <a class="reference internal image-reference" href="../_images/timeout_en.png"><img alt="../_images/timeout_en.png" src="../_images/timeout_en.png" style="width: 392.0px; height: 98.0px;" /></a>
 <p class="caption"><span class="caption-text">查找显示信息对应的英文文本</span></p>
 </div>
 <p>可以看到，文本注释处已经提示了在middleware.py文件中。于是继续查找middleware.py文件：</p>
-<div class="figure align-center" id="id15">
+<div class="figure align-center" id="id16">
 <a class="reference internal image-reference" href="../_images/find_timeout_en.png"><img alt="../_images/find_timeout_en.png" src="../_images/find_timeout_en.png" style="width: 893.0px; height: 652.0px;" /></a>
 <p class="caption"><span class="caption-text">查找middleware文件</span></p>
 </div>
 <p>至此，已经找到重登陆的代码为路径为：horizon/middleware.py</p>
 </div>
 <div class="section" id="django">
-<h2><a class="toc-backref" href="#id32">9.2. django中间件原理</a><a class="headerlink" href="#django" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id34">9.2. django中间件原理</a><a class="headerlink" href="#django" title="Permalink to this headline">¶</a></h2>
 <p>查看middleware的代码，发现它是一个中间件，利用中间件来处理会话超时重登录，因此，这里有必要理解下django中间件的原理。</p>
 <p>Django 处理一个 Request 的过程是首先通过中间件，然后再通过默认的 URL 方式进行的。
 我们可以在 Middleware 这个地方把所有Request 拦截住，用我们自己的方式完成处理以
@@ -240,7 +240,7 @@
 <p class="last">我们可以自己定义中间件。另外，dango框架自身也定义了很多常用的中间件。</p>
 </div>
 <div class="section" id="id3">
-<h3><a class="toc-backref" href="#id33">9.2.1. 安装中间件</a><a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id35">9.2.1. 安装中间件</a><a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h3>
 <p>要启用一个中间件，只需将其添加到配置模块的 MIDDLEWARE_CLASSES 元组中。
 在 MIDDLEWARE_CLASSES 中，中间件组件用字符串表示： 指向中间件类名的完整
 Python路径。 例如，下面是 django-admin.py startproject 创建的缺省 MIDDLEWARE_CLASSES :</p>
@@ -261,7 +261,7 @@ view函数外层的顺序包装子： 在request阶段按顺序从上到下穿�
 </div>
 </div>
 <div class="section" id="id4">
-<h3><a class="toc-backref" href="#id34">9.2.2. 中间件方法</a><a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id36">9.2.2. 中间件方法</a><a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h3>
 <p>我们可以定义中间件方法的一个或者多个，可以定义的中间件方法如下：</p>
 <ul>
 <li><p class="first">初始化方法</p>
@@ -279,7 +279,7 @@ view函数外层的顺序包装子： 在request阶段按顺序从上到下穿�
 的view之前。 Django向它传入相应的 HttpRequest 对象，以便在方法中修改。</p>
 <div class="admonition important">
 <p class="first admonition-title">Important</p>
-<div class="last figure align-center" id="id16">
+<div class="last figure align-center" id="id17">
 <a class="reference internal image-reference" href="../_images/pr_return.png"><img alt="../_images/pr_return.png" src="../_images/pr_return.png" style="width: 678.0px; height: 162.0px;" /></a>
 <p class="caption"><span class="caption-text">函数返回与处理流程</span></p>
 </div>
@@ -305,9 +305,9 @@ view函数外层的顺序包装子： 在request阶段按顺序从上到下穿�
 </div>
 </div>
 <div class="section" id="id5">
-<h2><a class="toc-backref" href="#id35">9.3. 代码细节</a><a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id37">9.3. 代码细节</a><a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h2>
 <p>理解了中间件的工作原理，再来看代码细节，就很显然了。如图所示代码：</p>
-<div class="figure align-center" id="id17">
+<div class="figure align-center" id="id18">
 <a class="reference internal image-reference" href="../_images/preq_func.png"><img alt="../_images/preq_func.png" src="../_images/preq_func.png" style="width: 845.0px; height: 641.0px;" /></a>
 <p class="caption"><span class="caption-text">重登陆拦截预处理函数</span></p>
 </div>
@@ -316,28 +316,28 @@ view函数外层的顺序包装子： 在request阶段按顺序从上到下穿�
 接下来会按照正常流程处理。</p>
 </div>
 <div class="section" id="horizon">
-<h2><a class="toc-backref" href="#id36">9.4. Horizon 用户登录流程分析</a><a class="headerlink" href="#horizon" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id38">9.4. Horizon 用户登录流程分析</a><a class="headerlink" href="#horizon" title="Permalink to this headline">¶</a></h2>
 <p>下面对用户登录horizon的流程进行分析。</p>
 <ul>
 <li><p class="first">用户输入IP地址，根据setting.py ROOT_URLCONF配置项来决定根URL映射函数；</p>
-<div class="figure align-center" id="id18">
+<div class="figure align-center" id="id19">
 <a class="reference internal image-reference" href="../_images/root_urlconf.png"><img alt="../_images/root_urlconf.png" src="../_images/root_urlconf.png" style="width: 668.0px; height: 73.0px;" /></a>
 <p class="caption"><span class="caption-text">openstack_dashboard/setting.py ROOT_URLCONF 配置项</span></p>
 </div>
 </li>
 <li><p class="first">根据URL匹配调用view处理函数(splash 函数。)</p>
-<div class="figure align-center" id="id19">
+<div class="figure align-center" id="id20">
 <a class="reference internal image-reference" href="../_images/url_map.png"><img alt="../_images/url_map.png" src="../_images/url_map.png" style="width: 791.0px; height: 169.0px;" /></a>
 <p class="caption"><span class="caption-text">openstack_dashboard/urls.py</span></p>
 </div>
 </li>
 <li><p class="first">根据request session判断用户是否认证(请求中间件拦截，判断是否会话失效，这里不予考虑)，
 如果认证，则重定向到用户主界面；否则就加载模板系统，显示登录主界面；</p>
-<div class="figure align-center" id="id20">
+<div class="figure align-center" id="id21">
 <a class="reference internal image-reference" href="../_images/splash.png"><img alt="../_images/splash.png" src="../_images/splash.png" style="width: 782.0px; height: 344.0px;" /></a>
 <p class="caption"><span class="caption-text">openstack_dashboard/views.py</span></p>
 </div>
-<div class="figure align-center" id="id21">
+<div class="figure align-center" id="id22">
 <a class="reference internal image-reference" href="../_images/splash_html.png"><img alt="../_images/splash_html.png" src="../_images/splash_html.png" style="width: 730.0px; height: 293.0px;" /></a>
 <p class="caption"><span class="caption-text">horizon/templates/splash.html 模板include表单模板</span></p>
 </div>
@@ -345,7 +345,7 @@ view函数外层的顺序包装子： 在request阶段按顺序从上到下穿�
 <li><p class="first">用户输入登录信息，登录；</p>
 </li>
 <li><p class="first">django框架表单数据校验；</p>
-<div class="figure align-center" id="id22">
+<div class="figure align-center" id="id23">
 <a class="reference internal image-reference" href="../_images/clean_f1.png"><img alt="../_images/clean_f1.png" src="../_images/clean_f1.png" style="width: 852.0px; height: 659.0px;" /></a>
 <p class="caption"><span class="caption-text">表单数据校验：openstack_auth/form.py</span></p>
 </div>
@@ -359,7 +359,7 @@ view函数外层的顺序包装子： 在request阶段按顺序从上到下穿�
 </div>
 </li>
 <li><p class="first">假如数据校验成功，则提交表单，根据表单action 属性匹配映射处理函数。</p>
-<div class="figure align-center" id="id23">
+<div class="figure align-center" id="id24">
 <a class="reference internal image-reference" href="../_images/form_action.png"><img alt="../_images/form_action.png" src="../_images/form_action.png" style="width: 1107.0px; height: 234.0px;" /></a>
 <p class="caption"><span class="caption-text">登录页面，表单action属性。</span></p>
 </div>
@@ -367,22 +367,48 @@ view函数外层的顺序包装子： 在request阶段按顺序从上到下穿�
 <p class="first admonition-title">Error</p>
 <p>_login.html 表单继承 model_from1.html，并重写action 属性，但是{% url &#8216;login&#8217; %} 最后怎么转换成&#8221;auth/login&#8221;，
 还需要进一步的分析。</p>
-<div class="figure align-center" id="id24">
+<div class="figure align-center" id="id25">
 <a class="reference internal image-reference" href="../_images/model_form1.png"><img alt="../_images/model_form1.png" src="../_images/model_form1.png" style="width: 597.0px; height: 131.0px;" /></a>
 <p class="caption"><span class="caption-text">基类表单模板action属性</span></p>
 </div>
-<div class="last figure align-center" id="id25">
+<div class="last figure align-center" id="id26">
 <a class="reference internal image-reference" href="../_images/model_form1.png"><img alt="../_images/model_form1.png" src="../_images/model_form1.png" style="width: 597.0px; height: 131.0px;" /></a>
 <p class="caption"><span class="caption-text">_login.html 模板表单重写action 属性</span></p>
 </div>
 </div>
+<div class="admonition tip">
+<p class="first admonition-title">Tip</p>
+<p>{% url &#8216;login&#8217; %}最后怎么转换成&#8221;auth/login&#8221;的过程已经理清，这里涉及到django中的name参数。</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="c1"># openstack_auth/urls.py</span>
+<span class="n">urlpatterns</span> <span class="o">=</span> <span class="n">patterns</span><span class="p">(</span>
+    <span class="s1">&#39;openstack_auth.views&#39;</span><span class="p">,</span>
+    <span class="n">url</span><span class="p">(</span><span class="s2">r&quot;^testlogin/$&quot;</span><span class="p">,</span> <span class="s2">&quot;login&quot;</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;dlogin&#39;</span><span class="p">),</span>
+</pre></div>
+</div>
+<div class="figure align-center" id="id27">
+<a class="reference internal image-reference" href="../_images/testlogin.png"><img alt="../_images/testlogin.png" src="../_images/testlogin.png" style="width: 851.0px; height: 197.0px;" /></a>
+<p class="caption"><span class="caption-text">页面显示代码</span></p>
+</div>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="c1"># 魔板文件重写form_action属性！</span>
+<span class="p">{</span><span class="o">%</span> <span class="n">block</span> <span class="n">form_action</span> <span class="o">%</span><span class="p">}{</span><span class="o">%</span> <span class="n">url</span> <span class="s1">&#39;dlogin&#39;</span> <span class="o">%</span><span class="p">}{</span><span class="o">%</span> <span class="n">endblock</span> <span class="o">%</span><span class="p">}</span>
+</pre></div>
+</div>
+<p class="last">页面模板使用{%url &#8216;dlogin&#8217; %}转换url，所以总是转换成该名字对应的URL。</p>
+</div>
+<table class="docutils footnote" frame="void" id="id6" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label">[1]</td><td><p class="first last">论述了django URL name参数的用法及其意义。<a class="reference external" href="http://www.cnblogs.com/no13bus/p/3767521.html">http://www.cnblogs.com/no13bus/p/3767521.html</a></p>
+</td></tr>
+</tbody>
+</table>
 </li>
 <li><p class="first">URL截断，分级URL匹配；</p>
-<div class="figure align-center" id="id26">
+<div class="figure align-center" id="id28">
 <a class="reference internal image-reference" href="../_images/url_include_1.png"><img alt="../_images/url_include_1.png" src="../_images/url_include_1.png" style="width: 768.0px; height: 197.0px;" /></a>
 <p class="caption"><span class="caption-text">URL include 截断匹配</span></p>
 </div>
-<div class="figure align-center" id="id27">
+<div class="figure align-center" id="id29">
 <a class="reference internal image-reference" href="../_images/auth_url.png"><img alt="../_images/auth_url.png" src="../_images/auth_url.png" style="width: 630.0px; height: 193.0px;" /></a>
 <p class="caption"><span class="caption-text">URL分级匹配</span></p>
 </div>
@@ -393,52 +419,52 @@ view函数外层的顺序包装子： 在request阶段按顺序从上到下穿�
 </div>
 </li>
 <li><p class="first">调用login处理函数和keystone认证后端，进行处理；</p>
-<div class="figure align-center" id="id28">
+<div class="figure align-center" id="id30">
 <a class="reference internal image-reference" href="../_images/auth_backend.png"><img alt="../_images/auth_backend.png" src="../_images/auth_backend.png" style="width: 816.0px; height: 119.0px;" /></a>
 <p class="caption"><span class="caption-text">setting.py 认证后端项</span></p>
 </div>
 </li>
 </ul>
 </div>
-<div class="section" id="id6">
-<h2><a class="toc-backref" href="#id37">9.5. 流程图</a><a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id7">
+<h2><a class="toc-backref" href="#id39">9.5. 流程图</a><a class="headerlink" href="#id7" title="Permalink to this headline">¶</a></h2>
 <p>这是自己根据上面的分析，绘制的一个简单流程图！</p>
-<div class="figure align-center" id="id29">
+<div class="figure align-center" id="id31">
 <a class="reference internal image-reference" href="../_images/openstack_login.png"><img alt="../_images/openstack_login.png" src="../_images/openstack_login.png" style="width: 1043.0px; height: 1319.0px;" /></a>
 <p class="caption"><span class="caption-text">处理逻辑和流程图</span></p>
 </div>
 </div>
 <hr class="docutils" />
-<div class="section" id="id7">
-<h2><a class="toc-backref" href="#id38">9.6. 参考</a><a class="headerlink" href="#id7" title="Permalink to this headline">¶</a></h2>
-<table class="docutils footnote" frame="void" id="id8" rules="none">
-<colgroup><col class="label" /><col /></colgroup>
-<tbody valign="top">
-<tr><td class="label">[1]</td><td><a class="reference external" href="http://djangobook.py3k.cn/2.0/chapter17/">http://djangobook.py3k.cn/2.0/chapter17/</a></td></tr>
-</tbody>
-</table>
+<div class="section" id="id8">
+<h2><a class="toc-backref" href="#id40">9.6. 参考</a><a class="headerlink" href="#id8" title="Permalink to this headline">¶</a></h2>
 <table class="docutils footnote" frame="void" id="id9" rules="none">
 <colgroup><col class="label" /><col /></colgroup>
 <tbody valign="top">
-<tr><td class="label">[2]</td><td><a class="reference external" href="http://lukejin.iteye.com/blog/599783">http://lukejin.iteye.com/blog/599783</a></td></tr>
+<tr><td class="label">[2]</td><td><a class="reference external" href="http://djangobook.py3k.cn/2.0/chapter17/">http://djangobook.py3k.cn/2.0/chapter17/</a></td></tr>
 </tbody>
 </table>
 <table class="docutils footnote" frame="void" id="id10" rules="none">
 <colgroup><col class="label" /><col /></colgroup>
 <tbody valign="top">
-<tr><td class="label">[3]</td><td><a class="reference external" href="http://www.52ij.com/jishu/1174.html">http://www.52ij.com/jishu/1174.html</a></td></tr>
+<tr><td class="label">[3]</td><td><a class="reference external" href="http://lukejin.iteye.com/blog/599783">http://lukejin.iteye.com/blog/599783</a></td></tr>
 </tbody>
 </table>
 <table class="docutils footnote" frame="void" id="id11" rules="none">
 <colgroup><col class="label" /><col /></colgroup>
 <tbody valign="top">
-<tr><td class="label">[4]</td><td><a class="reference external" href="http://www.cnblogs.com/daoluanxiaozi/p/3320618.html">http://www.cnblogs.com/daoluanxiaozi/p/3320618.html</a></td></tr>
+<tr><td class="label">[4]</td><td><a class="reference external" href="http://www.52ij.com/jishu/1174.html">http://www.52ij.com/jishu/1174.html</a></td></tr>
 </tbody>
 </table>
 <table class="docutils footnote" frame="void" id="id12" rules="none">
 <colgroup><col class="label" /><col /></colgroup>
 <tbody valign="top">
-<tr><td class="label">[5]</td><td><a class="reference external" href="http://www.nowamagic.net/academy/detail/13281811">http://www.nowamagic.net/academy/detail/13281811</a></td></tr>
+<tr><td class="label">[5]</td><td><a class="reference external" href="http://www.cnblogs.com/daoluanxiaozi/p/3320618.html">http://www.cnblogs.com/daoluanxiaozi/p/3320618.html</a></td></tr>
+</tbody>
+</table>
+<table class="docutils footnote" frame="void" id="id13" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label">[6]</td><td><a class="reference external" href="http://www.nowamagic.net/academy/detail/13281811">http://www.nowamagic.net/academy/detail/13281811</a></td></tr>
 </tbody>
 </table>
 </div>

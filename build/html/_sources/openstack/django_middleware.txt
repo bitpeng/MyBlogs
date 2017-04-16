@@ -262,6 +262,33 @@ Horizon 用户登录流程分析
 
          _login.html 模板表单重写action 属性
 
+  .. tip::
+
+      {% url 'login' %}最后怎么转换成"auth/login"的过程已经理清，这里涉及到django中的name参数。
+      
+      .. code-block:: python
+
+        # openstack_auth/urls.py
+        urlpatterns = patterns(
+            'openstack_auth.views',
+            url(r"^testlogin/$", "login", name='dlogin'),
+
+      .. figure:: /_static/images/testlogin.png
+         :scale: 100
+         :align: center
+
+         页面显示代码
+
+      ::
+        
+        # 魔板文件重写form_action属性！
+        {% block form_action %}{% url 'dlogin' %}{% endblock %}
+  
+
+      页面模板使用{%url 'dlogin' %}转换url，所以总是转换成该名字对应的URL。
+  
+  .. [#] 论述了django URL name参数的用法及其意义。http://www.cnblogs.com/no13bus/p/3767521.html
+
 - URL截断，分级URL匹配；
 
   .. figure:: /_static/images/url_include_1.png
