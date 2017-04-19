@@ -550,8 +550,8 @@ df/du
     # 列出某个文件或目录占用的空间
     du -sh dir
 
-find/xargs
-+++++++++++
+find
++++++
 
 ::
 
@@ -559,6 +559,55 @@ find/xargs
 
 
 .. [#] http://yansu.org/2014/01/15/general-shell-resources.html
+
+xargs
+++++++
+
+xargs和重定向的区别，网上有很多论述。可以通过一个例子来简单理解下：
+
+.. code-block:: console
+
+    root@ubuntu:/smbshare/MyBlogs# echo '--help' | xargs cat
+    Usage: cat [OPTION]... [FILE]...
+    Concatenate FILE(s), or standard input, to standard output.
+    
+      -A, --show-all           equivalent to -vET
+      -b, --number-nonblank    number nonempty output lines, overrides -n
+      -e                       equivalent to -vE
+      -E, --show-ends          display $ at end of each line
+      -n, --number             number all output lines
+      -s, --squeeze-blank      suppress repeated empty output lines
+      -t                       equivalent to -vT
+      -T, --show-tabs          display TAB characters as ^I
+      -u                       (ignored)
+      -v, --show-nonprinting   use ^ and M- notation, except for LFD and TAB
+          --help     display this help and exit
+          --version  output version information and exit
+    
+    With no FILE, or when FILE is -, read standard input.
+    
+    Examples:
+      cat f - g  Output f's contents, then standard input, then g's contents.
+      cat        Copy standard input to standard output.
+    
+    Report cat bugs to bug-coreutils@gnu.org
+    GNU coreutils home page: <http://www.gnu.org/software/coreutils/>
+    General help using GNU software: <http://www.gnu.org/gethelp/>
+    For complete documentation, run: info coreutils 'cat invocation'
+    root@ubuntu:/smbshare/MyBlogs# echo '--help' | cat
+    --help
+
+输出结果一目了然，对于xargs，是将echo的输出"--help"当做cat命令的参数；
+而重定向符合则是将输出当初cat命令的输入。差别还是很明显的。
+
+来看其他几个例子，来理解下：
+
+::
+
+    find . -type f -name "*.py" | xargs chmod 666
+    find . -type f -name "*.sh" | xargs chmod +x
+
+xargs命令还有很多其他高级用法，可以参考man文档。
 
 lsof
 ++++
