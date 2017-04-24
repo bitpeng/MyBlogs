@@ -27,3 +27,12 @@ tips
 
   Windows键 +r 打开“启动”，输入services.msc打开“服务”，找到“Windows Management Instrumentation”，
   右键“重新启动”。 **亲测有效** 。具体可以参考： https://www.zhihu.com/question/48491814
+
+--------------------------
+
+- 问：电脑重启后，vmware启动虚机提示"内部错误"
+
+  答： Windows键 +r 打开“启动”，输入services.msc打开“服务”，然后依次启动vmware相关服务！
+  **亲测有效** 。
+
+  另外，网络上说，可以右键vmware，然后选择以管理员身份运行！

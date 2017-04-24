@@ -560,6 +560,15 @@ find
 
 .. [#] http://yansu.org/2014/01/15/general-shell-resources.html
 
+
+locate/updatedb
+++++++++++++++++
+
+::
+
+    updatedb
+    locate .git | grep -P ".git$"
+
 xargs
 ++++++
 

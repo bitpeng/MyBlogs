@@ -98,7 +98,7 @@ rabbitmq http-api
     ......省略数据
 
 
-至于rabbitmq-management所提供的api，可以通过http:://192.168.159.155:15672/api页面进行查看。
+至于rabbitmq-management所提供的api，可以通过http://192.168.159.155:15672/api页面进行查看。
 
 .. figure:: /_static/images/rabbit_api.png
    :scale: 100
