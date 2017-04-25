@@ -87,8 +87,9 @@
 <li class="toctree-l1 current"><a class="reference internal" href="index.html">Hack Linux</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="git_cmd.html">1. git 版本控制</a></li>
 <li class="toctree-l2 current"><a class="current reference internal" href="#">2. Samba共享访问配置</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#id1">2.1. 自动化脚本</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#mount">2.2. mount共享</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id2">2.1. samba安装和配置</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id3">2.2. 自动化脚本</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#mount">2.3. mount共享</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="use_man_page.html">3. 善用Linux man page</a></li>
@@ -151,14 +152,91 @@
            <div itemprop="articleBody">
             
   <div class="section" id="samba">
-<h1>2. Samba共享访问配置<a class="headerlink" href="#samba" title="Permalink to this headline">¶</a></h1>
+<h1><a class="toc-backref" href="#id4">2. Samba共享访问配置</a><a class="headerlink" href="#samba" title="Permalink to this headline">¶</a></h1>
+<div class="contents topic" id="id1">
+<p class="topic-title first">目录</p>
+<ul class="simple">
+<li><a class="reference internal" href="#samba" id="id4">Samba共享访问配置</a><ul>
+<li><a class="reference internal" href="#id2" id="id5">samba安装和配置</a></li>
+<li><a class="reference internal" href="#id3" id="id6">自动化脚本</a></li>
+<li><a class="reference internal" href="#mount" id="id7">mount共享</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<hr class="docutils" />
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
-<p class="last">有时需要在在Windows和Linux之间传输文件，可以通过Samba共享实现。实例尝试
-在windows下访问Linux中文件，通过在Linux配置samba,smb用户名为smbuser1:123456.共享访问目录为/smbshare</p>
+<p class="last">有时需要在在Windows和Linux之间传输文件，可以通过Samba共享实现。
+实例尝试在windows下访问Linux中文件，通过在Linux配置samba，
+smb用户名/密码为smbuser1:123456.共享访问目录为/smbshare</p>
 </div>
-<div class="section" id="id1">
-<h2>2.1. 自动化脚本<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id2">
+<h2><a class="toc-backref" href="#id5">2.1. samba安装和配置</a><a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
+<p>一. samba的安装</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="n">insall</span> <span class="n">samba</span>
+</pre></div>
+</div>
+<p>二. 创建共享目录</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span>mkdir /smbshare
+chmod 777 /smbshare –R
+</pre></div>
+</div>
+<p>三. 创建Samba配置文件</p>
+<ol class="arabic simple">
+<li>保存现有的配置文件</li>
+</ol>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="n">cp</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">samba</span><span class="o">/</span><span class="n">smb</span><span class="o">.</span><span class="n">conf</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">samba</span><span class="o">/</span><span class="n">smb</span><span class="o">.</span><span class="n">conf</span><span class="o">.</span><span class="n">bak</span>
+</pre></div>
+</div>
+<ol class="arabic simple" start="2">
+<li>修改现配置文件</li>
+</ol>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="n">vi</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">samba</span><span class="o">/</span><span class="n">smb</span><span class="o">.</span><span class="n">conf</span>
+</pre></div>
+</div>
+<p>在smb.conf最后添加</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">security</span> <span class="o">=</span> <span class="n">user</span>
+<span class="n">username</span> <span class="nb">map</span> <span class="o">=</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">samba</span><span class="o">/</span><span class="n">users</span>
+
+<span class="p">[</span><span class="n">smbshare</span><span class="p">]</span>
+<span class="n">path</span><span class="o">=/</span><span class="n">smbshare</span>
+<span class="n">available</span><span class="o">=</span><span class="n">yes</span>
+<span class="n">browseable</span><span class="o">=</span><span class="n">yes</span>
+<span class="n">public</span><span class="o">=</span><span class="n">yes</span>
+<span class="n">valid</span> <span class="n">users</span> <span class="o">=</span> <span class="n">smbuser1</span>
+<span class="n">writeable</span><span class="o">=</span><span class="n">yes</span>
+</pre></div>
+</div>
+<p>四. 创建samba帐户</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="n">touch</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">samba</span><span class="o">/</span><span class="n">smbpasswd</span>
+<span class="n">smbpasswd</span> <span class="o">-</span><span class="n">a</span> <span class="n">smbuser1</span>
+</pre></div>
+</div>
+<p>然后会要求你输入samba帐户的密码</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<ul class="last simple">
+<li>ps1：如果没有第四步，当你登录时会提示 <code class="docutils literal"><span class="pre">session</span> <span class="pre">setup</span> <span class="pre">failed:</span> <span class="pre">NT_STATUS_LOGON_FAILURE</span></code></li>
+<li>ps2：如果提示 <code class="docutils literal"><span class="pre">Failed</span> <span class="pre">to</span> <span class="pre">add</span> <span class="pre">entry</span> <span class="pre">for</span> <span class="pre">user</span></code> ，则表示没有对应的用户。
+需要先增加一个系统用户smbuser1（增加一个和samba用户名一样的系统用户）。
+命令如下： <code class="docutils literal"><span class="pre">useradd</span> <span class="pre">smbuser1</span></code></li>
+</ul>
+</div>
+<p>五. 重启samba服务器</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">init</span><span class="o">.</span><span class="n">d</span><span class="o">/</span><span class="n">samba</span> <span class="n">restart</span>
+</pre></div>
+</div>
+<p>六. 测试</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">smbclient</span> <span class="o">-</span><span class="n">L</span> <span class="o">//</span><span class="n">localhost</span><span class="o">/</span><span class="n">share</span>
+</pre></div>
+</div>
+<p>七. 使用</p>
+<p>可以到windows下输入ip使用了，在文件夹处输入 &#8220;\&#8221; + &#8220;Ubuntu机器的ip或主机名&#8221; + &#8220;\&#8221; + “smbshare”
+提示输入认证时：用户名为smbuser1，密码为增加smb用户smbuser1时输入的密码。</p>
+</div>
+<div class="section" id="id3">
+<h2><a class="toc-backref" href="#id6">2.2. 自动化脚本</a><a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h2>
 <div class="highlight-bash"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
  2
  3
@@ -242,7 +320,7 @@ smbpasswd -a smbuser1
 </td></tr></table></div>
 </div>
 <div class="section" id="mount">
-<h2>2.2. mount共享<a class="headerlink" href="#mount" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id7">2.3. mount共享</a><a class="headerlink" href="#mount" title="Permalink to this headline">¶</a></h2>
 <p>有时因为公司网络访问限制，不允许访问外网，那么samba无法安装，也就无法共享了。
 此时可以退而求其次，通过mount命令，在windows宿主机和vmware中的Linux虚机进行文件共享！</p>
 <ul>

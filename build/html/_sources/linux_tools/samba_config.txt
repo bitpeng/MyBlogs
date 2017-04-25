@@ -1,10 +1,99 @@
 Samba共享访问配置
 ##################
 
+.. contents:: 目录
+
+-------------------
 
 .. note::
-    有时需要在在Windows和Linux之间传输文件，可以通过Samba共享实现。实例尝试
-    在windows下访问Linux中文件，通过在Linux配置samba,smb用户名为smbuser1:123456.共享访问目录为/smbshare
+    有时需要在在Windows和Linux之间传输文件，可以通过Samba共享实现。
+    实例尝试在windows下访问Linux中文件，通过在Linux配置samba，
+    smb用户名/密码为smbuser1:123456.共享访问目录为/smbshare
+
+samba安装和配置
+================
+
+一. samba的安装
+
+::
+
+    sudo apt-get insall samba
+
+
+二. 创建共享目录
+
+::
+
+    mkdir /smbshare
+    chmod 777 /smbshare –R
+
+
+三. 创建Samba配置文件
+
+1. 保存现有的配置文件
+
+::
+
+    sudo cp /etc/samba/smb.conf /etc/samba/smb.conf.bak
+
+2. 修改现配置文件
+
+::
+
+    sudo vi /etc/samba/smb.conf
+
+在smb.conf最后添加
+
+::
+
+    security = user
+    username map = /etc/samba/users
+
+    [smbshare]
+    path=/smbshare
+    available=yes
+    browseable=yes
+    public=yes
+    valid users = smbuser1
+    writeable=yes
+
+
+四. 创建samba帐户
+
+::
+
+    sudo touch /etc/samba/smbpasswd
+    smbpasswd -a smbuser1
+
+然后会要求你输入samba帐户的密码
+
+.. note::
+
+    - ps1：如果没有第四步，当你登录时会提示 ``session setup failed: NT_STATUS_LOGON_FAILURE``
+    - ps2：如果提示 ``Failed to add entry for user`` ，则表示没有对应的用户。
+      需要先增加一个系统用户smbuser1（增加一个和samba用户名一样的系统用户）。
+      命令如下： ``useradd smbuser1``
+
+
+五. 重启samba服务器
+
+::
+
+    sudo /etc/init.d/samba restart
+
+
+六. 测试
+
+::
+
+    smbclient -L //localhost/share
+
+
+七. 使用
+
+可以到windows下输入ip使用了，在文件夹处输入 "\\" + "Ubuntu机器的ip或主机名" + "\\" + “smbshare”
+提示输入认证时：用户名为smbuser1，密码为增加smb用户smbuser1时输入的密码。
+
 
 自动化脚本
 ============
