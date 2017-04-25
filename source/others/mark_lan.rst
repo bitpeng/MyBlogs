@@ -439,4 +439,3 @@ ttl为Textile，asc为AsciiDoc，org为Org-mode。
        网址：\ http://www.methods.co.nz/asciidoc\ 。
 .. [#] https://github.com/mojombo/god/commit/cea00609ca8441c82bc9760ae5eea7d7509d85b3
 .. [#] https://github.com/mojombo/god/issues/1
-
