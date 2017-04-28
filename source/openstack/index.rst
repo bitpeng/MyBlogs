@@ -29,6 +29,7 @@ OpenStack Note
     horizon_workflows_analysis
     horizon_launch_instance
     django-generic_view
+    django_auth
     cloud_check
     paste_webob_routes
     opengrok_xp

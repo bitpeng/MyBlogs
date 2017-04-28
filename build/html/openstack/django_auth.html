@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>9. django中间件和openstack用户重登录分析 &mdash; Welcome to Sitian&#39;s Blog 1.0 documentation</title>
+  <title>13. Django认证：horizon登录认证解析 &mdash; Welcome to Sitian&#39;s Blog 1.0 documentation</title>
   
 
   
@@ -32,8 +32,8 @@
   
     <link rel="top" title="Welcome to Sitian&#39;s Blog 1.0 documentation" href="../index.html"/>
         <link rel="up" title="OpenStack Note" href="index.html"/>
-        <link rel="next" title="10. [翻译] horizon workflows分析" href="horizon_workflows_analysis.html"/>
-        <link rel="prev" title="8. KVM错误问题" href="kvm_error.html"/> 
+        <link rel="next" title="14. 云平台服务器重启注意事项" href="cloud_check.html"/>
+        <link rel="prev" title="12. django通用视图：一个小问题引发的思考" href="django-generic_view.html"/> 
 
   
   <script src="../_static/js/modernizr.min.js"></script>
@@ -94,38 +94,39 @@
 <li class="toctree-l2"><a class="reference internal" href="rabbitmq_doc.html">6. [翻译] rabbitmq教程</a></li>
 <li class="toctree-l2"><a class="reference internal" href="os_cmd.html">7. openstack命令汇总</a></li>
 <li class="toctree-l2"><a class="reference internal" href="kvm_error.html">8. KVM错误问题</a></li>
-<li class="toctree-l2 current"><a class="current reference internal" href="#">9. django中间件和openstack用户重登录分析</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#id2">9.1. 代码定位</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#django">9.2. django中间件原理</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#id3">9.2.1. 安装中间件</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#id4">9.2.2. 中间件方法</a></li>
-</ul>
-</li>
-<li class="toctree-l3"><a class="reference internal" href="#id5">9.3. 代码细节</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#horizon">9.4. Horizon 用户登录流程分析</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#id7">9.5. 流程图</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#id8">9.6. 参考</a></li>
-</ul>
-</li>
+<li class="toctree-l2"><a class="reference internal" href="django_middleware.html">9. django中间件和openstack用户重登录分析</a></li>
 <li class="toctree-l2"><a class="reference internal" href="horizon_workflows_analysis.html">10. [翻译] horizon workflows分析</a></li>
 <li class="toctree-l2"><a class="reference internal" href="horizon_launch_instance.html">11. horizon启动虚拟机分析</a></li>
 <li class="toctree-l2"><a class="reference internal" href="django-generic_view.html">12. django通用视图：一个小问题引发的思考</a></li>
-<li class="toctree-l2"><a class="reference internal" href="cloud_check.html">13. 云平台服务器重启注意事项</a></li>
-<li class="toctree-l2"><a class="reference internal" href="paste_webob_routes.html">14. OpenStack REST-API基础：paste/webob/routes库</a></li>
-<li class="toctree-l2"><a class="reference internal" href="opengrok_xp.html">15. OpenGrok代码浏览环境搭建</a></li>
-<li class="toctree-l2"><a class="reference internal" href="nova_api.html">16. nova-api分析</a></li>
-<li class="toctree-l2"><a class="reference internal" href="nova_smd.html">17. [翻译] nova：Services、Managers and Drivers</a></li>
-<li class="toctree-l2"><a class="reference internal" href="oslo_cfg.html">18. oslo.config 用法总结</a></li>
-<li class="toctree-l2"><a class="reference internal" href="kombu.html">19. kombu和消息队列总结</a></li>
-<li class="toctree-l2"><a class="reference internal" href="openstack_debug.html">20. OpenStack 调试</a></li>
-<li class="toctree-l2"><a class="reference internal" href="nova_rpcserver_start.html">21. nova rpc服务启动分析</a></li>
-<li class="toctree-l2"><a class="reference internal" href="periodic_task.html">22. OpenStack周期性任务分析</a></li>
-<li class="toctree-l2"><a class="reference internal" href="nova_log.html">23. OpenStack 日志模块分析</a></li>
-<li class="toctree-l2"><a class="reference internal" href="qemu_kvm.html">24. qemu/kvm学习笔记</a></li>
-<li class="toctree-l2"><a class="reference internal" href="virt_cmd.html">25. 虚拟化相关命令</a></li>
-<li class="toctree-l2"><a class="reference internal" href="qemu_img_encry.html">26. nova虚机加密总结</a></li>
-<li class="toctree-l2"><a class="reference internal" href="nova_interact.html">27. nova组件间交互总结</a></li>
-<li class="toctree-l2"><a class="reference internal" href="juno_neutron-meter-agent_install.html">28. juno安装neutron-meter-agent</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">13. Django认证：horizon登录认证解析</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id2">13.1. 代码定位</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#django">13.2. django中间件原理</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#id3">13.2.1. 安装中间件</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id4">13.2.2. 中间件方法</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#id5">13.3. 代码细节</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#horizon">13.4. Horizon 用户登录流程分析</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id7">13.5. 流程图</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id8">13.6. 参考</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="cloud_check.html">14. 云平台服务器重启注意事项</a></li>
+<li class="toctree-l2"><a class="reference internal" href="paste_webob_routes.html">15. OpenStack REST-API基础：paste/webob/routes库</a></li>
+<li class="toctree-l2"><a class="reference internal" href="opengrok_xp.html">16. OpenGrok代码浏览环境搭建</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nova_api.html">17. nova-api分析</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nova_smd.html">18. [翻译] nova：Services、Managers and Drivers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="oslo_cfg.html">19. oslo.config 用法总结</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kombu.html">20. kombu和消息队列总结</a></li>
+<li class="toctree-l2"><a class="reference internal" href="openstack_debug.html">21. OpenStack 调试</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nova_rpcserver_start.html">22. nova rpc服务启动分析</a></li>
+<li class="toctree-l2"><a class="reference internal" href="periodic_task.html">23. OpenStack周期性任务分析</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nova_log.html">24. OpenStack 日志模块分析</a></li>
+<li class="toctree-l2"><a class="reference internal" href="qemu_kvm.html">25. qemu/kvm学习笔记</a></li>
+<li class="toctree-l2"><a class="reference internal" href="virt_cmd.html">26. 虚拟化相关命令</a></li>
+<li class="toctree-l2"><a class="reference internal" href="qemu_img_encry.html">27. nova虚机加密总结</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nova_interact.html">28. nova组件间交互总结</a></li>
+<li class="toctree-l2"><a class="reference internal" href="juno_neutron-meter-agent_install.html">29. juno安装neutron-meter-agent</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../network/index.html">网络技术/neutron</a></li>
@@ -162,11 +163,11 @@
       
           <li><a href="index.html">OpenStack Note</a> &raquo;</li>
       
-    <li>9. django中间件和openstack用户重登录分析</li>
+    <li>13. Django认证：horizon登录认证解析</li>
       <li class="wy-breadcrumbs-aside">
         
           
-            <a href="../_sources/openstack/django_middleware.txt" rel="nofollow"> View page source</a>
+            <a href="../_sources/openstack/django_auth.txt" rel="nofollow"> View page source</a>
           
         
       </li>
@@ -176,17 +177,13 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="djangoopenstack">
-<span id="django-middleware"></span><h1><a class="toc-backref" href="#id32">9. django中间件和openstack用户重登录分析</a><a class="headerlink" href="#djangoopenstack" title="Permalink to this headline">¶</a></h1>
-<div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">这一部分，分析的是openstack的用户重登录机制：简而言之，在规定的未使用时限后，
-系统断开会话或者重新鉴别用户 ，系统应提供时限的默认值；</p>
-</div>
+  <div class="section" id="django-horizon">
+<span id="django-auth"></span><h1><a class="toc-backref" href="#id32">13. Django认证：horizon登录认证解析</a><a class="headerlink" href="#django-horizon" title="Permalink to this headline">¶</a></h1>
+<p><strong>date: 2017-04-25 17:11</strong></p>
 <div class="contents topic" id="id1">
 <p class="topic-title first">目录</p>
 <ul class="simple">
-<li><a class="reference internal" href="#djangoopenstack" id="id32">django中间件和openstack用户重登录分析</a><ul>
+<li><a class="reference internal" href="#django-horizon" id="id32">Django认证：horizon登录认证解析</a><ul>
 <li><a class="reference internal" href="#id2" id="id33">代码定位</a></li>
 <li><a class="reference internal" href="#django" id="id34">django中间件原理</a><ul>
 <li><a class="reference internal" href="#id3" id="id35">安装中间件</a></li>
@@ -202,8 +199,11 @@
 </ul>
 </div>
 <hr class="docutils" />
+<p>在上一篇文章中，我们分析了Django中间件并简要分析分析了openstack horizon用户登录流程，
+最近深究这个模块时，发现这里面也大有学问，涉及到的知识点也很多，自己对horizon登录认证这一部分，
+也分析了好几天，才算有一个比较深刻的认识，现在把相关知识点记录下来。</p>
 <div class="section" id="id2">
-<h2><a class="toc-backref" href="#id33">9.1. 代码定位</a><a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id33">13.1. 代码定位</a><a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
 <p>以下是系统超时自动退出时的提示：</p>
 <div class="figure align-center" id="id14">
 <a class="reference internal image-reference" href="../_images/timeout_logout.png"><img alt="../_images/timeout_logout.png" src="../_images/timeout_logout.png" style="width: 468.0px; height: 256.0px;" /></a>
@@ -225,7 +225,7 @@
 <p>至此，已经找到重登陆的代码为路径为：horizon/middleware.py</p>
 </div>
 <div class="section" id="django">
-<h2><a class="toc-backref" href="#id34">9.2. django中间件原理</a><a class="headerlink" href="#django" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id34">13.2. django中间件原理</a><a class="headerlink" href="#django" title="Permalink to this headline">¶</a></h2>
 <p>查看middleware的代码，发现它是一个中间件，利用中间件来处理会话超时重登录，因此，这里有必要理解下django中间件的原理。</p>
 <p>Django 处理一个 Request 的过程是首先通过中间件，然后再通过默认的 URL 方式进行的。
 我们可以在 Middleware 这个地方把所有Request 拦截住，用我们自己的方式完成处理以后直接返回Response。
@@ -240,7 +240,7 @@
 <p class="last">我们可以自己定义中间件。另外，dango框架自身也定义了很多常用的中间件。</p>
 </div>
 <div class="section" id="id3">
-<h3><a class="toc-backref" href="#id35">9.2.1. 安装中间件</a><a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id35">13.2.1. 安装中间件</a><a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h3>
 <p>要启用一个中间件，只需将其添加到配置模块的 MIDDLEWARE_CLASSES 元组中。
 在 MIDDLEWARE_CLASSES 中，中间件组件用字符串表示： 指向中间件类名的完整
 Python路径。 例如，下面是 django-admin.py startproject 创建的缺省 MIDDLEWARE_CLASSES :</p>
@@ -261,7 +261,7 @@ view函数外层的顺序包装子： 在request阶段按顺序从上到下穿�
 </div>
 </div>
 <div class="section" id="id4">
-<h3><a class="toc-backref" href="#id36">9.2.2. 中间件方法</a><a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id36">13.2.2. 中间件方法</a><a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h3>
 <p>我们可以定义中间件方法的一个或者多个，可以定义的中间件方法如下：</p>
 <ul>
 <li><p class="first">初始化方法</p>
@@ -305,7 +305,7 @@ view函数外层的顺序包装子： 在request阶段按顺序从上到下穿�
 </div>
 </div>
 <div class="section" id="id5">
-<h2><a class="toc-backref" href="#id37">9.3. 代码细节</a><a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id37">13.3. 代码细节</a><a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h2>
 <p>理解了中间件的工作原理，再来看代码细节，就很显然了。如图所示代码：</p>
 <div class="figure align-center" id="id18">
 <a class="reference internal image-reference" href="../_images/preq_func.png"><img alt="../_images/preq_func.png" src="../_images/preq_func.png" style="width: 845.0px; height: 641.0px;" /></a>
@@ -316,7 +316,7 @@ view函数外层的顺序包装子： 在request阶段按顺序从上到下穿�
 接下来会按照正常流程处理。</p>
 </div>
 <div class="section" id="horizon">
-<h2><a class="toc-backref" href="#id38">9.4. Horizon 用户登录流程分析</a><a class="headerlink" href="#horizon" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id38">13.4. Horizon 用户登录流程分析</a><a class="headerlink" href="#horizon" title="Permalink to this headline">¶</a></h2>
 <p>下面对用户登录horizon的流程进行分析。</p>
 <ul>
 <li><p class="first">用户输入IP地址，根据setting.py ROOT_URLCONF配置项来决定根URL映射函数；</p>
@@ -427,7 +427,7 @@ view函数外层的顺序包装子： 在request阶段按顺序从上到下穿�
 </ul>
 </div>
 <div class="section" id="id7">
-<h2><a class="toc-backref" href="#id39">9.5. 流程图</a><a class="headerlink" href="#id7" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id39">13.5. 流程图</a><a class="headerlink" href="#id7" title="Permalink to this headline">¶</a></h2>
 <p>这是自己根据上面的分析，绘制的一个简单流程图！</p>
 <div class="figure align-center" id="id31">
 <a class="reference internal image-reference" href="../_images/openstack_login.png"><img alt="../_images/openstack_login.png" src="../_images/openstack_login.png" style="width: 1043.0px; height: 1319.0px;" /></a>
@@ -436,7 +436,7 @@ view函数外层的顺序包装子： 在request阶段按顺序从上到下穿�
 </div>
 <hr class="docutils" />
 <div class="section" id="id8">
-<h2><a class="toc-backref" href="#id40">9.6. 参考</a><a class="headerlink" href="#id8" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id40">13.6. 参考</a><a class="headerlink" href="#id8" title="Permalink to this headline">¶</a></h2>
 <table class="docutils footnote" frame="void" id="id9" rules="none">
 <colgroup><col class="label" /><col /></colgroup>
 <tbody valign="top">
@@ -477,10 +477,10 @@ view函数外层的顺序包装子： 在request阶段按顺序从上到下穿�
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="horizon_workflows_analysis.html" class="btn btn-neutral float-right" title="10. [翻译] horizon workflows分析" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="cloud_check.html" class="btn btn-neutral float-right" title="14. 云平台服务器重启注意事项" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="kvm_error.html" class="btn btn-neutral" title="8. KVM错误问题" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="django-generic_view.html" class="btn btn-neutral" title="12. django通用视图：一个小问题引发的思考" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   

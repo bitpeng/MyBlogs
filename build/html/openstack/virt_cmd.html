@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>25. 虚拟化相关命令 &mdash; Welcome to Sitian&#39;s Blog 1.0 documentation</title>
+  <title>26. 虚拟化相关命令 &mdash; Welcome to Sitian&#39;s Blog 1.0 documentation</title>
   
 
   
@@ -32,8 +32,8 @@
   
     <link rel="top" title="Welcome to Sitian&#39;s Blog 1.0 documentation" href="../index.html"/>
         <link rel="up" title="OpenStack Note" href="index.html"/>
-        <link rel="next" title="26. nova虚机加密总结" href="qemu_img_encry.html"/>
-        <link rel="prev" title="24. qemu/kvm学习笔记" href="qemu_kvm.html"/> 
+        <link rel="next" title="27. nova虚机加密总结" href="qemu_img_encry.html"/>
+        <link rel="prev" title="25. qemu/kvm学习笔记" href="qemu_kvm.html"/> 
 
   
   <script src="../_static/js/modernizr.min.js"></script>
@@ -88,7 +88,7 @@
 <li class="toctree-l1 current"><a class="reference internal" href="index.html">OpenStack Note</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="horizon_develop.html">1. Horizon 二次开发指南</a></li>
 <li class="toctree-l2"><a class="reference internal" href="image-create-guide.html">2. OpenStack镜像制作</a></li>
-<li class="toctree-l2"><a class="reference internal" href="deploy_synopsis.html">3. openstack 部署实践</a></li>
+<li class="toctree-l2"><a class="reference internal" href="deploy_synopsis.html">3. OpenStack 部署实践</a></li>
 <li class="toctree-l2"><a class="reference internal" href="centos_vm_netconf.html">4. Centos虚拟机联网配置</a></li>
 <li class="toctree-l2"><a class="reference internal" href="lanch_instance_failure.html">5. OpenStack 启动虚拟机失败分析</a></li>
 <li class="toctree-l2"><a class="reference internal" href="rabbitmq_doc.html">6. [翻译] rabbitmq教程</a></li>
@@ -98,29 +98,31 @@
 <li class="toctree-l2"><a class="reference internal" href="horizon_workflows_analysis.html">10. [翻译] horizon workflows分析</a></li>
 <li class="toctree-l2"><a class="reference internal" href="horizon_launch_instance.html">11. horizon启动虚拟机分析</a></li>
 <li class="toctree-l2"><a class="reference internal" href="django-generic_view.html">12. django通用视图：一个小问题引发的思考</a></li>
-<li class="toctree-l2"><a class="reference internal" href="cloud_check.html">13. 云平台服务器重启注意事项</a></li>
-<li class="toctree-l2"><a class="reference internal" href="paste_webob_routes.html">14. OpenStack REST-API基础：paste/webob/routes库</a></li>
-<li class="toctree-l2"><a class="reference internal" href="opengrok_xp.html">15. OpenGrok代码浏览环境搭建</a></li>
-<li class="toctree-l2"><a class="reference internal" href="nova_api.html">16. nova-api分析</a></li>
-<li class="toctree-l2"><a class="reference internal" href="nova_smd.html">17. [翻译] nova：Services、Managers and Drivers</a></li>
-<li class="toctree-l2"><a class="reference internal" href="oslo_cfg.html">18. oslo.config 用法总结</a></li>
-<li class="toctree-l2"><a class="reference internal" href="kombu.html">19. kombu和消息队列总结</a></li>
-<li class="toctree-l2"><a class="reference internal" href="openstack_debug.html">20. OpenStack 调试</a></li>
-<li class="toctree-l2"><a class="reference internal" href="nova_rpcserver_start.html">21. nova rpc服务启动分析</a></li>
-<li class="toctree-l2"><a class="reference internal" href="periodic_task.html">22. OpenStack周期性任务分析</a></li>
-<li class="toctree-l2"><a class="reference internal" href="nova_log.html">23. OpenStack 日志模块分析</a></li>
-<li class="toctree-l2"><a class="reference internal" href="qemu_kvm.html">24. qemu/kvm学习笔记</a></li>
-<li class="toctree-l2 current"><a class="current reference internal" href="#">25. 虚拟化相关命令</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#virsh">25.1. virsh</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#qemu">25.2. qemu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="django_auth.html">13. Django认证：horizon登录认证解析</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cloud_check.html">14. 云平台服务器重启注意事项</a></li>
+<li class="toctree-l2"><a class="reference internal" href="paste_webob_routes.html">15. OpenStack REST-API基础：paste/webob/routes库</a></li>
+<li class="toctree-l2"><a class="reference internal" href="opengrok_xp.html">16. OpenGrok代码浏览环境搭建</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nova_api.html">17. nova-api分析</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nova_smd.html">18. [翻译] nova：Services、Managers and Drivers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="oslo_cfg.html">19. oslo.config 用法总结</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kombu.html">20. kombu和消息队列总结</a></li>
+<li class="toctree-l2"><a class="reference internal" href="openstack_debug.html">21. OpenStack 调试</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nova_rpcserver_start.html">22. nova rpc服务启动分析</a></li>
+<li class="toctree-l2"><a class="reference internal" href="periodic_task.html">23. OpenStack周期性任务分析</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nova_log.html">24. OpenStack 日志模块分析</a></li>
+<li class="toctree-l2"><a class="reference internal" href="qemu_kvm.html">25. qemu/kvm学习笔记</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">26. 虚拟化相关命令</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#virsh">26.1. virsh</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#qemu">26.2. qemu</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="qemu_img_encry.html">26. nova虚机加密总结</a></li>
-<li class="toctree-l2"><a class="reference internal" href="nova_interact.html">27. nova组件间交互总结</a></li>
-<li class="toctree-l2"><a class="reference internal" href="juno_neutron-meter-agent_install.html">28. juno安装neutron-meter-agent</a></li>
+<li class="toctree-l2"><a class="reference internal" href="qemu_img_encry.html">27. nova虚机加密总结</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nova_interact.html">28. nova组件间交互总结</a></li>
+<li class="toctree-l2"><a class="reference internal" href="juno_neutron-meter-agent_install.html">29. juno安装neutron-meter-agent</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="../others/index.html">杂项讨论</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../network/index.html">网络技术/neutron</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../others/index.html">未分类</a></li>
 </ul>
 
             
@@ -153,7 +155,7 @@
       
           <li><a href="index.html">OpenStack Note</a> &raquo;</li>
       
-    <li>25. 虚拟化相关命令</li>
+    <li>26. 虚拟化相关命令</li>
       <li class="wy-breadcrumbs-aside">
         
           
@@ -168,7 +170,7 @@
            <div itemprop="articleBody">
             
   <div class="section" id="virt-cmd">
-<span id="id1"></span><h1><a class="toc-backref" href="#id3">25. 虚拟化相关命令</a><a class="headerlink" href="#virt-cmd" title="Permalink to this headline">¶</a></h1>
+<span id="id1"></span><h1><a class="toc-backref" href="#id3">26. 虚拟化相关命令</a><a class="headerlink" href="#virt-cmd" title="Permalink to this headline">¶</a></h1>
 <div class="contents topic" id="id2">
 <p class="topic-title first">目录</p>
 <ul class="simple">
@@ -181,7 +183,7 @@
 </div>
 <hr class="docutils" />
 <div class="section" id="virsh">
-<h2><a class="toc-backref" href="#id4">25.1. virsh</a><a class="headerlink" href="#virsh" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id4">26.1. virsh</a><a class="headerlink" href="#virsh" title="Permalink to this headline">¶</a></h2>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="c1"># 列出已运行的虚机</span>
 <span class="n">virsh</span> <span class="nb">list</span>
 <span class="c1"># 列出所有的虚拟机</span>
@@ -209,7 +211,7 @@
 </div>
 </div>
 <div class="section" id="qemu">
-<h2><a class="toc-backref" href="#id5">25.2. qemu</a><a class="headerlink" href="#qemu" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id5">26.2. qemu</a><a class="headerlink" href="#qemu" title="Permalink to this headline">¶</a></h2>
 <p>有关qemu磁盘加密的命令，可以参考另一篇文章：</p>
 </div>
 </div>
@@ -221,10 +223,10 @@
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="qemu_img_encry.html" class="btn btn-neutral float-right" title="26. nova虚机加密总结" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="qemu_img_encry.html" class="btn btn-neutral float-right" title="27. nova虚机加密总结" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="qemu_kvm.html" class="btn btn-neutral" title="24. qemu/kvm学习笔记" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="qemu_kvm.html" class="btn btn-neutral" title="25. qemu/kvm学习笔记" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   

@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>27. nova组件间交互总结 &mdash; Welcome to Sitian&#39;s Blog 1.0 documentation</title>
+  <title>28. nova组件间交互总结 &mdash; Welcome to Sitian&#39;s Blog 1.0 documentation</title>
   
 
   
@@ -32,8 +32,8 @@
   
     <link rel="top" title="Welcome to Sitian&#39;s Blog 1.0 documentation" href="../index.html"/>
         <link rel="up" title="OpenStack Note" href="index.html"/>
-        <link rel="next" title="28. juno安装neutron-meter-agent" href="juno_neutron-meter-agent_install.html"/>
-        <link rel="prev" title="26. nova虚机加密总结" href="qemu_img_encry.html"/> 
+        <link rel="next" title="29. juno安装neutron-meter-agent" href="juno_neutron-meter-agent_install.html"/>
+        <link rel="prev" title="27. nova虚机加密总结" href="qemu_img_encry.html"/> 
 
   
   <script src="../_static/js/modernizr.min.js"></script>
@@ -88,7 +88,7 @@
 <li class="toctree-l1 current"><a class="reference internal" href="index.html">OpenStack Note</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="horizon_develop.html">1. Horizon 二次开发指南</a></li>
 <li class="toctree-l2"><a class="reference internal" href="image-create-guide.html">2. OpenStack镜像制作</a></li>
-<li class="toctree-l2"><a class="reference internal" href="deploy_synopsis.html">3. openstack 部署实践</a></li>
+<li class="toctree-l2"><a class="reference internal" href="deploy_synopsis.html">3. OpenStack 部署实践</a></li>
 <li class="toctree-l2"><a class="reference internal" href="centos_vm_netconf.html">4. Centos虚拟机联网配置</a></li>
 <li class="toctree-l2"><a class="reference internal" href="lanch_instance_failure.html">5. OpenStack 启动虚拟机失败分析</a></li>
 <li class="toctree-l2"><a class="reference internal" href="rabbitmq_doc.html">6. [翻译] rabbitmq教程</a></li>
@@ -98,29 +98,31 @@
 <li class="toctree-l2"><a class="reference internal" href="horizon_workflows_analysis.html">10. [翻译] horizon workflows分析</a></li>
 <li class="toctree-l2"><a class="reference internal" href="horizon_launch_instance.html">11. horizon启动虚拟机分析</a></li>
 <li class="toctree-l2"><a class="reference internal" href="django-generic_view.html">12. django通用视图：一个小问题引发的思考</a></li>
-<li class="toctree-l2"><a class="reference internal" href="cloud_check.html">13. 云平台服务器重启注意事项</a></li>
-<li class="toctree-l2"><a class="reference internal" href="paste_webob_routes.html">14. OpenStack REST-API基础：paste/webob/routes库</a></li>
-<li class="toctree-l2"><a class="reference internal" href="opengrok_xp.html">15. OpenGrok代码浏览环境搭建</a></li>
-<li class="toctree-l2"><a class="reference internal" href="nova_api.html">16. nova-api分析</a></li>
-<li class="toctree-l2"><a class="reference internal" href="nova_smd.html">17. [翻译] nova：Services、Managers and Drivers</a></li>
-<li class="toctree-l2"><a class="reference internal" href="oslo_cfg.html">18. oslo.config 用法总结</a></li>
-<li class="toctree-l2"><a class="reference internal" href="kombu.html">19. kombu和消息队列总结</a></li>
-<li class="toctree-l2"><a class="reference internal" href="openstack_debug.html">20. OpenStack 调试</a></li>
-<li class="toctree-l2"><a class="reference internal" href="nova_rpcserver_start.html">21. nova rpc服务启动分析</a></li>
-<li class="toctree-l2"><a class="reference internal" href="periodic_task.html">22. OpenStack周期性任务分析</a></li>
-<li class="toctree-l2"><a class="reference internal" href="nova_log.html">23. OpenStack 日志模块分析</a></li>
-<li class="toctree-l2"><a class="reference internal" href="qemu_kvm.html">24. qemu/kvm学习笔记</a></li>
-<li class="toctree-l2"><a class="reference internal" href="virt_cmd.html">25. 虚拟化相关命令</a></li>
-<li class="toctree-l2"><a class="reference internal" href="qemu_img_encry.html">26. nova虚机加密总结</a></li>
-<li class="toctree-l2 current"><a class="current reference internal" href="#">27. nova组件间交互总结</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#id2">27.1. 模块与组件调用关系</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#id3">27.2. 一些误区</a></li>
+<li class="toctree-l2"><a class="reference internal" href="django_auth.html">13. Django认证：horizon登录认证解析</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cloud_check.html">14. 云平台服务器重启注意事项</a></li>
+<li class="toctree-l2"><a class="reference internal" href="paste_webob_routes.html">15. OpenStack REST-API基础：paste/webob/routes库</a></li>
+<li class="toctree-l2"><a class="reference internal" href="opengrok_xp.html">16. OpenGrok代码浏览环境搭建</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nova_api.html">17. nova-api分析</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nova_smd.html">18. [翻译] nova：Services、Managers and Drivers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="oslo_cfg.html">19. oslo.config 用法总结</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kombu.html">20. kombu和消息队列总结</a></li>
+<li class="toctree-l2"><a class="reference internal" href="openstack_debug.html">21. OpenStack 调试</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nova_rpcserver_start.html">22. nova rpc服务启动分析</a></li>
+<li class="toctree-l2"><a class="reference internal" href="periodic_task.html">23. OpenStack周期性任务分析</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nova_log.html">24. OpenStack 日志模块分析</a></li>
+<li class="toctree-l2"><a class="reference internal" href="qemu_kvm.html">25. qemu/kvm学习笔记</a></li>
+<li class="toctree-l2"><a class="reference internal" href="virt_cmd.html">26. 虚拟化相关命令</a></li>
+<li class="toctree-l2"><a class="reference internal" href="qemu_img_encry.html">27. nova虚机加密总结</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">28. nova组件间交互总结</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id2">28.1. 模块与组件调用关系</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id3">28.2. 一些误区</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="juno_neutron-meter-agent_install.html">28. juno安装neutron-meter-agent</a></li>
+<li class="toctree-l2"><a class="reference internal" href="juno_neutron-meter-agent_install.html">29. juno安装neutron-meter-agent</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="../others/index.html">杂项讨论</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../network/index.html">网络技术/neutron</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../others/index.html">未分类</a></li>
 </ul>
 
             
@@ -153,7 +155,7 @@
       
           <li><a href="index.html">OpenStack Note</a> &raquo;</li>
       
-    <li>27. nova组件间交互总结</li>
+    <li>28. nova组件间交互总结</li>
       <li class="wy-breadcrumbs-aside">
         
           
@@ -168,7 +170,7 @@
            <div itemprop="articleBody">
             
   <div class="section" id="nova">
-<span id="nova-interact"></span><h1><a class="toc-backref" href="#id5">27. nova组件间交互总结</a><a class="headerlink" href="#nova" title="Permalink to this headline">¶</a></h1>
+<span id="nova-interact"></span><h1><a class="toc-backref" href="#id5">28. nova组件间交互总结</a><a class="headerlink" href="#nova" title="Permalink to this headline">¶</a></h1>
 <div class="contents topic" id="id1">
 <p class="topic-title first">目录</p>
 <ul class="simple">
@@ -181,7 +183,7 @@
 </div>
 <hr class="docutils" />
 <div class="section" id="id2">
-<h2><a class="toc-backref" href="#id6">27.1. 模块与组件调用关系</a><a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id6">28.1. 模块与组件调用关系</a><a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
 <p>刚开始分析nova代码时，觉得nova组件间的交互关系非常之复杂，并且同名函数、同名类甚多，因此有时一时难以确定调用的是哪个文件、那个类。以虚机启动为例，nova-api组件在 nova/api/openstack/compute/servers.py:Controller.create 函数最终会调用self.compute_api.create发起虚机创建。当初自己是使用打日志的方式，确定self.compute_api类型，然后看对应的函数。这种方式，需要频繁打日志，重启服务，不太方便。</p>
 <p>在熟悉nova源码后，可以发现其实组件间交互关系、api接口，还是有很强的规律性的。</p>
 <p>首先，我们要知道，nova服务的总入口时nova-api，它是一个rest-api服务，用户不管是从horizon还是CLI发起的请求，最终都会被novaclient封装成对nova-api的http请求。其他组件之间，都是通过rpc来进行交互，涉及到的
@@ -201,7 +203,7 @@ cast rpc调用，而是调用 nova/conductor/api.py，然后在api.py模块中�
 而rpcapi.py模块才最终发起rpc请求。rpc请求由 nova/conduct/manager.py中的endpoints处理。</p>
 </div>
 <div class="section" id="id3">
-<h2><a class="toc-backref" href="#id7">27.2. 一些误区</a><a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id7">28.2. 一些误区</a><a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h2>
 <p>原来自己误认为，属于某个目录下(如:nova/compute)的代码，就是某个组件的。比如自己看日志时，nova-api直接调用了nova/compute/api.py模块下的函数，以为该模块里的log日志是输出到nova-compute.log里，结果怎么都找不到。实际上，组件执行时，除非发生异常，否则直到发起rpc调用的地方，都是属于该组件(进程)的代码。</p>
 </div>
 </div>
@@ -213,10 +215,10 @@ cast rpc调用，而是调用 nova/conductor/api.py，然后在api.py模块中�
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="juno_neutron-meter-agent_install.html" class="btn btn-neutral float-right" title="28. juno安装neutron-meter-agent" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="juno_neutron-meter-agent_install.html" class="btn btn-neutral float-right" title="29. juno安装neutron-meter-agent" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="qemu_img_encry.html" class="btn btn-neutral" title="26. nova虚机加密总结" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="qemu_img_encry.html" class="btn btn-neutral" title="27. nova虚机加密总结" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   

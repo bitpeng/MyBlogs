@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>28. juno安装neutron-meter-agent &mdash; Welcome to Sitian&#39;s Blog 1.0 documentation</title>
+  <title>29. juno安装neutron-meter-agent &mdash; Welcome to Sitian&#39;s Blog 1.0 documentation</title>
   
 
   
@@ -32,8 +32,8 @@
   
     <link rel="top" title="Welcome to Sitian&#39;s Blog 1.0 documentation" href="../index.html"/>
         <link rel="up" title="OpenStack Note" href="index.html"/>
-        <link rel="next" title="杂项讨论" href="../others/index.html"/>
-        <link rel="prev" title="27. nova组件间交互总结" href="nova_interact.html"/> 
+        <link rel="next" title="网络技术/neutron" href="../network/index.html"/>
+        <link rel="prev" title="28. nova组件间交互总结" href="nova_interact.html"/> 
 
   
   <script src="../_static/js/modernizr.min.js"></script>
@@ -88,7 +88,7 @@
 <li class="toctree-l1 current"><a class="reference internal" href="index.html">OpenStack Note</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="horizon_develop.html">1. Horizon 二次开发指南</a></li>
 <li class="toctree-l2"><a class="reference internal" href="image-create-guide.html">2. OpenStack镜像制作</a></li>
-<li class="toctree-l2"><a class="reference internal" href="deploy_synopsis.html">3. openstack 部署实践</a></li>
+<li class="toctree-l2"><a class="reference internal" href="deploy_synopsis.html">3. OpenStack 部署实践</a></li>
 <li class="toctree-l2"><a class="reference internal" href="centos_vm_netconf.html">4. Centos虚拟机联网配置</a></li>
 <li class="toctree-l2"><a class="reference internal" href="lanch_instance_failure.html">5. OpenStack 启动虚拟机失败分析</a></li>
 <li class="toctree-l2"><a class="reference internal" href="rabbitmq_doc.html">6. [翻译] rabbitmq教程</a></li>
@@ -98,30 +98,32 @@
 <li class="toctree-l2"><a class="reference internal" href="horizon_workflows_analysis.html">10. [翻译] horizon workflows分析</a></li>
 <li class="toctree-l2"><a class="reference internal" href="horizon_launch_instance.html">11. horizon启动虚拟机分析</a></li>
 <li class="toctree-l2"><a class="reference internal" href="django-generic_view.html">12. django通用视图：一个小问题引发的思考</a></li>
-<li class="toctree-l2"><a class="reference internal" href="cloud_check.html">13. 云平台服务器重启注意事项</a></li>
-<li class="toctree-l2"><a class="reference internal" href="paste_webob_routes.html">14. OpenStack REST-API基础：paste/webob/routes库</a></li>
-<li class="toctree-l2"><a class="reference internal" href="opengrok_xp.html">15. OpenGrok代码浏览环境搭建</a></li>
-<li class="toctree-l2"><a class="reference internal" href="nova_api.html">16. nova-api分析</a></li>
-<li class="toctree-l2"><a class="reference internal" href="nova_smd.html">17. [翻译] nova：Services、Managers and Drivers</a></li>
-<li class="toctree-l2"><a class="reference internal" href="oslo_cfg.html">18. oslo.config 用法总结</a></li>
-<li class="toctree-l2"><a class="reference internal" href="kombu.html">19. kombu和消息队列总结</a></li>
-<li class="toctree-l2"><a class="reference internal" href="openstack_debug.html">20. OpenStack 调试</a></li>
-<li class="toctree-l2"><a class="reference internal" href="nova_rpcserver_start.html">21. nova rpc服务启动分析</a></li>
-<li class="toctree-l2"><a class="reference internal" href="periodic_task.html">22. OpenStack周期性任务分析</a></li>
-<li class="toctree-l2"><a class="reference internal" href="nova_log.html">23. OpenStack 日志模块分析</a></li>
-<li class="toctree-l2"><a class="reference internal" href="qemu_kvm.html">24. qemu/kvm学习笔记</a></li>
-<li class="toctree-l2"><a class="reference internal" href="virt_cmd.html">25. 虚拟化相关命令</a></li>
-<li class="toctree-l2"><a class="reference internal" href="qemu_img_encry.html">26. nova虚机加密总结</a></li>
-<li class="toctree-l2"><a class="reference internal" href="nova_interact.html">27. nova组件间交互总结</a></li>
-<li class="toctree-l2 current"><a class="current reference internal" href="#">28. juno安装neutron-meter-agent</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#apt-get">28.1. apt-get 尝试</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#id2">28.2. 手动下载2014.2.1版本并安装</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#id3">28.3. 参考</a></li>
+<li class="toctree-l2"><a class="reference internal" href="django_auth.html">13. Django认证：horizon登录认证解析</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cloud_check.html">14. 云平台服务器重启注意事项</a></li>
+<li class="toctree-l2"><a class="reference internal" href="paste_webob_routes.html">15. OpenStack REST-API基础：paste/webob/routes库</a></li>
+<li class="toctree-l2"><a class="reference internal" href="opengrok_xp.html">16. OpenGrok代码浏览环境搭建</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nova_api.html">17. nova-api分析</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nova_smd.html">18. [翻译] nova：Services、Managers and Drivers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="oslo_cfg.html">19. oslo.config 用法总结</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kombu.html">20. kombu和消息队列总结</a></li>
+<li class="toctree-l2"><a class="reference internal" href="openstack_debug.html">21. OpenStack 调试</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nova_rpcserver_start.html">22. nova rpc服务启动分析</a></li>
+<li class="toctree-l2"><a class="reference internal" href="periodic_task.html">23. OpenStack周期性任务分析</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nova_log.html">24. OpenStack 日志模块分析</a></li>
+<li class="toctree-l2"><a class="reference internal" href="qemu_kvm.html">25. qemu/kvm学习笔记</a></li>
+<li class="toctree-l2"><a class="reference internal" href="virt_cmd.html">26. 虚拟化相关命令</a></li>
+<li class="toctree-l2"><a class="reference internal" href="qemu_img_encry.html">27. nova虚机加密总结</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nova_interact.html">28. nova组件间交互总结</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">29. juno安装neutron-meter-agent</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#apt-get">29.1. apt-get 尝试</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id2">29.2. 手动下载2014.2.1版本并安装</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id3">29.3. 参考</a></li>
 </ul>
 </li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="../others/index.html">杂项讨论</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../network/index.html">网络技术/neutron</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../others/index.html">未分类</a></li>
 </ul>
 
             
@@ -154,7 +156,7 @@
       
           <li><a href="index.html">OpenStack Note</a> &raquo;</li>
       
-    <li>28. juno安装neutron-meter-agent</li>
+    <li>29. juno安装neutron-meter-agent</li>
       <li class="wy-breadcrumbs-aside">
         
           
@@ -169,7 +171,7 @@
            <div itemprop="articleBody">
             
   <div class="section" id="junoneutron-meter-agent">
-<span id="install-neutron-meter-agent"></span><h1><a class="toc-backref" href="#id9">28. juno安装neutron-meter-agent</a><a class="headerlink" href="#junoneutron-meter-agent" title="Permalink to this headline">¶</a></h1>
+<span id="install-neutron-meter-agent"></span><h1><a class="toc-backref" href="#id9">29. juno安装neutron-meter-agent</a><a class="headerlink" href="#junoneutron-meter-agent" title="Permalink to this headline">¶</a></h1>
 <div class="contents topic" id="id1">
 <p class="topic-title first">目录</p>
 <ul class="simple">
@@ -186,7 +188,7 @@
 所部署环境是基于比较老的版本(juno)，安装时还是遇到一定的困难，现在对在openstack juno版本
 下安装neutron-metering-agent过程简单记录下。</p>
 <div class="section" id="apt-get">
-<h2><a class="toc-backref" href="#id10">28.1. apt-get 尝试</a><a class="headerlink" href="#apt-get" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id10">29.1. apt-get 尝试</a><a class="headerlink" href="#apt-get" title="Permalink to this headline">¶</a></h2>
 <p>首先尝试直接使用apt-get方式安装，结果提示包依赖版本不匹配。这里有意思的是，是所依赖的包neutron-common版本过高。</p>
 <div class="figure align-center" id="id6">
 <a class="reference internal image-reference" href="../_images/install_neutron_meter.png"><img alt="../_images/install_neutron_meter.png" src="../_images/install_neutron_meter.png" style="width: 1270.0px; height: 381.0px;" /></a>
@@ -204,7 +206,7 @@
 </div>
 </div>
 <div class="section" id="id2">
-<h2><a class="toc-backref" href="#id11">28.2. 手动下载2014.2.1版本并安装</a><a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id11">29.2. 手动下载2014.2.1版本并安装</a><a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
 <p>看来只有尝试手动下载和neutron-common_2014.2.1相同版本的neutron-metering-agent了。由于不知道确切的版本号，于是
 只有根据neutron-common版本号搜索，很快也通过google找到了版本为 <code class="docutils literal"><span class="pre">1:2014.2.1-0ubuntu1~cloud0</span></code> 的所有neutron相关的包：
 <a class="reference external" href="https://launchpad.net/~openstack-ubuntu-testing/+archive/ubuntu/juno/+build/6648524">neutron_2014.2.1连接</a></p>
@@ -216,7 +218,7 @@
 </div>
 <hr class="docutils" />
 <div class="section" id="id3">
-<h2><a class="toc-backref" href="#id12">28.3. 参考</a><a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id12">29.3. 参考</a><a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h2>
 <table class="docutils footnote" frame="void" id="id4" rules="none">
 <colgroup><col class="label" /><col /></colgroup>
 <tbody valign="top">
@@ -239,10 +241,10 @@
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="../others/index.html" class="btn btn-neutral float-right" title="杂项讨论" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="../network/index.html" class="btn btn-neutral float-right" title="网络技术/neutron" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="nova_interact.html" class="btn btn-neutral" title="27. nova组件间交互总结" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="nova_interact.html" class="btn btn-neutral" title="28. nova组件间交互总结" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   

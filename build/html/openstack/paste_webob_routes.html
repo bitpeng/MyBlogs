@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>14. OpenStack REST-API基础：paste/webob/routes库 &mdash; Welcome to Sitian&#39;s Blog 1.0 documentation</title>
+  <title>15. OpenStack REST-API基础：paste/webob/routes库 &mdash; Welcome to Sitian&#39;s Blog 1.0 documentation</title>
   
 
   
@@ -32,8 +32,8 @@
   
     <link rel="top" title="Welcome to Sitian&#39;s Blog 1.0 documentation" href="../index.html"/>
         <link rel="up" title="OpenStack Note" href="index.html"/>
-        <link rel="next" title="15. OpenGrok代码浏览环境搭建" href="opengrok_xp.html"/>
-        <link rel="prev" title="13. 云平台服务器重启注意事项" href="cloud_check.html"/> 
+        <link rel="next" title="16. OpenGrok代码浏览环境搭建" href="opengrok_xp.html"/>
+        <link rel="prev" title="14. 云平台服务器重启注意事项" href="cloud_check.html"/> 
 
   
   <script src="../_static/js/modernizr.min.js"></script>
@@ -88,7 +88,7 @@
 <li class="toctree-l1 current"><a class="reference internal" href="index.html">OpenStack Note</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="horizon_develop.html">1. Horizon 二次开发指南</a></li>
 <li class="toctree-l2"><a class="reference internal" href="image-create-guide.html">2. OpenStack镜像制作</a></li>
-<li class="toctree-l2"><a class="reference internal" href="deploy_synopsis.html">3. openstack 部署实践</a></li>
+<li class="toctree-l2"><a class="reference internal" href="deploy_synopsis.html">3. OpenStack 部署实践</a></li>
 <li class="toctree-l2"><a class="reference internal" href="centos_vm_netconf.html">4. Centos虚拟机联网配置</a></li>
 <li class="toctree-l2"><a class="reference internal" href="lanch_instance_failure.html">5. OpenStack 启动虚拟机失败分析</a></li>
 <li class="toctree-l2"><a class="reference internal" href="rabbitmq_doc.html">6. [翻译] rabbitmq教程</a></li>
@@ -98,38 +98,40 @@
 <li class="toctree-l2"><a class="reference internal" href="horizon_workflows_analysis.html">10. [翻译] horizon workflows分析</a></li>
 <li class="toctree-l2"><a class="reference internal" href="horizon_launch_instance.html">11. horizon启动虚拟机分析</a></li>
 <li class="toctree-l2"><a class="reference internal" href="django-generic_view.html">12. django通用视图：一个小问题引发的思考</a></li>
-<li class="toctree-l2"><a class="reference internal" href="cloud_check.html">13. 云平台服务器重启注意事项</a></li>
-<li class="toctree-l2 current"><a class="current reference internal" href="#">14. OpenStack REST-API基础：paste/webob/routes库</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#paste">14.1. paste库</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#id2">14.1.1. 程序示例</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#id3">14.1.2. paste配置讲解</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#loadapp-name">14.1.3. loadapp() name参数</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#url">14.1.4. URL匹配</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#id4">14.1.5. 总结</a></li>
+<li class="toctree-l2"><a class="reference internal" href="django_auth.html">13. Django认证：horizon登录认证解析</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cloud_check.html">14. 云平台服务器重启注意事项</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">15. OpenStack REST-API基础：paste/webob/routes库</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#paste">15.1. paste库</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#id2">15.1.1. 程序示例</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id3">15.1.2. paste配置讲解</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#loadapp-name">15.1.3. loadapp() name参数</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#url">15.1.4. URL匹配</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id4">15.1.5. 总结</a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="#webob">14.2. webob库</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#routes">14.3. routes库</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#id7">14.4. 参考</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#webob">15.2. webob库</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#routes">15.3. routes库</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id7">15.4. 参考</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="opengrok_xp.html">15. OpenGrok代码浏览环境搭建</a></li>
-<li class="toctree-l2"><a class="reference internal" href="nova_api.html">16. nova-api分析</a></li>
-<li class="toctree-l2"><a class="reference internal" href="nova_smd.html">17. [翻译] nova：Services、Managers and Drivers</a></li>
-<li class="toctree-l2"><a class="reference internal" href="oslo_cfg.html">18. oslo.config 用法总结</a></li>
-<li class="toctree-l2"><a class="reference internal" href="kombu.html">19. kombu和消息队列总结</a></li>
-<li class="toctree-l2"><a class="reference internal" href="openstack_debug.html">20. OpenStack 调试</a></li>
-<li class="toctree-l2"><a class="reference internal" href="nova_rpcserver_start.html">21. nova rpc服务启动分析</a></li>
-<li class="toctree-l2"><a class="reference internal" href="periodic_task.html">22. OpenStack周期性任务分析</a></li>
-<li class="toctree-l2"><a class="reference internal" href="nova_log.html">23. OpenStack 日志模块分析</a></li>
-<li class="toctree-l2"><a class="reference internal" href="qemu_kvm.html">24. qemu/kvm学习笔记</a></li>
-<li class="toctree-l2"><a class="reference internal" href="virt_cmd.html">25. 虚拟化相关命令</a></li>
-<li class="toctree-l2"><a class="reference internal" href="qemu_img_encry.html">26. nova虚机加密总结</a></li>
-<li class="toctree-l2"><a class="reference internal" href="nova_interact.html">27. nova组件间交互总结</a></li>
-<li class="toctree-l2"><a class="reference internal" href="juno_neutron-meter-agent_install.html">28. juno安装neutron-meter-agent</a></li>
+<li class="toctree-l2"><a class="reference internal" href="opengrok_xp.html">16. OpenGrok代码浏览环境搭建</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nova_api.html">17. nova-api分析</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nova_smd.html">18. [翻译] nova：Services、Managers and Drivers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="oslo_cfg.html">19. oslo.config 用法总结</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kombu.html">20. kombu和消息队列总结</a></li>
+<li class="toctree-l2"><a class="reference internal" href="openstack_debug.html">21. OpenStack 调试</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nova_rpcserver_start.html">22. nova rpc服务启动分析</a></li>
+<li class="toctree-l2"><a class="reference internal" href="periodic_task.html">23. OpenStack周期性任务分析</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nova_log.html">24. OpenStack 日志模块分析</a></li>
+<li class="toctree-l2"><a class="reference internal" href="qemu_kvm.html">25. qemu/kvm学习笔记</a></li>
+<li class="toctree-l2"><a class="reference internal" href="virt_cmd.html">26. 虚拟化相关命令</a></li>
+<li class="toctree-l2"><a class="reference internal" href="qemu_img_encry.html">27. nova虚机加密总结</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nova_interact.html">28. nova组件间交互总结</a></li>
+<li class="toctree-l2"><a class="reference internal" href="juno_neutron-meter-agent_install.html">29. juno安装neutron-meter-agent</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="../others/index.html">杂项讨论</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../network/index.html">网络技术/neutron</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../others/index.html">未分类</a></li>
 </ul>
 
             
@@ -162,7 +164,7 @@
       
           <li><a href="index.html">OpenStack Note</a> &raquo;</li>
       
-    <li>14. OpenStack REST-API基础：paste/webob/routes库</li>
+    <li>15. OpenStack REST-API基础：paste/webob/routes库</li>
       <li class="wy-breadcrumbs-aside">
         
           
@@ -177,7 +179,7 @@
            <div itemprop="articleBody">
             
   <div class="section" id="openstack-rest-api-paste-webob-routes">
-<span id="paste-webob-routes"></span><h1><a class="toc-backref" href="#id15">14. OpenStack REST-API基础：paste/webob/routes库</a><a class="headerlink" href="#openstack-rest-api-paste-webob-routes" title="Permalink to this headline">¶</a></h1>
+<span id="paste-webob-routes"></span><h1><a class="toc-backref" href="#id15">15. OpenStack REST-API基础：paste/webob/routes库</a><a class="headerlink" href="#openstack-rest-api-paste-webob-routes" title="Permalink to this headline">¶</a></h1>
 <div class="admonition tip">
 <p class="first admonition-title">Tip</p>
 <p class="last">在OpenStack 组件中，每一类组件服务入口都是通过rest-API提供的。而python rest-api服务的发布涉及
@@ -211,9 +213,9 @@
 </div>
 <hr class="docutils" />
 <div class="section" id="paste">
-<h2><a class="toc-backref" href="#id16">14.1. paste库</a><a class="headerlink" href="#paste" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id16">15.1. paste库</a><a class="headerlink" href="#paste" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="id2">
-<h3><a class="toc-backref" href="#id17">14.1.1. 程序示例</a><a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id17">15.1.1. 程序示例</a><a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h3>
 <p>paste的核心是paste配置文件，因此看懂paste.ini配置文件是关键，先来看一个例子。</p>
 <p>paste配置文件：</p>
 <div class="highlight-default"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
@@ -524,7 +526,7 @@
 </div>
 </div>
 <div class="section" id="id3">
-<h3><a class="toc-backref" href="#id18">14.1.2. paste配置讲解</a><a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id18">15.1.2. paste配置讲解</a><a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h3>
 <p>使用Paste和PasteDeploy模块来实现WSGI服务时，都需要一个paste.ini文件。
 这个文件也是Paste框架的精髓，这里需要重点说明一下这个文件如何阅读。</p>
 <p>paste.ini文件的格式类似于INI格式，每个section的格式为[type:name]。
@@ -628,7 +630,7 @@ paste.app_factory表示调用哪个函数来获得这个app。</p>
 </div>
 </div>
 <div class="section" id="loadapp-name">
-<h3><a class="toc-backref" href="#id23">14.1.3. loadapp() name参数</a><a class="headerlink" href="#loadapp-name" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id23">15.1.3. loadapp() name参数</a><a class="headerlink" href="#loadapp-name" title="Permalink to this headline">¶</a></h3>
 <p>loadapp 函数的name很关键，必须和配置文件的某个 composite对应上，否则出错。
 实际上，name变量表示paste.ini中一个section的名字，指定这个section作为HTTP请求处理的第一站。</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="c1">#wsgi_app = loadapp(&quot;config:%s&quot; % os.path.abspath(configfile), appname)</span>
@@ -641,7 +643,7 @@ paste.app_factory表示调用哪个函数来获得这个app。</p>
 </div>
 </div>
 <div class="section" id="url">
-<h3><a class="toc-backref" href="#id24">14.1.4. URL匹配</a><a class="headerlink" href="#url" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id24">15.1.4. URL匹配</a><a class="headerlink" href="#url" title="Permalink to this headline">¶</a></h3>
 <p>路径不是绝对匹配，只要开头匹配就可以，但是假如有更精确的匹配，那就采用更精确的。(有点类似于IP路由的最长最佳路由匹配)</p>
 <div class="figure align-center" id="id14">
 <a class="reference internal image-reference" href="../_images/paste_head_match.png"><img alt="../_images/paste_head_match.png" src="../_images/paste_head_match.png" style="width: 1070.0px; height: 275.0px;" /></a>
@@ -649,7 +651,7 @@ paste.app_factory表示调用哪个函数来获得这个app。</p>
 </div>
 </div>
 <div class="section" id="id4">
-<h3><a class="toc-backref" href="#id25">14.1.5. 总结</a><a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id25">15.1.5. 总结</a><a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h3>
 <p>paste.ini中这一大堆配置的作用就是把我们用Python写的WSGI application和middleware串起来，规定好HTTP请求处理的路径。
 即规定，对哪个URL path 调用对应的app！</p>
 <div class="admonition note">
@@ -672,7 +674,7 @@ paste.app_factory表示调用哪个函数来获得这个app。</p>
 </div>
 </div>
 <div class="section" id="webob">
-<h2><a class="toc-backref" href="#id26">14.2. webob库</a><a class="headerlink" href="#webob" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id26">15.2. webob库</a><a class="headerlink" href="#webob" title="Permalink to this headline">¶</a></h2>
 <p>WebOb is a Python library that provides wrappers around the WSGI request environment, and an object to help create WSGI responses. The objects map much of the specified behavior of HTTP, including header parsing, content negotiation and correct handling of conditional and range requests.</p>
 <p>来看例子：</p>
 <div class="highlight-default"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
@@ -842,7 +844,7 @@ root@juno-controller:/smbshare/paste_test# curl   http://192.168.60.254:9999/dum
 <p>先了解webob的简单用法，等分析openstack源码遇到更高级用法时再近些分析！</p>
 </div>
 <div class="section" id="routes">
-<h2><a class="toc-backref" href="#id27">14.3. routes库</a><a class="headerlink" href="#routes" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id27">15.3. routes库</a><a class="headerlink" href="#routes" title="Permalink to this headline">¶</a></h2>
 <p>restful程序的一大特点是url和app对应起来，但是wsgi规范和webob并没有
 解决这个问题。这就是routes库解决的问题，来看官网说明：</p>
 <p>Routes is a Python re-implementation of the Rails routes system for mapping URL’s
@@ -1096,7 +1098,7 @@ WSGI app。如果指定了action参数，那么请求会路由到该特定的方
 </div>
 <hr class="docutils" />
 <div class="section" id="id7">
-<h2><a class="toc-backref" href="#id28">14.4. 参考</a><a class="headerlink" href="#id7" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id28">15.4. 参考</a><a class="headerlink" href="#id7" title="Permalink to this headline">¶</a></h2>
 <table class="docutils footnote" frame="void" id="id8" rules="none">
 <colgroup><col class="label" /><col /></colgroup>
 <tbody valign="top">
@@ -1119,10 +1121,10 @@ WSGI app。如果指定了action参数，那么请求会路由到该特定的方
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="opengrok_xp.html" class="btn btn-neutral float-right" title="15. OpenGrok代码浏览环境搭建" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="opengrok_xp.html" class="btn btn-neutral float-right" title="16. OpenGrok代码浏览环境搭建" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="cloud_check.html" class="btn btn-neutral" title="13. 云平台服务器重启注意事项" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="cloud_check.html" class="btn btn-neutral" title="14. 云平台服务器重启注意事项" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   

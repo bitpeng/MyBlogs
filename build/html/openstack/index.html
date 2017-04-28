@@ -97,22 +97,23 @@
 <li class="toctree-l2"><a class="reference internal" href="horizon_workflows_analysis.html">10. [翻译] horizon workflows分析</a></li>
 <li class="toctree-l2"><a class="reference internal" href="horizon_launch_instance.html">11. horizon启动虚拟机分析</a></li>
 <li class="toctree-l2"><a class="reference internal" href="django-generic_view.html">12. django通用视图：一个小问题引发的思考</a></li>
-<li class="toctree-l2"><a class="reference internal" href="cloud_check.html">13. 云平台服务器重启注意事项</a></li>
-<li class="toctree-l2"><a class="reference internal" href="paste_webob_routes.html">14. OpenStack REST-API基础：paste/webob/routes库</a></li>
-<li class="toctree-l2"><a class="reference internal" href="opengrok_xp.html">15. OpenGrok代码浏览环境搭建</a></li>
-<li class="toctree-l2"><a class="reference internal" href="nova_api.html">16. nova-api分析</a></li>
-<li class="toctree-l2"><a class="reference internal" href="nova_smd.html">17. [翻译] nova：Services、Managers and Drivers</a></li>
-<li class="toctree-l2"><a class="reference internal" href="oslo_cfg.html">18. oslo.config 用法总结</a></li>
-<li class="toctree-l2"><a class="reference internal" href="kombu.html">19. kombu和消息队列总结</a></li>
-<li class="toctree-l2"><a class="reference internal" href="openstack_debug.html">20. OpenStack 调试</a></li>
-<li class="toctree-l2"><a class="reference internal" href="nova_rpcserver_start.html">21. nova rpc服务启动分析</a></li>
-<li class="toctree-l2"><a class="reference internal" href="periodic_task.html">22. OpenStack周期性任务分析</a></li>
-<li class="toctree-l2"><a class="reference internal" href="nova_log.html">23. OpenStack 日志模块分析</a></li>
-<li class="toctree-l2"><a class="reference internal" href="qemu_kvm.html">24. qemu/kvm学习笔记</a></li>
-<li class="toctree-l2"><a class="reference internal" href="virt_cmd.html">25. 虚拟化相关命令</a></li>
-<li class="toctree-l2"><a class="reference internal" href="qemu_img_encry.html">26. nova虚机加密总结</a></li>
-<li class="toctree-l2"><a class="reference internal" href="nova_interact.html">27. nova组件间交互总结</a></li>
-<li class="toctree-l2"><a class="reference internal" href="juno_neutron-meter-agent_install.html">28. juno安装neutron-meter-agent</a></li>
+<li class="toctree-l2"><a class="reference internal" href="django_auth.html">13. Django认证：horizon登录认证解析</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cloud_check.html">14. 云平台服务器重启注意事项</a></li>
+<li class="toctree-l2"><a class="reference internal" href="paste_webob_routes.html">15. OpenStack REST-API基础：paste/webob/routes库</a></li>
+<li class="toctree-l2"><a class="reference internal" href="opengrok_xp.html">16. OpenGrok代码浏览环境搭建</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nova_api.html">17. nova-api分析</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nova_smd.html">18. [翻译] nova：Services、Managers and Drivers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="oslo_cfg.html">19. oslo.config 用法总结</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kombu.html">20. kombu和消息队列总结</a></li>
+<li class="toctree-l2"><a class="reference internal" href="openstack_debug.html">21. OpenStack 调试</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nova_rpcserver_start.html">22. nova rpc服务启动分析</a></li>
+<li class="toctree-l2"><a class="reference internal" href="periodic_task.html">23. OpenStack周期性任务分析</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nova_log.html">24. OpenStack 日志模块分析</a></li>
+<li class="toctree-l2"><a class="reference internal" href="qemu_kvm.html">25. qemu/kvm学习笔记</a></li>
+<li class="toctree-l2"><a class="reference internal" href="virt_cmd.html">26. 虚拟化相关命令</a></li>
+<li class="toctree-l2"><a class="reference internal" href="qemu_img_encry.html">27. nova虚机加密总结</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nova_interact.html">28. nova组件间交互总结</a></li>
+<li class="toctree-l2"><a class="reference internal" href="juno_neutron-meter-agent_install.html">29. juno安装neutron-meter-agent</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../network/index.html">网络技术/neutron</a></li>
@@ -398,138 +399,151 @@
 <li class="toctree-l2"><a class="reference internal" href="django-generic_view.html#id4">12.3. 参考</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="cloud_check.html">13. 云平台服务器重启注意事项</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="cloud_check.html#id3">13.1. 核心服务状态检查</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="cloud_check.html#cinder">13.1.1. cinder服务</a></li>
-<li class="toctree-l3"><a class="reference internal" href="cloud_check.html#neutron">13.1.2. neutron服务</a></li>
-<li class="toctree-l3"><a class="reference internal" href="cloud_check.html#nova">13.1.3. nova服务</a></li>
-<li class="toctree-l3"><a class="reference internal" href="cloud_check.html#glance">13.1.4. glance 服务</a></li>
-<li class="toctree-l3"><a class="reference internal" href="cloud_check.html#id4">13.1.5. 消息队列服务状态</a></li>
-<li class="toctree-l3"><a class="reference internal" href="cloud_check.html#ceph">13.1.6. Ceph集群状态</a></li>
+<li class="toctree-l1"><a class="reference internal" href="django_auth.html">13. Django认证：horizon登录认证解析</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="django_auth.html#id2">13.1. 代码定位</a></li>
+<li class="toctree-l2"><a class="reference internal" href="django_auth.html#django">13.2. django中间件原理</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="django_auth.html#id3">13.2.1. 安装中间件</a></li>
+<li class="toctree-l3"><a class="reference internal" href="django_auth.html#id4">13.2.2. 中间件方法</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="cloud_check.html#id5">13.2. 异常服务重启</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="cloud_check.html#id6">13.2.1. 重启neutron服务</a></li>
-<li class="toctree-l3"><a class="reference internal" href="cloud_check.html#id7">13.2.2. 重启nova服务</a></li>
+<li class="toctree-l2"><a class="reference internal" href="django_auth.html#id5">13.3. 代码细节</a></li>
+<li class="toctree-l2"><a class="reference internal" href="django_auth.html#horizon">13.4. Horizon 用户登录流程分析</a></li>
+<li class="toctree-l2"><a class="reference internal" href="django_auth.html#id7">13.5. 流程图</a></li>
+<li class="toctree-l2"><a class="reference internal" href="django_auth.html#id8">13.6. 参考</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="cloud_check.html#id8">13.3. 启动虚拟机测试</a></li>
-<li class="toctree-l2"><a class="reference internal" href="cloud_check.html#id9">13.4. 脚本</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cloud_check.html">14. 云平台服务器重启注意事项</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="cloud_check.html#id3">14.1. 核心服务状态检查</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="cloud_check.html#cinder">14.1.1. cinder服务</a></li>
+<li class="toctree-l3"><a class="reference internal" href="cloud_check.html#neutron">14.1.2. neutron服务</a></li>
+<li class="toctree-l3"><a class="reference internal" href="cloud_check.html#nova">14.1.3. nova服务</a></li>
+<li class="toctree-l3"><a class="reference internal" href="cloud_check.html#glance">14.1.4. glance 服务</a></li>
+<li class="toctree-l3"><a class="reference internal" href="cloud_check.html#id4">14.1.5. 消息队列服务状态</a></li>
+<li class="toctree-l3"><a class="reference internal" href="cloud_check.html#ceph">14.1.6. Ceph集群状态</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="paste_webob_routes.html">14. OpenStack REST-API基础：paste/webob/routes库</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="paste_webob_routes.html#paste">14.1. paste库</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="paste_webob_routes.html#id2">14.1.1. 程序示例</a></li>
-<li class="toctree-l3"><a class="reference internal" href="paste_webob_routes.html#id3">14.1.2. paste配置讲解</a></li>
-<li class="toctree-l3"><a class="reference internal" href="paste_webob_routes.html#loadapp-name">14.1.3. loadapp() name参数</a></li>
-<li class="toctree-l3"><a class="reference internal" href="paste_webob_routes.html#url">14.1.4. URL匹配</a></li>
-<li class="toctree-l3"><a class="reference internal" href="paste_webob_routes.html#id4">14.1.5. 总结</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cloud_check.html#id5">14.2. 异常服务重启</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="cloud_check.html#id6">14.2.1. 重启neutron服务</a></li>
+<li class="toctree-l3"><a class="reference internal" href="cloud_check.html#id7">14.2.2. 重启nova服务</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="paste_webob_routes.html#webob">14.2. webob库</a></li>
-<li class="toctree-l2"><a class="reference internal" href="paste_webob_routes.html#routes">14.3. routes库</a></li>
-<li class="toctree-l2"><a class="reference internal" href="paste_webob_routes.html#id7">14.4. 参考</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cloud_check.html#id8">14.3. 启动虚拟机测试</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cloud_check.html#id9">14.4. 脚本</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="opengrok_xp.html">15. OpenGrok代码浏览环境搭建</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="opengrok_xp.html#tomcat">15.1. tomcat 安装</a></li>
-<li class="toctree-l2"><a class="reference internal" href="opengrok_xp.html#id2">15.2. OpenGrok 部署</a></li>
+<li class="toctree-l1"><a class="reference internal" href="paste_webob_routes.html">15. OpenStack REST-API基础：paste/webob/routes库</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="paste_webob_routes.html#paste">15.1. paste库</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="paste_webob_routes.html#id2">15.1.1. 程序示例</a></li>
+<li class="toctree-l3"><a class="reference internal" href="paste_webob_routes.html#id3">15.1.2. paste配置讲解</a></li>
+<li class="toctree-l3"><a class="reference internal" href="paste_webob_routes.html#loadapp-name">15.1.3. loadapp() name参数</a></li>
+<li class="toctree-l3"><a class="reference internal" href="paste_webob_routes.html#url">15.1.4. URL匹配</a></li>
+<li class="toctree-l3"><a class="reference internal" href="paste_webob_routes.html#id4">15.1.5. 总结</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="nova_api.html">16. nova-api分析</a></li>
-<li class="toctree-l1"><a class="reference internal" href="nova_smd.html">17. [翻译] nova：Services、Managers and Drivers</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="nova_smd.html#nova-service">17.1. nova.service 模块</a></li>
-<li class="toctree-l2"><a class="reference internal" href="nova_smd.html#nova-manager">17.2. nova.manager 模块</a></li>
-<li class="toctree-l2"><a class="reference internal" href="nova_smd.html#drivers">17.3. Drivers:特定实现</a></li>
+<li class="toctree-l2"><a class="reference internal" href="paste_webob_routes.html#webob">15.2. webob库</a></li>
+<li class="toctree-l2"><a class="reference internal" href="paste_webob_routes.html#routes">15.3. routes库</a></li>
+<li class="toctree-l2"><a class="reference internal" href="paste_webob_routes.html#id7">15.4. 参考</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="oslo_cfg.html">18. oslo.config 用法总结</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="oslo_cfg.html#id2">18.1. 配置项</a></li>
-<li class="toctree-l2"><a class="reference internal" href="oslo_cfg.html#id3">18.2. 配置项类型</a></li>
-<li class="toctree-l2"><a class="reference internal" href="oslo_cfg.html#id4">18.3. 注册参数</a></li>
-<li class="toctree-l2"><a class="reference internal" href="oslo_cfg.html#id5">18.4. 参数解析</a></li>
-<li class="toctree-l2"><a class="reference internal" href="oslo_cfg.html#id6">18.5. 获取帮助信息</a></li>
-<li class="toctree-l2"><a class="reference internal" href="oslo_cfg.html#id7">18.6. 参数分组</a></li>
-<li class="toctree-l2"><a class="reference internal" href="oslo_cfg.html#id8">18.7. 命令行和配置文件重复指定配置项</a></li>
-<li class="toctree-l2"><a class="reference internal" href="oslo_cfg.html#id9">18.8. 从其他模块导入配置</a></li>
-<li class="toctree-l2"><a class="reference internal" href="oslo_cfg.html#id10">18.9. 代码汇总</a></li>
-<li class="toctree-l2"><a class="reference internal" href="oslo_cfg.html#id11">18.10. 补充和更新</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="oslo_cfg.html#id12">18.10.1. 对配置项下划线的特殊处理</a></li>
-<li class="toctree-l3"><a class="reference internal" href="oslo_cfg.html#id13">18.10.2. 加载配置文件</a></li>
-<li class="toctree-l3"><a class="reference internal" href="oslo_cfg.html#id14">18.10.3. 记录所有的配置项</a></li>
-<li class="toctree-l3"><a class="reference internal" href="oslo_cfg.html#id15">18.10.4. 变量引用和替换</a></li>
+<li class="toctree-l1"><a class="reference internal" href="opengrok_xp.html">16. OpenGrok代码浏览环境搭建</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="opengrok_xp.html#tomcat">16.1. tomcat 安装</a></li>
+<li class="toctree-l2"><a class="reference internal" href="opengrok_xp.html#id2">16.2. OpenGrok 部署</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="oslo_cfg.html#id16">18.11. 参考</a></li>
+<li class="toctree-l1"><a class="reference internal" href="nova_api.html">17. nova-api分析</a></li>
+<li class="toctree-l1"><a class="reference internal" href="nova_smd.html">18. [翻译] nova：Services、Managers and Drivers</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="nova_smd.html#nova-service">18.1. nova.service 模块</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nova_smd.html#nova-manager">18.2. nova.manager 模块</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nova_smd.html#drivers">18.3. Drivers:特定实现</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="kombu.html">19. kombu和消息队列总结</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="kombu.html#id3">19.1. 术语</a></li>
-<li class="toctree-l2"><a class="reference internal" href="kombu.html#amqp">19.2. 通过amqp收发消息模型</a></li>
-<li class="toctree-l2"><a class="reference internal" href="kombu.html#id4">19.3. 其他要点</a></li>
-<li class="toctree-l2"><a class="reference internal" href="kombu.html#id5">19.4. 代码示例</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="kombu.html#id6">19.4.1. 示例一</a></li>
-<li class="toctree-l3"><a class="reference internal" href="kombu.html#id7">19.4.2. 示例二</a></li>
+<li class="toctree-l1"><a class="reference internal" href="oslo_cfg.html">19. oslo.config 用法总结</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="oslo_cfg.html#id2">19.1. 配置项</a></li>
+<li class="toctree-l2"><a class="reference internal" href="oslo_cfg.html#id3">19.2. 配置项类型</a></li>
+<li class="toctree-l2"><a class="reference internal" href="oslo_cfg.html#id4">19.3. 注册参数</a></li>
+<li class="toctree-l2"><a class="reference internal" href="oslo_cfg.html#id5">19.4. 参数解析</a></li>
+<li class="toctree-l2"><a class="reference internal" href="oslo_cfg.html#id6">19.5. 获取帮助信息</a></li>
+<li class="toctree-l2"><a class="reference internal" href="oslo_cfg.html#id7">19.6. 参数分组</a></li>
+<li class="toctree-l2"><a class="reference internal" href="oslo_cfg.html#id8">19.7. 命令行和配置文件重复指定配置项</a></li>
+<li class="toctree-l2"><a class="reference internal" href="oslo_cfg.html#id9">19.8. 从其他模块导入配置</a></li>
+<li class="toctree-l2"><a class="reference internal" href="oslo_cfg.html#id10">19.9. 代码汇总</a></li>
+<li class="toctree-l2"><a class="reference internal" href="oslo_cfg.html#id11">19.10. 补充和更新</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="oslo_cfg.html#id12">19.10.1. 对配置项下划线的特殊处理</a></li>
+<li class="toctree-l3"><a class="reference internal" href="oslo_cfg.html#id13">19.10.2. 加载配置文件</a></li>
+<li class="toctree-l3"><a class="reference internal" href="oslo_cfg.html#id14">19.10.3. 记录所有的配置项</a></li>
+<li class="toctree-l3"><a class="reference internal" href="oslo_cfg.html#id15">19.10.4. 变量引用和替换</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="kombu.html#id8">19.5. 参考</a></li>
+<li class="toctree-l2"><a class="reference internal" href="oslo_cfg.html#id16">19.11. 参考</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="openstack_debug.html">20. OpenStack 调试</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="openstack_debug.html#id3">20.1. 日志</a></li>
-<li class="toctree-l2"><a class="reference internal" href="openstack_debug.html#pdb-ipdb">20.2. pdb/ipdb</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="openstack_debug.html#set-trace">20.2.1. set_trace</a></li>
-<li class="toctree-l3"><a class="reference internal" href="openstack_debug.html#pdb">20.2.2. 直接使用 pdb 模块参数</a></li>
+<li class="toctree-l1"><a class="reference internal" href="kombu.html">20. kombu和消息队列总结</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="kombu.html#id3">20.1. 术语</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kombu.html#amqp">20.2. 通过amqp收发消息模型</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kombu.html#id4">20.3. 其他要点</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kombu.html#id5">20.4. 代码示例</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="kombu.html#id6">20.4.1. 示例一</a></li>
+<li class="toctree-l3"><a class="reference internal" href="kombu.html#id7">20.4.2. 示例二</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="openstack_debug.html#id4">20.3. 使用自己编写的调试设施</a></li>
-<li class="toctree-l2"><a class="reference internal" href="openstack_debug.html#id5">20.4. 参考</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kombu.html#id8">20.5. 参考</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="nova_rpcserver_start.html">21. nova rpc服务启动分析</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="nova_rpcserver_start.html#id2">21.1. 服务创建</a></li>
-<li class="toctree-l2"><a class="reference internal" href="nova_rpcserver_start.html#id3">21.2. 启动服务</a></li>
+<li class="toctree-l1"><a class="reference internal" href="openstack_debug.html">21. OpenStack 调试</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="openstack_debug.html#id3">21.1. 日志</a></li>
+<li class="toctree-l2"><a class="reference internal" href="openstack_debug.html#pdb-ipdb">21.2. pdb/ipdb</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="openstack_debug.html#set-trace">21.2.1. set_trace</a></li>
+<li class="toctree-l3"><a class="reference internal" href="openstack_debug.html#pdb">21.2.2. 直接使用 pdb 模块参数</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="periodic_task.html">22. OpenStack周期性任务分析</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="periodic_task.html#id2">22.1. 阻塞型定时任务</a></li>
-<li class="toctree-l2"><a class="reference internal" href="periodic_task.html#id3">22.2. 状态报告和通知型定时任务</a></li>
+<li class="toctree-l2"><a class="reference internal" href="openstack_debug.html#id4">21.3. 使用自己编写的调试设施</a></li>
+<li class="toctree-l2"><a class="reference internal" href="openstack_debug.html#id5">21.4. 参考</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="nova_log.html">23. OpenStack 日志模块分析</a></li>
-<li class="toctree-l1"><a class="reference internal" href="qemu_kvm.html">24. qemu/kvm学习笔记</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="qemu_kvm.html#id3">24.1. 虚拟化</a></li>
-<li class="toctree-l2"><a class="reference internal" href="qemu_kvm.html#kvm">24.2. kvm</a></li>
-<li class="toctree-l2"><a class="reference internal" href="qemu_kvm.html#id4">24.3. qemu-kvm</a></li>
-<li class="toctree-l2"><a class="reference internal" href="qemu_kvm.html#qemu-img">24.4. qemu-img</a></li>
+<li class="toctree-l1"><a class="reference internal" href="nova_rpcserver_start.html">22. nova rpc服务启动分析</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="nova_rpcserver_start.html#id2">22.1. 服务创建</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nova_rpcserver_start.html#id3">22.2. 启动服务</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="virt_cmd.html">25. 虚拟化相关命令</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="virt_cmd.html#virsh">25.1. virsh</a></li>
-<li class="toctree-l2"><a class="reference internal" href="virt_cmd.html#qemu">25.2. qemu</a></li>
+<li class="toctree-l1"><a class="reference internal" href="periodic_task.html">23. OpenStack周期性任务分析</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="periodic_task.html#id2">23.1. 阻塞型定时任务</a></li>
+<li class="toctree-l2"><a class="reference internal" href="periodic_task.html#id3">23.2. 状态报告和通知型定时任务</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="qemu_img_encry.html">26. nova虚机加密总结</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="qemu_img_encry.html#id2">26.1. 预备知识</a></li>
-<li class="toctree-l2"><a class="reference internal" href="qemu_img_encry.html#qemu-img">26.2. qemu-img 磁盘加密</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="qemu_img_encry.html#backing-file">26.2.1. backing_file</a></li>
-<li class="toctree-l3"><a class="reference internal" href="qemu_img_encry.html#backfile">26.2.2. 创建加密磁盘，开启backfile选项</a></li>
-<li class="toctree-l3"><a class="reference internal" href="qemu_img_encry.html#convert">26.2.3. 利用convert命令创建加密磁盘</a></li>
-<li class="toctree-l3"><a class="reference internal" href="qemu_img_encry.html#id3">26.2.4. 区别分析</a></li>
+<li class="toctree-l1"><a class="reference internal" href="nova_log.html">24. OpenStack 日志模块分析</a></li>
+<li class="toctree-l1"><a class="reference internal" href="qemu_kvm.html">25. qemu/kvm学习笔记</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="qemu_kvm.html#id3">25.1. 虚拟化</a></li>
+<li class="toctree-l2"><a class="reference internal" href="qemu_kvm.html#kvm">25.2. kvm</a></li>
+<li class="toctree-l2"><a class="reference internal" href="qemu_kvm.html#id4">25.3. qemu-kvm</a></li>
+<li class="toctree-l2"><a class="reference internal" href="qemu_kvm.html#qemu-img">25.4. qemu-img</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="qemu_img_encry.html#id4">26.3. 附录：实验步骤</a></li>
+<li class="toctree-l1"><a class="reference internal" href="virt_cmd.html">26. 虚拟化相关命令</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="virt_cmd.html#virsh">26.1. virsh</a></li>
+<li class="toctree-l2"><a class="reference internal" href="virt_cmd.html#qemu">26.2. qemu</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="nova_interact.html">27. nova组件间交互总结</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="nova_interact.html#id2">27.1. 模块与组件调用关系</a></li>
-<li class="toctree-l2"><a class="reference internal" href="nova_interact.html#id3">27.2. 一些误区</a></li>
+<li class="toctree-l1"><a class="reference internal" href="qemu_img_encry.html">27. nova虚机加密总结</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="qemu_img_encry.html#id2">27.1. 预备知识</a></li>
+<li class="toctree-l2"><a class="reference internal" href="qemu_img_encry.html#qemu-img">27.2. qemu-img 磁盘加密</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="qemu_img_encry.html#backing-file">27.2.1. backing_file</a></li>
+<li class="toctree-l3"><a class="reference internal" href="qemu_img_encry.html#backfile">27.2.2. 创建加密磁盘，开启backfile选项</a></li>
+<li class="toctree-l3"><a class="reference internal" href="qemu_img_encry.html#convert">27.2.3. 利用convert命令创建加密磁盘</a></li>
+<li class="toctree-l3"><a class="reference internal" href="qemu_img_encry.html#id3">27.2.4. 区别分析</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="juno_neutron-meter-agent_install.html">28. juno安装neutron-meter-agent</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="juno_neutron-meter-agent_install.html#apt-get">28.1. apt-get 尝试</a></li>
-<li class="toctree-l2"><a class="reference internal" href="juno_neutron-meter-agent_install.html#id2">28.2. 手动下载2014.2.1版本并安装</a></li>
-<li class="toctree-l2"><a class="reference internal" href="juno_neutron-meter-agent_install.html#id3">28.3. 参考</a></li>
+<li class="toctree-l2"><a class="reference internal" href="qemu_img_encry.html#id4">27.3. 附录：实验步骤</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="nova_interact.html">28. nova组件间交互总结</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="nova_interact.html#id2">28.1. 模块与组件调用关系</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nova_interact.html#id3">28.2. 一些误区</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="juno_neutron-meter-agent_install.html">29. juno安装neutron-meter-agent</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="juno_neutron-meter-agent_install.html#apt-get">29.1. apt-get 尝试</a></li>
+<li class="toctree-l2"><a class="reference internal" href="juno_neutron-meter-agent_install.html#id2">29.2. 手动下载2014.2.1版本并安装</a></li>
+<li class="toctree-l2"><a class="reference internal" href="juno_neutron-meter-agent_install.html#id3">29.3. 参考</a></li>
 </ul>
 </li>
 </ul>

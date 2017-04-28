@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>18. oslo.config 用法总结 &mdash; Welcome to Sitian&#39;s Blog 1.0 documentation</title>
+  <title>19. oslo.config 用法总结 &mdash; Welcome to Sitian&#39;s Blog 1.0 documentation</title>
   
 
   
@@ -32,8 +32,8 @@
   
     <link rel="top" title="Welcome to Sitian&#39;s Blog 1.0 documentation" href="../index.html"/>
         <link rel="up" title="OpenStack Note" href="index.html"/>
-        <link rel="next" title="19. kombu和消息队列总结" href="kombu.html"/>
-        <link rel="prev" title="17. [翻译] nova：Services、Managers and Drivers" href="nova_smd.html"/> 
+        <link rel="next" title="20. kombu和消息队列总结" href="kombu.html"/>
+        <link rel="prev" title="18. [翻译] nova：Services、Managers and Drivers" href="nova_smd.html"/> 
 
   
   <script src="../_static/js/modernizr.min.js"></script>
@@ -88,7 +88,7 @@
 <li class="toctree-l1 current"><a class="reference internal" href="index.html">OpenStack Note</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="horizon_develop.html">1. Horizon 二次开发指南</a></li>
 <li class="toctree-l2"><a class="reference internal" href="image-create-guide.html">2. OpenStack镜像制作</a></li>
-<li class="toctree-l2"><a class="reference internal" href="deploy_synopsis.html">3. openstack 部署实践</a></li>
+<li class="toctree-l2"><a class="reference internal" href="deploy_synopsis.html">3. OpenStack 部署实践</a></li>
 <li class="toctree-l2"><a class="reference internal" href="centos_vm_netconf.html">4. Centos虚拟机联网配置</a></li>
 <li class="toctree-l2"><a class="reference internal" href="lanch_instance_failure.html">5. OpenStack 启动虚拟机失败分析</a></li>
 <li class="toctree-l2"><a class="reference internal" href="rabbitmq_doc.html">6. [翻译] rabbitmq教程</a></li>
@@ -98,44 +98,46 @@
 <li class="toctree-l2"><a class="reference internal" href="horizon_workflows_analysis.html">10. [翻译] horizon workflows分析</a></li>
 <li class="toctree-l2"><a class="reference internal" href="horizon_launch_instance.html">11. horizon启动虚拟机分析</a></li>
 <li class="toctree-l2"><a class="reference internal" href="django-generic_view.html">12. django通用视图：一个小问题引发的思考</a></li>
-<li class="toctree-l2"><a class="reference internal" href="cloud_check.html">13. 云平台服务器重启注意事项</a></li>
-<li class="toctree-l2"><a class="reference internal" href="paste_webob_routes.html">14. OpenStack REST-API基础：paste/webob/routes库</a></li>
-<li class="toctree-l2"><a class="reference internal" href="opengrok_xp.html">15. OpenGrok代码浏览环境搭建</a></li>
-<li class="toctree-l2"><a class="reference internal" href="nova_api.html">16. nova-api分析</a></li>
-<li class="toctree-l2"><a class="reference internal" href="nova_smd.html">17. [翻译] nova：Services、Managers and Drivers</a></li>
-<li class="toctree-l2 current"><a class="current reference internal" href="#">18. oslo.config 用法总结</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#id2">18.1. 配置项</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#id3">18.2. 配置项类型</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#id4">18.3. 注册参数</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#id5">18.4. 参数解析</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#id6">18.5. 获取帮助信息</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#id7">18.6. 参数分组</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#id8">18.7. 命令行和配置文件重复指定配置项</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#id9">18.8. 从其他模块导入配置</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#id10">18.9. 代码汇总</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#id11">18.10. 补充和更新</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#id12">18.10.1. 对配置项下划线的特殊处理</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#id13">18.10.2. 加载配置文件</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#id14">18.10.3. 记录所有的配置项</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#id15">18.10.4. 变量引用和替换</a></li>
+<li class="toctree-l2"><a class="reference internal" href="django_auth.html">13. Django认证：horizon登录认证解析</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cloud_check.html">14. 云平台服务器重启注意事项</a></li>
+<li class="toctree-l2"><a class="reference internal" href="paste_webob_routes.html">15. OpenStack REST-API基础：paste/webob/routes库</a></li>
+<li class="toctree-l2"><a class="reference internal" href="opengrok_xp.html">16. OpenGrok代码浏览环境搭建</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nova_api.html">17. nova-api分析</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nova_smd.html">18. [翻译] nova：Services、Managers and Drivers</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">19. oslo.config 用法总结</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id2">19.1. 配置项</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id3">19.2. 配置项类型</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id4">19.3. 注册参数</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id5">19.4. 参数解析</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id6">19.5. 获取帮助信息</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id7">19.6. 参数分组</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id8">19.7. 命令行和配置文件重复指定配置项</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id9">19.8. 从其他模块导入配置</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id10">19.9. 代码汇总</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id11">19.10. 补充和更新</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#id12">19.10.1. 对配置项下划线的特殊处理</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id13">19.10.2. 加载配置文件</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id14">19.10.3. 记录所有的配置项</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id15">19.10.4. 变量引用和替换</a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="#id16">18.11. 参考</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id16">19.11. 参考</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="kombu.html">19. kombu和消息队列总结</a></li>
-<li class="toctree-l2"><a class="reference internal" href="openstack_debug.html">20. OpenStack 调试</a></li>
-<li class="toctree-l2"><a class="reference internal" href="nova_rpcserver_start.html">21. nova rpc服务启动分析</a></li>
-<li class="toctree-l2"><a class="reference internal" href="periodic_task.html">22. OpenStack周期性任务分析</a></li>
-<li class="toctree-l2"><a class="reference internal" href="nova_log.html">23. OpenStack 日志模块分析</a></li>
-<li class="toctree-l2"><a class="reference internal" href="qemu_kvm.html">24. qemu/kvm学习笔记</a></li>
-<li class="toctree-l2"><a class="reference internal" href="virt_cmd.html">25. 虚拟化相关命令</a></li>
-<li class="toctree-l2"><a class="reference internal" href="qemu_img_encry.html">26. nova虚机加密总结</a></li>
-<li class="toctree-l2"><a class="reference internal" href="nova_interact.html">27. nova组件间交互总结</a></li>
-<li class="toctree-l2"><a class="reference internal" href="juno_neutron-meter-agent_install.html">28. juno安装neutron-meter-agent</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kombu.html">20. kombu和消息队列总结</a></li>
+<li class="toctree-l2"><a class="reference internal" href="openstack_debug.html">21. OpenStack 调试</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nova_rpcserver_start.html">22. nova rpc服务启动分析</a></li>
+<li class="toctree-l2"><a class="reference internal" href="periodic_task.html">23. OpenStack周期性任务分析</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nova_log.html">24. OpenStack 日志模块分析</a></li>
+<li class="toctree-l2"><a class="reference internal" href="qemu_kvm.html">25. qemu/kvm学习笔记</a></li>
+<li class="toctree-l2"><a class="reference internal" href="virt_cmd.html">26. 虚拟化相关命令</a></li>
+<li class="toctree-l2"><a class="reference internal" href="qemu_img_encry.html">27. nova虚机加密总结</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nova_interact.html">28. nova组件间交互总结</a></li>
+<li class="toctree-l2"><a class="reference internal" href="juno_neutron-meter-agent_install.html">29. juno安装neutron-meter-agent</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="../others/index.html">杂项讨论</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../network/index.html">网络技术/neutron</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../others/index.html">未分类</a></li>
 </ul>
 
             
@@ -168,7 +170,7 @@
       
           <li><a href="index.html">OpenStack Note</a> &raquo;</li>
       
-    <li>18. oslo.config 用法总结</li>
+    <li>19. oslo.config 用法总结</li>
       <li class="wy-breadcrumbs-aside">
         
           
@@ -183,7 +185,7 @@
            <div itemprop="articleBody">
             
   <div class="section" id="oslo-config">
-<span id="oslo-cfg"></span><h1><a class="toc-backref" href="#id25">18. oslo.config 用法总结</a><a class="headerlink" href="#oslo-config" title="Permalink to this headline">¶</a></h1>
+<span id="oslo-cfg"></span><h1><a class="toc-backref" href="#id25">19. oslo.config 用法总结</a><a class="headerlink" href="#oslo-config" title="Permalink to this headline">¶</a></h1>
 <div class="contents topic" id="id1">
 <p class="topic-title first">目录</p>
 <ul class="simple">
@@ -213,7 +215,7 @@
 <p>OpenStack源码中使用了很多的标准库和第三方库，假如不熟悉这些库的用法，分析代码时往往会事倍功半。oslo作为OpenStack的通用组件，在每一个项目中都有用到，现在对子项目 <code class="docutils literal"><span class="pre">oslo.config</span></code> 用法做一个总结！由于oslo.config支持的功能非常的多，因此这里可能只会列出常用的用法。</p>
 <p>代码版本为 OpenStack juno！</p>
 <div class="section" id="id2">
-<h2><a class="toc-backref" href="#id26">18.1. 配置项</a><a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id26">19.1. 配置项</a><a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">sys</span>
 <span class="kn">from</span> <span class="nn">oslo.config</span> <span class="k">import</span> <span class="n">cfg</span>
 <span class="kn">from</span> <span class="nn">oslo.config</span> <span class="k">import</span> <span class="n">types</span>
@@ -236,12 +238,12 @@
 </div>
 </div>
 <div class="section" id="id3">
-<h2><a class="toc-backref" href="#id27">18.2. 配置项类型</a><a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id27">19.2. 配置项类型</a><a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h2>
 <p>第一种方式是使用 cfg.StrOpt，cfg.IntOpt 等带有类型的参数类；另一种方式是在
 初始化 cfg.Opt 时传递 type 参数。oslo.config 支持多种类型！</p>
 </div>
 <div class="section" id="id4">
-<h2><a class="toc-backref" href="#id28">18.3. 注册参数</a><a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id28">19.3. 注册参数</a><a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h2>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="c1"># oslo.config 默认维护了一个 ConfigOpts 类型的全局变量 CONF。</span>
 <span class="c1"># 注册参数，以及后续获取参数，都是可以通过 CONF。</span>
 <span class="n">CONF</span> <span class="o">=</span> <span class="n">cfg</span><span class="o">.</span><span class="n">CONF</span>
@@ -262,7 +264,7 @@
 </div>
 </div>
 <div class="section" id="id5">
-<h2><a class="toc-backref" href="#id29">18.4. 参数解析</a><a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id29">19.4. 参数解析</a><a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h2>
 <p>配置文件和命令行参数解析是通过 <code class="docutils literal"><span class="pre">CONF(sys.argv[1:])</span></code> 完成。</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
     <span class="n">CONF</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">:])</span>
@@ -274,7 +276,7 @@
 </div>
 </div>
 <div class="section" id="id6">
-<h2><a class="toc-backref" href="#id30">18.5. 获取帮助信息</a><a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id30">19.5. 获取帮助信息</a><a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h2>
 <div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">root@allinone-v2:/smbshare#</span> ./test_cfg.py -h
 <span class="go">usage: test_cfg.py [-h] [--config-dir DIR] [--config-file PATH] [--host HOST]</span>
 <span class="go">                   [--port PORT] [--version]</span>
@@ -299,7 +301,7 @@
 选项，用来从配置文件中获取参数值！</p>
 </div>
 <div class="section" id="id7">
-<h2><a class="toc-backref" href="#id31">18.6. 参数分组</a><a class="headerlink" href="#id7" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id31">19.6. 参数分组</a><a class="headerlink" href="#id7" title="Permalink to this headline">¶</a></h2>
 <p>参数分组，既可以通过 <code class="xref py py-class docutils literal"><span class="pre">cfg.OptGroup</span></code> 指定，也可以在
 注册参数时直接指定分组名字字符串，个人倾向直接使用字符串组名。</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">CONF</span><span class="o">.</span><span class="n">register_opts</span><span class="p">(</span><span class="n">disk_opts</span><span class="p">,</span> <span class="s1">&#39;disk&#39;</span><span class="p">)</span>
@@ -347,7 +349,7 @@
 </ul>
 </div>
 <div class="section" id="id8">
-<h2><a class="toc-backref" href="#id32">18.7. 命令行和配置文件重复指定配置项</a><a class="headerlink" href="#id8" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id32">19.7. 命令行和配置文件重复指定配置项</a><a class="headerlink" href="#id8" title="Permalink to this headline">¶</a></h2>
 <p>假如在命令行和配置文件中，都指定了配置项，那么后指定的会覆盖先指定的！</p>
 <div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">root@allinone-v2:/smbshare#</span> ./test_cfg.py
 <span class="go">volume: [&#39;hda 100G&#39;, &#39;hdb 150G&#39;, &#39;hdc 200G&#39;]</span>
@@ -373,7 +375,7 @@
 <p>可以看到，假如命令行参数最后指定，就会覆盖配置文件中的相应参数；反过来亦然！</p>
 </div>
 <div class="section" id="id9">
-<h2><a class="toc-backref" href="#id33">18.8. 从其他模块导入配置</a><a class="headerlink" href="#id9" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id33">19.8. 从其他模块导入配置</a><a class="headerlink" href="#id9" title="Permalink to this headline">¶</a></h2>
 <p>由于OpenStack项目大，模块多。因此假如可以在部分模块中定义配置项，然后其他模块直接
 导入，就会很方便，也方便管理。</p>
 <p>oslo.config 支持直接从其他模块中导入配置！可以使用 <a class="reference internal" href="#ConfigOpts.import_opt" title="ConfigOpts.import_opt"><code class="xref py py-meth docutils literal"><span class="pre">ConfigOpts.import_opt()</span></code></a> 实现。</p>
@@ -418,7 +420,7 @@
 从其他模块导入配置项这种用法在 OpenStack 组件中使用相当广泛!</p>
 </div>
 <div class="section" id="id10">
-<h2><a class="toc-backref" href="#id34">18.9. 代码汇总</a><a class="headerlink" href="#id10" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id34">19.9. 代码汇总</a><a class="headerlink" href="#id10" title="Permalink to this headline">¶</a></h2>
 <p>以下是本次测试代码，可以直接复制运行！</p>
 <p>test_cfg.py：</p>
 <div class="highlight-python"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
@@ -550,9 +552,9 @@ print <span class="s2">&quot;cli host: &quot;</span>, CONF.cli.host
 </td></tr></table></div>
 </div>
 <div class="section" id="id11">
-<h2><a class="toc-backref" href="#id35">18.10. 补充和更新</a><a class="headerlink" href="#id11" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id35">19.10. 补充和更新</a><a class="headerlink" href="#id11" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="id12">
-<h3><a class="toc-backref" href="#id36">18.10.1. 对配置项下划线的特殊处理</a><a class="headerlink" href="#id12" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id36">19.10.1. 对配置项下划线的特殊处理</a><a class="headerlink" href="#id12" title="Permalink to this headline">¶</a></h3>
 <p><strong>update: 2016/12/25-18-54</strong></p>
 <p>oslo.config.cfg 模块，对配置项名称中下划线进行了特殊处理，这一点要特别注意。</p>
 <p>比如我今天在阅读 nova/openstack/common/log.py 代码时，代码中有这么一项：</p>
@@ -578,7 +580,7 @@ print <span class="s2">&quot;cli host: &quot;</span>, CONF.cli.host
 </div>
 </div>
 <div class="section" id="id13">
-<h3><a class="toc-backref" href="#id37">18.10.2. 加载配置文件</a><a class="headerlink" href="#id13" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id37">19.10.2. 加载配置文件</a><a class="headerlink" href="#id13" title="Permalink to this headline">¶</a></h3>
 <p><strong>update: 2016/12/26-12-40</strong></p>
 <p>这种方式，也是我在阅读 nova/openstack/common/log 模块代码时注意到的。
 log 模块设置nova的日志保存在 /var/log/nova/ 目录下，该项由 /etc/nova/nova.conf
@@ -615,7 +617,7 @@ log 模块设置nova的日志保存在 /var/log/nova/ 目录下，该项由 /etc
 </div>
 </div>
 <div class="section" id="id14">
-<h3><a class="toc-backref" href="#id38">18.10.3. 记录所有的配置项</a><a class="headerlink" href="#id14" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id38">19.10.3. 记录所有的配置项</a><a class="headerlink" href="#id14" title="Permalink to this headline">¶</a></h3>
 <p><strong>update: 2017-1-8 18:30</strong></p>
 <p>该函数的用法也是在分析nova组件源码时学习到的，会尝试
 以level级别记录CONF所有的配置项：</p>
@@ -648,7 +650,7 @@ log 模块设置nova的日志保存在 /var/log/nova/ 目录下，该项由 /etc
 </div>
 </div>
 <div class="section" id="id15">
-<h3><a class="toc-backref" href="#id39">18.10.4. 变量引用和替换</a><a class="headerlink" href="#id15" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id39">19.10.4. 变量引用和替换</a><a class="headerlink" href="#id15" title="Permalink to this headline">¶</a></h3>
 <p><strong>update: 2017-1-10</strong></p>
 <p>oslo.config 支持配置项引用其他配置项的值。</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">cfg</span><span class="o">.</span><span class="n">StrOpt</span><span class="p">(</span><span class="s1">&#39;state_path&#39;</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="s1">&#39;/root&#39;</span><span class="p">)</span>
@@ -668,7 +670,7 @@ log 模块设置nova的日志保存在 /var/log/nova/ 目录下，该项由 /etc
 </div>
 <hr class="docutils" />
 <div class="section" id="id16">
-<h2><a class="toc-backref" href="#id40">18.11. 参考</a><a class="headerlink" href="#id16" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id40">19.11. 参考</a><a class="headerlink" href="#id16" title="Permalink to this headline">¶</a></h2>
 <table class="docutils footnote" frame="void" id="id17" rules="none">
 <colgroup><col class="label" /><col /></colgroup>
 <tbody valign="top">
@@ -703,10 +705,10 @@ log 模块设置nova的日志保存在 /var/log/nova/ 目录下，该项由 /etc
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="kombu.html" class="btn btn-neutral float-right" title="19. kombu和消息队列总结" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="kombu.html" class="btn btn-neutral float-right" title="20. kombu和消息队列总结" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="nova_smd.html" class="btn btn-neutral" title="17. [翻译] nova：Services、Managers and Drivers" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="nova_smd.html" class="btn btn-neutral" title="18. [翻译] nova：Services、Managers and Drivers" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   

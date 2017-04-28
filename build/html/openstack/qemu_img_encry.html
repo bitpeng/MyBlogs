@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>26. nova虚机加密总结 &mdash; Welcome to Sitian&#39;s Blog 1.0 documentation</title>
+  <title>27. nova虚机加密总结 &mdash; Welcome to Sitian&#39;s Blog 1.0 documentation</title>
   
 
   
@@ -32,8 +32,8 @@
   
     <link rel="top" title="Welcome to Sitian&#39;s Blog 1.0 documentation" href="../index.html"/>
         <link rel="up" title="OpenStack Note" href="index.html"/>
-        <link rel="next" title="27. nova组件间交互总结" href="nova_interact.html"/>
-        <link rel="prev" title="25. 虚拟化相关命令" href="virt_cmd.html"/> 
+        <link rel="next" title="28. nova组件间交互总结" href="nova_interact.html"/>
+        <link rel="prev" title="26. 虚拟化相关命令" href="virt_cmd.html"/> 
 
   
   <script src="../_static/js/modernizr.min.js"></script>
@@ -88,7 +88,7 @@
 <li class="toctree-l1 current"><a class="reference internal" href="index.html">OpenStack Note</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="horizon_develop.html">1. Horizon 二次开发指南</a></li>
 <li class="toctree-l2"><a class="reference internal" href="image-create-guide.html">2. OpenStack镜像制作</a></li>
-<li class="toctree-l2"><a class="reference internal" href="deploy_synopsis.html">3. openstack 部署实践</a></li>
+<li class="toctree-l2"><a class="reference internal" href="deploy_synopsis.html">3. OpenStack 部署实践</a></li>
 <li class="toctree-l2"><a class="reference internal" href="centos_vm_netconf.html">4. Centos虚拟机联网配置</a></li>
 <li class="toctree-l2"><a class="reference internal" href="lanch_instance_failure.html">5. OpenStack 启动虚拟机失败分析</a></li>
 <li class="toctree-l2"><a class="reference internal" href="rabbitmq_doc.html">6. [翻译] rabbitmq教程</a></li>
@@ -98,36 +98,38 @@
 <li class="toctree-l2"><a class="reference internal" href="horizon_workflows_analysis.html">10. [翻译] horizon workflows分析</a></li>
 <li class="toctree-l2"><a class="reference internal" href="horizon_launch_instance.html">11. horizon启动虚拟机分析</a></li>
 <li class="toctree-l2"><a class="reference internal" href="django-generic_view.html">12. django通用视图：一个小问题引发的思考</a></li>
-<li class="toctree-l2"><a class="reference internal" href="cloud_check.html">13. 云平台服务器重启注意事项</a></li>
-<li class="toctree-l2"><a class="reference internal" href="paste_webob_routes.html">14. OpenStack REST-API基础：paste/webob/routes库</a></li>
-<li class="toctree-l2"><a class="reference internal" href="opengrok_xp.html">15. OpenGrok代码浏览环境搭建</a></li>
-<li class="toctree-l2"><a class="reference internal" href="nova_api.html">16. nova-api分析</a></li>
-<li class="toctree-l2"><a class="reference internal" href="nova_smd.html">17. [翻译] nova：Services、Managers and Drivers</a></li>
-<li class="toctree-l2"><a class="reference internal" href="oslo_cfg.html">18. oslo.config 用法总结</a></li>
-<li class="toctree-l2"><a class="reference internal" href="kombu.html">19. kombu和消息队列总结</a></li>
-<li class="toctree-l2"><a class="reference internal" href="openstack_debug.html">20. OpenStack 调试</a></li>
-<li class="toctree-l2"><a class="reference internal" href="nova_rpcserver_start.html">21. nova rpc服务启动分析</a></li>
-<li class="toctree-l2"><a class="reference internal" href="periodic_task.html">22. OpenStack周期性任务分析</a></li>
-<li class="toctree-l2"><a class="reference internal" href="nova_log.html">23. OpenStack 日志模块分析</a></li>
-<li class="toctree-l2"><a class="reference internal" href="qemu_kvm.html">24. qemu/kvm学习笔记</a></li>
-<li class="toctree-l2"><a class="reference internal" href="virt_cmd.html">25. 虚拟化相关命令</a></li>
-<li class="toctree-l2 current"><a class="current reference internal" href="#">26. nova虚机加密总结</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#id2">26.1. 预备知识</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#qemu-img">26.2. qemu-img 磁盘加密</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#backing-file">26.2.1. backing_file</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#backfile">26.2.2. 创建加密磁盘，开启backfile选项</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#convert">26.2.3. 利用convert命令创建加密磁盘</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#id3">26.2.4. 区别分析</a></li>
+<li class="toctree-l2"><a class="reference internal" href="django_auth.html">13. Django认证：horizon登录认证解析</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cloud_check.html">14. 云平台服务器重启注意事项</a></li>
+<li class="toctree-l2"><a class="reference internal" href="paste_webob_routes.html">15. OpenStack REST-API基础：paste/webob/routes库</a></li>
+<li class="toctree-l2"><a class="reference internal" href="opengrok_xp.html">16. OpenGrok代码浏览环境搭建</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nova_api.html">17. nova-api分析</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nova_smd.html">18. [翻译] nova：Services、Managers and Drivers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="oslo_cfg.html">19. oslo.config 用法总结</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kombu.html">20. kombu和消息队列总结</a></li>
+<li class="toctree-l2"><a class="reference internal" href="openstack_debug.html">21. OpenStack 调试</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nova_rpcserver_start.html">22. nova rpc服务启动分析</a></li>
+<li class="toctree-l2"><a class="reference internal" href="periodic_task.html">23. OpenStack周期性任务分析</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nova_log.html">24. OpenStack 日志模块分析</a></li>
+<li class="toctree-l2"><a class="reference internal" href="qemu_kvm.html">25. qemu/kvm学习笔记</a></li>
+<li class="toctree-l2"><a class="reference internal" href="virt_cmd.html">26. 虚拟化相关命令</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">27. nova虚机加密总结</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id2">27.1. 预备知识</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#qemu-img">27.2. qemu-img 磁盘加密</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#backing-file">27.2.1. backing_file</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#backfile">27.2.2. 创建加密磁盘，开启backfile选项</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#convert">27.2.3. 利用convert命令创建加密磁盘</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id3">27.2.4. 区别分析</a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="#id4">26.3. 附录：实验步骤</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id4">27.3. 附录：实验步骤</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="nova_interact.html">27. nova组件间交互总结</a></li>
-<li class="toctree-l2"><a class="reference internal" href="juno_neutron-meter-agent_install.html">28. juno安装neutron-meter-agent</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nova_interact.html">28. nova组件间交互总结</a></li>
+<li class="toctree-l2"><a class="reference internal" href="juno_neutron-meter-agent_install.html">29. juno安装neutron-meter-agent</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="../others/index.html">杂项讨论</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../network/index.html">网络技术/neutron</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../others/index.html">未分类</a></li>
 </ul>
 
             
@@ -160,7 +162,7 @@
       
           <li><a href="index.html">OpenStack Note</a> &raquo;</li>
       
-    <li>26. nova虚机加密总结</li>
+    <li>27. nova虚机加密总结</li>
       <li class="wy-breadcrumbs-aside">
         
           
@@ -175,7 +177,7 @@
            <div itemprop="articleBody">
             
   <div class="section" id="nova">
-<span id="qemu-img-encry"></span><h1><a class="toc-backref" href="#id6">26. nova虚机加密总结</a><a class="headerlink" href="#nova" title="Permalink to this headline">¶</a></h1>
+<span id="qemu-img-encry"></span><h1><a class="toc-backref" href="#id6">27. nova虚机加密总结</a><a class="headerlink" href="#nova" title="Permalink to this headline">¶</a></h1>
 <div class="contents topic" id="id1">
 <p class="topic-title first">目录</p>
 <ul class="simple">
@@ -196,7 +198,7 @@
 <hr class="docutils" />
 <p>把最近对 qemu-img 加密虚机磁盘和高安云v2.5创建加密虚机的相关知识做下总结。</p>
 <div class="section" id="id2">
-<h2><a class="toc-backref" href="#id7">26.1. 预备知识</a><a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id7">27.1. 预备知识</a><a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
 <p>高安云v2.5基于 OpenStack Juno 版本，该版本可以在 nova/glance/cinder 中统一
 用ceph做后端存储。</p>
 <div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">root@allinone-v2:/smbshare#</span>  rados -p images ls
@@ -309,11 +311,11 @@ imaeg_backend 为 <code class="docutils literal"><span class="pre">nova.virt.lib
 生成虚拟磁盘文件，然后通过libvirt API定义虚机xml文件并控制虚机的启动，运行，迁移等。</p>
 </div>
 <div class="section" id="qemu-img">
-<h2><a class="toc-backref" href="#id8">26.2. qemu-img 磁盘加密</a><a class="headerlink" href="#qemu-img" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id8">27.2. qemu-img 磁盘加密</a><a class="headerlink" href="#qemu-img" title="Permalink to this headline">¶</a></h2>
 <p>nova 创建虚机是借助于 libvirt&#8211;&gt; qemu 来实现的。为此，我进一步试验了 qemu-img 有关磁盘
 加密的命令，不同的加密选项差别很大。</p>
 <div class="section" id="backing-file">
-<h3><a class="toc-backref" href="#id9">26.2.1. backing_file</a><a class="headerlink" href="#backing-file" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id9">27.2.1. backing_file</a><a class="headerlink" href="#backing-file" title="Permalink to this headline">¶</a></h3>
 <p>qcow 是 <code class="docutils literal"><span class="pre">Qemu</span> <span class="pre">Copy</span> <span class="pre">On</span> <span class="pre">Write</span></code> 的缩写。关于cow技术，可以自行搜索相关材料。</p>
 <p>qemu 创建虚机磁盘时，通过 <code class="docutils literal"><span class="pre">-o</span> <span class="pre">backing_file=file</span></code> 或者 <code class="docutils literal"><span class="pre">-b</span> <span class="pre">file</span></code> 开启
 写时复制。这样多个虚机磁盘，可以共享同一个 backfile ，并把自己独有的内容
@@ -322,7 +324,7 @@ imaeg_backend 为 <code class="docutils literal"><span class="pre">nova.virt.lib
 到backfile。</strong></p>
 </div>
 <div class="section" id="backfile">
-<h3><a class="toc-backref" href="#id10">26.2.2. 创建加密磁盘，开启backfile选项</a><a class="headerlink" href="#backfile" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id10">27.2.2. 创建加密磁盘，开启backfile选项</a><a class="headerlink" href="#backfile" title="Permalink to this headline">¶</a></h3>
 <div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">root@allinone-v2:/smbshare#</span> qemu-img create -f qcow2 -o  <span class="nv">backing_file</span><span class="o">=</span>/var/lib/nova/instances/_base/6a6f72f6c315b082cba3e32e0ece4a5e933a868a,encryption<span class="o">=</span>on,size<span class="o">=</span><span class="m">1073741824</span> /smbshare/encry3.qcow2
 <span class="go">Formatting &#39;/smbshare/encry3.qcow2&#39;, fmt=qcow2 size=1073741824 backing_file=&#39;/var/lib/nova/instances/_base/6a6f72f6c315b082cba3e32e0ece4a5e933a868a&#39; encryption=on cluster_size=65536 lazy_refcounts=off</span>
 </pre></div>
@@ -330,7 +332,7 @@ imaeg_backend 为 <code class="docutils literal"><span class="pre">nova.virt.lib
 <p>经测试，使用这种方式加密的虚机，使用 <code class="docutils literal"><span class="pre">virsh</span> <span class="pre">secret-list</span></code> 中任意的的uuid，都可以正常启动虚机。</p>
 </div>
 <div class="section" id="convert">
-<h3><a class="toc-backref" href="#id11">26.2.3. 利用convert命令创建加密磁盘</a><a class="headerlink" href="#convert" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id11">27.2.3. 利用convert命令创建加密磁盘</a><a class="headerlink" href="#convert" title="Permalink to this headline">¶</a></h3>
 <div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">#</span><span class="c1"># 该方式会提示输入密码，假设输入密码123456</span>
 <span class="gp">root@allinone-v2:/smbshare#</span> qemu-img convert -f raw -O qcow2 -o <span class="nv">encryption</span><span class="o">=</span>on,size<span class="o">=</span><span class="m">1073741824</span> /var/lib/nova/instances/_base/6a6f72f6c315b082cba3e32e0ece4a5e933a868a encry2.qcow2
 <span class="go">Disk image &#39;encry2.qcow2&#39; is encrypted.</span>
@@ -341,7 +343,7 @@ imaeg_backend 为 <code class="docutils literal"><span class="pre">nova.virt.lib
 uuid 为根据密码生成的才可以启动。</p>
 </div>
 <div class="section" id="id3">
-<h3><a class="toc-backref" href="#id12">26.2.4. 区别分析</a><a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id12">27.2.4. 区别分析</a><a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h3>
 <p>一种提示输入密码，一种无需密码；一种用任意的 secret-uuid 都可以启动，另一种只有密码对应的 secret-uuid 才可以启动。
 为何会表现出这么大的差别呢？</p>
 <p>对此，我的理解是：</p>
@@ -356,7 +358,7 @@ libvirt 中合法的 secret-uuid，都可以正常启动虚机。</li>
 </div>
 </div>
 <div class="section" id="id4">
-<h2><a class="toc-backref" href="#id13">26.3. 附录：实验步骤</a><a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id13">27.3. 附录：实验步骤</a><a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h2>
 <ol class="arabic">
 <li><p class="first">导出某个虚机的xml文件</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">virsh</span> <span class="nb">list</span> <span class="o">--</span><span class="nb">all</span>
@@ -415,10 +417,10 @@ virsh secret-set-value <span class="nv">$secret_uuid</span> <span class="k">$(</
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="nova_interact.html" class="btn btn-neutral float-right" title="27. nova组件间交互总结" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="nova_interact.html" class="btn btn-neutral float-right" title="28. nova组件间交互总结" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="virt_cmd.html" class="btn btn-neutral" title="25. 虚拟化相关命令" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="virt_cmd.html" class="btn btn-neutral" title="26. 虚拟化相关命令" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   

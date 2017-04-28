@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>20. OpenStack 调试 &mdash; Welcome to Sitian&#39;s Blog 1.0 documentation</title>
+  <title>21. OpenStack 调试 &mdash; Welcome to Sitian&#39;s Blog 1.0 documentation</title>
   
 
   
@@ -32,8 +32,8 @@
   
     <link rel="top" title="Welcome to Sitian&#39;s Blog 1.0 documentation" href="../index.html"/>
         <link rel="up" title="OpenStack Note" href="index.html"/>
-        <link rel="next" title="21. nova rpc服务启动分析" href="nova_rpcserver_start.html"/>
-        <link rel="prev" title="19. kombu和消息队列总结" href="kombu.html"/> 
+        <link rel="next" title="22. nova rpc服务启动分析" href="nova_rpcserver_start.html"/>
+        <link rel="prev" title="20. kombu和消息队列总结" href="kombu.html"/> 
 
   
   <script src="../_static/js/modernizr.min.js"></script>
@@ -98,32 +98,33 @@
 <li class="toctree-l2"><a class="reference internal" href="horizon_workflows_analysis.html">10. [翻译] horizon workflows分析</a></li>
 <li class="toctree-l2"><a class="reference internal" href="horizon_launch_instance.html">11. horizon启动虚拟机分析</a></li>
 <li class="toctree-l2"><a class="reference internal" href="django-generic_view.html">12. django通用视图：一个小问题引发的思考</a></li>
-<li class="toctree-l2"><a class="reference internal" href="cloud_check.html">13. 云平台服务器重启注意事项</a></li>
-<li class="toctree-l2"><a class="reference internal" href="paste_webob_routes.html">14. OpenStack REST-API基础：paste/webob/routes库</a></li>
-<li class="toctree-l2"><a class="reference internal" href="opengrok_xp.html">15. OpenGrok代码浏览环境搭建</a></li>
-<li class="toctree-l2"><a class="reference internal" href="nova_api.html">16. nova-api分析</a></li>
-<li class="toctree-l2"><a class="reference internal" href="nova_smd.html">17. [翻译] nova：Services、Managers and Drivers</a></li>
-<li class="toctree-l2"><a class="reference internal" href="oslo_cfg.html">18. oslo.config 用法总结</a></li>
-<li class="toctree-l2"><a class="reference internal" href="kombu.html">19. kombu和消息队列总结</a></li>
-<li class="toctree-l2 current"><a class="current reference internal" href="#">20. OpenStack 调试</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#id3">20.1. 日志</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#pdb-ipdb">20.2. pdb/ipdb</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#set-trace">20.2.1. set_trace</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#pdb">20.2.2. 直接使用 pdb 模块参数</a></li>
+<li class="toctree-l2"><a class="reference internal" href="django_auth.html">13. Django认证：horizon登录认证解析</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cloud_check.html">14. 云平台服务器重启注意事项</a></li>
+<li class="toctree-l2"><a class="reference internal" href="paste_webob_routes.html">15. OpenStack REST-API基础：paste/webob/routes库</a></li>
+<li class="toctree-l2"><a class="reference internal" href="opengrok_xp.html">16. OpenGrok代码浏览环境搭建</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nova_api.html">17. nova-api分析</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nova_smd.html">18. [翻译] nova：Services、Managers and Drivers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="oslo_cfg.html">19. oslo.config 用法总结</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kombu.html">20. kombu和消息队列总结</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">21. OpenStack 调试</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id3">21.1. 日志</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#pdb-ipdb">21.2. pdb/ipdb</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#set-trace">21.2.1. set_trace</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pdb">21.2.2. 直接使用 pdb 模块参数</a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="#id4">20.3. 使用自己编写的调试设施</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#id5">20.4. 参考</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id4">21.3. 使用自己编写的调试设施</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id5">21.4. 参考</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="nova_rpcserver_start.html">21. nova rpc服务启动分析</a></li>
-<li class="toctree-l2"><a class="reference internal" href="periodic_task.html">22. OpenStack周期性任务分析</a></li>
-<li class="toctree-l2"><a class="reference internal" href="nova_log.html">23. OpenStack 日志模块分析</a></li>
-<li class="toctree-l2"><a class="reference internal" href="qemu_kvm.html">24. qemu/kvm学习笔记</a></li>
-<li class="toctree-l2"><a class="reference internal" href="virt_cmd.html">25. 虚拟化相关命令</a></li>
-<li class="toctree-l2"><a class="reference internal" href="qemu_img_encry.html">26. nova虚机加密总结</a></li>
-<li class="toctree-l2"><a class="reference internal" href="nova_interact.html">27. nova组件间交互总结</a></li>
-<li class="toctree-l2"><a class="reference internal" href="juno_neutron-meter-agent_install.html">28. juno安装neutron-meter-agent</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nova_rpcserver_start.html">22. nova rpc服务启动分析</a></li>
+<li class="toctree-l2"><a class="reference internal" href="periodic_task.html">23. OpenStack周期性任务分析</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nova_log.html">24. OpenStack 日志模块分析</a></li>
+<li class="toctree-l2"><a class="reference internal" href="qemu_kvm.html">25. qemu/kvm学习笔记</a></li>
+<li class="toctree-l2"><a class="reference internal" href="virt_cmd.html">26. 虚拟化相关命令</a></li>
+<li class="toctree-l2"><a class="reference internal" href="qemu_img_encry.html">27. nova虚机加密总结</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nova_interact.html">28. nova组件间交互总结</a></li>
+<li class="toctree-l2"><a class="reference internal" href="juno_neutron-meter-agent_install.html">29. juno安装neutron-meter-agent</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../network/index.html">网络技术/neutron</a></li>
@@ -160,7 +161,7 @@
       
           <li><a href="index.html">OpenStack Note</a> &raquo;</li>
       
-    <li>20. OpenStack 调试</li>
+    <li>21. OpenStack 调试</li>
       <li class="wy-breadcrumbs-aside">
         
           
@@ -175,7 +176,7 @@
            <div itemprop="articleBody">
             
   <div class="section" id="openstack">
-<span id="openstack-debug"></span><h1><a class="toc-backref" href="#id12">20. OpenStack 调试</a><a class="headerlink" href="#openstack" title="Permalink to this headline">¶</a></h1>
+<span id="openstack-debug"></span><h1><a class="toc-backref" href="#id12">21. OpenStack 调试</a><a class="headerlink" href="#openstack" title="Permalink to this headline">¶</a></h1>
 <div class="contents topic" id="id1">
 <p class="topic-title first">目录</p>
 <ul class="simple">
@@ -196,7 +197,7 @@
 <p>这里简要把自己分析、跟踪、调试OpenStack组件所用到的方法记录下来。
 主要参考了网友 <cite>koala bear</cite> 的博文 <a class="reference external" href="http://wsfdl.com/openstack/2013/08/28/%E8%B0%83%E8%AF%95OpenStack.html">OpenStack调试</a> ，在此表示感谢！</p>
 <div class="section" id="id3">
-<h2><a class="toc-backref" href="#id13">20.1. 日志</a><a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id13">21.1. 日志</a><a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h2>
 <p><code class="docutils literal"><span class="pre">OpenStack</span> <span class="pre">logging</span></code> 模块是在 <code class="docutils literal"><span class="pre">python</span> <span class="pre">logging</span></code> 基础之上做了封装，使用简单，以 nova 为例，首先需要导入相关代码文件，获取日志句柄后，即可往该句柄写入日志信息。</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">nova.openstack.common</span> <span class="k">import</span> <span class="n">log</span> <span class="k">as</span> <span class="n">logging</span>
 
@@ -239,7 +240,7 @@ OpenStack logging 模块提供了丰富的和日志相关的配置项，详情�
 </ul>
 </div>
 <div class="section" id="pdb-ipdb">
-<h2><a class="toc-backref" href="#id14">20.2. pdb/ipdb</a><a class="headerlink" href="#pdb-ipdb" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id14">21.2. pdb/ipdb</a><a class="headerlink" href="#pdb-ipdb" title="Permalink to this headline">¶</a></h2>
 <p>pdb 是 python 自带的库，它支持设置断点、单步调试源码、查看当前代码、
 查看 stack 片段和动态修改变量的值等功能，根据个人经验，使用 pdb 调试 OpenStack
 使用到的主要命令包括：</p>
@@ -262,7 +263,7 @@ OpenStack logging 模块提供了丰富的和日志相关的配置项，详情�
 </pre></div>
 </div>
 <div class="section" id="set-trace">
-<h3><a class="toc-backref" href="#id15">20.2.1. set_trace</a><a class="headerlink" href="#set-trace" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id15">21.2.1. set_trace</a><a class="headerlink" href="#set-trace" title="Permalink to this headline">¶</a></h3>
 <p>使用该方法时，需在断点处加入以下代码：</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pdb</span><span class="p">;</span> <span class="n">pdb</span><span class="o">.</span><span class="n">set_trace</span><span class="p">()</span>
 </pre></div>
@@ -295,7 +296,7 @@ OpenStack logging 模块提供了丰富的和日志相关的配置项，详情�
 </div>
 </div>
 <div class="section" id="pdb">
-<h3><a class="toc-backref" href="#id16">20.2.2. 直接使用 pdb 模块参数</a><a class="headerlink" href="#pdb" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id16">21.2.2. 直接使用 pdb 模块参数</a><a class="headerlink" href="#pdb" title="Permalink to this headline">¶</a></h3>
 <p>无论是日志还是 pdb.set_trace 方法，均需要修改源代码，有没有一种方
 法不需要改动文件呢？答案是肯定的，pdb 还提供了另外一种调试模式：</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span>$ python -m pdb debug_file.py
@@ -365,7 +366,7 @@ OpenStack logging 模块提供了丰富的和日志相关的配置项，详情�
 </div>
 </div>
 <div class="section" id="id4">
-<h2><a class="toc-backref" href="#id17">20.3. 使用自己编写的调试设施</a><a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id17">21.3. 使用自己编写的调试设施</a><a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h2>
 <p>nova 组件日志是根据进程，分别输出到 nova-api.log，nova-scheduler.log 等文件。
 假如我们自己添加一些调试信息，那么调试信息也会分散到上述不同文件，并和系统原来
 众多的日志混合在一起，查看起来非常不方便。</p>
@@ -379,7 +380,7 @@ OpenStack logging 模块提供了丰富的和日志相关的配置项，详情�
 </div>
 <hr class="docutils" />
 <div class="section" id="id5">
-<h2><a class="toc-backref" href="#id18">20.4. 参考</a><a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id18">21.4. 参考</a><a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h2>
 <table class="docutils footnote" frame="void" id="id6" rules="none">
 <colgroup><col class="label" /><col /></colgroup>
 <tbody valign="top">
@@ -408,10 +409,10 @@ OpenStack logging 模块提供了丰富的和日志相关的配置项，详情�
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="nova_rpcserver_start.html" class="btn btn-neutral float-right" title="21. nova rpc服务启动分析" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="nova_rpcserver_start.html" class="btn btn-neutral float-right" title="22. nova rpc服务启动分析" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="kombu.html" class="btn btn-neutral" title="19. kombu和消息队列总结" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="kombu.html" class="btn btn-neutral" title="20. kombu和消息队列总结" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   

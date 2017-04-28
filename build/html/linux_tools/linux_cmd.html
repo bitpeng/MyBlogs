@@ -119,7 +119,7 @@
 <li class="toctree-l4"><a class="reference internal" href="#netstat">4.4.17. netstat</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#nmap">4.4.18. nmap</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#ss">4.4.19. ss</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#ln">4.4.20. ln</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#ln-unlink">4.4.20. ln/unlink</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#grep">4.4.21. grep</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#pgrep">4.4.22. pgrep</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#pkill">4.4.23. pkill</a></li>
@@ -228,7 +228,7 @@
 <li><a class="reference internal" href="#netstat" id="id56">netstat</a></li>
 <li><a class="reference internal" href="#nmap" id="id57">nmap</a></li>
 <li><a class="reference internal" href="#ss" id="id58">ss</a></li>
-<li><a class="reference internal" href="#ln" id="id59">ln</a></li>
+<li><a class="reference internal" href="#ln-unlink" id="id59">ln/unlink</a></li>
 <li><a class="reference internal" href="#grep" id="id60">grep</a></li>
 <li><a class="reference internal" href="#pgrep" id="id61">pgrep</a></li>
 <li><a class="reference internal" href="#pkill" id="id62">pkill</a></li>
@@ -722,7 +722,9 @@ echo ${SERVICE_ENDPOINT##*/}
 <div class="section" id="locate-updatedb">
 <h3><a class="toc-backref" href="#id53">4.4.14. locate/updatedb</a><a class="headerlink" href="#locate-updatedb" title="Permalink to this headline">¶</a></h3>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">updatedb</span>
+<span class="c1"># 以下两条命令等效</span>
 <span class="n">locate</span> <span class="o">.</span><span class="n">git</span> <span class="o">|</span> <span class="n">grep</span> <span class="o">-</span><span class="n">P</span> <span class="s2">&quot;.git$&quot;</span>
+<span class="n">locate</span> <span class="o">-</span><span class="n">b</span> <span class="o">.</span><span class="n">git</span>
 </pre></div>
 </div>
 </div>
@@ -823,12 +825,13 @@ echo ${SERVICE_ENDPOINT##*/}
 <div class="section" id="ss">
 <h3><a class="toc-backref" href="#id58">4.4.19. ss</a><a class="headerlink" href="#ss" title="Permalink to this headline">¶</a></h3>
 </div>
-<div class="section" id="ln">
-<h3><a class="toc-backref" href="#id59">4.4.20. ln</a><a class="headerlink" href="#ln" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="ln-unlink">
+<h3><a class="toc-backref" href="#id59">4.4.20. ln/unlink</a><a class="headerlink" href="#ln-unlink" title="Permalink to this headline">¶</a></h3>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="c1"># 建立硬链接</span>
 <span class="n">ln</span> <span class="n">srcfile</span> <span class="n">dstfile</span>
 <span class="c1"># 建立软连接</span>
 <span class="n">ln</span> <span class="o">-</span><span class="n">s</span> <span class="n">srcfile</span> <span class="n">dstfile</span>
+<span class="n">ln</span> <span class="o">-</span><span class="n">s</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">python2</span><span class="o">.</span><span class="mi">7</span><span class="o">/</span><span class="n">dist</span><span class="o">-</span><span class="n">packages</span> <span class="n">pydist</span>
 
 <span class="c1"># 显示软硬连接文件详情和区别、inode节点数！</span>
 <span class="n">ll</span> <span class="n">tf</span><span class="o">-*</span> <span class="o">-</span><span class="n">i</span>
@@ -843,6 +846,8 @@ echo ${SERVICE_ENDPOINT##*/}
 <li>建立硬链接时拷贝inode节点。硬链接文件是普通文件(文件类型位为 <code class="docutils literal"><span class="pre">-</span></code> )，永远不要建立目录的硬链接。</li>
 <li>软连接可以连接文件、目录，inode节点数没有增加，文件类型位为 <code class="docutils literal"><span class="pre">l</span></code> 。</li>
 </ul>
+<p><strong>删除链接文件时要特别注意，可能一不小心，就把链接文件指向的目录下所有内容就删除了。安全起见，
+还是使用unlink命令删除一个链接！</strong></p>
 </div>
 <div class="section" id="grep">
 <h3><a class="toc-backref" href="#id60">4.4.21. grep</a><a class="headerlink" href="#grep" title="Permalink to this headline">¶</a></h3>
