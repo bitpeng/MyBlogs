@@ -214,7 +214,7 @@
 <a class="reference internal image-reference" href="../_images/url_map.png"><img alt="../_images/url_map.png" src="../_images/url_map.png" style="width: 791.0px; height: 169.0px;" /></a>
 <p class="caption"><span class="caption-text">openstack_dashboard/urls.py</span></p>
 </div>
-<p>注意：ROOT_URLCONF文件很重要，整个URL匹配之后匹配该urls.py所指定的。
+<p>注意：ROOT_URLCONF配置项很重要，整个URL只能匹配该urls.py所指定的。
 假如我们输入一个正则无法匹配的，就会提示如下错误：</p>
 <div class="figure align-center" id="id15">
 <a class="reference internal image-reference" href="../_images/page_not_found.png"><img alt="../_images/page_not_found.png" src="../_images/page_not_found.png" style="width: 792.0px; height: 613.0px;" /></a>
@@ -450,7 +450,7 @@
 </pre></div>
 </td></tr></table></div>
 <p>这里的关键是第51行代码 <code class="docutils literal"><span class="pre">res</span> <span class="pre">=</span> <span class="pre">django_auth_views.login(request,</span></code> ，
-调用这个函数时，会把登录表单类实例作为参数。然后在login函数里面，
+调用这个函数时，会把登录表单类实例作为参数。然后在 <code class="xref py py-func docutils literal"><span class="pre">django.contrib.auth.login()</span></code> 函数里面，
 会调用 <code class="docutils literal"><span class="pre">openstack_auth.forms.Login:clean()</span></code> 方法，请看clean方法的调用堆栈：</p>
 <div class="figure align-center" id="id24">
 <a class="reference internal image-reference" href="../_images/clean_call_stack.png"><img alt="../_images/clean_call_stack.png" src="../_images/clean_call_stack.png" style="width: 1440.0px; height: 497.0px;" /></a>
@@ -624,7 +624,7 @@
 </div>
 <div class="section" id="django">
 <h3><a class="toc-backref" href="#id32">13.2.4. django认证后端</a><a class="headerlink" href="#django" title="Permalink to this headline">¶</a></h3>
-<p>登录表单forms的clean方法，在 <code class="docutils literal"><span class="pre">self.user_cache</span> <span class="pre">=</span> <span class="pre">authenticate(request=self.request,</span></code> 这一处代码中，
+<p>登录表单forms的clean方法，在第45行 <code class="docutils literal"><span class="pre">self.user_cache</span> <span class="pre">=</span> <span class="pre">authenticate(request=self.request,</span></code> 这一处代码中，
 会执行用户认证。查看 <code class="xref py py-func docutils literal"><span class="pre">authenticate()</span></code> 函数代码，实际上该函数会调用settings.py配置的认证后端：</p>
 <div class="figure align-center" id="id25">
 <a class="reference internal image-reference" href="../_images/auth_backend.png"><img alt="../_images/auth_backend.png" src="../_images/auth_backend.png" style="width: 816.0px; height: 119.0px;" /></a>
@@ -701,6 +701,9 @@
             <span class="n">credentials</span><span class="o">=</span><span class="n">_clean_credentials</span><span class="p">(</span><span class="n">credentials</span><span class="p">))</span>
 </pre></div>
 </td></tr></table></div>
+<p>从 <code class="xref py py-func docutils literal"><span class="pre">authenticate()</span></code> 函数的实现来看，Django可以配置多个认证后端。
+然后按照顺序，依次调用每一个认证后端，知道找到第一个认证成功/失败的后端，
+该函数才退出！</p>
 <p>至此，整个用户登录的流程，已经完全清晰了。</p>
 </div>
 </div>

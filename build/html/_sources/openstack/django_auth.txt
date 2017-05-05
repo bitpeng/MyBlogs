@@ -35,9 +35,9 @@ url映射
     :align: center
 
     openstack_dashboard/urls.py
-    
 
-注意：ROOT_URLCONF文件很重要，整个URL匹配之后匹配该urls.py所指定的。
+
+注意：ROOT_URLCONF配置项很重要，整个URL只能匹配该urls.py所指定的。
 假如我们输入一个正则无法匹配的，就会提示如下错误：
 
 .. figure:: /_static/images/page_not_found.png
@@ -230,7 +230,7 @@ url映射
         return res
 
 这里的关键是第51行代码 ``res = django_auth_views.login(request,`` ，
-调用这个函数时，会把登录表单类实例作为参数。然后在login函数里面，
+调用这个函数时，会把登录表单类实例作为参数。然后在 :func:`django.contrib.auth.login` 函数里面，
 会调用 ``openstack_auth.forms.Login:clean()`` 方法，请看clean方法的调用堆栈：
 
 .. figure:: /_static/images/clean_call_stack.png
@@ -333,7 +333,7 @@ url映射
 django认证后端
 +++++++++++++++
 
-登录表单forms的clean方法，在 ``self.user_cache = authenticate(request=self.request,`` 这一处代码中，
+登录表单forms的clean方法，在第45行 ``self.user_cache = authenticate(request=self.request,`` 这一处代码中，
 会执行用户认证。查看 :func:`authenticate` 函数代码，实际上该函数会调用settings.py配置的认证后端：
 
 
@@ -347,7 +347,7 @@ django认证后端
 
 .. code-block:: python
     :linenos:
-    
+
     def get_backends():
         backends = []
         for backend_path in settings.AUTHENTICATION_BACKENDS:
@@ -380,7 +380,13 @@ django认证后端
         user_login_failed.send(sender=__name__,
                 credentials=_clean_credentials(credentials))
 
+
+从 :func:`authenticate` 函数的实现来看，Django可以配置多个认证后端。
+然后按照顺序，依次调用每一个认证后端，知道找到第一个认证成功/失败的后端，
+该函数才退出！
+
 至此，整个用户登录的流程，已经完全清晰了。
+
 
 ---------------------
 
