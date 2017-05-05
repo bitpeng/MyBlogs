@@ -810,3 +810,14 @@ crontab
 ::
 
     initctl list | grep nova
+
+Linux一行命令汇总
+==================
+
+自己平时日常操作中写的一行命令汇总。由于自己对shell不是特别熟悉，
+可能有些命令效率不是最高的。
+
+::
+
+    # 列出目录下大小最大的前15个文件
+    ls -l | sed '1d'| awk '{print $5, $NF}'|sort -nr| head -15 | awk '{print $NF}' | xargs ls -hl
