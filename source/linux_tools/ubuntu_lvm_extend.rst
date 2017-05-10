@@ -237,6 +237,24 @@ fdisk 命令新建好分区后，扩展根文件系统的相关命令以及自�
     lvextend -L 37G /dev/mapper/ubuntu--vg-root
     resize2fs /dev/mapper/ubuntu--vg-root
 
+**更新: 2017-05-08 16:17**
+
+.. important::
+
+  最近在centos7系统进行lvm扩容的时候，总是提示 ``Bad magic number in super-block while trying to open /dev/mapper/centos-root`` ，
+  (原来在centos-6.5系统扩容时没有这个问题)！经过搜索，发现可以用另外一个命令进行扩容！
+
+  ::
+
+      xfs_growfs $LVM_ROOT
+
+  .. figure:: /_static/images/xfs_growfs.png
+     :scale: 100
+     :align: center
+
+     提示bad magic number错误
+
+
 以下是自动化脚本，供参考，经测试可以直接复制使用！唯一需要注意的是扩展后的空间大小！
 
 .. code-block:: bash

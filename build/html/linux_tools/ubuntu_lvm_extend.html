@@ -103,7 +103,8 @@
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../openstack/index.html">OpenStack Note</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../others/index.html">杂项讨论</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../network/index.html">网络技术/neutron</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../others/index.html">未分类</a></li>
 </ul>
 
             
@@ -151,14 +152,14 @@
            <div itemprop="articleBody">
             
   <div class="section" id="ubuntulvm">
-<span id="ubuntu-lvm-extend"></span><h1><a class="toc-backref" href="#id14">6. Ubuntu根分区使用Lvm扩容</a><a class="headerlink" href="#ubuntulvm" title="Permalink to this headline">¶</a></h1>
+<span id="ubuntu-lvm-extend"></span><h1><a class="toc-backref" href="#id15">6. Ubuntu根分区使用Lvm扩容</a><a class="headerlink" href="#ubuntulvm" title="Permalink to this headline">¶</a></h1>
 <div class="contents topic" id="id1">
 <p class="topic-title first">目录</p>
 <ul class="simple">
-<li><a class="reference internal" href="#ubuntulvm" id="id14">Ubuntu根分区使用Lvm扩容</a><ul>
-<li><a class="reference internal" href="#id2" id="id15">使用新硬盘扩展根文件系统</a></li>
-<li><a class="reference internal" href="#id3" id="id16">用未完全使用硬盘扩展根文件系统</a></li>
-<li><a class="reference internal" href="#id4" id="id17">命令参考和自动化脚本</a></li>
+<li><a class="reference internal" href="#ubuntulvm" id="id15">Ubuntu根分区使用Lvm扩容</a><ul>
+<li><a class="reference internal" href="#id2" id="id16">使用新硬盘扩展根文件系统</a></li>
+<li><a class="reference internal" href="#id3" id="id17">用未完全使用硬盘扩展根文件系统</a></li>
+<li><a class="reference internal" href="#id4" id="id18">命令参考和自动化脚本</a></li>
 </ul>
 </li>
 </ul>
@@ -170,7 +171,7 @@
 <p class="last">系统版本：ubuntu-14.04 LTS</p>
 </div>
 <div class="section" id="id2">
-<h2><a class="toc-backref" href="#id15">6.1. 使用新硬盘扩展根文件系统</a><a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id16">6.1. 使用新硬盘扩展根文件系统</a><a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
 <ul>
 <li><p class="first">新建一块硬盘并进行分区：</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">fdisk</span> <span class="o">/</span><span class="n">dev</span><span class="o">/</span><span class="n">sde</span>
@@ -239,7 +240,7 @@
 </div>
 <hr class="docutils" />
 <div class="section" id="id3">
-<h2><a class="toc-backref" href="#id16">6.2. 用未完全使用硬盘扩展根文件系统</a><a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id17">6.2. 用未完全使用硬盘扩展根文件系统</a><a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h2>
 <p>假如没有新硬盘可用，并且系统挂载的硬盘有空闲扇区。那么可以通过空闲扇区新建分区来进行扩展。</p>
 <div class="highlight-bash"><div class="highlight"><pre><span></span><span class="c1"># 对已经使用但是没有完全使用的分区进行lvm扩容。</span>
 <span class="c1"># 比如，有vda,总容量为500G，但是只有两个分区:vda1和vda2且只用了10G。</span>
@@ -332,7 +333,7 @@ Syncing disks.
 </div>
 </div>
 <div class="section" id="id4">
-<h2><a class="toc-backref" href="#id17">6.3. 命令参考和自动化脚本</a><a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id18">6.3. 命令参考和自动化脚本</a><a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h2>
 <p>fdisk 命令新建好分区后，扩展根文件系统的相关命令以及自动化脚本。</p>
 <div class="highlight-bash"><div class="highlight"><pre><span></span>fdisk /dev/sde
 <span class="c1"># 新建分区完成后，需要重读分区表。</span>
@@ -348,6 +349,19 @@ lvdisplay
 lvextend -L 37G /dev/mapper/ubuntu--vg-root
 resize2fs /dev/mapper/ubuntu--vg-root
 </pre></div>
+</div>
+<p><strong>更新: 2017-05-08 16:17</strong></p>
+<div class="admonition important">
+<p class="first admonition-title">Important</p>
+<p>最近在centos7系统进行lvm扩容的时候，总是提示 <code class="docutils literal"><span class="pre">Bad</span> <span class="pre">magic</span> <span class="pre">number</span> <span class="pre">in</span> <span class="pre">super-block</span> <span class="pre">while</span> <span class="pre">trying</span> <span class="pre">to</span> <span class="pre">open</span> <span class="pre">/dev/mapper/centos-root</span></code> ，
+(原来在centos-6.5系统扩容时没有这个问题)！经过搜索，发现可以用另外一个命令进行扩容！</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span>xfs_growfs $LVM_ROOT
+</pre></div>
+</div>
+<div class="last figure align-center" id="id14">
+<a class="reference internal image-reference" href="../_images/xfs_growfs.png"><img alt="../_images/xfs_growfs.png" src="../_images/xfs_growfs.png" style="width: 884.0px; height: 545.0px;" /></a>
+<p class="caption"><span class="caption-text">提示bad magic number错误</span></p>
+</div>
 </div>
 <p>以下是自动化脚本，供参考，经测试可以直接复制使用！唯一需要注意的是扩展后的空间大小！</p>
 <div class="highlight-bash"><div class="highlight"><pre><span></span><span class="c1"># 然后使用下面的命令扩展根文件系统</span>
