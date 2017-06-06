@@ -24,6 +24,7 @@
     horizon_rabbitmq
     html_note
     inkscope_install
+    mysql_note
     tip
 
 ..    sphinx_doc

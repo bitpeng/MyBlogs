@@ -17,7 +17,7 @@ samba安装和配置
 
 ::
 
-    sudo apt-get insall samba
+    sudo apt-get install samba
 
 
 二. 创建共享目录

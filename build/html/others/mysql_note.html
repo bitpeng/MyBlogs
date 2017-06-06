@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>14. tips &mdash; Welcome to Sitian&#39;s Blog 1.0 documentation</title>
+  <title>13. mysql相关 &mdash; Welcome to Sitian&#39;s Blog 1.0 documentation</title>
   
 
   
@@ -32,7 +32,8 @@
   
     <link rel="top" title="Welcome to Sitian&#39;s Blog 1.0 documentation" href="../index.html"/>
         <link rel="up" title="未分类" href="index.html"/>
-        <link rel="prev" title="13. mysql相关" href="mysql_note.html"/> 
+        <link rel="next" title="14. tips" href="tip.html"/>
+        <link rel="prev" title="12. Ceph web管理/监控平台Inkscope部署" href="inkscope_install.html"/> 
 
   
   <script src="../_static/js/modernizr.min.js"></script>
@@ -99,8 +100,12 @@
 <li class="toctree-l2"><a class="reference internal" href="horizon_rabbitmq.html">10. horizon集成rabbitmq监控</a></li>
 <li class="toctree-l2"><a class="reference internal" href="html_note.html">11. HTML与前端</a></li>
 <li class="toctree-l2"><a class="reference internal" href="inkscope_install.html">12. Ceph web管理/监控平台Inkscope部署</a></li>
-<li class="toctree-l2"><a class="reference internal" href="mysql_note.html">13. mysql相关</a></li>
-<li class="toctree-l2 current"><a class="current reference internal" href="#">14. tips</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">13. mysql相关</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id2">13.1. mysql权限</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id3">13.2. 参考</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="tip.html">14. tips</a></li>
 </ul>
 </li>
 </ul>
@@ -135,11 +140,11 @@
       
           <li><a href="index.html">未分类</a> &raquo;</li>
       
-    <li>14. tips</li>
+    <li>13. mysql相关</li>
       <li class="wy-breadcrumbs-aside">
         
           
-            <a href="../_sources/others/tip.txt" rel="nofollow"> View page source</a>
+            <a href="../_sources/others/mysql_note.txt" rel="nofollow"> View page source</a>
           
         
       </li>
@@ -149,38 +154,55 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="tips">
-<h1>14. tips<a class="headerlink" href="#tips" title="Permalink to this headline">¶</a></h1>
-<p>各种各样的tips和乱七八糟的记录！</p>
-<hr class="docutils" />
-<ul>
-<li><p class="first">问：Firefox打开httpfox</p>
-<p>答：使用快捷键：ctrl+shift+F2</p>
+  <div class="section" id="mysql">
+<span id="mysql-note"></span><h1><a class="toc-backref" href="#id5">13. mysql相关</a><a class="headerlink" href="#mysql" title="Permalink to this headline">¶</a></h1>
+<div class="contents topic" id="id1">
+<p class="topic-title first">目录</p>
+<ul class="simple">
+<li><a class="reference internal" href="#mysql" id="id5">mysql相关</a><ul>
+<li><a class="reference internal" href="#id2" id="id6">mysql权限</a></li>
+<li><a class="reference internal" href="#id3" id="id7">参考</a></li>
+</ul>
 </li>
 </ul>
+</div>
 <hr class="docutils" />
-<ul>
-<li><p class="first">问：ubuntu apt-get下载的deb包目录</p>
-<p>答：/var/cache/apt/archives</p>
-</li>
-</ul>
+<div class="section" id="id2">
+<h2><a class="toc-backref" href="#id6">13.1. mysql权限</a><a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
+<p>今天尝试使用Navicat数据库可视化工具，使用Navicat for mysql工具连接ubuntu时，连接不上，经查，
+这里涉及到MySQL权限问题。主要是下面几条：</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="c1"># 赋予MySQL myuser用户从任何主机访问数据库的权限。</span>
+<span class="n">GRANT</span> <span class="n">ALL</span> <span class="n">PRIVILEGES</span> <span class="n">ON</span> <span class="o">*.*</span> <span class="n">TO</span> <span class="s1">&#39;myuser&#39;</span><span class="o">@</span><span class="s1">&#39;%&#39;</span><span class="n">IDENTIFIED</span> <span class="n">BY</span> <span class="s1">&#39;mypassword&#39;</span> <span class="n">WI</span>
+<span class="n">TH</span> <span class="n">GRANT</span> <span class="n">OPTION</span><span class="p">;</span>
+<span class="n">FLUSH</span> <span class="n">PRIVILEGES</span><span class="p">;</span>
+
+
+<span class="c1"># 赋予MySQL root用户从192.168.159.1访问访问数据库的权限。</span>
+<span class="n">GRANT</span> <span class="n">ALL</span> <span class="n">PRIVILEGES</span> <span class="n">ON</span> <span class="o">*.*</span> <span class="n">TO</span> <span class="s1">&#39;root&#39;</span><span class="o">@</span><span class="s1">&#39;192.168.159.1&#39;</span><span class="n">IDENTIFIED</span> <span class="n">BY</span>
+<span class="s1">&#39;httc123&#39;</span> <span class="n">WITH</span> <span class="n">GRANT</span> <span class="n">OPTION</span><span class="p">;</span>
+<span class="n">FLUSH</span> <span class="n">PRIVILEGES</span><span class="p">;</span>
+
+
+<span class="c1"># 赋予任何主机访问访问数据库的权限。</span>
+<span class="n">GRANT</span> <span class="n">ALL</span> <span class="n">PRIVILEGES</span> <span class="n">ON</span> <span class="o">*.*</span> <span class="n">TO</span> <span class="s1">&#39;root&#39;</span><span class="o">@</span><span class="s1">&#39;%&#39;</span><span class="n">WITH</span> <span class="n">GRANT</span> <span class="n">OPTION</span><span class="p">;</span>
+<span class="n">FLUSH</span> <span class="n">PRIVILEGES</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>经过合适的权限设置，然后就可以使用Navicat连接MySQL数据库了。效果如下！</p>
+<div class="figure align-center">
+<a class="reference internal image-reference" href="../_images/Navicat_for_mysql.png"><img alt="../_images/Navicat_for_mysql.png" src="../_images/Navicat_for_mysql.png" style="width: 917.0px; height: 573.0px;" /></a>
+</div>
+</div>
 <hr class="docutils" />
-<ul>
-<li><p class="first">问：win10系统VMI provide host进程占用CPU过高</p>
-<p>答：网上找了很多，都是千篇一律的关闭windows firewall，实际上根本没用。
-不断搜索，总算找到一个靠谱的解决方案！</p>
-<p>Windows键 +r 打开“启动”，输入services.msc打开“服务”，找到“Windows Management Instrumentation”，
-右键“重新启动”。 <strong>亲测有效</strong> 。具体可以参考： <a class="reference external" href="https://www.zhihu.com/question/48491814">https://www.zhihu.com/question/48491814</a></p>
-</li>
-</ul>
-<hr class="docutils" />
-<ul>
-<li><p class="first">问：电脑重启后，vmware启动虚机提示&#8221;内部错误&#8221;</p>
-<p>答： Windows键 +r 打开“启动”，输入services.msc打开“服务”，然后依次启动vmware相关服务！
-<strong>亲测有效</strong> 。</p>
-<p>另外，网络上说，可以右键vmware，然后选择以管理员身份运行！</p>
-</li>
-</ul>
+<div class="section" id="id3">
+<h2><a class="toc-backref" href="#id7">13.2. 参考</a><a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h2>
+<table class="docutils footnote" frame="void" id="id4" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label">[1]</td><td><a class="reference external" href="http://www.jb51.net/article/85218.htm">http://www.jb51.net/article/85218.htm</a></td></tr>
+</tbody>
+</table>
+</div>
 </div>
 
 
@@ -190,8 +212,10 @@
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
+        <a href="tip.html" class="btn btn-neutral float-right" title="14. tips" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
       
-        <a href="mysql_note.html" class="btn btn-neutral" title="13. mysql相关" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+        <a href="inkscope_install.html" class="btn btn-neutral" title="12. Ceph web管理/监控平台Inkscope部署" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   
