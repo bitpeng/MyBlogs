@@ -1,0 +1,314 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>15. Python文件与目录操作 &mdash; Welcome to Sitian&#39;s Blog 1.0 documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+    <link rel="top" title="Welcome to Sitian&#39;s Blog 1.0 documentation" href="../index.html"/>
+        <link rel="up" title="Python Note" href="index.html"/>
+        <link rel="next" title="Hack Linux" href="../linux_tools/index.html"/>
+        <link rel="prev" title="14. django笔记" href="django_note.html"/> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> Welcome to Sitian's Blog
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Python Note</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="pysnmp_doc.html">1. [翻译] PySNMP教程</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pysnmp_doc_example.html">2. PySNMP获取设备信息</a></li>
+<li class="toctree-l2"><a class="reference internal" href="re_doc.html">3. [翻译] Python正则表达式</a></li>
+<li class="toctree-l2"><a class="reference internal" href="wsgi.html">4. WSGI基础</a></li>
+<li class="toctree-l2"><a class="reference internal" href="re_analysis.html">5. Python正则表达式分析利器</a></li>
+<li class="toctree-l2"><a class="reference internal" href="python_descriptor.html">6. Python描述器</a></li>
+<li class="toctree-l2"><a class="reference internal" href="python_notebook.html">7. Python学习总结</a></li>
+<li class="toctree-l2"><a class="reference internal" href="python_coding.html">8. Python 编码问题总结</a></li>
+<li class="toctree-l2"><a class="reference internal" href="dec_logic.html">9. Python 装饰器、闭包</a></li>
+<li class="toctree-l2"><a class="reference internal" href="webob_analysis.html">10. webob库简单分析</a></li>
+<li class="toctree-l2"><a class="reference internal" href="metaclass_intro.html">11. Python元类</a></li>
+<li class="toctree-l2"><a class="reference internal" href="os_lib.html">12. Python Library</a></li>
+<li class="toctree-l2"><a class="reference internal" href="log_summary.html">13. logging 模块总结</a></li>
+<li class="toctree-l2"><a class="reference internal" href="django_note.html">14. django笔记</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">15. Python文件与目录操作</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id2">15.1. 获取文件绝对目录</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../linux_tools/index.html">Hack Linux</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../openstack/index.html">OpenStack Note</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../network/index.html">网络技术/neutron</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../others/index.html">未分类</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../index.html">Welcome to Sitian's Blog</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+ 
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../index.html">Docs</a> &raquo;</li>
+      
+          <li><a href="index.html">Python Note</a> &raquo;</li>
+      
+    <li>15. Python文件与目录操作</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="../_sources/py_doc/python_path.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="python">
+<span id="py-path"></span><h1><a class="toc-backref" href="#id3">15. Python文件与目录操作</a><a class="headerlink" href="#python" title="Permalink to this headline">¶</a></h1>
+<div class="contents topic" id="id1">
+<p class="topic-title first">目录</p>
+<ul class="simple">
+<li><a class="reference internal" href="#python" id="id3">Python文件与目录操作</a><ul>
+<li><a class="reference internal" href="#id2" id="id4">获取文件绝对目录</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<hr class="docutils" />
+<p>本文对Python文件和目录操作的问题做个总结。</p>
+<div class="section" id="id2">
+<h2><a class="toc-backref" href="#id4">15.1. 获取文件绝对目录</a><a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
+<p>获取文件的绝对目录，请看下面的测试代码：</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="c1"># path_test.py</span>
+<span class="kn">import</span> <span class="nn">os</span>
+
+<span class="k">print</span> <span class="s2">&quot;__file__:&quot;</span><span class="p">,</span> <span class="n">__file__</span>
+<span class="c1">#print &quot;type(__file__):&quot;, type(__file__)</span>
+
+<span class="k">print</span> <span class="s2">&quot;__name__:&quot;</span><span class="p">,</span> <span class="n">__name__</span>
+
+<span class="k">print</span> <span class="s2">&quot;os.path.dirname(__file__):&quot;</span><span class="p">,</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">__file__</span><span class="p">)</span>
+<span class="k">print</span> <span class="s2">&quot;os.path.abspath(__file__):&quot;</span><span class="p">,</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="n">__file__</span><span class="p">)</span>
+<span class="k">print</span> <span class="s2">&quot;os.path.dirname(os.path.abspath(__file__)):&quot;</span><span class="p">,</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="n">__file__</span><span class="p">))</span>
+
+<span class="k">print</span> <span class="s2">&quot;getcwd():&quot;</span><span class="p">,</span> <span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">()</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="c1"># path_test-2.py</span>
+<span class="kn">import</span> <span class="nn">path_test</span>
+</pre></div>
+</div>
+<p>这两个文件，都放在/smbshare/目录下：</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">root</span><span class="nd">@ubuntu</span><span class="p">:</span><span class="o">/</span><span class="n">smbshare</span><span class="c1"># ls path_test*</span>
+<span class="n">path_test</span><span class="o">-</span><span class="mf">2.</span><span class="n">py</span>  <span class="n">path_test</span><span class="o">.</span><span class="n">py</span>  <span class="n">path_test</span><span class="o">.</span><span class="n">pyc</span>
+</pre></div>
+</div>
+<p>然后在不同的目录，依次执行两个程序。首先在源文件所在目录/smbshare下执行：</p>
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">root@ubuntu:/smbshare#</span> python path_test.py
+<span class="go">__file__: path_test.py</span>
+<span class="go">__name__: __main__</span>
+<span class="go">os.path.dirname(__file__):</span>
+<span class="go">os.path.abspath(__file__): /smbshare/path_test.py</span>
+<span class="go">os.path.dirname(os.path.abspath(__file__)): /smbshare</span>
+<span class="go">getcwd(): /smbshare</span>
+<span class="gp">root@ubuntu:/smbshare#</span>
+<span class="gp">root@ubuntu:/smbshare#</span> python path_test-2.py
+<span class="go">__file__: /smbshare/path_test.pyc</span>
+<span class="go">__name__: path_test</span>
+<span class="go">os.path.dirname(__file__): /smbshare</span>
+<span class="go">os.path.abspath(__file__): /smbshare/path_test.pyc</span>
+<span class="go">os.path.dirname(os.path.abspath(__file__)): /smbshare</span>
+<span class="go">getcwd(): /smbshare</span>
+</pre></div>
+</div>
+<p>然后在另外一个目录下执行：</p>
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">root@ubuntu:/usr/local/lib#</span> python /smbshare/path_test.py
+<span class="go">__file__: /smbshare/path_test.py</span>
+<span class="go">__name__: __main__</span>
+<span class="go">os.path.dirname(__file__): /smbshare</span>
+<span class="go">os.path.abspath(__file__): /smbshare/path_test.py</span>
+<span class="go">os.path.dirname(os.path.abspath(__file__)): /smbshare</span>
+<span class="go">getcwd(): /usr/local/lib</span>
+<span class="gp">root@ubuntu:/usr/local/lib#</span>
+<span class="gp">root@ubuntu:/usr/local/lib#</span> python /smbshare/path_test-2.py
+<span class="go">__file__: /smbshare/path_test.pyc</span>
+<span class="go">__name__: path_test</span>
+<span class="go">os.path.dirname(__file__): /smbshare</span>
+<span class="go">os.path.abspath(__file__): /smbshare/path_test.pyc</span>
+<span class="go">os.path.dirname(os.path.abspath(__file__)): /smbshare</span>
+<span class="go">getcwd(): /usr/local/lib</span>
+</pre></div>
+</div>
+<p><strong>在不同的目录下，以及通过直接执行和导入执行，__file__变量代表的值都是不一样的。因此，在程序中，
+绝对不可以用__file__来获取文件的路径。</strong></p>
+<p>通过程序运行结果，可以看到：假如想获取文件的绝对全路径，只可以用 <code class="docutils literal"><span class="pre">os.path.abspath(__file__)</span></code> ，
+如果想获取文件所在的完整目录：只可以用 <code class="docutils literal"><span class="pre">os.path.dirname(os.path.abspath(__file__))</span></code> 。</p>
+<p>另外值得一提的是，自己原来也使用过这样的方式，来获取与当前文件在同一个目录的文件绝对路径：</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">abs_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="n">__file__</span><span class="p">)</span>
+<span class="n">name</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;glusterrest.ini&quot;</span><span class="p">]</span>
+<span class="k">return</span> <span class="s1">&#39;/&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">abs_path</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;/&quot;</span><span class="p">)[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="n">name</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+
+
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../linux_tools/index.html" class="btn btn-neutral float-right" title="Hack Linux" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="django_note.html" class="btn btn-neutral" title="14. django笔记" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2016, chenshiqiang.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'1.0',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

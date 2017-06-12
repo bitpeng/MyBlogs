@@ -29,3 +29,4 @@ Python Note
     os_lib
     log_summary
     django_note
+    python_path
