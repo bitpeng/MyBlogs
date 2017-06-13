@@ -52,6 +52,17 @@ mysql权限
    :align: center
 
 
+MySQL相关命令
+==============
+
+::
+
+    show databases;
+    show tables;
+    use <db>;
+    desc <table>;
+
+    select * from <T> limit 0, 10;
 
 
 ---------------------
@@ -60,4 +71,3 @@ mysql权限
 =====
 
 .. [#] http://www.jb51.net/article/85218.htm
-

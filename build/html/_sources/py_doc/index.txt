@@ -30,3 +30,4 @@ Python Note
     log_summary
     django_note
     python_path
+    sqlalchemy

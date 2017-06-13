@@ -102,7 +102,8 @@
 <li class="toctree-l2"><a class="reference internal" href="inkscope_install.html">12. Ceph web管理/监控平台Inkscope部署</a></li>
 <li class="toctree-l2 current"><a class="current reference internal" href="#">13. mysql相关</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#id2">13.1. mysql权限</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#id3">13.2. 参考</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id3">13.2. MySQL相关命令</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id4">13.3. 参考</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="tip.html">14. tips</a></li>
@@ -155,20 +156,21 @@
            <div itemprop="articleBody">
             
   <div class="section" id="mysql">
-<span id="mysql-note"></span><h1><a class="toc-backref" href="#id5">13. mysql相关</a><a class="headerlink" href="#mysql" title="Permalink to this headline">¶</a></h1>
+<span id="mysql-note"></span><h1><a class="toc-backref" href="#id6">13. mysql相关</a><a class="headerlink" href="#mysql" title="Permalink to this headline">¶</a></h1>
 <div class="contents topic" id="id1">
 <p class="topic-title first">目录</p>
 <ul class="simple">
-<li><a class="reference internal" href="#mysql" id="id5">mysql相关</a><ul>
-<li><a class="reference internal" href="#id2" id="id6">mysql权限</a></li>
-<li><a class="reference internal" href="#id3" id="id7">参考</a></li>
+<li><a class="reference internal" href="#mysql" id="id6">mysql相关</a><ul>
+<li><a class="reference internal" href="#id2" id="id7">mysql权限</a></li>
+<li><a class="reference internal" href="#id3" id="id8">MySQL相关命令</a></li>
+<li><a class="reference internal" href="#id4" id="id9">参考</a></li>
 </ul>
 </li>
 </ul>
 </div>
 <hr class="docutils" />
 <div class="section" id="id2">
-<h2><a class="toc-backref" href="#id6">13.1. mysql权限</a><a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id7">13.1. mysql权限</a><a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
 <p>今天尝试使用Navicat数据库可视化工具，使用Navicat for mysql工具连接ubuntu时，连接不上，经查，
 这里涉及到MySQL权限问题。主要是下面几条：</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="c1"># 赋予MySQL myuser用户从任何主机访问数据库的权限。</span>
@@ -193,10 +195,21 @@
 <a class="reference internal image-reference" href="../_images/Navicat_for_mysql.png"><img alt="../_images/Navicat_for_mysql.png" src="../_images/Navicat_for_mysql.png" style="width: 917.0px; height: 573.0px;" /></a>
 </div>
 </div>
-<hr class="docutils" />
 <div class="section" id="id3">
-<h2><a class="toc-backref" href="#id7">13.2. 参考</a><a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h2>
-<table class="docutils footnote" frame="void" id="id4" rules="none">
+<h2><a class="toc-backref" href="#id8">13.2. MySQL相关命令</a><a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">show</span> <span class="n">databases</span><span class="p">;</span>
+<span class="n">show</span> <span class="n">tables</span><span class="p">;</span>
+<span class="n">use</span> <span class="o">&lt;</span><span class="n">db</span><span class="o">&gt;</span><span class="p">;</span>
+<span class="n">desc</span> <span class="o">&lt;</span><span class="n">table</span><span class="o">&gt;</span><span class="p">;</span>
+
+<span class="n">select</span> <span class="o">*</span> <span class="kn">from</span> <span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="n">limit</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">10</span><span class="p">;</span>
+</pre></div>
+</div>
+</div>
+<hr class="docutils" />
+<div class="section" id="id4">
+<h2><a class="toc-backref" href="#id9">13.3. 参考</a><a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h2>
+<table class="docutils footnote" frame="void" id="id5" rules="none">
 <colgroup><col class="label" /><col /></colgroup>
 <tbody valign="top">
 <tr><td class="label">[1]</td><td><a class="reference external" href="http://www.jb51.net/article/85218.htm">http://www.jb51.net/article/85218.htm</a></td></tr>
