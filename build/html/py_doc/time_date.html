@@ -1,0 +1,378 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>17. Python时间和日期操作 &mdash; Welcome to Sitian&#39;s Blog 1.0 documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+    <link rel="top" title="Welcome to Sitian&#39;s Blog 1.0 documentation" href="../index.html"/>
+        <link rel="up" title="Python Note" href="index.html"/>
+        <link rel="next" title="Hack Linux" href="../linux_tools/index.html"/>
+        <link rel="prev" title="16. sqlalchemy笔记" href="sqlalchemy.html"/> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> Welcome to Sitian's Blog
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Python Note</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="pysnmp_doc.html">1. [翻译] PySNMP教程</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pysnmp_doc_example.html">2. PySNMP获取设备信息</a></li>
+<li class="toctree-l2"><a class="reference internal" href="re_doc.html">3. [翻译] Python正则表达式</a></li>
+<li class="toctree-l2"><a class="reference internal" href="wsgi.html">4. WSGI基础</a></li>
+<li class="toctree-l2"><a class="reference internal" href="re_analysis.html">5. Python正则表达式分析利器</a></li>
+<li class="toctree-l2"><a class="reference internal" href="python_descriptor.html">6. Python描述器</a></li>
+<li class="toctree-l2"><a class="reference internal" href="python_notebook.html">7. Python学习总结</a></li>
+<li class="toctree-l2"><a class="reference internal" href="python_coding.html">8. Python 编码问题总结</a></li>
+<li class="toctree-l2"><a class="reference internal" href="dec_logic.html">9. Python 装饰器、闭包</a></li>
+<li class="toctree-l2"><a class="reference internal" href="webob_analysis.html">10. webob库简单分析</a></li>
+<li class="toctree-l2"><a class="reference internal" href="metaclass_intro.html">11. Python元类</a></li>
+<li class="toctree-l2"><a class="reference internal" href="os_lib.html">12. Python Library</a></li>
+<li class="toctree-l2"><a class="reference internal" href="log_summary.html">13. logging 模块总结</a></li>
+<li class="toctree-l2"><a class="reference internal" href="django_note.html">14. django笔记</a></li>
+<li class="toctree-l2"><a class="reference internal" href="python_path.html">15. Python文件与目录操作</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sqlalchemy.html">16. sqlalchemy笔记</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">17. Python时间和日期操作</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id2">17.1. 相关对象</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id3">17.2. 转化关系</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#tuple-string">17.2.1. tuple &lt;&#8211;&gt; string</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#datetime-string">17.2.2. datetime &lt;&#8211;&gt; string</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#datetime-timetuple">17.2.3. datetime &lt;&#8211;&gt; timetuple</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id4">17.2.4. 其他转化</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#id5">17.3. 参考</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../linux_tools/index.html">Hack Linux</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../openstack/index.html">OpenStack Note</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../network/index.html">网络技术/neutron</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../others/index.html">未分类</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../index.html">Welcome to Sitian's Blog</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+ 
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../index.html">Docs</a> &raquo;</li>
+      
+          <li><a href="index.html">Python Note</a> &raquo;</li>
+      
+    <li>17. Python时间和日期操作</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="../_sources/py_doc/time_date.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="python">
+<span id="py-time-date"></span><h1><a class="toc-backref" href="#id8">17. Python时间和日期操作</a><a class="headerlink" href="#python" title="Permalink to this headline">¶</a></h1>
+<div class="contents topic" id="id1">
+<p class="topic-title first">目录</p>
+<ul class="simple">
+<li><a class="reference internal" href="#python" id="id8">Python时间和日期操作</a><ul>
+<li><a class="reference internal" href="#id2" id="id9">相关对象</a></li>
+<li><a class="reference internal" href="#id3" id="id10">转化关系</a><ul>
+<li><a class="reference internal" href="#tuple-string" id="id11">tuple &lt;&#8211;&gt; string</a></li>
+<li><a class="reference internal" href="#datetime-string" id="id12">datetime &lt;&#8211;&gt; string</a></li>
+<li><a class="reference internal" href="#datetime-timetuple" id="id13">datetime &lt;&#8211;&gt; timetuple</a></li>
+<li><a class="reference internal" href="#id4" id="id14">其他转化</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#id5" id="id15">参考</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<hr class="docutils" />
+<p>Python时间和日期操作，总是容易搞混淆，现在对相关库的用法坐下总结！</p>
+<div class="section" id="id2">
+<h2><a class="toc-backref" href="#id9">17.1. 相关对象</a><a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">time</span>
+<span class="go">&gt;&gt;&gt;</span>
+<span class="go">&gt;&gt;&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">time</span><span class="o">.</span><span class="n">localtime</span><span class="p">()</span>
+<span class="go">time.struct_time(tm_year=2017, tm_mon=6, tm_mday=13, tm_hour=23, tm_min=20, tm_sec=48, tm_wday=1, tm_yday=164, tm_isdst=1)</span>
+<span class="go">&gt;&gt;&gt;</span>
+<span class="go">&gt;&gt;&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">time</span><span class="o">.</span><span class="n">strptime</span><span class="p">(</span><span class="s2">&quot;2017-5-3&quot;</span><span class="p">,</span><span class="s1">&#39;%Y-%m-</span><span class="si">%d</span><span class="s1">&#39;</span><span class="p">)</span>
+<span class="go">time.struct_time(tm_year=2017, tm_mon=5, tm_mday=3, tm_hour=0, tm_min=0, tm_sec=0, tm_wday=2, tm_yday=123, tm_isdst=-1)</span>
+<span class="go">&gt;&gt;&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">time</span><span class="o">.</span><span class="n">strptime</span><span class="p">(</span><span class="s2">&quot;2017-5-3 13:20:5&quot;</span><span class="p">,</span><span class="s1">&#39;%Y-%m-</span><span class="si">%d</span><span class="s1"> %H:%M:%S&#39;</span><span class="p">)</span>
+<span class="go">time.struct_time(tm_year=2017, tm_mon=5, tm_mday=3, tm_hour=13, tm_min=20, tm_sec=5, tm_wday=2, tm_yday=123, tm_isdst=-1)</span>
+</pre></div>
+</div>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">datetime</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">now</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">now</span>
+<span class="go">datetime.datetime(2017, 6, 13, 23, 27, 41, 421889)</span>
+<span class="go">&gt;&gt;&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">t</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="p">(</span><span class="mi">2017</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">13</span><span class="p">,</span> <span class="mi">21</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">43</span><span class="p">)</span>
+<span class="go">&gt;&gt;&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">t</span>
+<span class="go">datetime.datetime(2017, 5, 13, 21, 12, 43)</span>
+<span class="go">&gt;&gt;&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">t</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s2">&quot;%Y-%m-</span><span class="si">%d</span><span class="s2"> %H:%M:%S&quot;</span><span class="p">)</span>
+<span class="go">&#39;2017-05-13 21:12:43&#39;</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="id3">
+<h2><a class="toc-backref" href="#id10">17.2. 转化关系</a><a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="tuple-string">
+<h3><a class="toc-backref" href="#id11">17.2.1. tuple &lt;&#8211;&gt; string</a><a class="headerlink" href="#tuple-string" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">ttu</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">strptime</span><span class="p">(</span><span class="s2">&quot;2017-5-3 13:20:5&quot;</span><span class="p">,</span><span class="s1">&#39;%Y-%m-</span><span class="si">%d</span><span class="s1"> %H:%M:%S&#39;</span><span class="p">)</span>
+<span class="go">&gt;&gt;&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">ttu</span>
+<span class="go">time.struct_time(tm_year=2017, tm_mon=5, tm_mday=3, tm_hour=13, tm_min=20, tm_sec=5, tm_wday=2, tm_yday=123, tm_isdst=-1)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">time</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s2">&quot;%Y-%m-</span><span class="si">%d</span><span class="s2"> %H:%M&quot;</span><span class="p">,</span> <span class="n">ttu</span><span class="p">)</span>
+<span class="go">&#39;2017-05-03 13:20&#39;</span>
+<span class="go">&gt;&gt;&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">time</span><span class="o">.</span><span class="n">strptime</span><span class="p">(</span><span class="s2">&quot;2017-5-3 13:20:5&quot;</span><span class="p">,</span><span class="s1">&#39;%Y-%m-</span><span class="si">%d</span><span class="s1"> %H:%M:%S&#39;</span><span class="p">)</span>
+<span class="go">time.struct_time(tm_year=2017, tm_mon=5, tm_mday=3, tm_hour=13, tm_min=20, tm_sec=5, tm_wday=2, tm_yday=123, tm_isdst=-1)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="datetime-string">
+<h3><a class="toc-backref" href="#id12">17.2.2. datetime &lt;&#8211;&gt; string</a><a class="headerlink" href="#datetime-string" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">t</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="p">(</span><span class="mi">2017</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">13</span><span class="p">,</span> <span class="mi">21</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">43</span><span class="p">)</span>
+<span class="go">&gt;&gt;&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">t</span>
+<span class="go">datetime.datetime(2017, 5, 13, 21, 12, 43)</span>
+<span class="go">&gt;&gt;&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">t</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s2">&quot;%Y-%m-</span><span class="si">%d</span><span class="s2"> %H:%M:%S&quot;</span><span class="p">)</span>
+<span class="go">&#39;2017-05-13 21:12:43&#39;</span>
+<span class="go">&gt;&gt;&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">strptime</span><span class="p">(</span><span class="s2">&quot;2014-12-31 18:20:10&quot;</span><span class="p">,</span> <span class="s2">&quot;%Y-%m-</span><span class="si">%d</span><span class="s2"> %H:%M:%S&quot;</span><span class="p">)</span>
+<span class="go">datetime.datetime(2014, 12, 31, 18, 20, 10)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="datetime-timetuple">
+<h3><a class="toc-backref" href="#id13">17.2.3. datetime &lt;&#8211;&gt; timetuple</a><a class="headerlink" href="#datetime-timetuple" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">now</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">now</span>
+<span class="go">datetime.datetime(2017, 6, 13, 23, 53, 10, 530091)</span>
+<span class="go">&gt;&gt;&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">now</span><span class="o">.</span><span class="n">timetuple</span><span class="p">()</span>
+<span class="go">time.struct_time(tm_year=2017, tm_mon=6, tm_mday=13, tm_hour=23, tm_min=53, tm_sec=10, tm_wday=1, tm_yday=164, tm_isdst=-1)</span>
+<span class="go">&gt;&gt;&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">ntu</span> <span class="o">=</span> <span class="n">now</span><span class="o">.</span><span class="n">timetuple</span><span class="p">()</span>
+<span class="go">&gt;&gt;&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">ntu</span>
+<span class="go">time.struct_time(tm_year=2017, tm_mon=6, tm_mday=13, tm_hour=23, tm_min=53, tm_sec=10, tm_wday=1, tm_yday=164, tm_isdst=-1)</span>
+</pre></div>
+</div>
+<p>而timetuple转化为datetime，可以先转化为timestamp。</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">ntu</span>
+<span class="go">time.struct_time(tm_year=2017, tm_mon=6, tm_mday=13, tm_hour=23, tm_min=53, tm_sec=10, tm_wday=1, tm_yday=164, tm_isdst=-1)</span>
+<span class="go">&gt;&gt;&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">ts</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">mktime</span><span class="p">(</span><span class="n">ntu</span><span class="p">)</span>
+<span class="go">&gt;&gt;&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">ts</span>
+<span class="go">1497423190.0</span>
+<span class="go">&gt;&gt;&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">fromtimestamp</span><span class="p">(</span><span class="n">ts</span><span class="p">)</span>
+<span class="go">datetime.datetime(2017, 6, 13, 23, 53, 10)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="id4">
+<h3><a class="toc-backref" href="#id14">17.2.4. 其他转化</a><a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">ts</span>
+<span class="go">1497423190.0</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">ntu</span>
+<span class="go">time.struct_time(tm_year=2017, tm_mon=6, tm_mday=13, tm_hour=23, tm_min=53, tm_sec=10, tm_wday=1, tm_yday=164, tm_isdst=-1)</span>
+<span class="go">&gt;&gt;&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">time</span><span class="o">.</span><span class="n">ctime</span><span class="p">(</span><span class="n">ts</span><span class="p">)</span>
+<span class="go">&#39;Tue Jun 13 23:53:10 2017&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">time</span><span class="o">.</span><span class="n">asctime</span><span class="p">(</span><span class="n">ntu</span><span class="p">)</span>
+<span class="go">&#39;Tue Jun 13 23:53:10 2017&#39;</span>
+</pre></div>
+</div>
+<p>盗用网上的一张图。理解了以上这些，基本可以满足日常编码需要，以后有需要，再继续补充吧！</p>
+<div class="figure align-center" id="id7">
+<a class="reference internal image-reference" href="../_images/time_convert.png"><img alt="../_images/time_convert.png" src="../_images/time_convert.png" style="width: 707.0px; height: 723.0px;" /></a>
+<p class="caption"><span class="caption-text">转化关系图</span></p>
+</div>
+</div>
+</div>
+<div class="section" id="id5">
+<h2><a class="toc-backref" href="#id15">17.3. 参考</a><a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h2>
+<table class="docutils footnote" frame="void" id="id6" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label">[1]</td><td><a class="reference external" href="http://www.wklken.me/posts/2015/03/03/python-base-datetime.html">http://www.wklken.me/posts/2015/03/03/python-base-datetime.html</a></td></tr>
+</tbody>
+</table>
+</div>
+</div>
+
+
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../linux_tools/index.html" class="btn btn-neutral float-right" title="Hack Linux" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="sqlalchemy.html" class="btn btn-neutral" title="16. sqlalchemy笔记" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2016, chenshiqiang.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'1.0',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

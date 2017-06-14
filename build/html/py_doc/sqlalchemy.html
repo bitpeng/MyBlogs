@@ -212,18 +212,28 @@
 </div>
 <div class="section" id="id4">
 <h2><a class="toc-backref" href="#id8">16.2. 插入</a><a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">new_record</span> <span class="o">=</span> <span class="n">User</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="s1">&#39;5&#39;</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s1">&#39;Bob&#39;</span><span class="p">)</span>
+<span class="c1"># 添加到session:</span>
+<span class="n">session</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">new_record</span><span class="p">)</span>
+<span class="c1"># 提交即保存到数据库:</span>
+<span class="n">session</span><span class="o">.</span><span class="n">commit</span><span class="p">()</span>
+<span class="c1"># 关闭session:</span>
+<span class="n">session</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+</pre></div>
+</div>
 </div>
 <div class="section" id="id5">
 <h2><a class="toc-backref" href="#id9">16.3. 查询</a><a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h2>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">DBSession</span> <span class="o">=</span> <span class="n">sessionmaker</span><span class="p">(</span><span class="n">bind</span><span class="o">=</span><span class="n">engine</span><span class="p">)</span>
 <span class="n">session</span> <span class="o">=</span> <span class="n">DBSession</span><span class="p">()</span>
 
-
 <span class="n">session</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">SystemLog</span><span class="p">)</span><span class="o">.</span><span class="n">one</span><span class="p">()</span>
 <span class="n">session</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">SystemLog</span><span class="p">)</span><span class="o">.</span><span class="n">all</span><span class="p">()</span>
 
 <span class="c1"># select * from cec_cmsystem_log limit 10, 30</span>
 <span class="n">session</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">SystemLog</span><span class="p">)</span><span class="o">.</span><span class="n">offset</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span><span class="o">.</span><span class="n">limit</span><span class="p">(</span><span class="mi">20</span><span class="p">)</span>
+
+<span class="n">session</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">SystemLog</span><span class="p">)</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">SystemLog</span><span class="o">.</span><span class="n">id</span><span class="o">==</span><span class="s1">&#39;5&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">one</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>

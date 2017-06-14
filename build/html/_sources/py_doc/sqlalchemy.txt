@@ -58,6 +58,15 @@ Python ORM框架sqlalchemy学习笔记！
 插入
 =====
 
+::
+
+    new_record = User(id='5', desc='Bob')
+    # 添加到session:
+    session.add(new_record)
+    # 提交即保存到数据库:
+    session.commit()
+    # 关闭session:
+    session.close()
 
 查询
 ======
@@ -67,10 +76,10 @@ Python ORM框架sqlalchemy学习笔记！
     DBSession = sessionmaker(bind=engine)
     session = DBSession()
 
-
     session.query(SystemLog).one()
     session.query(SystemLog).all()
 
     # select * from cec_cmsystem_log limit 10, 30
     session.query(SystemLog).offset(10).limit(20)
 
+    session.query(SystemLog).filter(SystemLog.id=='5').one()
