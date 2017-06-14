@@ -1,0 +1,411 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>18. pecan学习示例 &mdash; Welcome to Sitian&#39;s Blog 1.0 documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+    <link rel="top" title="Welcome to Sitian&#39;s Blog 1.0 documentation" href="../index.html"/>
+        <link rel="up" title="Python Note" href="index.html"/>
+        <link rel="next" title="Hack Linux" href="../linux_tools/index.html"/>
+        <link rel="prev" title="17. Python时间和日期操作" href="time_date.html"/> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> Welcome to Sitian's Blog
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Python Note</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="pysnmp_doc.html">1. [翻译] PySNMP教程</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pysnmp_doc_example.html">2. PySNMP获取设备信息</a></li>
+<li class="toctree-l2"><a class="reference internal" href="re_doc.html">3. [翻译] Python正则表达式</a></li>
+<li class="toctree-l2"><a class="reference internal" href="wsgi.html">4. WSGI基础</a></li>
+<li class="toctree-l2"><a class="reference internal" href="re_analysis.html">5. Python正则表达式分析利器</a></li>
+<li class="toctree-l2"><a class="reference internal" href="python_descriptor.html">6. Python描述器</a></li>
+<li class="toctree-l2"><a class="reference internal" href="python_notebook.html">7. Python学习总结</a></li>
+<li class="toctree-l2"><a class="reference internal" href="python_coding.html">8. Python 编码问题总结</a></li>
+<li class="toctree-l2"><a class="reference internal" href="dec_logic.html">9. Python 装饰器、闭包</a></li>
+<li class="toctree-l2"><a class="reference internal" href="webob_analysis.html">10. webob库简单分析</a></li>
+<li class="toctree-l2"><a class="reference internal" href="metaclass_intro.html">11. Python元类</a></li>
+<li class="toctree-l2"><a class="reference internal" href="os_lib.html">12. Python Library</a></li>
+<li class="toctree-l2"><a class="reference internal" href="log_summary.html">13. logging 模块总结</a></li>
+<li class="toctree-l2"><a class="reference internal" href="django_note.html">14. django笔记</a></li>
+<li class="toctree-l2"><a class="reference internal" href="python_path.html">15. Python文件与目录操作</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sqlalchemy.html">16. sqlalchemy笔记</a></li>
+<li class="toctree-l2"><a class="reference internal" href="time_date.html">17. Python时间和日期操作</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">18. pecan学习示例</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id2">18.1. 入门示例</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#url">18.2. url查询字符串</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id3">18.3. 参考</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../linux_tools/index.html">Hack Linux</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../openstack/index.html">OpenStack Note</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../network/index.html">网络技术/neutron</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../others/index.html">未分类</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../index.html">Welcome to Sitian's Blog</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+ 
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../index.html">Docs</a> &raquo;</li>
+      
+          <li><a href="index.html">Python Note</a> &raquo;</li>
+      
+    <li>18. pecan学习示例</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="../_sources/py_doc/pecan_note.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="pecan">
+<span id="pecan-note"></span><h1><a class="toc-backref" href="#id5">18. pecan学习示例</a><a class="headerlink" href="#pecan" title="Permalink to this headline">¶</a></h1>
+<div class="contents topic" id="id1">
+<p class="topic-title first">目录</p>
+<ul class="simple">
+<li><a class="reference internal" href="#pecan" id="id5">pecan学习示例</a><ul>
+<li><a class="reference internal" href="#id2" id="id6">入门示例</a></li>
+<li><a class="reference internal" href="#url" id="id7">url查询字符串</a></li>
+<li><a class="reference internal" href="#id3" id="id8">参考</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<hr class="docutils" />
+<p>在openstack的某些项目如ceilometer中，摒弃了paste+webob这种复杂的构建rest-API的方式，
+才是采用了全新的框架：pecan。在网上搜索学习了下，入门确实比paste+webob简单很多，
+现在通过例子来熟悉下。参考网址：<a class="reference external" href="http://www.giantflyingsaucer.com/blog/?p=4834">http://www.giantflyingsaucer.com/blog/?p=4834</a></p>
+<div class="section" id="id2">
+<h2><a class="toc-backref" href="#id6">18.1. 入门示例</a><a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
+<p>首先通过下面的命令，新建一个pecan项目：</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">mkdir</span> <span class="n">pecanrest</span><span class="o">-</span><span class="n">proj</span>
+<span class="n">cd</span> <span class="n">pecanrest</span><span class="o">-</span><span class="n">proj</span>
+
+<span class="n">pip</span> <span class="n">install</span> <span class="n">pecan</span>
+<span class="n">pecan</span> <span class="n">create</span> <span class="n">pecanrest</span>
+<span class="n">cd</span> <span class="n">pecanrest</span>
+<span class="n">python</span> <span class="n">setup</span><span class="o">.</span><span class="n">py</span> <span class="n">develop</span>
+</pre></div>
+</div>
+<p>由于新建的pecan项目默认监听端口为8080，和ceph-inkscope监听端口冲突，
+因此编辑config.py文件，设置监听端口为18080。</p>
+<p>启动pecan项目并测试：</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">pecan</span> <span class="n">serve</span> <span class="n">config</span><span class="o">.</span><span class="n">py</span>
+</pre></div>
+</div>
+<div class="figure align-center">
+<a class="reference internal image-reference" href="../_images/pecan_test.png"><img alt="../_images/pecan_test.png" src="../_images/pecan_test.png" style="width: 876.0px; height: 474.0px;" /></a>
+</div>
+<p>然后尝试给项目加上版本信息</p>
+<p>编辑root.py文件，加上如下代码：</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pecanrest.controllers</span> <span class="k">import</span> <span class="n">v1</span>
+
+<span class="k">class</span> <span class="nc">RootController</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+
+    <span class="n">v1</span> <span class="o">=</span> <span class="n">v1</span><span class="o">.</span><span class="n">VersionController</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>然后在和root.py文件所在目录新建v1.py，代码如下：</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pecan</span>
+<span class="kn">from</span> <span class="nn">pecan</span> <span class="k">import</span> <span class="n">rest</span>
+
+<span class="k">class</span> <span class="nc">VersionController</span><span class="p">(</span><span class="n">rest</span><span class="o">.</span><span class="n">RestController</span><span class="p">):</span>
+    <span class="nd">@pecan</span><span class="o">.</span><span class="n">expose</span><span class="p">(</span><span class="s1">&#39;json&#39;</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">get</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="p">{</span><span class="s2">&quot;api version&quot;</span><span class="p">:</span> <span class="s2">&quot;1.0&quot;</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>重新启动服务，并测试。</p>
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">root@ubuntu:/smbshare#</span> curl http://192.168.159.155:18080/v1
+<span class="go">{&quot;api version&quot;: &quot;1.0&quot;}</span>
+</pre></div>
+</div>
+<p>下一步测试，在controller目录下新建api目录，并包含三个文件：__init__.py，api.py，order.py。</p>
+<p>其中每一个文件内容如下：</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="c1"># api.py</span>
+<span class="kn">from</span> <span class="nn">pecanrest.controllers.api</span> <span class="k">import</span> <span class="n">order</span>
+<span class="kn">import</span> <span class="nn">pecan</span>
+
+<span class="k">class</span> <span class="nc">ApiController</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="n">orders</span> <span class="o">=</span> <span class="n">order</span><span class="o">.</span><span class="n">OrdersController</span><span class="p">()</span>
+    <span class="n">testhh</span> <span class="o">=</span> <span class="n">order</span><span class="o">.</span><span class="n">OrdersController</span><span class="p">()</span>
+
+    <span class="nd">@pecan</span><span class="o">.</span><span class="n">expose</span><span class="p">(</span><span class="s1">&#39;json&#39;</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">index</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="p">{</span><span class="s2">&quot;version&quot;</span><span class="p">:</span> <span class="s2">&quot;1.0.0&quot;</span><span class="p">,</span> <span class="s2">&quot;info&quot;</span><span class="p">:</span> <span class="s2">&quot;test api&quot;</span><span class="p">}</span>
+</pre></div>
+</div>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="c1"># order.py</span>
+<span class="kn">import</span> <span class="nn">pecan</span>
+<span class="kn">from</span> <span class="nn">pecan</span> <span class="k">import</span> <span class="n">rest</span><span class="p">,</span> <span class="n">response</span>
+
+<span class="k">class</span> <span class="nc">OrdersController</span><span class="p">(</span><span class="n">rest</span><span class="o">.</span><span class="n">RestController</span><span class="p">):</span>
+
+    <span class="nd">@pecan</span><span class="o">.</span><span class="n">expose</span><span class="p">(</span><span class="s2">&quot;json&quot;</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">get</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="p">{</span>
+            <span class="s2">&quot;100A&quot;</span><span class="p">:</span> <span class="s2">&quot;1 bag of corn&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;293F&quot;</span><span class="p">:</span> <span class="s2">&quot;2 bags of potatoes&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;207B&quot;</span><span class="p">:</span> <span class="s2">&quot;1 bag of carrots&quot;</span>
+        <span class="p">}</span>
+
+    <span class="nd">@pecan</span><span class="o">.</span><span class="n">expose</span><span class="p">()</span>
+    <span class="k">def</span> <span class="nf">post</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="c1"># TODO: Create a new order, (optional) return some status data</span>
+        <span class="n">response</span><span class="o">.</span><span class="n">status</span> <span class="o">=</span> <span class="mi">201</span>
+        <span class="k">return</span> <span class="s2">&quot;POST SUCCESS!</span><span class="se">\n</span><span class="s2">&quot;</span>
+
+    <span class="nd">@pecan</span><span class="o">.</span><span class="n">expose</span><span class="p">()</span>
+    <span class="k">def</span> <span class="nf">put</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="c1"># TODO: Idempotent PUT (return 200 or 204)</span>
+        <span class="c1">#response.status = 204</span>
+        <span class="n">response</span><span class="o">.</span><span class="n">status</span> <span class="o">=</span> <span class="mi">205</span>
+        <span class="k">return</span> <span class="s2">&quot;PUT SUCCESS!</span><span class="se">\n</span><span class="s2">&quot;</span>
+
+    <span class="nd">@pecan</span><span class="o">.</span><span class="n">expose</span><span class="p">()</span>
+    <span class="k">def</span> <span class="nf">delete</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="c1"># TODO: Idempotent DELETE</span>
+        <span class="n">response</span><span class="o">.</span><span class="n">status</span> <span class="o">=</span> <span class="mi">200</span>
+        <span class="k">return</span> <span class="s2">&quot;DELETE SUCCESS</span><span class="se">\n</span><span class="s2">&quot;</span>
+</pre></div>
+</div>
+<p>然后编辑root.py加上下面的内容：</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pecanrest.controllers</span> <span class="k">import</span> <span class="n">v1</span>
+<span class="kn">from</span> <span class="nn">pecanrest.controllers.api</span> <span class="k">import</span> <span class="n">api</span>
+
+<span class="k">class</span> <span class="nc">RootController</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+
+    <span class="n">v1</span> <span class="o">=</span> <span class="n">v1</span><span class="o">.</span><span class="n">VersionController</span><span class="p">()</span>
+    <span class="n">api</span> <span class="o">=</span> <span class="n">api</span><span class="o">.</span><span class="n">ApiController</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>重新启动服务并测试：</p>
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">root@ubuntu:/smbshare#</span>
+<span class="gp">root@ubuntu:/smbshare#</span> curl http://192.168.159.155:18080/api/orders
+<span class="go">{&quot;293F&quot;: &quot;2 bags of potatoes&quot;, &quot;207B&quot;: &quot;1 bag of carrots&quot;, &quot;100A&quot;: &quot;1 bag of corn&quot;}root@ubuntu:/smbshare#</span>
+<span class="gp">root@ubuntu:/smbshare#</span>
+<span class="gp">root@ubuntu:/smbshare#</span> curl http://192.168.159.155:18080/api/testhh
+<span class="go">{&quot;293F&quot;: &quot;2 bags of potatoes&quot;, &quot;207B&quot;: &quot;1 bag of carrots&quot;, &quot;100A&quot;: &quot;1 bag of corn&quot;}root@ubuntu:/smbshare#</span>
+<span class="gp">root@ubuntu:/smbshare#</span>
+<span class="gp">root@ubuntu:/smbshare#</span> curl -X POST http://192.168.159.155:18080/api/testhh
+<span class="go">POST SUCCESS!</span>
+<span class="gp">root@ubuntu:/smbshare#</span>
+<span class="gp">root@ubuntu:/smbshare#</span> curl -X PUT http://192.168.159.155:18080/api/testhh
+<span class="go">PUT SUCCESS!</span>
+<span class="gp">root@ubuntu:/smbshare#</span>
+<span class="gp">root@ubuntu:/smbshare#</span> curl -X DELETE http://192.168.159.155:18080/api/testhh
+<span class="go">DELETE SUCCESS</span>
+</pre></div>
+</div>
+<p>把这个例子动手操作一篇，pecan就会有一个大概的了解了。</p>
+<p>附上项目controller目录结构：</p>
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">root@allinone-v2:/smbshare/pecanrest-proj/pecanrest/pecanrest#</span> tree controllers/
+<span class="go">controllers/</span>
+<span class="go">├── api</span>
+<span class="go">│   ├── api.py</span>
+<span class="go">│   ├── api.pyc</span>
+<span class="go">│   ├── __init__.py</span>
+<span class="go">│   ├── __init__.pyc</span>
+<span class="go">│   ├── order.py</span>
+<span class="go">│   └── order.pyc</span>
+<span class="go">├── __init__.py</span>
+<span class="go">├── __init__.pyc</span>
+<span class="go">├── root.py</span>
+<span class="go">├── root.pyc</span>
+<span class="go">├── v1.py</span>
+<span class="go">└── v1.pyc</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="url">
+<h2><a class="toc-backref" href="#id7">18.2. url查询字符串</a><a class="headerlink" href="#url" title="Permalink to this headline">¶</a></h2>
+<p>后来在ceilometer的扩展开发中，需要在http请求中加上URL查询字符串，这里可以用下面的实现方法。</p>
+<div class="figure align-center">
+<a class="reference internal image-reference" href="../_images/query_string.png"><img alt="../_images/query_string.png" src="../_images/query_string.png" style="width: 856.0px; height: 686.0px;" /></a>
+</div>
+<div class="figure align-center">
+<a class="reference internal image-reference" href="../_images/test_pecan_query_string.png"><img alt="../_images/test_pecan_query_string.png" src="../_images/test_pecan_query_string.png" style="width: 1428.0px; height: 316.0px;" /></a>
+</div>
+</div>
+<hr class="docutils" />
+<div class="section" id="id3">
+<h2><a class="toc-backref" href="#id8">18.3. 参考</a><a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h2>
+<table class="docutils footnote" frame="void" id="id4" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label">[1]</td><td><a class="reference external" href="http://www.giantflyingsaucer.com/blog/?p=4834">http://www.giantflyingsaucer.com/blog/?p=4834</a></td></tr>
+</tbody>
+</table>
+</div>
+</div>
+
+
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../linux_tools/index.html" class="btn btn-neutral float-right" title="Hack Linux" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="time_date.html" class="btn btn-neutral" title="17. Python时间和日期操作" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2016, chenshiqiang.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'1.0',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

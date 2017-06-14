@@ -32,3 +32,4 @@ Python Note
     python_path
     sqlalchemy
     time_date
+    pecan_note
