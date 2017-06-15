@@ -197,8 +197,7 @@
 <div class="figure align-center">
 <a class="reference internal image-reference" href="../_images/pecan_test.png"><img alt="../_images/pecan_test.png" src="../_images/pecan_test.png" style="width: 876.0px; height: 474.0px;" /></a>
 </div>
-<p>然后尝试给项目加上版本信息</p>
-<p>编辑root.py文件，加上如下代码：</p>
+<p>然后尝试给项目加上版本信息，编辑root.py文件，加上如下代码：</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pecanrest.controllers</span> <span class="k">import</span> <span class="n">v1</span>
 
 <span class="k">class</span> <span class="nc">RootController</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
@@ -206,8 +205,9 @@
     <span class="n">v1</span> <span class="o">=</span> <span class="n">v1</span><span class="o">.</span><span class="n">VersionController</span><span class="p">()</span>
 </pre></div>
 </div>
-<p>然后在和root.py文件所在目录新建v1.py，代码如下：</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pecan</span>
+<p>然后在root.py文件所在目录新建v1.py，代码如下：</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="c1">#v1.py</span>
+<span class="kn">import</span> <span class="nn">pecan</span>
 <span class="kn">from</span> <span class="nn">pecan</span> <span class="k">import</span> <span class="n">rest</span>
 
 <span class="k">class</span> <span class="nc">VersionController</span><span class="p">(</span><span class="n">rest</span><span class="o">.</span><span class="n">RestController</span><span class="p">):</span>

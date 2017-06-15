@@ -45,9 +45,7 @@ pecan学习示例
    :scale: 100
    :align: center
 
-然后尝试给项目加上版本信息
-
-编辑root.py文件，加上如下代码：
+然后尝试给项目加上版本信息，编辑root.py文件，加上如下代码：
 
 ::
 
@@ -58,10 +56,11 @@ pecan学习示例
         v1 = v1.VersionController()
 
 
-然后在和root.py文件所在目录新建v1.py，代码如下：
+然后在root.py文件所在目录新建v1.py，代码如下：
 
 ::
 
+    #v1.py
     import pecan
     from pecan import rest
 
@@ -201,8 +200,6 @@ url查询字符串
 .. figure:: /_static/images/test_pecan_query_string.png
    :scale: 100
    :align: center
-
-
 
 
 ---------------------

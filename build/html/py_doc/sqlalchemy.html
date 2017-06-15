@@ -32,7 +32,7 @@
   
     <link rel="top" title="Welcome to Sitian&#39;s Blog 1.0 documentation" href="../index.html"/>
         <link rel="up" title="Python Note" href="index.html"/>
-        <link rel="next" title="Hack Linux" href="../linux_tools/index.html"/>
+        <link rel="next" title="17. Python时间和日期操作" href="time_date.html"/>
         <link rel="prev" title="15. Python文件与目录操作" href="python_path.html"/> 
 
   
@@ -100,11 +100,17 @@
 <li class="toctree-l2"><a class="reference internal" href="django_note.html">14. django笔记</a></li>
 <li class="toctree-l2"><a class="reference internal" href="python_path.html">15. Python文件与目录操作</a></li>
 <li class="toctree-l2 current"><a class="current reference internal" href="#">16. sqlalchemy笔记</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#id3">16.1. 定义表</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#id4">16.2. 插入</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#id5">16.3. 查询</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id3">16.1. 定义表</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#id4">16.1.1. 方式一</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id5">16.1.2. 方式二</a></li>
 </ul>
 </li>
+<li class="toctree-l3"><a class="reference internal" href="#id6">16.2. 插入</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id7">16.3. 查询</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="time_date.html">17. Python时间和日期操作</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pecan_note.html">18. pecan学习示例</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../linux_tools/index.html">Hack Linux</a></li>
@@ -158,14 +164,18 @@
            <div itemprop="articleBody">
             
   <div class="section" id="sqlalchemy">
-<span id="id1"></span><h1><a class="toc-backref" href="#id6">16. sqlalchemy笔记</a><a class="headerlink" href="#sqlalchemy" title="Permalink to this headline">¶</a></h1>
+<span id="id1"></span><h1><a class="toc-backref" href="#id8">16. sqlalchemy笔记</a><a class="headerlink" href="#sqlalchemy" title="Permalink to this headline">¶</a></h1>
 <div class="contents topic" id="id2">
 <p class="topic-title first">目录</p>
 <ul class="simple">
-<li><a class="reference internal" href="#sqlalchemy" id="id6">sqlalchemy笔记</a><ul>
-<li><a class="reference internal" href="#id3" id="id7">定义表</a></li>
-<li><a class="reference internal" href="#id4" id="id8">插入</a></li>
-<li><a class="reference internal" href="#id5" id="id9">查询</a></li>
+<li><a class="reference internal" href="#sqlalchemy" id="id8">sqlalchemy笔记</a><ul>
+<li><a class="reference internal" href="#id3" id="id9">定义表</a><ul>
+<li><a class="reference internal" href="#id4" id="id10">方式一</a></li>
+<li><a class="reference internal" href="#id5" id="id11">方式二</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#id6" id="id12">插入</a></li>
+<li><a class="reference internal" href="#id7" id="id13">查询</a></li>
 </ul>
 </li>
 </ul>
@@ -173,7 +183,9 @@
 <hr class="docutils" />
 <p>Python ORM框架sqlalchemy学习笔记！</p>
 <div class="section" id="id3">
-<h2><a class="toc-backref" href="#id7">16.1. 定义表</a><a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id9">16.1. 定义表</a><a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id4">
+<h3><a class="toc-backref" href="#id10">16.1.1. 方式一</a><a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h3>
 <div class="highlight-python"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sqlalchemy</span> <span class="kn">import</span> <span class="n">Column</span><span class="p">,</span> <span class="n">String</span><span class="p">,</span> <span class="n">create_engine</span>
 <span class="kn">from</span> <span class="nn">sqlalchemy.orm</span> <span class="kn">import</span> <span class="n">sessionmaker</span>
 <span class="kn">from</span> <span class="nn">sqlalchemy.ext.declarative</span> <span class="kn">import</span> <span class="n">declarative_base</span>
@@ -210,9 +222,99 @@
 </div>
 <p>然后执行代码，如果cec_audit数据库中，不存在cec_cmsystem_log表，则会创建该表。</p>
 </div>
-<div class="section" id="id4">
-<h2><a class="toc-backref" href="#id8">16.2. 插入</a><a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h2>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">new_record</span> <span class="o">=</span> <span class="n">User</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="s1">&#39;5&#39;</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s1">&#39;Bob&#39;</span><span class="p">)</span>
+<div class="section" id="id5">
+<h3><a class="toc-backref" href="#id11">16.1.2. 方式二</a><a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h3>
+<p>除开上面这种方式，还有另外一种方式定义表：</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sqlalchemy</span> <span class="k">import</span> <span class="n">create_engine</span>
+<span class="kn">from</span> <span class="nn">sqlalchemy</span> <span class="k">import</span> <span class="n">Table</span><span class="p">,</span> <span class="n">Column</span><span class="p">,</span> <span class="n">Integer</span><span class="p">,</span> <span class="n">Numeric</span><span class="p">,</span> <span class="n">String</span><span class="p">,</span> <span class="n">ForeignKey</span><span class="p">,</span> <span class="n">DateTime</span>
+<span class="kn">from</span> <span class="nn">sqlalchemy</span> <span class="k">import</span> <span class="n">MetaData</span>
+<span class="kn">from</span> <span class="nn">sqlalchemy.exc</span> <span class="k">import</span> <span class="n">IntegrityError</span>
+
+<span class="kn">from</span> <span class="nn">datetime</span> <span class="k">import</span> <span class="n">datetime</span>
+
+<span class="n">MYSQL_USER</span> <span class="o">=</span> <span class="s2">&quot;root&quot;</span>
+<span class="n">MYSQL_PASS</span> <span class="o">=</span> <span class="s2">&quot;httc123&quot;</span>
+<span class="n">MYSQL_HOST</span> <span class="o">=</span> <span class="s2">&quot;localhost&quot;</span>
+<span class="n">DB_NAME</span> <span class="o">=</span> <span class="s2">&quot;openstack_dashboard&quot;</span>
+
+<span class="c1">#engine = create_engine(&quot;mysql://root:httc123@localhost/cloud_monitor&quot;, echo=True)</span>
+<span class="n">DB_URL</span> <span class="o">=</span> <span class="s2">&quot;mysql://</span><span class="si">%s</span><span class="s2">:</span><span class="si">%s</span><span class="s2">@</span><span class="si">%s</span><span class="s2">/</span><span class="si">%s</span><span class="s2">&quot;</span><span class="o">%</span><span class="p">(</span><span class="n">MYSQL_USER</span><span class="p">,</span> <span class="n">MYSQL_PASS</span><span class="p">,</span> <span class="n">MYSQL_HOST</span><span class="p">,</span> <span class="n">DB_NAME</span><span class="p">)</span>
+
+<span class="n">conn</span> <span class="o">=</span> <span class="kc">None</span>
+
+<span class="c1">#engine = create_engine(DB_URL, echo=True)</span>
+<span class="n">engine</span> <span class="o">=</span> <span class="n">create_engine</span><span class="p">(</span><span class="n">DB_URL</span><span class="p">)</span>
+<span class="n">conn</span> <span class="o">=</span> <span class="n">engine</span><span class="o">.</span><span class="n">connect</span><span class="p">()</span>
+
+<span class="n">metadata</span> <span class="o">=</span> <span class="n">MetaData</span><span class="p">()</span>
+
+<span class="n">services</span> <span class="o">=</span> <span class="n">Table</span><span class="p">(</span><span class="s1">&#39;services&#39;</span><span class="p">,</span> <span class="n">metadata</span><span class="p">,</span>
+    <span class="n">Column</span><span class="p">(</span><span class="s1">&#39;id&#39;</span><span class="p">,</span> <span class="n">Integer</span><span class="p">(),</span> <span class="n">primary_key</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span>
+    <span class="n">Column</span><span class="p">(</span><span class="s1">&#39;name&#39;</span><span class="p">,</span> <span class="n">String</span><span class="p">(</span><span class="mi">30</span><span class="p">),</span> <span class="n">nullable</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">unique</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span>
+    <span class="n">Column</span><span class="p">(</span><span class="s1">&#39;description&#39;</span><span class="p">,</span> <span class="n">String</span><span class="p">(</span><span class="mi">30</span><span class="p">),</span> <span class="n">nullable</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span>
+    <span class="n">Column</span><span class="p">(</span><span class="s1">&#39;host&#39;</span><span class="p">,</span> <span class="n">String</span><span class="p">(</span><span class="mi">30</span><span class="p">),</span> <span class="n">nullable</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span>
+    <span class="n">Column</span><span class="p">(</span><span class="s1">&#39;status&#39;</span><span class="p">,</span> <span class="n">String</span><span class="p">(</span><span class="mi">30</span><span class="p">),</span> <span class="n">nullable</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span>
+    <span class="n">Column</span><span class="p">(</span><span class="s1">&#39;running_status&#39;</span><span class="p">,</span> <span class="n">String</span><span class="p">(</span><span class="mi">50</span><span class="p">),</span> <span class="n">nullable</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span>
+    <span class="n">Column</span><span class="p">(</span><span class="s1">&#39;updated_on&#39;</span><span class="p">,</span> <span class="n">DateTime</span><span class="p">(),</span> <span class="n">default</span><span class="o">=</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">,</span> <span class="n">onupdate</span><span class="o">=</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">)</span>
+<span class="p">)</span>
+
+<span class="n">metadata</span><span class="o">.</span><span class="n">create_all</span><span class="p">(</span><span class="n">engine</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>这种方式定义的表，可以采用下面的插入方式：</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">ins</span> <span class="o">=</span> <span class="n">services</span><span class="o">.</span><span class="n">insert</span><span class="p">()</span><span class="o">.</span><span class="n">values</span><span class="p">(</span>
+    <span class="nb">id</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+    <span class="n">name</span><span class="o">=</span><span class="s1">&#39;glance-api&#39;</span><span class="p">,</span>
+    <span class="n">host</span><span class="o">=</span><span class="s1">&#39;allinone-v2&#39;</span><span class="p">,</span>
+    <span class="n">status</span><span class="o">=</span><span class="s1">&#39;unknown&#39;</span><span class="p">,</span>
+    <span class="n">updated_on</span><span class="o">=</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span>
+<span class="p">)</span>
+<span class="n">conn</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">ins</span><span class="p">)</span>
+
+<span class="n">multi_data</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="p">{</span>
+        <span class="s1">&#39;id&#39;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span>
+        <span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="s1">&#39;glance-registry&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;host&#39;</span><span class="p">:</span> <span class="s1">&#39;allinone-v2&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;status&#39;</span><span class="p">:</span> <span class="s1">&#39;unknown&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;updated_on&#39;</span><span class="p">:</span> <span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span>
+    <span class="p">},</span>
+
+    <span class="p">{</span>
+        <span class="s1">&#39;id&#39;</span><span class="p">:</span> <span class="mi">3</span><span class="p">,</span>
+        <span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="s1">&#39;keystone-all&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;host&#39;</span><span class="p">:</span> <span class="s1">&#39;allinone-v2&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;status&#39;</span><span class="p">:</span> <span class="s1">&#39;unknown&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;updated_on&#39;</span><span class="p">:</span> <span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span>
+    <span class="p">},</span>
+<span class="p">]</span>
+
+<span class="n">ins_multi</span> <span class="o">=</span> <span class="n">services</span><span class="o">.</span><span class="n">insert</span><span class="p">()</span>
+<span class="n">conn</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">ins_multi</span><span class="p">,</span> <span class="n">multi_data</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>查询和更新：</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">ser_table</span> <span class="o">=</span> <span class="n">services</span>
+<span class="n">update</span> <span class="o">=</span> <span class="n">ser_table</span><span class="o">.</span><span class="n">update</span>
+<span class="n">s</span> <span class="o">=</span> <span class="n">ser_table</span><span class="o">.</span><span class="n">select</span><span class="p">()</span>
+<span class="n">rs</span> <span class="o">=</span> <span class="n">conn</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
+
+<span class="n">row</span> <span class="o">=</span> <span class="n">rs</span><span class="o">.</span><span class="n">fetchall</span><span class="p">()</span>
+
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">row</span><span class="p">:</span>
+    <span class="nb">print</span> <span class="p">(</span><span class="n">i</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">])</span>
+
+<span class="n">s</span> <span class="o">=</span> <span class="n">update</span><span class="p">()</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">ser_table</span><span class="o">.</span><span class="n">c</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="n">i</span><span class="p">)</span><span class="o">.</span><span class="n">values</span><span class="p">(</span><span class="n">status</span><span class="o">=</span><span class="s1">&#39;active&#39;</span><span class="p">,</span> <span class="n">running_status</span><span class="o">=</span><span class="s1">&#39;running&#39;</span><span class="p">)</span>
+
+<span class="n">conn</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="id6">
+<h2><a class="toc-backref" href="#id12">16.2. 插入</a><a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h2>
+<p>下面的插入和查询操作，都是针对第一种创建表的方式！</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">new_record</span> <span class="o">=</span> <span class="n">SystemLog</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="s1">&#39;5&#39;</span><span class="p">,</span> <span class="n">description</span><span class="o">==</span><span class="s1">&#39;Bob&#39;</span><span class="p">)</span>
 <span class="c1"># 添加到session:</span>
 <span class="n">session</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">new_record</span><span class="p">)</span>
 <span class="c1"># 提交即保存到数据库:</span>
@@ -222,8 +324,8 @@
 </pre></div>
 </div>
 </div>
-<div class="section" id="id5">
-<h2><a class="toc-backref" href="#id9">16.3. 查询</a><a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id7">
+<h2><a class="toc-backref" href="#id13">16.3. 查询</a><a class="headerlink" href="#id7" title="Permalink to this headline">¶</a></h2>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">DBSession</span> <span class="o">=</span> <span class="n">sessionmaker</span><span class="p">(</span><span class="n">bind</span><span class="o">=</span><span class="n">engine</span><span class="p">)</span>
 <span class="n">session</span> <span class="o">=</span> <span class="n">DBSession</span><span class="p">()</span>
 
@@ -236,6 +338,7 @@
 <span class="n">session</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">SystemLog</span><span class="p">)</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">SystemLog</span><span class="o">.</span><span class="n">id</span><span class="o">==</span><span class="s1">&#39;5&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">one</span><span class="p">()</span>
 </pre></div>
 </div>
+<p>待以后陆续补充、更新和完善！</p>
 </div>
 </div>
 
@@ -246,7 +349,7 @@
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="../linux_tools/index.html" class="btn btn-neutral float-right" title="Hack Linux" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="time_date.html" class="btn btn-neutral float-right" title="17. Python时间和日期操作" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
         <a href="python_path.html" class="btn btn-neutral" title="15. Python文件与目录操作" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>

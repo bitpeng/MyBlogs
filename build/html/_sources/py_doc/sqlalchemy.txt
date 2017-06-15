@@ -17,6 +17,9 @@ Python ORM框架sqlalchemy学习笔记！
 定义表
 ========
 
+方式一
++++++++++
+
 .. code-block:: python
 
     from sqlalchemy import Column, String, create_engine
@@ -55,12 +58,110 @@ Python ORM框架sqlalchemy学习笔记！
 
 然后执行代码，如果cec_audit数据库中，不存在cec_cmsystem_log表，则会创建该表。
 
-插入
-=====
+方式二
++++++++++++++
+
+除开上面这种方式，还有另外一种方式定义表：
 
 ::
 
-    new_record = User(id='5', desc='Bob')
+    from sqlalchemy import create_engine
+    from sqlalchemy import Table, Column, Integer, Numeric, String, ForeignKey, DateTime
+    from sqlalchemy import MetaData
+    from sqlalchemy.exc import IntegrityError
+
+    from datetime import datetime
+
+    MYSQL_USER = "root"
+    MYSQL_PASS = "httc123"
+    MYSQL_HOST = "localhost"
+    DB_NAME = "openstack_dashboard"
+
+    #engine = create_engine("mysql://root:httc123@localhost/cloud_monitor", echo=True)
+    DB_URL = "mysql://%s:%s@%s/%s"%(MYSQL_USER, MYSQL_PASS, MYSQL_HOST, DB_NAME)
+
+    conn = None
+
+    #engine = create_engine(DB_URL, echo=True)
+    engine = create_engine(DB_URL)
+    conn = engine.connect()
+
+    metadata = MetaData()
+
+    services = Table('services', metadata,
+        Column('id', Integer(), primary_key=True),
+        Column('name', String(30), nullable=True, unique=True),
+        Column('description', String(30), nullable=True),
+        Column('host', String(30), nullable=True),
+        Column('status', String(30), nullable=True),
+        Column('running_status', String(50), nullable=True),
+        Column('updated_on', DateTime(), default=datetime.now, onupdate=datetime.now)
+    )
+
+    metadata.create_all(engine)
+
+这种方式定义的表，可以采用下面的插入方式：
+
+::
+
+    ins = services.insert().values(
+        id=1,
+        name='glance-api',
+        host='allinone-v2',
+        status='unknown',
+        updated_on=datetime.now()
+    )
+    conn.execute(ins)
+
+    multi_data = [
+        {
+            'id': 2,
+            'name': 'glance-registry',
+            'host': 'allinone-v2',
+            'status': 'unknown',
+            'updated_on': datetime.now()
+        },
+
+        {
+            'id': 3,
+            'name': 'keystone-all',
+            'host': 'allinone-v2',
+            'status': 'unknown',
+            'updated_on': datetime.now()
+        },
+    ]
+
+    ins_multi = services.insert()
+    conn.execute(ins_multi, multi_data)
+
+
+查询和更新：
+
+::
+
+    ser_table = services
+    update = ser_table.update
+    s = ser_table.select()
+    rs = conn.execute(s)
+
+    row = rs.fetchall()
+
+    for i in row:
+        print (i['name'])
+
+    s = update().where(ser_table.c.name == i).values(status='active', running_status='running')
+
+    conn.execute(s)
+
+
+插入
+=====
+
+下面的插入和查询操作，都是针对第一种创建表的方式！
+
+::
+
+    new_record = SystemLog(id='5', description=='Bob')
     # 添加到session:
     session.add(new_record)
     # 提交即保存到数据库:
@@ -83,3 +184,6 @@ Python ORM框架sqlalchemy学习笔记！
     session.query(SystemLog).offset(10).limit(20)
 
     session.query(SystemLog).filter(SystemLog.id=='5').one()
+
+
+待以后陆续补充、更新和完善！
