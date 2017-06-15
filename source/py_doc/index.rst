@@ -33,3 +33,4 @@ Python Note
     sqlalchemy
     time_date
     pecan_note
+    stevedemo

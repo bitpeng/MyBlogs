@@ -1,0 +1,484 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>19. stevedore库学习 &mdash; Welcome to Sitian&#39;s Blog 1.0 documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+    <link rel="top" title="Welcome to Sitian&#39;s Blog 1.0 documentation" href="../index.html"/>
+        <link rel="up" title="Python Note" href="index.html"/>
+        <link rel="next" title="Hack Linux" href="../linux_tools/index.html"/>
+        <link rel="prev" title="18. pecan学习示例" href="pecan_note.html"/> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> Welcome to Sitian's Blog
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Python Note</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="pysnmp_doc.html">1. [翻译] PySNMP教程</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pysnmp_doc_example.html">2. PySNMP获取设备信息</a></li>
+<li class="toctree-l2"><a class="reference internal" href="re_doc.html">3. [翻译] Python正则表达式</a></li>
+<li class="toctree-l2"><a class="reference internal" href="wsgi.html">4. WSGI基础</a></li>
+<li class="toctree-l2"><a class="reference internal" href="re_analysis.html">5. Python正则表达式分析利器</a></li>
+<li class="toctree-l2"><a class="reference internal" href="python_descriptor.html">6. Python描述器</a></li>
+<li class="toctree-l2"><a class="reference internal" href="python_notebook.html">7. Python学习总结</a></li>
+<li class="toctree-l2"><a class="reference internal" href="python_coding.html">8. Python 编码问题总结</a></li>
+<li class="toctree-l2"><a class="reference internal" href="dec_logic.html">9. Python 装饰器、闭包</a></li>
+<li class="toctree-l2"><a class="reference internal" href="webob_analysis.html">10. webob库简单分析</a></li>
+<li class="toctree-l2"><a class="reference internal" href="metaclass_intro.html">11. Python元类</a></li>
+<li class="toctree-l2"><a class="reference internal" href="os_lib.html">12. Python Library</a></li>
+<li class="toctree-l2"><a class="reference internal" href="log_summary.html">13. logging 模块总结</a></li>
+<li class="toctree-l2"><a class="reference internal" href="django_note.html">14. django笔记</a></li>
+<li class="toctree-l2"><a class="reference internal" href="python_path.html">15. Python文件与目录操作</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sqlalchemy.html">16. sqlalchemy笔记</a></li>
+<li class="toctree-l2"><a class="reference internal" href="time_date.html">17. Python时间和日期操作</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pecan_note.html">18. pecan学习示例</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">19. stevedore库学习</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id2">19.1. 代码结构</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id3">19.2. 定义插件</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id4">19.3. 声明插件</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id5">19.4. 执行</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id6">19.5. 参考</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../linux_tools/index.html">Hack Linux</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../openstack/index.html">OpenStack Note</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../network/index.html">网络技术/neutron</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../others/index.html">未分类</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../index.html">Welcome to Sitian's Blog</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+ 
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../index.html">Docs</a> &raquo;</li>
+      
+          <li><a href="index.html">Python Note</a> &raquo;</li>
+      
+    <li>19. stevedore库学习</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="../_sources/py_doc/stevedemo.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="stevedore">
+<span id="stevedemo"></span><h1><a class="toc-backref" href="#id8">19. stevedore库学习</a><a class="headerlink" href="#stevedore" title="Permalink to this headline">¶</a></h1>
+<div class="contents topic" id="id1">
+<p class="topic-title first">目录</p>
+<ul class="simple">
+<li><a class="reference internal" href="#stevedore" id="id8">stevedore库学习</a><ul>
+<li><a class="reference internal" href="#id2" id="id9">代码结构</a></li>
+<li><a class="reference internal" href="#id3" id="id10">定义插件</a></li>
+<li><a class="reference internal" href="#id4" id="id11">声明插件</a></li>
+<li><a class="reference internal" href="#id5" id="id12">执行</a></li>
+<li><a class="reference internal" href="#id6" id="id13">参考</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<hr class="docutils" />
+<p>stevedore库是OpenStack社区在开发ceilometer项目时设计的一个插件框架。
+为了更好地理解ceilometer项目代码，现在来学习下该框架。</p>
+<p>需要说明的是，在stevedore库源码里面，有一个example目录，包含了利用stevedore定义插件、加载插件的完整例子。
+由于stevedore使用setuptools的entry points来定义并加载插件，为了同时理解setuptools库，
+下面基于该例子简单修改代码，来定义和加载插件。</p>
+<div class="section" id="id2">
+<h2><a class="toc-backref" href="#id9">19.1. 代码结构</a><a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
+<p>整个例子的代码结构如下：</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span>root@allinone-v2:/smbshare# tree stevedemo/
+stevedemo/
+├── setup.py
+└── stevedemo
+    ├── base.py
+    ├── base.pyc
+    ├── fields.py
+    ├── fields.pyc
+    ├── __init__.py
+    ├── __init__.pyc
+    ├── load_as_driver.py
+    ├── load_as_extension.py
+    ├── simple.py
+    └── simple.pyc
+</pre></div>
+</div>
+<p>使用stevedore给应用程序添加插件支持，非常简单。可以分为定义插件，声明插件，加载插件，执行接口四个步骤。</p>
+</div>
+<div class="section" id="id3">
+<h2><a class="toc-backref" href="#id10">19.2. 定义插件</a><a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h2>
+<p>base.py文件对应着定义插件的抽象类：</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">abc</span>
+<span class="kn">import</span> <span class="nn">six</span>
+
+<span class="nd">@six</span><span class="o">.</span><span class="n">add_metaclass</span><span class="p">(</span><span class="n">abc</span><span class="o">.</span><span class="n">ABCMeta</span><span class="p">)</span>
+<span class="k">class</span> <span class="nc">FormatterBase</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Base class for example plugin used in the tutoral.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">max_width</span><span class="o">=</span><span class="mi">60</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">max_width</span> <span class="o">=</span> <span class="n">max_width</span>
+
+    <span class="nd">@abc</span><span class="o">.</span><span class="n">abstractmethod</span>
+    <span class="k">def</span> <span class="nf">format</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Format the data and return unicode text.</span>
+
+<span class="sd">        :param data: A dictionary with string keys and simple types as</span>
+<span class="sd">                     values.</span>
+<span class="sd">        :type data: dict(str:?)</span>
+<span class="sd">        :returns: Iterable producing the formatted text.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+</pre></div>
+</div>
+<p>然后定义不同插件的具体实现，这个例子实现了两个：</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">textwrap</span>
+
+<span class="c1">#from plugin import base</span>
+<span class="kn">import</span> <span class="nn">base</span>
+
+
+<span class="k">class</span> <span class="nc">FieldList</span><span class="p">(</span><span class="n">base</span><span class="o">.</span><span class="n">FormatterBase</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Format values as a reStructuredText field list.</span>
+
+<span class="sd">    For example::</span>
+
+<span class="sd">      : name1 : value</span>
+<span class="sd">      : name2 : value</span>
+<span class="sd">      : name3 : a long value</span>
+<span class="sd">          will be wrapped with</span>
+<span class="sd">          a hanging indent</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">format</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Format the data and return unicode text.</span>
+
+<span class="sd">        :param data: A dictionary with string keys and simple types as</span>
+<span class="sd">                     values.</span>
+<span class="sd">        :type data: dict(str:?)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">items</span><span class="p">()):</span>
+            <span class="n">full_text</span> <span class="o">=</span> <span class="s1">&#39;: </span><span class="si">{name}</span><span class="s1"> : </span><span class="si">{value}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+                <span class="n">name</span><span class="o">=</span><span class="n">name</span><span class="p">,</span>
+                <span class="n">value</span><span class="o">=</span><span class="n">value</span><span class="p">,</span>
+            <span class="p">)</span>
+            <span class="n">wrapped_text</span> <span class="o">=</span> <span class="n">textwrap</span><span class="o">.</span><span class="n">fill</span><span class="p">(</span>
+                <span class="n">full_text</span><span class="p">,</span>
+                <span class="n">initial_indent</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span>
+                <span class="n">subsequent_indent</span><span class="o">=</span><span class="s1">&#39;    &#39;</span><span class="p">,</span>
+                <span class="n">width</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">max_width</span><span class="p">,</span>
+            <span class="p">)</span>
+            <span class="k">yield</span> <span class="n">wrapped_text</span> <span class="o">+</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span>
+</pre></div>
+</div>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="c1">#from plugin import base</span>
+<span class="kn">import</span> <span class="nn">base</span>
+
+<span class="k">class</span> <span class="nc">Simple</span><span class="p">(</span><span class="n">base</span><span class="o">.</span><span class="n">FormatterBase</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;A very basic formatter.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">format</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Format the data and return unicode text.</span>
+
+<span class="sd">        :param data: A dictionary with string keys and simple types as</span>
+<span class="sd">                     values.</span>
+<span class="sd">        :type data: dict(str:?)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">items</span><span class="p">()):</span>
+            <span class="n">line</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="si">{name}</span><span class="s1"> = </span><span class="si">{value}</span><span class="se">\n</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+                <span class="n">name</span><span class="o">=</span><span class="n">name</span><span class="p">,</span>
+                <span class="n">value</span><span class="o">=</span><span class="n">value</span><span class="p">,</span>
+            <span class="p">)</span>
+            <span class="k">yield</span> <span class="n">line</span>
+</pre></div>
+</div>
+<p><strong>注意，Python源码中，可以直接import当前目录下的py文件，所以可以import base</strong></p>
+</div>
+<div class="section" id="id4">
+<h2><a class="toc-backref" href="#id11">19.3. 声明插件</a><a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h2>
+<p>stevedore利用了pkg_resources的entry_points功能，声明插件，就是在setup.py中添加一条entry_points记录。</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">setuptools</span> <span class="k">import</span> <span class="n">setup</span><span class="p">,</span> <span class="n">find_packages</span>
+
+<span class="n">setup</span><span class="p">(</span>
+    <span class="n">name</span><span class="o">=</span><span class="s1">&#39;stevedore-demo&#39;</span><span class="p">,</span>
+    <span class="n">version</span><span class="o">=</span><span class="s1">&#39;0.1&#39;</span><span class="p">,</span>
+
+    <span class="n">packages</span><span class="o">=</span><span class="n">find_packages</span><span class="p">(),</span>
+    <span class="c1">#include_package_data=True,</span>
+
+    <span class="n">entry_points</span><span class="o">=</span><span class="p">{</span>
+        <span class="s1">&#39;stevedemo.formatter&#39;</span><span class="p">:</span> <span class="p">[</span>
+            <span class="s1">&#39;simple = stevedemo.simple:Simple&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;field = stevedemo.fields:FieldList&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;plain = stevedemo.simple:Simple&#39;</span><span class="p">,</span>
+        <span class="p">],</span>
+    <span class="p">},</span>
+
+    <span class="n">zip_safe</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="id5">
+<h2><a class="toc-backref" href="#id12">19.4. 执行</a><a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h2>
+<p>有两种方式执行，一种是根据name加载执行某一个确定的插件：</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">__future__</span> <span class="k">import</span> <span class="n">print_function</span>
+
+<span class="kn">import</span> <span class="nn">argparse</span>
+
+<span class="kn">from</span> <span class="nn">stevedore</span> <span class="k">import</span> <span class="n">driver</span>
+
+
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="n">parser</span> <span class="o">=</span> <span class="n">argparse</span><span class="o">.</span><span class="n">ArgumentParser</span><span class="p">()</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+        <span class="s1">&#39;format&#39;</span><span class="p">,</span>
+        <span class="n">nargs</span><span class="o">=</span><span class="s1">&#39;?&#39;</span><span class="p">,</span>
+        <span class="n">default</span><span class="o">=</span><span class="s1">&#39;simple&#39;</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="s1">&#39;the output format&#39;</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+        <span class="s1">&#39;--width&#39;</span><span class="p">,</span>
+        <span class="n">default</span><span class="o">=</span><span class="mi">60</span><span class="p">,</span>
+        <span class="nb">type</span><span class="o">=</span><span class="nb">int</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="s1">&#39;maximum output width for text&#39;</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="n">parsed_args</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">parse_args</span><span class="p">()</span>
+
+    <span class="n">data</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s1">&#39;aaa&#39;</span><span class="p">:</span> <span class="s1">&#39;AAA&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;bbb&#39;</span><span class="p">:</span> <span class="s1">&#39;BBB&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;long&#39;</span><span class="p">:</span> <span class="s1">&#39;driver &#39;</span> <span class="o">*</span> <span class="mi">40</span><span class="p">,</span>
+    <span class="p">}</span>
+
+    <span class="n">mgr</span> <span class="o">=</span> <span class="n">driver</span><span class="o">.</span><span class="n">DriverManager</span><span class="p">(</span>
+        <span class="n">namespace</span><span class="o">=</span><span class="s1">&#39;stevedemo.formatter&#39;</span><span class="p">,</span>
+        <span class="n">name</span><span class="o">=</span><span class="n">parsed_args</span><span class="o">.</span><span class="n">format</span><span class="p">,</span>
+        <span class="n">invoke_on_load</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+        <span class="n">invoke_args</span><span class="o">=</span><span class="p">(</span><span class="n">parsed_args</span><span class="o">.</span><span class="n">width</span><span class="p">,),</span>
+    <span class="p">)</span>
+    <span class="k">for</span> <span class="n">chunk</span> <span class="ow">in</span> <span class="n">mgr</span><span class="o">.</span><span class="n">driver</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">data</span><span class="p">):</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">chunk</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>另外一种是加载执行某个命名空间下的所有插件：</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">__future__</span> <span class="k">import</span> <span class="n">print_function</span>
+
+<span class="kn">import</span> <span class="nn">argparse</span>
+<span class="kn">from</span> <span class="nn">stevedore</span> <span class="k">import</span> <span class="n">extension</span>
+
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="n">parser</span> <span class="o">=</span> <span class="n">argparse</span><span class="o">.</span><span class="n">ArgumentParser</span><span class="p">()</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+        <span class="s1">&#39;--width&#39;</span><span class="p">,</span>
+        <span class="n">default</span><span class="o">=</span><span class="mi">60</span><span class="p">,</span>
+        <span class="nb">type</span><span class="o">=</span><span class="nb">int</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="s1">&#39;maximum output width for text&#39;</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="n">parsed_args</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">parse_args</span><span class="p">()</span>
+
+    <span class="n">data</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s1">&#39;abc&#39;</span><span class="p">:</span> <span class="s1">&#39;ABC&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;b_extension&#39;</span><span class="p">:</span> <span class="s1">&#39;B_EXTENSION&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;long&#39;</span><span class="p">:</span> <span class="s1">&#39;extension &#39;</span> <span class="o">*</span> <span class="mi">40</span><span class="p">,</span>
+    <span class="p">}</span>
+
+    <span class="n">mgr</span> <span class="o">=</span> <span class="n">extension</span><span class="o">.</span><span class="n">ExtensionManager</span><span class="p">(</span>
+        <span class="n">namespace</span><span class="o">=</span><span class="s1">&#39;stevedemo.formatter&#39;</span><span class="p">,</span>
+        <span class="n">invoke_on_load</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+        <span class="n">invoke_args</span><span class="o">=</span><span class="p">(</span><span class="n">parsed_args</span><span class="o">.</span><span class="n">width</span><span class="p">,),</span>
+    <span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">format_data</span><span class="p">(</span><span class="n">ext</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
+        <span class="k">return</span> <span class="p">(</span><span class="n">ext</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">ext</span><span class="o">.</span><span class="n">obj</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">data</span><span class="p">))</span>
+
+    <span class="n">results</span> <span class="o">=</span> <span class="n">mgr</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="n">format_data</span><span class="p">,</span> <span class="n">data</span><span class="p">)</span>
+
+    <span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">result</span> <span class="ow">in</span> <span class="n">results</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Formatter: </span><span class="si">{0}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">name</span><span class="p">))</span>
+        <span class="k">for</span> <span class="n">chunk</span> <span class="ow">in</span> <span class="n">result</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="n">chunk</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;=&#39;</span> <span class="o">*</span> <span class="mi">40</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<hr class="docutils" />
+<div class="section" id="id6">
+<h2><a class="toc-backref" href="#id13">19.5. 参考</a><a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h2>
+<table class="docutils footnote" frame="void" id="id7" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label">[1]</td><td><a class="reference external" href="https://pure-earth-7284.herokuapp.com/2015/05/16/OpenStack%E6%89%A9%E5%B1%95%E8%AE%BE%E8%AE%A1%E4%B9%8Bstevedore%E6%8F%92%E4%BB%B6/">https://pure-earth-7284.herokuapp.com/2015/05/16/OpenStack%E6%89%A9%E5%B1%95%E8%AE%BE%E8%AE%A1%E4%B9%8Bstevedore%E6%8F%92%E4%BB%B6/</a></td></tr>
+</tbody>
+</table>
+</div>
+</div>
+
+
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../linux_tools/index.html" class="btn btn-neutral float-right" title="Hack Linux" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="pecan_note.html" class="btn btn-neutral" title="18. pecan学习示例" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2016, chenshiqiang.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'1.0',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>
