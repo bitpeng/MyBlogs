@@ -103,7 +103,8 @@
 <li class="toctree-l2 current"><a class="current reference internal" href="#">13. mysql相关</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#id2">13.1. mysql权限</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#id3">13.2. MySQL相关命令</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#id4">13.3. 参考</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#shellmysql">13.3. shell中执行MySQL命令</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id4">13.4. 参考</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="tip.html">14. tips</a></li>
@@ -163,7 +164,8 @@
 <li><a class="reference internal" href="#mysql" id="id6">mysql相关</a><ul>
 <li><a class="reference internal" href="#id2" id="id7">mysql权限</a></li>
 <li><a class="reference internal" href="#id3" id="id8">MySQL相关命令</a></li>
-<li><a class="reference internal" href="#id4" id="id9">参考</a></li>
+<li><a class="reference internal" href="#shellmysql" id="id9">shell中执行MySQL命令</a></li>
+<li><a class="reference internal" href="#id4" id="id10">参考</a></li>
 </ul>
 </li>
 </ul>
@@ -206,9 +208,58 @@
 </pre></div>
 </div>
 </div>
+<div class="section" id="shellmysql">
+<h2><a class="toc-backref" href="#id9">13.3. shell中执行MySQL命令</a><a class="headerlink" href="#shellmysql" title="Permalink to this headline">¶</a></h2>
+<p>有时会遇到一些场景，需要在shell脚本中执行MySQL命令。比如，我曾经遇到，
+OpenStack登录认证响应过慢，经确定，是keystone认证生成的token都保存在数据库中，影响MySQL读性能，
+进而影响keystone认证。因此，需要确定，keystone数据库中，各个表的记录数和占用的空间！</p>
+<p>假如在MySQL命令行下，一条一条命令的执行，查看每个表占用的空间，那真的太麻烦了。后来，
+经过一番学习，简单写了个shell脚本。</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span>#!/usr/bin/env bash
+
+#set -ex
+
+mysql &lt;&lt;EOF  &gt; keystone_tables
+    use keystone;
+    show tables;
+EOF
+
+#echo &#39;use information_schema;&#39; &gt;&gt; count_length.sql;
+echo &#39;use information_schema;&#39; &gt; count_length.sql;
+
+while read line
+do
+    # echo $line
+    select=&quot;SELECT TABLE_NAME,DATA_LENGTH+INDEX_LENGTH,TABLE_ROWS FROM TABLES WHERE TABLE_SCHEMA=&#39;keystone&#39; AND TABLE_NAME=&#39;$line&#39;;&quot;
+    echo $select &gt;&gt; count_length.sql
+done &lt; keystone_tables
+
+mysql &lt; count_length.sql
+</pre></div>
+</div>
+<p>在这个脚本中，先把keystone的每一个表，保存在文件keystone_tables中，然后对于每一个表，
+查找它的表名，占用空间，表记录数等(把MySQL查询语句保存在count_length.sql文件中)。
+以下是脚本的执行结果：</p>
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">root@allinone-v2:/smbshare#</span> ./shell_mysql.sh
+<span class="go">TABLE_NAME  DATA_LENGTH+INDEX_LENGTH    TABLE_ROWS</span>
+<span class="go">assignment  49152   9</span>
+<span class="go">TABLE_NAME  DATA_LENGTH+INDEX_LENGTH    TABLE_ROWS</span>
+<span class="go">credential  16384   0</span>
+<span class="go">TABLE_NAME  DATA_LENGTH+INDEX_LENGTH    TABLE_ROWS</span>
+<span class="go">domain  32768   1</span>
+<span class="go">TABLE_NAME  DATA_LENGTH+INDEX_LENGTH    TABLE_ROWS</span>
+<span class="go">endpoint    49152   27</span>
+<span class="go">TABLE_NAME  DATA_LENGTH+INDEX_LENGTH    TABLE_ROWS</span>
+<span class="go">group   32768   0</span>
+<span class="go">TABLE_NAME  DATA_LENGTH+INDEX_LENGTH    TABLE_ROWS</span>
+<span class="go">id_mapping  32768   0</span>
+</pre></div>
+</div>
+<p>实际上，对于输出结果，我们还可以利用awk工具，进行格式化输出。这一步的工作，待以后完善！</p>
+</div>
 <hr class="docutils" />
 <div class="section" id="id4">
-<h2><a class="toc-backref" href="#id9">13.3. 参考</a><a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id10">13.4. 参考</a><a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h2>
 <table class="docutils footnote" frame="void" id="id5" rules="none">
 <colgroup><col class="label" /><col /></colgroup>
 <tbody valign="top">
