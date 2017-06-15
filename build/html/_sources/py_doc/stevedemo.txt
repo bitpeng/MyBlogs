@@ -168,7 +168,7 @@ stevedore利用了pkg_resources的entry_points功能，声明插件，就是在s
 执行
 =====
 
-有两种方式执行，一种是根据name加载执行某一个确定的插件：
+有两种方式执行，一种是根据name使用DriverManager加载执行某一个确定的插件：
 
 ::
 
@@ -210,7 +210,7 @@ stevedore利用了pkg_resources的entry_points功能，声明插件，就是在s
         for chunk in mgr.driver.format(data):
             print(chunk, end='')
 
-另外一种是加载执行某个命名空间下的所有插件：
+另外一种是使用ExtensionManager加载执行某个命名空间下的所有插件：
 
 ::
 
@@ -251,6 +251,34 @@ stevedore利用了pkg_resources的entry_points功能，声明插件，就是在s
             for chunk in result:
                 print(chunk, end='')
             print('=' * 40)
+
+
+此时执行程序，代码并不能正确执行。
+
+.. code-block:: console
+
+    root@allinone-v2:/smbshare/stevedemo# python stevedemo/load_as_driver.py 
+    Traceback (most recent call last):
+      File "stevedemo/load_as_driver.py", line 34, in <module>
+        invoke_args=(parsed_args.width,),
+      File "/usr/lib/python2.7/dist-packages/stevedore/driver.py", line 45, in __init__
+        verify_requirements=verify_requirements,
+      File "/usr/lib/python2.7/dist-packages/stevedore/named.py", line 56, in __init__
+        self._init_plugins(extensions)
+      File "/usr/lib/python2.7/dist-packages/stevedore/driver.py", line 97, in _init_plugins
+        (self.namespace, name))
+    RuntimeError: No 'stevedemo.formatter' driver found, looking for 'simple'
+
+需要先进行打包，然后就可以了。利用下面的命令，都可以！
+
+.. code-block:: console
+
+    #python setup.py develop
+    #python setup.py install
+    root@allinone-v2:/smbshare/stevedemo# python stevedemo/load_as_driver.py 
+    aaa = AAA
+    bbb = BBB
+    long = driver driver driver driver driver driver driver driver driver driver driver driver driver driver driver driver driver driver driver driver driver driver driver driver driver driver driver driver driver driver driver driver driver driver driver driver driver driver driver driver
 
 
 ---------------------
