@@ -217,6 +217,18 @@ set_trace
     的断点，因为 import 时使用的是 sys.path 中指定的路径！
 
 
+命令行debug模式
+===============
+
+OpenStack每一个服务都提供的是标准的REST-API接口，如果我们想查看查看某个api的执行细节，
+可以通过命令行开启debug模式，查看比较详细的REST-API执行细节。
+
+::
+
+    ceilometer --debug sample-list -m mem.max -l 10
+    nova --debug list
+
+
 使用自己编写的调试设施
 =======================
 

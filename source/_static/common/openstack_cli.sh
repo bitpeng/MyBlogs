@@ -66,6 +66,6 @@ source /smbshare/chensqrc
 neutron net-create demo-net
 neutron subnet-create demo-net 10.10.10.0/24 --name demo-subnet --allocation-pool start=10.10.10.2,end=10.10.10.254 --gateway 10.10.10.1 --dns-nameserver 114.114.114.114
 # 创建路由，设置外网网关，内网接口！
-neutron router-create demo-router
+neutron router-create demo-router --distributed False
 neutron router-gateway-set demo-router ext-net
 neutron router-interface-add demo-router demo-subnet
