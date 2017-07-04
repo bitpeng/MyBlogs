@@ -52,7 +52,10 @@ MySQL相关命令
     use <db>;
     desc <table>;
 
+    # 查找前十条记录
     select * from <T> limit 0, 10;
+    # 查找最后五条记录
+    select * from <T> order by id desc limit 5;
 
 
 shell中执行MySQL命令

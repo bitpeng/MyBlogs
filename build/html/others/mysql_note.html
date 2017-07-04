@@ -204,7 +204,10 @@
 <span class="n">use</span> <span class="o">&lt;</span><span class="n">db</span><span class="o">&gt;</span><span class="p">;</span>
 <span class="n">desc</span> <span class="o">&lt;</span><span class="n">table</span><span class="o">&gt;</span><span class="p">;</span>
 
+<span class="c1"># 查找前十条记录</span>
 <span class="n">select</span> <span class="o">*</span> <span class="kn">from</span> <span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="n">limit</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">10</span><span class="p">;</span>
+<span class="c1"># 查找最后五条记录</span>
+<span class="n">select</span> <span class="o">*</span> <span class="kn">from</span> <span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="n">order</span> <span class="n">by</span> <span class="nb">id</span> <span class="n">desc</span> <span class="n">limit</span> <span class="mi">5</span><span class="p">;</span>
 </pre></div>
 </div>
 </div>

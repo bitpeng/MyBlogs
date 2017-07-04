@@ -111,6 +111,7 @@
 </li>
 <li class="toctree-l2"><a class="reference internal" href="time_date.html">17. Python时间和日期操作</a></li>
 <li class="toctree-l2"><a class="reference internal" href="pecan_note.html">18. pecan学习示例</a></li>
+<li class="toctree-l2"><a class="reference internal" href="stevedemo.html">19. stevedore库学习</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../linux_tools/index.html">Hack Linux</a></li>
@@ -336,6 +337,12 @@
 <span class="n">session</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">SystemLog</span><span class="p">)</span><span class="o">.</span><span class="n">offset</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span><span class="o">.</span><span class="n">limit</span><span class="p">(</span><span class="mi">20</span><span class="p">)</span>
 
 <span class="n">session</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">SystemLog</span><span class="p">)</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">SystemLog</span><span class="o">.</span><span class="n">id</span><span class="o">==</span><span class="s1">&#39;5&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">one</span><span class="p">()</span>
+
+<span class="c1"># 倒序查询，相当于查询数据库的倒手第25至倒手15条记录！</span>
+<span class="n">session</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">SystemLog</span><span class="p">)</span><span class="o">.</span><span class="n">order_by</span><span class="p">(</span><span class="n">SystemLog</span><span class="o">.</span><span class="n">id</span><span class="o">.</span><span class="n">desc</span><span class="p">())</span><span class="o">.</span><span class="n">offset</span><span class="p">(</span><span class="mi">15</span><span class="p">)</span><span class="o">.</span><span class="n">limit</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+
+<span class="c1"># 查询数据最后十条记录</span>
+<span class="n">session</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">SystemLog</span><span class="p">)</span><span class="o">.</span><span class="n">order_by</span><span class="p">(</span><span class="n">SystemLog</span><span class="o">.</span><span class="n">id</span><span class="o">.</span><span class="n">desc</span><span class="p">())</span><span class="o">.</span><span class="n">limit</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>待以后陆续补充、更新和完善！</p>

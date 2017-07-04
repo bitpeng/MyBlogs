@@ -185,5 +185,11 @@ Python ORM框架sqlalchemy学习笔记！
 
     session.query(SystemLog).filter(SystemLog.id=='5').one()
 
+    # 倒序查询，相当于查询数据库的倒手第25至倒手15条记录！
+    session.query(SystemLog).order_by(SystemLog.id.desc()).offset(15).limit(10)
+
+    # 查询数据最后十条记录
+    session.query(SystemLog).order_by(SystemLog.id.desc()).limit(10)
+
 
 待以后陆续补充、更新和完善！
