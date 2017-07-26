@@ -279,42 +279,42 @@ URL构造有问题，把上述代码单步执行调试，并通过查看ceilomet
 暂时还没有定位到这两种方式，有什么区别。</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">SystemLogController</span><span class="p">(</span><span class="n">rest</span><span class="o">.</span><span class="n">RestController</span><span class="p">):</span>
 
-<span class="nd">@pecan</span><span class="o">.</span><span class="n">expose</span><span class="p">(</span><span class="s1">&#39;json&#39;</span><span class="p">)</span>
-<span class="c1">#@pecan.expose()</span>
-<span class="k">def</span> <span class="nf">get</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-    <span class="k">if</span> <span class="n">pecan</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">GET</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;q.field&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span> <span class="o">==</span> <span class="s1">&#39;page&#39;</span><span class="p">:</span>
-        <span class="n">page</span> <span class="o">=</span> <span class="n">pecan</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">GET</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;q.value&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
-    <span class="k">else</span><span class="p">:</span>
-        <span class="n">page</span> <span class="o">=</span> <span class="mi">1</span>
-    <span class="n">page</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">page</span><span class="p">)</span> <span class="k">if</span> <span class="nb">int</span><span class="p">(</span><span class="n">page</span><span class="p">)</span><span class="o">&gt;</span> <span class="mi">0</span> <span class="k">else</span> <span class="mi">1</span>
-    <span class="k">return</span> <span class="n">utils</span><span class="o">.</span><span class="n">query_table</span><span class="p">(</span><span class="n">SystemLog</span><span class="p">,</span> <span class="nb">int</span><span class="p">(</span><span class="n">page</span><span class="p">))</span>
+    <span class="nd">@pecan</span><span class="o">.</span><span class="n">expose</span><span class="p">(</span><span class="s1">&#39;json&#39;</span><span class="p">)</span>
+    <span class="c1">#@pecan.expose()</span>
+    <span class="k">def</span> <span class="nf">get</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">pecan</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">GET</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;q.field&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span> <span class="o">==</span> <span class="s1">&#39;page&#39;</span><span class="p">:</span>
+            <span class="n">page</span> <span class="o">=</span> <span class="n">pecan</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">GET</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;q.value&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">page</span> <span class="o">=</span> <span class="mi">1</span>
+        <span class="n">page</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">page</span><span class="p">)</span> <span class="k">if</span> <span class="nb">int</span><span class="p">(</span><span class="n">page</span><span class="p">)</span><span class="o">&gt;</span> <span class="mi">0</span> <span class="k">else</span> <span class="mi">1</span>
+        <span class="k">return</span> <span class="n">utils</span><span class="o">.</span><span class="n">query_table</span><span class="p">(</span><span class="n">SystemLog</span><span class="p">,</span> <span class="nb">int</span><span class="p">(</span><span class="n">page</span><span class="p">))</span>
 </pre></div>
 </div>
 <div class="last highlight-default"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">query_table</span><span class="p">(</span><span class="n">table</span><span class="p">,</span> <span class="n">page</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
-<span class="c1"># 优先查找前几条日志</span>
-<span class="c1">#res = session.query(table).offset((page - 1) * LOG_NUM_PER_PAGE).limit(LOG_NUM_PER_PAGE)</span>
-<span class="c1">#session.query(ObjectRes).order_by(ObjectRes.id.desc()).first()</span>
-<span class="c1"># 优先查找后生成的日志</span>
-<span class="n">res</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">table</span><span class="p">)</span><span class="o">.</span><span class="n">order_by</span><span class="p">(</span><span class="n">table</span><span class="o">.</span><span class="n">id</span><span class="o">.</span><span class="n">desc</span><span class="p">())</span><span class="o">.</span><span class="n">offset</span><span class="p">((</span><span class="n">page</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="n">LOG_NUM_PER_PAGE</span><span class="p">)</span><span class="o">.</span><span class="n">limit</span><span class="p">(</span><span class="n">LOG_NUM_PER_PAGE</span><span class="p">)</span>
+    <span class="c1"># 优先查找前几条日志</span>
+    <span class="c1">#res = session.query(table).offset((page - 1) * LOG_NUM_PER_PAGE).limit(LOG_NUM_PER_PAGE)</span>
+    <span class="c1">#session.query(ObjectRes).order_by(ObjectRes.id.desc()).first()</span>
+    <span class="c1"># 优先查找后生成的日志</span>
+    <span class="n">res</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">table</span><span class="p">)</span><span class="o">.</span><span class="n">order_by</span><span class="p">(</span><span class="n">table</span><span class="o">.</span><span class="n">id</span><span class="o">.</span><span class="n">desc</span><span class="p">())</span><span class="o">.</span><span class="n">offset</span><span class="p">((</span><span class="n">page</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="n">LOG_NUM_PER_PAGE</span><span class="p">)</span><span class="o">.</span><span class="n">limit</span><span class="p">(</span><span class="n">LOG_NUM_PER_PAGE</span><span class="p">)</span>
 
-<span class="c1"># 直接json.dumps返回序列化日志，HTTP请求结果总是提示&quot;No Acceptable&quot;，</span>
-<span class="c1"># 直接直接返回对象，然后使用expose(&#39;json&#39;)包装，结果正常。</span>
-<span class="c1">#return json.dumps([{&quot;id&quot;: i.id,</span>
-<span class="c1">#                    &quot;desc&quot;: i.description.encode(&quot;utf-8&quot;),</span>
-<span class="c1">#                    &quot;time&quot;: i.time.strftime(&quot;%Y-%m-%d %H:%M:%S&quot;)</span>
-<span class="c1">#                            if i.time else datetime.now().strftime(&quot;%Y-%m-%d %H:%M:%S&quot;)</span>
-<span class="c1">#                    }</span>
-<span class="c1">#                    for i in res</span>
-<span class="c1">#                   ])</span>
-<span class="c1">#</span>
+    <span class="c1"># 直接json.dumps返回序列化日志，HTTP请求结果总是提示&quot;No Acceptable&quot;，</span>
+    <span class="c1"># 直接直接返回对象，然后使用expose(&#39;json&#39;)包装，结果正常。</span>
+    <span class="c1">#return json.dumps([{&quot;id&quot;: i.id,</span>
+    <span class="c1">#                    &quot;desc&quot;: i.description.encode(&quot;utf-8&quot;),</span>
+    <span class="c1">#                    &quot;time&quot;: i.time.strftime(&quot;%Y-%m-%d %H:%M:%S&quot;)</span>
+    <span class="c1">#                            if i.time else datetime.now().strftime(&quot;%Y-%m-%d %H:%M:%S&quot;)</span>
+    <span class="c1">#                    }</span>
+    <span class="c1">#                    for i in res</span>
+    <span class="c1">#                   ])</span>
+    <span class="c1">#</span>
 
-<span class="k">return</span> <span class="p">[{</span><span class="s2">&quot;id&quot;</span><span class="p">:</span> <span class="n">i</span><span class="o">.</span><span class="n">id</span><span class="p">,</span>
-          <span class="c1">#&quot;desc&quot;: i.description.encode(&quot;utf-8&quot;),</span>
-          <span class="s2">&quot;desc&quot;</span><span class="p">:</span> <span class="n">i</span><span class="o">.</span><span class="n">description</span><span class="p">,</span>
-          <span class="s2">&quot;time&quot;</span><span class="p">:</span> <span class="n">i</span><span class="o">.</span><span class="n">time</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s2">&quot;%Y-%m-</span><span class="si">%d</span><span class="s2"> %H:%M:%S&quot;</span><span class="p">)</span>
-                  <span class="k">if</span> <span class="n">i</span><span class="o">.</span><span class="n">time</span> <span class="k">else</span> <span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s2">&quot;%Y-%m-</span><span class="si">%d</span><span class="s2"> %H:%M:%S&quot;</span><span class="p">)</span>
-         <span class="p">}</span>
-         <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">res</span><span class="p">]</span>
+    <span class="k">return</span> <span class="p">[{</span><span class="s2">&quot;id&quot;</span><span class="p">:</span> <span class="n">i</span><span class="o">.</span><span class="n">id</span><span class="p">,</span>
+              <span class="c1">#&quot;desc&quot;: i.description.encode(&quot;utf-8&quot;),</span>
+              <span class="s2">&quot;desc&quot;</span><span class="p">:</span> <span class="n">i</span><span class="o">.</span><span class="n">description</span><span class="p">,</span>
+              <span class="s2">&quot;time&quot;</span><span class="p">:</span> <span class="n">i</span><span class="o">.</span><span class="n">time</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s2">&quot;%Y-%m-</span><span class="si">%d</span><span class="s2"> %H:%M:%S&quot;</span><span class="p">)</span>
+                      <span class="k">if</span> <span class="n">i</span><span class="o">.</span><span class="n">time</span> <span class="k">else</span> <span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s2">&quot;%Y-%m-</span><span class="si">%d</span><span class="s2"> %H:%M:%S&quot;</span><span class="p">)</span>
+             <span class="p">}</span>
+             <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">res</span><span class="p">]</span>
 </pre></div>
 </div>
 </div>

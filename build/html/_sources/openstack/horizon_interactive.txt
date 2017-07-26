@@ -124,43 +124,43 @@ ceilometerclient扩展
     
         class SystemLogController(rest.RestController):
 
-        @pecan.expose('json')
-        #@pecan.expose()
-        def get(self):
-            if pecan.request.GET.get('q.field', None) == 'page':
-                page = pecan.request.GET.get('q.value', 1)
-            else:
-                page = 1 
-            page = int(page) if int(page)> 0 else 1
-            return utils.query_table(SystemLog, int(page))
+            @pecan.expose('json')
+            #@pecan.expose()
+            def get(self):
+                if pecan.request.GET.get('q.field', None) == 'page':
+                    page = pecan.request.GET.get('q.value', 1)
+                else:
+                    page = 1 
+                page = int(page) if int(page)> 0 else 1
+                return utils.query_table(SystemLog, int(page))
         
     ::
     
         def query_table(table, page=1):
-        # 优先查找前几条日志
-        #res = session.query(table).offset((page - 1) * LOG_NUM_PER_PAGE).limit(LOG_NUM_PER_PAGE)
-        #session.query(ObjectRes).order_by(ObjectRes.id.desc()).first()
-        # 优先查找后生成的日志
-        res = session.query(table).order_by(table.id.desc()).offset((page - 1) * LOG_NUM_PER_PAGE).limit(LOG_NUM_PER_PAGE)
+            # 优先查找前几条日志
+            #res = session.query(table).offset((page - 1) * LOG_NUM_PER_PAGE).limit(LOG_NUM_PER_PAGE)
+            #session.query(ObjectRes).order_by(ObjectRes.id.desc()).first()
+            # 优先查找后生成的日志
+            res = session.query(table).order_by(table.id.desc()).offset((page - 1) * LOG_NUM_PER_PAGE).limit(LOG_NUM_PER_PAGE)
 
-        # 直接json.dumps返回序列化日志，HTTP请求结果总是提示"No Acceptable"，
-        # 直接直接返回对象，然后使用expose('json')包装，结果正常。
-        #return json.dumps([{"id": i.id,
-        #                    "desc": i.description.encode("utf-8"),
-        #                    "time": i.time.strftime("%Y-%m-%d %H:%M:%S")
-        #                            if i.time else datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-        #                    }
-        #                    for i in res
-        #                   ])
-        #
+            # 直接json.dumps返回序列化日志，HTTP请求结果总是提示"No Acceptable"，
+            # 直接直接返回对象，然后使用expose('json')包装，结果正常。
+            #return json.dumps([{"id": i.id,
+            #                    "desc": i.description.encode("utf-8"),
+            #                    "time": i.time.strftime("%Y-%m-%d %H:%M:%S")
+            #                            if i.time else datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+            #                    }
+            #                    for i in res
+            #                   ])
+            #
 
-        return [{"id": i.id,
-                  #"desc": i.description.encode("utf-8"),
-                  "desc": i.description,
-                  "time": i.time.strftime("%Y-%m-%d %H:%M:%S")
-                          if i.time else datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-                 }
-                 for i in res]
+            return [{"id": i.id,
+                      #"desc": i.description.encode("utf-8"),
+                      "desc": i.description,
+                      "time": i.time.strftime("%Y-%m-%d %H:%M:%S")
+                              if i.time else datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+                     }
+                     for i in res]
 
 另外，需要注意的是，也许我们可能会以为，编写ceilometerclient无非是通过Python相关http库，
 封装并发送http请求，然后获取响应结果。刚开始，我也是这么想，并觉得ceilometerclient那一套，
