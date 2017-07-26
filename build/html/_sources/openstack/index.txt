@@ -46,5 +46,6 @@ OpenStack Note
     qemu_img_encry
     nova_interact
     juno_neutron-meter-agent_install
+    horizon_interactive
 
 ..  sphinx_doc

@@ -1,0 +1,480 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>30. ceilometer API扩展与horizon前后端交互流程解析 &mdash; Welcome to Sitian&#39;s Blog 1.0 documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+    <link rel="top" title="Welcome to Sitian&#39;s Blog 1.0 documentation" href="../index.html"/>
+        <link rel="up" title="OpenStack Note" href="index.html"/>
+        <link rel="next" title="网络技术/neutron" href="../network/index.html"/>
+        <link rel="prev" title="29. juno安装neutron-meter-agent" href="juno_neutron-meter-agent_install.html"/> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> Welcome to Sitian's Blog
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../py_doc/index.html">Python Note</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../linux_tools/index.html">Hack Linux</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">OpenStack Note</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="horizon_develop.html">1. Horizon 二次开发指南</a></li>
+<li class="toctree-l2"><a class="reference internal" href="image-create-guide.html">2. OpenStack镜像制作</a></li>
+<li class="toctree-l2"><a class="reference internal" href="deploy_synopsis.html">3. OpenStack 部署实践</a></li>
+<li class="toctree-l2"><a class="reference internal" href="centos_vm_netconf.html">4. Centos虚拟机联网配置</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lanch_instance_failure.html">5. OpenStack 启动虚拟机失败分析</a></li>
+<li class="toctree-l2"><a class="reference internal" href="rabbitmq_doc.html">6. [翻译] rabbitmq教程</a></li>
+<li class="toctree-l2"><a class="reference internal" href="os_cmd.html">7. openstack命令汇总</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kvm_error.html">8. KVM错误问题</a></li>
+<li class="toctree-l2"><a class="reference internal" href="django_middleware.html">9. django中间件和openstack用户重登录分析</a></li>
+<li class="toctree-l2"><a class="reference internal" href="horizon_workflows_analysis.html">10. [翻译] horizon workflows分析</a></li>
+<li class="toctree-l2"><a class="reference internal" href="horizon_launch_instance.html">11. horizon启动虚拟机分析</a></li>
+<li class="toctree-l2"><a class="reference internal" href="django-generic_view.html">12. django通用视图：一个小问题引发的思考</a></li>
+<li class="toctree-l2"><a class="reference internal" href="django_auth.html">13. Django认证：horizon登录认证解析</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cloud_check.html">14. 云平台服务器重启注意事项</a></li>
+<li class="toctree-l2"><a class="reference internal" href="paste_webob_routes.html">15. OpenStack REST-API基础：paste/webob/routes库</a></li>
+<li class="toctree-l2"><a class="reference internal" href="opengrok_xp.html">16. OpenGrok代码浏览环境搭建</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nova_api.html">17. nova-api分析</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nova_smd.html">18. [翻译] nova：Services、Managers and Drivers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="oslo_cfg.html">19. oslo.config 用法总结</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kombu.html">20. kombu和消息队列总结</a></li>
+<li class="toctree-l2"><a class="reference internal" href="openstack_debug.html">21. OpenStack 调试</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nova_rpcserver_start.html">22. nova rpc服务启动分析</a></li>
+<li class="toctree-l2"><a class="reference internal" href="periodic_task.html">23. OpenStack周期性任务分析</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nova_log.html">24. OpenStack 日志模块分析</a></li>
+<li class="toctree-l2"><a class="reference internal" href="qemu_kvm.html">25. qemu/kvm学习笔记</a></li>
+<li class="toctree-l2"><a class="reference internal" href="virt_cmd.html">26. 虚拟化相关命令</a></li>
+<li class="toctree-l2"><a class="reference internal" href="qemu_img_encry.html">27. nova虚机加密总结</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nova_interact.html">28. nova组件间交互总结</a></li>
+<li class="toctree-l2"><a class="reference internal" href="juno_neutron-meter-agent_install.html">29. juno安装neutron-meter-agent</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">30. ceilometer API扩展与horizon前后端交互流程解析</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#ceilometer-api">30.1. ceilometer-api扩展</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#ceilometerclient">30.2. ceilometerclient扩展</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#horizon">30.3. horizon层封装</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id2">30.4. 参考</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../network/index.html">网络技术/neutron</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../others/index.html">未分类</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../index.html">Welcome to Sitian's Blog</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+ 
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../index.html">Docs</a> &raquo;</li>
+      
+          <li><a href="index.html">OpenStack Note</a> &raquo;</li>
+      
+    <li>30. ceilometer API扩展与horizon前后端交互流程解析</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="../_sources/openstack/horizon_interactive.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="ceilometer-apihorizon">
+<span id="horizon-interactive"></span><h1><a class="toc-backref" href="#id5">30. ceilometer API扩展与horizon前后端交互流程解析</a><a class="headerlink" href="#ceilometer-apihorizon" title="Permalink to this headline">¶</a></h1>
+<div class="contents topic" id="id1">
+<p class="topic-title first">目录</p>
+<ul class="simple">
+<li><a class="reference internal" href="#ceilometer-apihorizon" id="id5">ceilometer API扩展与horizon前后端交互流程解析</a><ul>
+<li><a class="reference internal" href="#ceilometer-api" id="id6">ceilometer-api扩展</a></li>
+<li><a class="reference internal" href="#ceilometerclient" id="id7">ceilometerclient扩展</a></li>
+<li><a class="reference internal" href="#horizon" id="id8">horizon层封装</a></li>
+<li><a class="reference internal" href="#id2" id="id9">参考</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<hr class="docutils" />
+<p>高安云开发在基于ceilometer项目基础中，进行监测项扩展。
+目前，绝大部分监测项扩展已经完成，下一步很重要的工作，就是对扩展监测项，
+编写对应的client，以方便前端开发者调用获取展示数据。
+因此，这篇文章，一方面会简要提及ceilometer-api扩展步骤，
+也会对horizon调用相关api—&gt;ceilometerclient—&gt;ceilomter-api的完整流程进行分析，
+同时会把开发过程中，所遇到的坑罗列出来，供大家参考和一起讨论。</p>
+<div class="section" id="ceilometer-api">
+<h2><a class="toc-backref" href="#id6">30.1. ceilometer-api扩展</a><a class="headerlink" href="#ceilometer-api" title="Permalink to this headline">¶</a></h2>
+<p>ceilometer-api是一个http服务，是ceilometer所有服务总入口。有关ceilometer-api扩展，
+杰哥之前写过详细的文档，也可以参考pecan官方文档。这里不在赘述。</p>
+<p>编写了ceilometer-api扩展后，重启rest-api服务，然后通过curl命令行进行测试。比如，
+我编写的rabbit相关监测项，测试如下：</p>
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">root@allinone-v2:/#</span> <span class="nv">token_id</span><span class="o">=</span><span class="sb">`</span>/smbshare/get_token.sh<span class="sb">`</span>
+<span class="gp">  %</span> Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+<span class="go">                                 Dload  Upload   Total   Spent    Left  Speed</span>
+<span class="go">100  3503  100  3401  100   102   9104    273 --:--:-- --:--:-- --:--:--  9142</span>
+<span class="gp">root@allinone-v2:/#</span>
+<span class="gp">root@allinone-v2:/#</span>
+<span class="gp">root@allinone-v2:/#</span> curl -H <span class="s2">&quot;X-Auth-Token: </span><span class="nv">$token_id</span><span class="s2">&quot;</span>  http://localhost:8777/v2/rabbit/users
+<span class="gp">[{&quot;tags&quot;: &quot;administrator&quot;, &quot;name&quot;: &quot;guest&quot;, &quot;password_hash&quot;: &quot;XBYJBalVMFOHwViSaL8U4wKv0Kg=&quot;}]root@allinone-v2:/#</span>
+<span class="gp">root@allinone-v2:/#</span> curl -H <span class="s2">&quot;X-Auth-Token: </span><span class="nv">$token_id</span><span class="s2">&quot;</span>  http://localhost:8777/v2/rabbit/overview
+<span class="go">{&quot;node&quot;: &quot;rabbit@allinone-v2&quot;, &quot;management_version&quot;: &quot;3.2.4&quot;, &quot;queue_totals&quot;: {&quot;messages_details&quot;: {&quot;rate&quot;: 0.0}, &quot;messages&quot;: 1, &quot;messages_ready&quot;: 1, &quot;messages_ready_details&quot;: {&quot;rate&quot;: 0.0}, &quot;messages_unacknowledged&quot;: 0, &quot;messages_unacknowledged_details&quot;: {&quot;rate&quot;: 0.0}}, }</span>
+<span class="gp">root@allinone-v2:/#</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="ceilometerclient">
+<h2><a class="toc-backref" href="#id7">30.2. ceilometerclient扩展</a><a class="headerlink" href="#ceilometerclient" title="Permalink to this headline">¶</a></h2>
+<p>完成上一步的工作，下一步，就是编写ceilometerclient，可以参考官网ceilometerclient的使用文档，
+然后进行仿写。下面以rabbitmq监测项为例，简要概括下步骤。</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">ceilometerclient.client</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">cclient</span> <span class="o">=</span> <span class="n">ceilometerclient</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">get_client</span><span class="p">(</span><span class="n">VERSION</span><span class="p">,</span> <span class="n">os_username</span><span class="o">=</span><span class="n">USERNAME</span><span class="p">,</span> <span class="n">os_password</span><span class="o">=</span><span class="n">PASSWORD</span><span class="p">,</span> <span class="n">os_tenant_name</span><span class="o">=</span><span class="n">PROJECT_NAME</span><span class="p">,</span> <span class="n">os_auth_url</span><span class="o">=</span><span class="n">AUTH_URL</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">cclient</span><span class="o">.</span><span class="n">meters</span><span class="o">.</span><span class="n">list</span><span class="p">()</span>
+<span class="go">[&lt;Meter ...&gt;, ...]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">cclient</span><span class="o">.</span><span class="n">new_samples</span><span class="o">.</span><span class="n">list</span><span class="p">()</span>
+<span class="go">[&lt;Sample ...&gt;, ...]</span>
+</pre></div>
+</div>
+<p><strong>这里VERSION版本号一般是2</strong>，下面是ceilometerclient的代码结构。</p>
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">root@allinone-v2:/usr/lib/python2.7/dist-packages/ceilometerclient#</span> ls
+<span class="go">client.py  client.pyc  common  exc.py  exc.pyc  __init__.py  __init__.pyc  openstack  shell.py  shell.pyc  tests  v1  v2</span>
+<span class="gp">root@allinone-v2:/usr/lib/python2.7/dist-packages/ceilometerclient#</span>
+<span class="gp">root@allinone-v2:/usr/lib/python2.7/dist-packages/ceilometerclient#</span> ls v2
+<span class="go">alarms.py   events.py        __init__.py   meters.py    query.py    resources.py   shell.py        trait_descriptions.py</span>
+<span class="go">alarms.pyc  events.pyc       __init__.pyc  meters.pyc   query.pyc   resources.pyc  shell.pyc       trait_descriptions.pyc</span>
+<span class="go">client.py   event_types.py   logs.py       options.py   rabbit.py   samples.py     statistics.py   traits.py</span>
+<span class="go">client.pyc  event_types.pyc  logs.pyc      options.pyc  rabbit.pyc  samples.pyc    statistics.pyc  traits.pyc</span>
+</pre></div>
+</div>
+<p>然后在v2目录下，新建rabbit.py文件，代码如下：</p>
+<p><code class="file docutils literal"><span class="pre">v2/rabbit.py</span></code></p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">ceilometerclient.common</span> <span class="kn">import</span> <span class="n">base</span>
+<span class="kn">from</span> <span class="nn">ceilometerclient.v2</span> <span class="kn">import</span> <span class="n">options</span>
+
+<span class="k">class</span> <span class="nc">Rabbit</span><span class="p">(</span><span class="n">base</span><span class="o">.</span><span class="n">Resource</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="s2">&quot;&lt;Rabbitmq record -- </span><span class="si">%s</span><span class="s2">&gt;&quot;</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">_info</span>
+
+
+<span class="k">class</span> <span class="nc">RabbitManager</span><span class="p">(</span><span class="n">base</span><span class="o">.</span><span class="n">Manager</span><span class="p">):</span>
+    <span class="n">resource_class</span> <span class="o">=</span> <span class="n">Rabbit</span>
+
+    <span class="k">def</span> <span class="nf">list</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">q</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+        <span class="n">path</span> <span class="o">=</span> <span class="s1">&#39;/v2/rabbit/</span><span class="si">%s</span><span class="s1">&#39;</span><span class="o">%</span><span class="n">q</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_list</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>并在v2/client.py中加入下面这行代码：</p>
+<div class="figure align-center" id="id4">
+<a class="reference internal image-reference" href="../_images/ceilclient_v2_client.png"><img alt="../_images/ceilclient_v2_client.png" src="../_images/ceilclient_v2_client.png" style="width: 865.0px; height: 630.0px;" /></a>
+<p class="caption"><span class="caption-text">v2/client.py</span></p>
+</div>
+<p>简单测试下，看看能否取到数据：</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">cclient</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">get_client</span><span class="p">(</span><span class="s1">&#39;2&#39;</span><span class="p">,</span>
+                            <span class="n">os_username</span><span class="o">=</span><span class="s1">&#39;chensq&#39;</span><span class="p">,</span>
+                            <span class="n">os_password</span><span class="o">=</span><span class="s1">&#39;cec123&#39;</span><span class="p">,</span>
+                            <span class="n">os_tenant_name</span><span class="o">=</span><span class="s1">&#39;csq&#39;</span><span class="p">,</span>
+                            <span class="n">os_auth_url</span><span class="o">=</span><span class="s2">&quot;http://10.10.10.10:5000/v2.0/&quot;</span><span class="p">)</span>
+
+<span class="nb">print</span> <span class="n">cclient</span><span class="o">.</span><span class="n">rabbit</span><span class="o">.</span><span class="n">list</span><span class="p">(</span><span class="s2">&quot;users&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="admonition error">
+<p class="first admonition-title">Error</p>
+<p>在上面的测试中，结果提示异常。刚开始怀疑，是不是在编写client过程中，
+URL构造有问题，把上述代码单步执行调试，并通过查看ceilometer-api日志，
+发现URL构造并没有问题。问题出在数据返回格式上。</p>
+<p>ceilometer-api返回json格式数据，不要直接json.dumps对数据进行序列化，而要使用expose(&#8216;json&#8217;)进行包装。
+假如直接使用json.dumps，在上面的测试中结果总是会返回406错误(&#8220;No Acceptable&#8221;)。
+暂时还没有定位到这两种方式，有什么区别。</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">SystemLogController</span><span class="p">(</span><span class="n">rest</span><span class="o">.</span><span class="n">RestController</span><span class="p">):</span>
+
+<span class="nd">@pecan</span><span class="o">.</span><span class="n">expose</span><span class="p">(</span><span class="s1">&#39;json&#39;</span><span class="p">)</span>
+<span class="c1">#@pecan.expose()</span>
+<span class="k">def</span> <span class="nf">get</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">pecan</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">GET</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;q.field&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span> <span class="o">==</span> <span class="s1">&#39;page&#39;</span><span class="p">:</span>
+        <span class="n">page</span> <span class="o">=</span> <span class="n">pecan</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">GET</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;q.value&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">page</span> <span class="o">=</span> <span class="mi">1</span>
+    <span class="n">page</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">page</span><span class="p">)</span> <span class="k">if</span> <span class="nb">int</span><span class="p">(</span><span class="n">page</span><span class="p">)</span><span class="o">&gt;</span> <span class="mi">0</span> <span class="k">else</span> <span class="mi">1</span>
+    <span class="k">return</span> <span class="n">utils</span><span class="o">.</span><span class="n">query_table</span><span class="p">(</span><span class="n">SystemLog</span><span class="p">,</span> <span class="nb">int</span><span class="p">(</span><span class="n">page</span><span class="p">))</span>
+</pre></div>
+</div>
+<div class="last highlight-default"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">query_table</span><span class="p">(</span><span class="n">table</span><span class="p">,</span> <span class="n">page</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
+<span class="c1"># 优先查找前几条日志</span>
+<span class="c1">#res = session.query(table).offset((page - 1) * LOG_NUM_PER_PAGE).limit(LOG_NUM_PER_PAGE)</span>
+<span class="c1">#session.query(ObjectRes).order_by(ObjectRes.id.desc()).first()</span>
+<span class="c1"># 优先查找后生成的日志</span>
+<span class="n">res</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">table</span><span class="p">)</span><span class="o">.</span><span class="n">order_by</span><span class="p">(</span><span class="n">table</span><span class="o">.</span><span class="n">id</span><span class="o">.</span><span class="n">desc</span><span class="p">())</span><span class="o">.</span><span class="n">offset</span><span class="p">((</span><span class="n">page</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="n">LOG_NUM_PER_PAGE</span><span class="p">)</span><span class="o">.</span><span class="n">limit</span><span class="p">(</span><span class="n">LOG_NUM_PER_PAGE</span><span class="p">)</span>
+
+<span class="c1"># 直接json.dumps返回序列化日志，HTTP请求结果总是提示&quot;No Acceptable&quot;，</span>
+<span class="c1"># 直接直接返回对象，然后使用expose(&#39;json&#39;)包装，结果正常。</span>
+<span class="c1">#return json.dumps([{&quot;id&quot;: i.id,</span>
+<span class="c1">#                    &quot;desc&quot;: i.description.encode(&quot;utf-8&quot;),</span>
+<span class="c1">#                    &quot;time&quot;: i.time.strftime(&quot;%Y-%m-%d %H:%M:%S&quot;)</span>
+<span class="c1">#                            if i.time else datetime.now().strftime(&quot;%Y-%m-%d %H:%M:%S&quot;)</span>
+<span class="c1">#                    }</span>
+<span class="c1">#                    for i in res</span>
+<span class="c1">#                   ])</span>
+<span class="c1">#</span>
+
+<span class="k">return</span> <span class="p">[{</span><span class="s2">&quot;id&quot;</span><span class="p">:</span> <span class="n">i</span><span class="o">.</span><span class="n">id</span><span class="p">,</span>
+          <span class="c1">#&quot;desc&quot;: i.description.encode(&quot;utf-8&quot;),</span>
+          <span class="s2">&quot;desc&quot;</span><span class="p">:</span> <span class="n">i</span><span class="o">.</span><span class="n">description</span><span class="p">,</span>
+          <span class="s2">&quot;time&quot;</span><span class="p">:</span> <span class="n">i</span><span class="o">.</span><span class="n">time</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s2">&quot;%Y-%m-</span><span class="si">%d</span><span class="s2"> %H:%M:%S&quot;</span><span class="p">)</span>
+                  <span class="k">if</span> <span class="n">i</span><span class="o">.</span><span class="n">time</span> <span class="k">else</span> <span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s2">&quot;%Y-%m-</span><span class="si">%d</span><span class="s2"> %H:%M:%S&quot;</span><span class="p">)</span>
+         <span class="p">}</span>
+         <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">res</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<p>另外，需要注意的是，也许我们可能会以为，编写ceilometerclient无非是通过Python相关http库，
+封装并发送http请求，然后获取响应结果。刚开始，我也是这么想，并觉得ceilometerclient那一套，
+是不是搞得太复杂。实际上这么做是有必要的，比如，ceilometerclient对http响应的处理上，
+假如返回数据量太大，会通过生成器，多次读取获取响应结果；同时，还会针对不同类型数据，
+作格式化处理，从而提高可用性、代码健壮性。值得大家借鉴和阅读！</p>
+<p>测试运行结果：</p>
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">root@allinone-v2:/#</span> python /smbshare/test_cc1.py
+
+<span class="go">============== list rabbitmq overview</span>
+<span class="go">[&lt;Rabbitmq record -- {u&#39;node&#39;: u&#39;rabbit@allinone-v2&#39;, u&#39;management_version&#39;: u&#39;3.2.4&#39;, u&#39;queue_totals&#39;: {u&#39;messages_details&#39;: {u&#39;rate&#39;: 0.0}, u&#39;messages&#39;: 1, u&#39;messages_ready&#39;: 1, u&#39;messages_ready_details&#39;: {u&#39;rate&#39;: 0.0}, u&#39;messages_unacknowledged&#39;: 0, u&#39;messages_unacknowledged_details&#39;: {u&#39;rate&#39;: 0.0}},</span>
+<span class="go">u&#39;contexts&#39;: [{u&#39;node&#39;: u&#39;rabbit@allinone-v2&#39;, u&#39;path&#39;: u&#39;/&#39;, u&#39;description&#39;: u&#39;RabbitMQ Management&#39;, u&#39;port&#39;: 15672}, {u&#39;node&#39;: u&#39;rabbit@allinone-v2&#39;, u&#39;path&#39;: u&#39;/&#39;, u&#39;port&#39;: 55672, u&#39;ignore_in_use&#39;: True, u&#39;description&#39;: u&#39;Redirect to port 15672&#39;}],</span>
+<span class="go">u&#39;object_totals&#39;: {u&#39;connections&#39;: 50, u&#39;channels&#39;: 50, u&#39;queues&#39;: 78, u&#39;consumers&#39;: 142, u&#39;exchanges&#39;: 50},</span>
+<span class="go">u&#39;erlang_version&#39;: u&#39;R16B03&#39;, u&#39;listeners&#39;: [{u&#39;node&#39;: u&#39;rabbit@allinone-v2&#39;, u&#39;protocol&#39;: u&#39;amqp&#39;, u&#39;ip_address&#39;: u&#39;::&#39;, u&#39;port&#39;: 5672}],</span>
+<span class="go">u&#39;rabbitmq_version&#39;: u&#39;3.2.4&#39;, u&#39;message_stats&#39;: {u&#39;publish_details&#39;: {u&#39;rate&#39;: 0.6}, u&#39;ack&#39;: 115024, u&#39;deliver_get&#39;: 115024, u&#39;deliver&#39;: 115024, u&#39;publish&#39;: 115027, u&#39;ack_details&#39;: {u&#39;rate&#39;: 0.4}, u&#39;deliver_details&#39;: {u&#39;rate&#39;: 0.4}, u&#39;deliver_get_details&#39;: {u&#39;rate&#39;: 0.4}},</span>
+<span class="go">u&#39;statistics_level&#39;: u&#39;fine&#39;, u&#39;statistics_db_node&#39;: u&#39;rabbit@allinone-v2&#39;, u&#39;exchange_types&#39;: [{u&#39;enabled&#39;: True, u&#39;name&#39;: u&#39;topic&#39;, u&#39;description&#39;: u&#39;AMQP topic exchange, as per the AMQP specification&#39;},</span>
+<span class="go">{u&#39;enabled&#39;: True, u&#39;name&#39;: u&#39;fanout&#39;, u&#39;description&#39;: u&#39;AMQP fanout exchange, as per the AMQP specification&#39;}, {u&#39;enabled&#39;: True, u&#39;name&#39;: u&#39;direct&#39;, u&#39;description&#39;: u&#39;AMQP direct exchange, as per the AMQP specification&#39;},</span>
+<span class="go">{u&#39;enabled&#39;: True, u&#39;name&#39;: u&#39;headers&#39;, u&#39;description&#39;: u&#39;AMQP headers exchange, as per the AMQP specification&#39;}], u&#39;erlang_full_version&#39;: u&#39;Erlang R16B03 (erts-5.10.4) [source] [64-bit] [smp:2:2] [async-threads:30] [kernel-poll:true]&#39;}&gt;]</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="horizon">
+<h2><a class="toc-backref" href="#id8">30.3. horizon层封装</a><a class="headerlink" href="#horizon" title="Permalink to this headline">¶</a></h2>
+<p>在上面的测试中，是直接通过硬编码用户名和密码进行认证的。而在OpenStack dashboards前端，
+调用api获取OpenStack其他服务数据都是通过request中的用户token信息进行认证。并且，
+在horizon项目中，与其他服务(如nova、neutron等)进行交互时，都会在horizon项目的根目录下，
+有个专门的api目录，对其他服务提供的SDK client进行简单封装。</p>
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">root@allinone-v2:/opt/cecgw/csmp/openstack_dashboard#</span> tree api <span class="p">|</span> grep -v pyc$
+<span class="go">api</span>
+<span class="go">├── base.py</span>
+<span class="go">├── ceilometer.py</span>
+<span class="go">├── cinder.py</span>
+<span class="go">├── fwaas.py</span>
+<span class="go">├── glance.py</span>
+<span class="go">├── heat.py</span>
+<span class="go">├── __init__.py</span>
+<span class="go">├── keystone.py</span>
+<span class="go">├── lbaas.py</span>
+<span class="go">├── network_base.py</span>
+<span class="go">├── network.py</span>
+<span class="go">├── neutron.py</span>
+<span class="go">├── nova.py</span>
+</pre></div>
+</div>
+<p>在api/ceilometer.py文件中，有个如下所示的函数，是通过http请求用户token信息，获取client。</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="nd">@memoized</span>
+<span class="k">def</span> <span class="nf">ceilometerclient</span><span class="p">(</span><span class="n">request</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Initialization of Ceilometer client.&quot;&quot;&quot;</span>
+
+    <span class="n">endpoint</span> <span class="o">=</span> <span class="n">base</span><span class="o">.</span><span class="n">url_for</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="s1">&#39;metering&#39;</span><span class="p">)</span>
+    <span class="n">insecure</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">settings</span><span class="p">,</span> <span class="s1">&#39;OPENSTACK_SSL_NO_VERIFY&#39;</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span>
+    <span class="n">cacert</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">settings</span><span class="p">,</span> <span class="s1">&#39;OPENSTACK_SSL_CACERT&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+    <span class="n">LOG</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;ceilometerclient connection created using token &quot;</span><span class="si">%s</span><span class="s1">&quot; &#39;</span>
+              <span class="s1">&#39;and endpoint &quot;</span><span class="si">%s</span><span class="s1">&quot;&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">request</span><span class="o">.</span><span class="n">user</span><span class="o">.</span><span class="n">token</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="n">endpoint</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">ceilometer_client</span><span class="o">.</span><span class="n">Client</span><span class="p">(</span><span class="s1">&#39;2&#39;</span><span class="p">,</span> <span class="n">endpoint</span><span class="p">,</span>
+                                    <span class="n">token</span><span class="o">=</span><span class="p">(</span><span class="k">lambda</span><span class="p">:</span> <span class="n">request</span><span class="o">.</span><span class="n">user</span><span class="o">.</span><span class="n">token</span><span class="o">.</span><span class="n">id</span><span class="p">),</span>
+                                    <span class="n">insecure</span><span class="o">=</span><span class="n">insecure</span><span class="p">,</span>
+                                    <span class="n">ca_file</span><span class="o">=</span><span class="n">cacert</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>然后添加下列代码，简要封装获取rabbitmq监测项信息：</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">rabbit_list</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="n">query</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="c1">#logs_record = ceilometerclient(request).logs.list(q=query)</span>
+    <span class="n">rabbit_info</span> <span class="o">=</span> <span class="n">ceilometerclient</span><span class="p">(</span><span class="n">request</span><span class="p">)</span><span class="o">.</span><span class="n">rabbit</span><span class="o">.</span><span class="n">list</span><span class="p">(</span><span class="n">query</span><span class="p">)</span>
+    <span class="n">LOG_DEBUG</span><span class="p">(</span><span class="n">rabbit_info</span><span class="o">=</span><span class="n">rabbit_info</span><span class="p">)</span>
+    <span class="k">return</span> <span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="n">s</span><span class="p">)</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">rabbit_info</span><span class="p">]</span>
+</pre></div>
+</div>
+<p>然后，在horizon前端，增加一个测试页面，看看整个流程下来，是否可以获取到rabbitmq监测数据。</p>
+<div class="figure align-center">
+<a class="reference internal image-reference" href="../_images/rabbitmq_tab.png"><img alt="../_images/rabbitmq_tab.png" src="../_images/rabbitmq_tab.png" style="width: 778.0px; height: 298.0px;" /></a>
+</div>
+<div class="figure align-center">
+<a class="reference internal image-reference" href="../_images/rabbit_html.png"><img alt="../_images/rabbit_html.png" src="../_images/rabbit_html.png" style="width: 742.0px; height: 106.0px;" /></a>
+</div>
+<p>重启apache2服务，刷新页面。数据显示出来了。</p>
+<div class="figure align-center">
+<a class="reference internal image-reference" href="../_images/rabbit_data.png"><img alt="../_images/rabbit_data.png" src="../_images/rabbit_data.png" style="width: 833.0px; height: 531.0px;" /></a>
+</div>
+</div>
+<hr class="docutils" />
+<div class="section" id="id2">
+<h2><a class="toc-backref" href="#id9">30.4. 参考</a><a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
+<table class="docutils footnote" frame="void" id="id3" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label">[1]</td><td><a class="reference external" href="https://docs.openstack.org/python-ceilometerclient/latest/api.html">https://docs.openstack.org/python-ceilometerclient/latest/api.html</a></td></tr>
+</tbody>
+</table>
+</div>
+</div>
+
+
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../network/index.html" class="btn btn-neutral float-right" title="网络技术/neutron" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="juno_neutron-meter-agent_install.html" class="btn btn-neutral" title="29. juno安装neutron-meter-agent" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2016, chenshiqiang.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'1.0',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>
