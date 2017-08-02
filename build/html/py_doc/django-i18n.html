@@ -1,0 +1,571 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>20. django国际化 &mdash; Welcome to Sitian&#39;s Blog 1.0 documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+    <link rel="top" title="Welcome to Sitian&#39;s Blog 1.0 documentation" href="../index.html"/>
+        <link rel="up" title="Python Note" href="index.html"/>
+        <link rel="next" title="Hack Linux" href="../linux_tools/index.html"/>
+        <link rel="prev" title="19. stevedore库学习" href="stevedemo.html"/> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> Welcome to Sitian's Blog
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Python Note</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="pysnmp_doc.html">1. [翻译] PySNMP教程</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pysnmp_doc_example.html">2. PySNMP获取设备信息</a></li>
+<li class="toctree-l2"><a class="reference internal" href="re_doc.html">3. [翻译] Python正则表达式</a></li>
+<li class="toctree-l2"><a class="reference internal" href="wsgi.html">4. WSGI基础</a></li>
+<li class="toctree-l2"><a class="reference internal" href="re_analysis.html">5. Python正则表达式分析利器</a></li>
+<li class="toctree-l2"><a class="reference internal" href="python_descriptor.html">6. Python描述器</a></li>
+<li class="toctree-l2"><a class="reference internal" href="python_notebook.html">7. Python学习总结</a></li>
+<li class="toctree-l2"><a class="reference internal" href="python_coding.html">8. Python 编码问题总结</a></li>
+<li class="toctree-l2"><a class="reference internal" href="dec_logic.html">9. Python 装饰器、闭包</a></li>
+<li class="toctree-l2"><a class="reference internal" href="webob_analysis.html">10. webob库简单分析</a></li>
+<li class="toctree-l2"><a class="reference internal" href="metaclass_intro.html">11. Python元类</a></li>
+<li class="toctree-l2"><a class="reference internal" href="os_lib.html">12. Python Library</a></li>
+<li class="toctree-l2"><a class="reference internal" href="log_summary.html">13. logging 模块总结</a></li>
+<li class="toctree-l2"><a class="reference internal" href="django_note.html">14. django笔记</a></li>
+<li class="toctree-l2"><a class="reference internal" href="python_path.html">15. Python文件与目录操作</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sqlalchemy.html">16. sqlalchemy笔记</a></li>
+<li class="toctree-l2"><a class="reference internal" href="time_date.html">17. Python时间和日期操作</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pecan_note.html">18. pecan学习示例</a></li>
+<li class="toctree-l2"><a class="reference internal" href="stevedemo.html">19. stevedore库学习</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">20. django国际化</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#python">20.1. Python代码国际化</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id3">20.2. 模板国际化</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id4">20.3. 参考</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../linux_tools/index.html">Hack Linux</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../openstack/index.html">OpenStack Note</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../network/index.html">网络技术/neutron</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../others/index.html">未分类</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../index.html">Welcome to Sitian's Blog</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+ 
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../index.html">Docs</a> &raquo;</li>
+      
+          <li><a href="index.html">Python Note</a> &raquo;</li>
+      
+    <li>20. django国际化</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="../_sources/py_doc/django-i18n.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="django">
+<span id="django-tip"></span><h1><a class="toc-backref" href="#id8">20. django国际化</a><a class="headerlink" href="#django" title="Permalink to this headline">¶</a></h1>
+<div class="contents topic" id="id1">
+<p class="topic-title first">目录</p>
+<ul class="simple">
+<li><a class="reference internal" href="#django" id="id8">django国际化</a><ul>
+<li><a class="reference internal" href="#python" id="id9">Python代码国际化</a></li>
+<li><a class="reference internal" href="#id3" id="id10">模板国际化</a></li>
+<li><a class="reference internal" href="#id4" id="id11">参考</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<hr class="docutils" />
+<p>在高安云开发中，一般通过rest-api接口获取的数据都是json格式的Unicode字符串。在前端展示时，
+可能需要翻译/转化成对应的中文格式。因此，前段时间，调研了下Django框架的国际化问题。
+下面的文档通过小例子，来说明Django国际化中的涉及到的点。</p>
+<p>需要注意的是，在调研的时候，参考了一些网络文档，可是由于Django版本的原因，
+网上给出的实例代码并不能正确的执行，费了较大功夫才调试正确。
+下面的例子，在我的测试环境中运行没有问题，django版本为&#8221;1.6.1&#8221;，对于其他版本，部分细节可能需要修改。</p>
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">root@allinone-v2:/smbshare/testi18n#</span> django-admin --version
+<span class="go">1.6.1</span>
+</pre></div>
+</div>
+<p>有关国际化和本地化的相关概念，大家可以参考有关文档。</p>
+<div class="section" id="python">
+<h2><a class="toc-backref" href="#id9">20.1. Python代码国际化</a><a class="headerlink" href="#python" title="Permalink to this headline">¶</a></h2>
+<p>首先开启一个新的Django项目并新建一个APP：</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">cd</span> <span class="o">/</span><span class="n">smbshare</span><span class="o">/</span>
+<span class="n">django</span><span class="o">-</span><span class="n">admin</span> <span class="n">startproject</span> <span class="n">testi18n</span>
+<span class="n">django</span><span class="o">-</span><span class="n">admin</span> <span class="n">startapp</span> <span class="n">app1</span>
+</pre></div>
+</div>
+<p>编辑app1的视图文件views.py，增加如下代码：</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="c1">#coding:utf-8</span>
+
+<span class="kn">from</span> <span class="nn">django.shortcuts</span> <span class="k">import</span> <span class="n">render</span>
+<span class="kn">from</span> <span class="nn">django.utils.translation</span> <span class="k">import</span> <span class="n">ugettext</span> <span class="k">as</span> <span class="n">_</span>
+
+<span class="c1"># Create your views here.</span>
+<span class="kn">from</span> <span class="nn">django.http</span> <span class="k">import</span> <span class="n">HttpResponse</span>
+<span class="kn">import</span> <span class="nn">time</span>
+
+<span class="k">def</span> <span class="nf">test1_view</span><span class="p">(</span><span class="n">request</span><span class="p">):</span>
+    <span class="c1"># 获得系统本地时间，返回的格式是 UTC 中的 struct_time 数据</span>
+    <span class="n">t</span>  <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">localtime</span><span class="p">()</span>
+    <span class="c1"># 第 6 个元素是 tm_wday , 范围为 [0,6], 星期一 is 0</span>
+    <span class="n">n</span>  <span class="o">=</span> <span class="n">t</span><span class="p">[</span><span class="mi">6</span><span class="p">]</span>
+    <span class="c1"># 星期一到星期日字符串</span>
+    <span class="n">weekdays</span> <span class="o">=</span> <span class="p">[</span><span class="n">_</span><span class="p">(</span><span class="s1">&#39;Monday&#39;</span><span class="p">),</span> <span class="n">_</span><span class="p">(</span><span class="s1">&#39;Tuesday&#39;</span><span class="p">),</span> <span class="n">_</span><span class="p">(</span><span class="s1">&#39;Wednesday&#39;</span><span class="p">),</span>
+                <span class="n">_</span><span class="p">(</span><span class="s1">&#39;Thursday&#39;</span><span class="p">),</span> <span class="n">_</span><span class="p">(</span><span class="s1">&#39;Friday&#39;</span><span class="p">),</span> <span class="n">_</span><span class="p">(</span><span class="s1">&#39;Saturday&#39;</span><span class="p">),</span> <span class="n">_</span><span class="p">(</span><span class="s1">&#39;Sunday&#39;</span><span class="p">)]</span>
+    <span class="c1"># 返回一个 HttpResponse、，这段代码将用来返回服务器系统上是星期几。</span>
+    <span class="k">return</span> <span class="n">HttpResponse</span><span class="p">(</span><span class="n">weekdays</span><span class="p">[</span><span class="n">n</span><span class="p">])</span>
+</pre></div>
+</div>
+<p>然后在root urls文件中加入对应的URL：</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">app1</span> <span class="k">import</span> <span class="n">views</span> <span class="k">as</span> <span class="n">app1_views</span>
+
+<span class="n">urlpatterns</span> <span class="o">=</span> <span class="n">patterns</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">,</span>
+    <span class="c1"># Examples:</span>
+    <span class="c1"># url(r&#39;^$&#39;, &#39;testi18n.views.home&#39;, name=&#39;home&#39;),</span>
+    <span class="c1"># url(r&#39;^blog/&#39;, include(&#39;blog.urls&#39;)),</span>
+
+    <span class="n">url</span><span class="p">(</span><span class="s1">r&#39;^admin/&#39;</span><span class="p">,</span> <span class="n">include</span><span class="p">(</span><span class="n">admin</span><span class="o">.</span><span class="n">site</span><span class="o">.</span><span class="n">urls</span><span class="p">)),</span>
+
+    <span class="n">url</span><span class="p">(</span><span class="s1">r&#39;^app1$&#39;</span><span class="p">,</span> <span class="n">app1_views</span><span class="o">.</span><span class="n">test1_view</span><span class="p">),</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<p>启动web服务，并在浏览器进行测试，此时应该可以看到英文的星期了。</p>
+<p>现在我们想对英文星期进行翻译，首先要对需要翻译的文本进行标记，然后创建语言文件。
+我们在上面的views文件中，已经通过_下划线(ugettext函数的别名)对需要翻译的文本进行标记了。</p>
+<p>在项目目录下创建locale文件。</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">cd</span> <span class="o">/</span><span class="n">smbshare</span><span class="o">/</span><span class="n">testi18n</span>
+<span class="n">mkdir</span> <span class="n">locale</span>
+<span class="n">django</span><span class="o">-</span><span class="n">admin</span> <span class="n">makemessages</span> <span class="o">-</span><span class="n">l</span> <span class="n">zh_CN</span>
+</pre></div>
+</div>
+<p>然后编辑 locale/zh_CN/LC_MESSAGES/django.po文件，并编译信息文件：</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="c1">#: app1/views.py:22</span>
+<span class="n">msgid</span> <span class="s2">&quot;Monday&quot;</span>
+<span class="n">msgstr</span> <span class="s2">&quot;星期1&quot;</span>
+
+<span class="c1">#: app1/views.py:22</span>
+<span class="n">msgid</span> <span class="s2">&quot;Tuesday&quot;</span>
+<span class="n">msgstr</span> <span class="s2">&quot;星期2&quot;</span>
+
+<span class="c1">#: app1/views.py:22</span>
+<span class="n">msgid</span> <span class="s2">&quot;Wednesday&quot;</span>
+<span class="n">msgstr</span> <span class="s2">&quot;星期3&quot;</span>
+
+<span class="c1">#: app1/views.py:23</span>
+<span class="n">msgid</span> <span class="s2">&quot;Thursday&quot;</span>
+<span class="n">msgstr</span> <span class="s2">&quot;星期4&quot;</span>
+
+<span class="c1">#: app1/views.py:23</span>
+<span class="n">msgid</span> <span class="s2">&quot;Friday&quot;</span>
+<span class="n">msgstr</span> <span class="s2">&quot;星期5&quot;</span>
+
+<span class="c1">#: app1/views.py:23</span>
+<span class="n">msgid</span> <span class="s2">&quot;Saturday&quot;</span>
+<span class="n">msgstr</span> <span class="s2">&quot;星期6&quot;</span>
+
+<span class="c1">#: app1/views.py:23</span>
+<span class="n">msgid</span> <span class="s2">&quot;Sunday&quot;</span>
+<span class="n">msgstr</span> <span class="s2">&quot;星期7&quot;</span>
+</pre></div>
+</div>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">django</span><span class="o">-</span><span class="n">admin</span> <span class="n">compilemessages</span>
+</pre></div>
+</div>
+<p>然后在settings.py文件中，配置相关的国际化选项：</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">MIDDLEWARE_CLASSES</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="s1">&#39;django.contrib.sessions.middleware.SessionMiddleware&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;django.middleware.common.CommonMiddleware&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;django.middleware.csrf.CsrfViewMiddleware&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;django.middleware.locale.LocaleMiddleware&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;django.contrib.auth.middleware.AuthenticationMiddleware&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;django.contrib.messages.middleware.MessageMiddleware&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;django.middleware.clickjacking.XFrameOptionsMiddleware&#39;</span><span class="p">,</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<p>请注意注意MIDDLEWARE_CLASSES中的&#8217;django.middleware.locale.LocaleMiddleware&#8217;, 需要放在&#8217;django.contrib.sessions.middleware.SessionMiddleware&#8217;后面。</p>
+<p>然后在浏览器中重新打开页面，看到翻译效果了：</p>
+<div class="figure align-center" id="id7">
+<a class="reference internal image-reference" href="../_images/i18n_app1.png"><img alt="../_images/i18n_app1.png" src="../_images/i18n_app1.png" style="width: 376.0px; height: 112.0px;" /></a>
+<p class="caption"><span class="caption-text">国际化效果</span></p>
+</div>
+<div class="admonition important">
+<p class="first admonition-title">Important</p>
+<p>实际上，假如在settings.py文件中，配置了有关国际化选项后，即使没有编辑django.po语言文件，
+刷新页面，还是可以看到中文效果，这一点刚开始我也是有点疑惑。后来，参考了官方文档，
+这和Django查找翻译文件的顺序机制有关：</p>
+<ul class="simple">
+<li>首先，会通过settings.py文件中配置的LOCALE_PATHS(后面会再次提到该配置项)选项查找翻译文件；</li>
+<li>然后在每个app目录下查找：$APPPATH/locale/&lt;language&gt;/LC_MESSAGES/django.(po|mo)</li>
+<li>然后在django conf文件中查找：$PYTHONPATH/django/conf/locale/&lt;language&gt;/LC_MESSAGES/django.(po|mo)</li>
+</ul>
+<table class="docutils footnote" frame="void" id="id2" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label">[1]</td><td><a class="reference external" href="https://docs.djangoproject.com/en/1.11/topics/i18n/translation/#how-django-discovers-translations">https://docs.djangoproject.com/en/1.11/topics/i18n/translation/#how-django-discovers-translations</a></td></tr>
+</tbody>
+</table>
+<p>回到这个例子本身，即使没有编辑django.po语言文件，但是最终还是会查找django库conf中的中文翻译文件，
+并加载显示中文化效果。</p>
+<div class="last figure align-center">
+<a class="reference internal image-reference" href="../_images/django_conf.png"><img alt="../_images/django_conf.png" src="../_images/django_conf.png" style="width: 805.0px; height: 166.0px;" /></a>
+</div>
+</div>
+</div>
+<div class="section" id="id3">
+<h2><a class="toc-backref" href="#id10">20.2. 模板国际化</a><a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h2>
+<p>新建一个APP，测试Django模板国际化：</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">django</span><span class="o">-</span><span class="n">admin</span> <span class="n">startapp</span> <span class="n">app2</span>
+</pre></div>
+</div>
+<p>在项目目录下新建templates/app2/index.html，模板内容如下：</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span>{% load i18n %}
+
+&lt;html xmlns=&quot;http://www.w3.org/1999/xhtml&quot; xml:lang=&quot;{{ LANGUAGE_CODE }}&quot; lang=&quot;{{ LANGUAGE_CODE }}&quot;&gt;
+
+&lt;head&gt;
+   &lt;meta http-equiv=&quot;Content-Type&quot; content=&quot;text/html; charset=ISO-8859-1&quot; /&gt;
+   &lt;title&gt;Welcome to my site&lt;/title&gt;
+        &lt;script  type=&quot;text/javascript&quot;&gt;
+              function selectdo(obj) {
+                       str=&quot;/i18n/setlang/&quot;;
+                       myform = document.getElementById(&#39;testform&#39;);
+                       myform.method = &quot;POST&quot;;
+                       myform.action = str;
+                       myform.submit();
+               }
+       &lt;/script&gt;
+&lt;/head&gt;
+&lt;body&gt;
+       &lt;form name=&quot;testform&quot; id=&quot;testform&quot; method=&#39;post&#39;&gt;
+           {% csrf_token %}
+           &lt;select id=&quot;language&quot; name=&quot;language&quot; onchange=&quot;selectdo(this)&quot;&gt;
+          &lt;!--    &lt;input name=&quot;next&quot; type=&quot;hidden&quot; value=&quot;{{request.path}}&quot; /&gt;--&gt;
+               &lt;option value=&quot;1&quot; &gt;{% trans &quot;Languages&quot; %}&lt;/option&gt;
+                {% for lang in LANGUAGES %}
+               &lt;option value=&quot;{{ lang.0 }}&quot; &gt; {{ lang.1 }}&lt;/option&gt;
+                {% endfor %}
+             &lt;/select&gt;
+        &lt;/form&gt;
+        &lt;p&gt;{% trans &quot;The first sentence is from the  template index.html&quot; %}&lt;/p&gt;
+       {{ code }}
+&lt;/body&gt;
+&lt;/html&gt;
+</pre></div>
+</div>
+<p>需要注意的几点：</p>
+<ul class="simple">
+<li>注意要加入 {% load i18n %}；</li>
+<li>表单中加入 {% csrf_token %}，否则语言切换时会提示错误；</li>
+<li>将 testform 的 action 重定向到 /i18n/setlang/，
+启用了 django.views.i18n.set_language视图，它的作用是设置用户语言偏好并重定向返回到前一页面；</li>
+</ul>
+<p>然后在settings.py中设置模板路径：</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">ROOT_PATH</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="n">__file__</span><span class="p">))</span>
+<span class="n">TEMPLATE_DIRS</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">ROOT_PATH</span><span class="p">),</span> <span class="s1">&#39;templates&#39;</span><span class="p">),</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<p>然后编辑app2视图文件，变更新url。</p>
+<p><code class="file docutils literal"><span class="pre">app2/views.py</span></code></p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">django.shortcuts</span> <span class="k">import</span> <span class="n">render</span>
+
+<span class="c1"># Create your views here.</span>
+
+<span class="c1"># Create your views here.</span>
+<span class="kn">from</span> <span class="nn">django.http</span> <span class="k">import</span> <span class="n">HttpResponse</span>
+<span class="kn">from</span> <span class="nn">django.shortcuts</span> <span class="k">import</span> <span class="n">render_to_response</span>
+<span class="kn">from</span> <span class="nn">django.template</span> <span class="k">import</span> <span class="n">RequestContext</span>
+<span class="kn">from</span> <span class="nn">django.utils.translation</span> <span class="k">import</span> <span class="n">ugettext_lazy</span> <span class="k">as</span> <span class="n">_</span>
+
+<span class="k">def</span> <span class="nf">test2_view</span><span class="p">(</span><span class="n">request</span><span class="p">):</span>
+   <span class="n">code</span> <span class="o">=</span> <span class="n">_</span><span class="p">(</span><span class="s2">&quot;The second sentence is from the Python code.&quot;</span><span class="p">);</span>
+   <span class="n">responseContext</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;lang&#39;</span><span class="p">:</span><span class="n">request</span><span class="o">.</span><span class="n">LANGUAGE_CODE</span><span class="p">,</span>
+                      <span class="s1">&#39;code&#39;</span><span class="p">:</span><span class="n">code</span><span class="p">,</span>
+                     <span class="p">}</span>
+   <span class="n">resp</span> <span class="o">=</span> <span class="n">render_to_response</span><span class="p">(</span><span class="s1">&#39;app2/index.html&#39;</span><span class="p">,</span> <span class="n">responseContext</span><span class="p">,</span>
+                               <span class="n">context_instance</span><span class="o">=</span><span class="n">RequestContext</span><span class="p">(</span><span class="n">request</span><span class="p">))</span>
+   <span class="k">return</span> <span class="n">resp</span>
+</pre></div>
+</div>
+<p><code class="file docutils literal"><span class="pre">testi18n/urls.py</span></code></p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">django.conf.urls</span> <span class="k">import</span> <span class="n">patterns</span><span class="p">,</span> <span class="n">include</span><span class="p">,</span> <span class="n">url</span>
+
+<span class="kn">from</span> <span class="nn">app1</span> <span class="k">import</span> <span class="n">views</span> <span class="k">as</span> <span class="n">app1_views</span>
+<span class="kn">from</span> <span class="nn">app2</span> <span class="k">import</span> <span class="n">views</span> <span class="k">as</span> <span class="n">app2_views</span>
+
+<span class="kn">from</span> <span class="nn">django.contrib</span> <span class="k">import</span> <span class="n">admin</span>
+<span class="n">admin</span><span class="o">.</span><span class="n">autodiscover</span><span class="p">()</span>
+
+<span class="n">urlpatterns</span> <span class="o">=</span> <span class="n">patterns</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">,</span>
+    <span class="c1"># Examples:</span>
+    <span class="c1"># url(r&#39;^$&#39;, &#39;testi18n.views.home&#39;, name=&#39;home&#39;),</span>
+    <span class="c1"># url(r&#39;^blog/&#39;, include(&#39;blog.urls&#39;)),</span>
+
+    <span class="n">url</span><span class="p">(</span><span class="s1">r&#39;^admin/&#39;</span><span class="p">,</span> <span class="n">include</span><span class="p">(</span><span class="n">admin</span><span class="o">.</span><span class="n">site</span><span class="o">.</span><span class="n">urls</span><span class="p">)),</span>
+
+    <span class="n">url</span><span class="p">(</span><span class="s1">r&#39;^app1$&#39;</span><span class="p">,</span> <span class="n">app1_views</span><span class="o">.</span><span class="n">test1_view</span><span class="p">),</span>
+    <span class="n">url</span><span class="p">(</span><span class="s1">r&#39;^app2$&#39;</span><span class="p">,</span> <span class="n">app2_views</span><span class="o">.</span><span class="n">test2_view</span><span class="p">),</span>
+    <span class="n">url</span><span class="p">(</span><span class="s1">r&#39;^i18n/&#39;</span><span class="p">,</span> <span class="n">include</span><span class="p">(</span><span class="s1">&#39;django.conf.urls.i18n&#39;</span><span class="p">)),</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<p>更新国际化的相关配置，特别需要注意的是，TEMPLATE_CONTEXT_PROCESSORS选项，
+需要加上&#8217;django.contrib.auth.context_processors.auth&#8217;，否则浏览页面会发生异常。</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">ugettext</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">s</span><span class="p">:</span> <span class="n">s</span>
+
+<span class="n">LANGUAGES</span> <span class="o">=</span> <span class="p">(</span>
+   <span class="p">(</span><span class="s1">&#39;en-us&#39;</span><span class="p">,</span> <span class="n">ugettext</span><span class="p">(</span><span class="s1">&#39;English&#39;</span><span class="p">)),</span>
+   <span class="p">(</span><span class="s1">&#39;zh-CN&#39;</span><span class="p">,</span> <span class="n">ugettext</span><span class="p">(</span><span class="s1">&#39;Chinese&#39;</span><span class="p">)),</span>
+<span class="p">)</span>
+
+<span class="n">TEMPLATE_CONTEXT_PROCESSORS</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="c1">#&quot;django.core.context_processors.auth&quot;,</span>
+    <span class="s1">&#39;django.contrib.auth.context_processors.auth&#39;</span><span class="p">,</span>
+    <span class="c1">#&quot;django.core.context_processors.debug&quot;,</span>
+
+    <span class="s2">&quot;django.core.context_processors.i18n&quot;</span><span class="p">,</span>
+    <span class="c1">#&quot;django.core.context_processors.request&quot;,</span>
+<span class="p">)</span>
+
+<span class="n">LOCALE_PATHS</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="c1">#os.path.join(BASE_DIR, &#39;locale&#39;),</span>
+    <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">ROOT_PATH</span><span class="p">),</span> <span class="s1">&#39;locale&#39;</span><span class="p">),</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<p>这里需要注意，需要用数据库保存session。执行下面命令， 产生 django_session 数据表。</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">python</span> <span class="n">manage</span><span class="o">.</span><span class="n">py</span> <span class="n">syncdb</span>
+</pre></div>
+</div>
+<p>更新语言文件并翻译：</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="c1">#: app2/views.py:12</span>
+<span class="n">msgid</span> <span class="s2">&quot;The second sentence is from the Python code.&quot;</span>
+<span class="n">msgstr</span> <span class="s2">&quot;这句话来自于Python代码&quot;</span>
+
+<span class="c1">#: templates/app2/index.html:23</span>
+<span class="n">msgid</span> <span class="s2">&quot;Languages&quot;</span>
+<span class="n">msgstr</span> <span class="s2">&quot;语言&quot;</span>
+
+<span class="c1">#: templates/app2/index.html:29</span>
+<span class="n">msgid</span> <span class="s2">&quot;The first sentence is from the  template index.html&quot;</span>
+<span class="n">msgstr</span> <span class="s2">&quot;这句话来自于模板index.html&quot;</span>
+
+<span class="c1">#: testi18n/settings.py:96</span>
+<span class="n">msgid</span> <span class="s2">&quot;English&quot;</span>
+<span class="n">msgstr</span> <span class="s2">&quot;英文&quot;</span>
+
+<span class="c1">#: testi18n/settings.py:97</span>
+<span class="n">msgid</span> <span class="s2">&quot;Chinese&quot;</span>
+<span class="n">msgstr</span> <span class="s2">&quot;中文&quot;</span>
+</pre></div>
+</div>
+<p>然后浏览页面，刚开始怎么都看不到翻译的效果。后来，查找了大量的文档，在配置项中，
+加上LOCALE_PATHS(在前文中提到过该配置项和Django语言文件查找机制)：</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">LOCALE_PATHS</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="c1">#os.path.join(BASE_DIR, &#39;locale&#39;),</span>
+        <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">ROOT_PATH</span><span class="p">),</span> <span class="s1">&#39;locale&#39;</span><span class="p">),</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<p>再次刷新页面，然后就可以看到国际化的效果了。</p>
+<div class="figure align-center">
+<a class="reference internal image-reference" href="../_images/i18n_zhongwen.png"><img alt="../_images/i18n_zhongwen.png" src="../_images/i18n_zhongwen.png" style="width: 420.0px; height: 204.0px;" /></a>
+</div>
+<div class="figure align-center">
+<a class="reference internal image-reference" href="../_images/i18n_en.png"><img alt="../_images/i18n_en.png" src="../_images/i18n_en.png" style="width: 420.0px; height: 187.0px;" /></a>
+</div>
+<p>可是，参考openstack horizon项目，我并没有在项目settings.py配置文件中，
+发现LOCALE_PATHS这个配置项，但是openstack dashboard还是可以中文汉化显示，
+这个问题以及Django国际化的很多细节，待以后进一步深究。</p>
+</div>
+<hr class="docutils" />
+<div class="section" id="id4">
+<h2><a class="toc-backref" href="#id11">20.3. 参考</a><a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h2>
+<table class="docutils footnote" frame="void" id="id5" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label">[2]</td><td><a class="reference external" href="https://www.ibm.com/developerworks/cn/web/1101_jinjh_djangoi18n/">https://www.ibm.com/developerworks/cn/web/1101_jinjh_djangoi18n/</a> 主要参考了这篇文章，可是由于django版本的原因，复制该文章的代码，
+并不能直接运行，很多细节和配置项需要修改。</td></tr>
+</tbody>
+</table>
+<table class="docutils footnote" frame="void" id="id6" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label">[3]</td><td><a class="reference external" href="https://docs.djangoproject.com/en/1.11/topics/i18n/translation/#how-django-discovers-translations">https://docs.djangoproject.com/en/1.11/topics/i18n/translation/#how-django-discovers-translations</a>  django国际化官方参考手册。</td></tr>
+</tbody>
+</table>
+</div>
+</div>
+
+
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../linux_tools/index.html" class="btn btn-neutral float-right" title="Hack Linux" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="stevedemo.html" class="btn btn-neutral" title="19. stevedore库学习" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2016, chenshiqiang.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'1.0',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

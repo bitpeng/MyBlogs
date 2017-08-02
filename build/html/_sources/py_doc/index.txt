@@ -34,3 +34,4 @@ Python Note
     time_date
     pecan_note
     stevedemo
+    django-i18n

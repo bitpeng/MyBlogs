@@ -1,7 +1,7 @@
 .. _horizon_interactive:
 
 
-ceilometer API扩展与horizon前后端交互流程解析
+ceilometer api扩展与horizon前后端交互流程解析
 ###############################################
 
 
