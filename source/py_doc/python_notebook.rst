@@ -39,6 +39,18 @@ startswith
     s = "ceil-meter"
     s.startswith("ceil")
 
+format
+^^^^^^^^^
+
+::
+
+    >>> msg = "hello, {name}. This is {lan}"
+    >>> msg
+    'hello, {name}. This is {lan}'
+    >>> msg.format(name="chenshiqiang", lan="python")
+    'hello, chenshiqiang. This is python'
+
+
 
 dict
 ~~~~~~~~

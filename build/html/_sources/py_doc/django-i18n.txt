@@ -333,6 +333,10 @@ Python代码国际化
 	msgid "Chinese"
 	msgstr "中文"
 
+::
+
+    django-admin compilemessages
+
 然后浏览页面，刚开始怎么都看不到翻译的效果。后来，查找了大量的文档，在配置项中，
 加上LOCALE_PATHS(在前文中提到过该配置项和Django语言文件查找机制)：
 
@@ -363,6 +367,7 @@ Python代码国际化
 参考
 =====
 
-.. [#] https://www.ibm.com/developerworks/cn/web/1101_jinjh_djangoi18n/ 主要参考了这篇文章，可是由于django版本的原因，复制该文章的代码，
-       并不能直接运行，很多细节和配置项需要修改。
-.. [#] https://docs.djangoproject.com/en/1.11/topics/i18n/translation/#how-django-discovers-translations  django国际化官方参考手册。
+.. [#] 主要参考了这篇文章，可是由于django版本的原因，复制该文章的代码，并不能直接运行，很多细节和配置项需要修改。
+       网址：https://www.ibm.com/developerworks/cn/web/1101_jinjh_djangoi18n/
+.. [#] django国际化官方参考手册。
+       网址：https://docs.djangoproject.com/en/1.11/topics/i18n/translation/#how-django-discovers-translations

@@ -462,6 +462,9 @@
 <span class="n">msgstr</span> <span class="s2">&quot;中文&quot;</span>
 </pre></div>
 </div>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">django</span><span class="o">-</span><span class="n">admin</span> <span class="n">compilemessages</span>
+</pre></div>
+</div>
 <p>然后浏览页面，刚开始怎么都看不到翻译的效果。后来，查找了大量的文档，在配置项中，
 加上LOCALE_PATHS(在前文中提到过该配置项和Django语言文件查找机制)：</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">LOCALE_PATHS</span> <span class="o">=</span> <span class="p">(</span>
@@ -487,14 +490,15 @@
 <table class="docutils footnote" frame="void" id="id5" rules="none">
 <colgroup><col class="label" /><col /></colgroup>
 <tbody valign="top">
-<tr><td class="label">[2]</td><td><a class="reference external" href="https://www.ibm.com/developerworks/cn/web/1101_jinjh_djangoi18n/">https://www.ibm.com/developerworks/cn/web/1101_jinjh_djangoi18n/</a> 主要参考了这篇文章，可是由于django版本的原因，复制该文章的代码，
-并不能直接运行，很多细节和配置项需要修改。</td></tr>
+<tr><td class="label">[2]</td><td>主要参考了这篇文章，可是由于django版本的原因，复制该文章的代码，并不能直接运行，很多细节和配置项需要修改。
+网址：<a class="reference external" href="https://www.ibm.com/developerworks/cn/web/1101_jinjh_djangoi18n/">https://www.ibm.com/developerworks/cn/web/1101_jinjh_djangoi18n/</a></td></tr>
 </tbody>
 </table>
 <table class="docutils footnote" frame="void" id="id6" rules="none">
 <colgroup><col class="label" /><col /></colgroup>
 <tbody valign="top">
-<tr><td class="label">[3]</td><td><a class="reference external" href="https://docs.djangoproject.com/en/1.11/topics/i18n/translation/#how-django-discovers-translations">https://docs.djangoproject.com/en/1.11/topics/i18n/translation/#how-django-discovers-translations</a>  django国际化官方参考手册。</td></tr>
+<tr><td class="label">[3]</td><td>django国际化官方参考手册。
+网址：<a class="reference external" href="https://docs.djangoproject.com/en/1.11/topics/i18n/translation/#how-django-discovers-translations">https://docs.djangoproject.com/en/1.11/topics/i18n/translation/#how-django-discovers-translations</a></td></tr>
 </tbody>
 </table>
 </div>
