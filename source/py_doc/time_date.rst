@@ -120,6 +120,24 @@ datetime <--> timetuple
     datetime.datetime(2017, 6, 13, 23, 53, 10)
 
 
+时间戳转换成成string
+++++++++++++++++++++++
+
+两种方法：
+
+::
+
+    >>> ts
+    1497423190.0
+    >>> 
+    >>> time.ctime(ts)
+    'Tue Jun 13 23:53:10 2017'
+    >>> 
+    >>> import datetime
+    >>> datetime.datetime.fromtimestamp(ts).strftime("%Y-%m-%d %H:%M:%S")
+    '2017-06-13 23:53:10'
+
+
 其他转化
 +++++++++
 

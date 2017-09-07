@@ -109,3 +109,39 @@ Python文件与目录操作
     abs_path = os.path.abspath(__file__)
     name = ["glusterrest.ini"]
     return '/'.join(abs_path.split("/")[:-1] + name)
+
+
+文件和目录操作
+================
+
+目录下所有文件
+++++++++++++++
+
+::
+
+    >>> os.listdir('.')
+    ['.idea', 'db.sqlite3', 'manage.py', 'demo', 'static', 'templates', 'dj_websocket']
+
+
+获取文件属性
++++++++++++++
+
+::
+
+    >>> os.stat('manage.py')
+    posix.stat_result(st_mode=33188, st_ino=7602258, st_dev=64512L, 
+    st_nlink=1, st_uid=0, st_gid=0, st_size=810, st_atime=1504676329, 
+    st_mtime=1504589646, st_ctime=1504589646)
+
+
+根据文件属性获取文件用户、组信息
+++++++++++++++++++++++++++++++++
+
+::
+
+    >>> import pwd
+    >>> pw = pwd.getpwuid(0)
+    >>> 
+    >>> pw
+    pwd.struct_passwd(pw_name='root', pw_passwd='x', pw_uid=0, 
+    pw_gid=0, pw_gecos='root', pw_dir='/root', pw_shell='/bin/bash')
