@@ -1,0 +1,216 @@
+.. _websocket:
+
+
+########################
+Django WebSocket
+########################
+
+
+..
+    标题 ####################
+    一号 ====================
+    二号 ++++++++++++++++++++
+    三号 --------------------
+    四号 ^^^^^^^^^^^^^^^^^^^^
+
+
+.. contents:: 目录
+
+--------------------------
+
+最近调研了下WebSocket技术，经过深究，对WebSocket技术的基本原理以及相关细节有了比较好的把握，
+并利用dwebsocket模块在Django项目中测试向多个客户端代理(浏览器)同时推送消息。
+
+
+websocket基础知识
+==================
+
+关于websocket的基本原理，互联网上有很多讲解，在此推荐 `看完让你彻底搞懂Websocket原理 <http://www.tuicool.com/articles/7zyMvy6>`_ ；
+
+下面，通过网址http://redflag.f3322.net:6680/来具体分析客户端websocket的相关知识要点。
+
+在浏览器中打开http://redflag.f3322.net:6680/，这是一个简单的基于websocket的页面，
+功能是服务器向所有的打开的页面推送rsyslog日志消息，保存页面源代码为wstest.html，
+并简单改写然后进行测试，改写后的文件wstest.html如下：
+
+::
+
+    <!DOCTYPE html>
+    <html>
+    <head>
+    <script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
+    <script language="JavaScript">
+    <!--
+    locate = 0;
+    function scroller() {
+    if (locate !=500 ) {
+    locate++;
+    scroll(0,locate);
+    clearTimeout(timer);
+    var timer = setTimeout("scroller()",3);
+    timer;
+    }
+    }
+    // -->
+    </script>
+      <title>demo</title>
+      <meta charset="utf8" />
+    </head>
+    <body OnLoad="scroller()">
+        <div class="container">
+        <br/> 
+        <h1> Rsyslog Demo </h1>
+         <div id="board"><div>
+        </div>
+      
+      <script>
+        var socket = new WebSocket('ws://' + "redflag.f3322.net:6680" + '/database/');
+
+        socket.onopen = function open() {
+          console.log('WebSockets connection created.');
+        };
+
+        socket.onmessage = function (message) {
+          var dom = document.getElementById("board");
+          //var log = document.createElement("p");
+          //log.innerHTML = message.data;
+          //dom.appendChild(log);
+          $('#board').prepend('<p>' + message.data + '</p>');
+        }
+
+        if (socket.readyState == WebSocket.OPEN) {
+          socket.onopen();
+        }
+      </script>
+
+    </body>
+    </html>
+
+浏览器中打开该HTML文件，利用firebug进行抓包分析！截图信息如下：
+
+.. figure:: /_static/images/web_wstest.png
+   :scale: 100
+   :align: center
+
+   websocket页面抓包
+
+结合wstest.html来看，页面加载时，js代码尝试会发起websocket连接(URL为：
+'ws://redflag.f3322.net:6680/database/')，但是通过firebug抓包结果来看，
+发起请求会将URL的模式部分替换成http(即URL为：http://redflag.f3322.net:6680/database/)，
+但是该请求的首部，会有其他特殊的头信息字段，通知服务器这不是一个普通的HTTP请求，
+而是websocket连接请求。
+
+.. figure:: /_static/images/switch_proto.png
+   :scale: 100
+   :align: center
+
+   服务器响应HTTP状态码
+
+而服务器返回的101状态码，表示已经成功的进行了协议转换。
+
+**这里特别注意：虽然websocket利用HTTP请求实现连接，但这就是为了兼容HTTP的握手规范，
+websocket是一个全新的协议，和HTTP协议没太大关系。**
+
+
+简而言之，**客户端发起websocket请求时，请求URL和普通的HTTP请求一样，但是在请求首部中，
+会加上相关标识信息(首部Sec-WebSocket-Key，Sec-WebSocket-Version，Upgrade字段)，
+然后服务端根据这些标识信息，进行协议切换并响应，此时websocket连接建立，
+后续客户端、服务端可以同时利用该连接发送消息(而不像普通HTTP请求那样，服务端被动等待客户端发起连接并响应)。**
+
+   
+客户端WebSocket API
+=====================
+
+上面的例子中，涉及到部分WebSocket API，WebSocket提供一组可用于WebSocket编程的对象、方法和属性。
+
+.. figure:: /_static/images/websocket_api.png
+   :scale: 100
+   :align: center
+
+   WebSocket API
+
+需要注意的是，readyState是一个只读属性，表示websocket的连接状态，他有下面四个可能值。
+
+.. figure:: /_static/images/readyState.png
+   :scale: 100
+   :align: center
+
+
+dwebsocket
+============
+   
+由于不知道页面http://redflag.f3322.net:6680/database/后端对应的技术，
+下面通过一个例子来，来探讨在Django中利用dwebsocket模块实现websocket技术！
+主要参考了 `利用dwebsocket在Django中使用websocket <http://www.cnblogs.com/huguodong/p/6611602.html>`_ ；
+但是该例子并没有实现，服务端向多个客户端推送消息的功能。下面介绍怎样实现这一功能：
+
+编辑urls.py文件，加上下面这两行：
+
+::
+
+    url(r'^wstest$', views.ws_html),
+    url(r'^websocket$', views.wstest),
+
+
+::
+
+    def ws_html(request):
+        LOG_DEBUG('call generic http')
+        return render(request, 'wstest.html')
+
+    @accept_websocket
+    def wstest(request):
+        LOG_DEBUG('call wstest')
+        if not request.is_websocket():#判断是不是websocket连接
+            try:#如果是普通的http方法
+                message = request.GET['message']
+                return HttpResponse(message)
+            except:
+                return render(request,'wstest.html')
+        else:
+            clients.append(request.websocket)
+            # 下面的for循环并不能删掉，否则无法给客户端推送消息，原因未知
+            for message in request.websocket:
+                request.websocket.send(message)
+
+wstest函数的功能是，对于每一个websocket连接请求，保存websocket客户端。
+后面，可以利用该clients客户端列表，进行消息推送。
+
+
+消息推送
+=========
+
+这里实现的是服务端向每个客户端推送消息，推送消息的时机很重要，一般而言，
+客户端是依据状态变化，触发特定事件，然后进行消息推送。这里，为了方便，
+是弄了一个定时任务，每几秒钟，依次向每一个websocket客户端推送消息。
+
+::
+
+	from apscheduler.scheduler import Scheduler
+	sched = Scheduler()
+
+	@sched.interval_schedule(seconds=1.5)
+	def mytask():
+		import uuid
+		msg = "websocket test: recevied msg [{msg}] from server at <{time}>".format(
+					time=datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+					msg=str(uuid.uuid4()))
+		for i in clients:
+			i.send(msg)
+
+	sched.start()
+
+刷新页面，就可以看到效果了。
+
+.. figure:: /_static/images/websocket_test.png
+   :scale: 100
+   :align: center
+
+   
+---------------------
+
+参考
+=====
+
+.. [#] 关于怎么在Django中实现定时任务。网址：http://blog.csdn.net/hui3909/article/details/46652623
+.. [#] 对websocket的原理及与HTTP的关系做了比较好的阐述。网址：http://www.tuicool.com/articles/7zyMvy6

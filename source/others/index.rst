@@ -25,6 +25,8 @@
     html_note
     inkscope_install
     mysql_note
+    websocket
     tip
+
 
 ..    sphinx_doc
