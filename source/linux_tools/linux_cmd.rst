@@ -744,6 +744,36 @@ pkill
 
     pkill nova-api
 
+
+tar
+++++
+
+tar命令笔记常用：
+
+::
+
+    tar -czf file.tar.gz a b c d
+
+    tar -xvzf file.tar.gz
+
+另外，假如tar命令压缩绝对路径文件时，需要特别注意，不能如下面这样：
+
+::
+
+    tar -czf /tmp/file.tar.gz /smbshare/a /smbshare/b /smbshare/c
+
+上面这条命令本意是，在压缩时，加上全路径，并把压缩文件放在/tmp目录下(至于为什么不先进入/smbshare目录，
+因为我是在某次工作需求中，需要通过程序执行shell命令进行压缩。因此需要使用绝对路径！)
+
+上述这个命令执行后，压缩文件里，也会把smbshar目录前缀压缩进去。
+
+正确的命令应该如下，使用 ``-C`` 选项改变tar命令的临时工作路径：
+
+::
+
+    tar -czf /tmp/file.tar.gz -C /smbshare a b c d
+    tar -czf /opt/cecgw/csmp/static/cloudwatch/filecheck/20170908-164114.tar.gz -C /opt/cecgw/csmp/static/cloudwatch/filecheck call_stack.log test.py test_1.py
+
 crontab
 ++++++++
 
