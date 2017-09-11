@@ -27,6 +27,36 @@ websocket基础知识
 
 关于websocket的基本原理，互联网上有很多讲解，在此推荐 `看完让你彻底搞懂Websocket原理 <http://www.tuicool.com/articles/7zyMvy6>`_ ；
 
+websocket握手连接过程
+++++++++++++++++++++++
+
+建立连接的握手
+当Web应用程序调用new WebSocket(url)接口时，Browser就开始了与地址为url的WebServer建立握手连接的过程。
+
+1. Browser与WebSocket服务器通过TCP三次握手建立连接，如果这个建立连接失败，那么后面的过程就不会执行，Web应用程序将收到错误消息通知。
+2. 在TCP建立连接成功后，Browser/UA通过http协议传送WebSocket支持的版本号，协议的字版本号，原始地址，主机地址等等一些列字段给服务器端。
+3. WebSocket服务器收到Browser/UA发送来的握手请求后，如果数据包数据和格式正确，客户端和服务器端的协议版本号匹配等等，就接受本次握手连接，并给出相应的数据回复，同样回复的数据包也是采用http协议传输。
+4. Browser收到服务器回复的数据包后，如果数据包内容、格式都没有问题的话，就表示本次连接成功，触发onopen消息，此时Web开发者就可以在此时通过send接口想服务器发送数据。否则，握手连接失败，Web应用程序会收到onerror消息，并且能知道连接失败的原因。
+
+这个握手很像HTTP，但是实际上却不是，它允许服务器以HTTP的方式解释一部分handshake的请求，然后切换为websocket数据传输
+WebScoket协议中，数据以帧序列的形式传输。
+
+考虑到数据安全性，客户端向服务器传输的数据帧必须进行掩码处理。服务器若接收到未经过掩码处理的数据帧，则必须主动关闭连接。
+服务器向客户端传输的数据帧一定不能进行掩码处理。客户端若接收到经过掩码处理的数据帧，则必须主动关闭连接。
+针对上情况，发现错误的一方可向对方发送close帧(状态码是1002，表示协议错误)，以关闭连接。
+
+借用网上的一个图，来表示websocket的连接状态。
+
+.. figure:: /_static/images/websocket_connect.png
+   :scale: 100
+   :align: center
+
+   websocket连接状态
+
+客户端websocket
+++++++++++++++++
+
+
 下面，通过网址http://redflag.f3322.net:6680/来具体分析客户端websocket的相关知识要点。
 
 在浏览器中打开http://redflag.f3322.net:6680/，这是一个简单的基于websocket的页面，
@@ -214,3 +244,4 @@ wstest函数的功能是，对于每一个websocket连接请求，保存websocke
 
 .. [#] 关于怎么在Django中实现定时任务。网址：http://blog.csdn.net/hui3909/article/details/46652623
 .. [#] 对websocket的原理及与HTTP的关系做了比较好的阐述。网址：http://www.tuicool.com/articles/7zyMvy6
+.. [#] http://rfyiamcool.blog.51cto.com/1030776/1269232/

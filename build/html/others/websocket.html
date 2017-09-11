@@ -98,15 +98,19 @@
 <li class="toctree-l2"><a class="reference internal" href="iptables_sum.html">8. iptables 学习总结</a></li>
 <li class="toctree-l2"><a class="reference internal" href="nova_start_error.html">9. Nova服务无法启动,日志,权限和异常处理</a></li>
 <li class="toctree-l2"><a class="reference internal" href="horizon_rabbitmq.html">10. horizon集成rabbitmq监控</a></li>
-<li class="toctree-l2"><a class="reference internal" href="html_note.html">11. HTML与前端</a></li>
+<li class="toctree-l2"><a class="reference internal" href="html_note.html">11. 前端开发</a></li>
 <li class="toctree-l2"><a class="reference internal" href="inkscope_install.html">12. Ceph web管理/监控平台Inkscope部署</a></li>
 <li class="toctree-l2"><a class="reference internal" href="mysql_note.html">13. mysql相关</a></li>
 <li class="toctree-l2 current"><a class="current reference internal" href="#">14. Django WebSocket</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#id2">14.1. websocket基础知识</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id2">14.1. websocket基础知识</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#id4">14.1.1. websocket握手连接过程</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id5">14.1.2. 客户端websocket</a></li>
+</ul>
+</li>
 <li class="toctree-l3"><a class="reference internal" href="#websocket-api">14.2. 客户端WebSocket API</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#dwebsocket">14.3. dwebsocket</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#id4">14.4. 消息推送</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#id5">14.5. 参考</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id6">14.4. 消息推送</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id7">14.5. 参考</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="tip.html">15. tips</a></li>
@@ -159,16 +163,20 @@
            <div itemprop="articleBody">
             
   <div class="section" id="django-websocket">
-<span id="websocket"></span><h1><a class="toc-backref" href="#id11">14. Django WebSocket</a><a class="headerlink" href="#django-websocket" title="Permalink to this headline">¶</a></h1>
+<span id="websocket"></span><h1><a class="toc-backref" href="#id15">14. Django WebSocket</a><a class="headerlink" href="#django-websocket" title="Permalink to this headline">¶</a></h1>
 <div class="contents topic" id="id1">
 <p class="topic-title first">目录</p>
 <ul class="simple">
-<li><a class="reference internal" href="#django-websocket" id="id11">Django WebSocket</a><ul>
-<li><a class="reference internal" href="#id2" id="id12">websocket基础知识</a></li>
-<li><a class="reference internal" href="#websocket-api" id="id13">客户端WebSocket API</a></li>
-<li><a class="reference internal" href="#dwebsocket" id="id14">dwebsocket</a></li>
-<li><a class="reference internal" href="#id4" id="id15">消息推送</a></li>
-<li><a class="reference internal" href="#id5" id="id16">参考</a></li>
+<li><a class="reference internal" href="#django-websocket" id="id15">Django WebSocket</a><ul>
+<li><a class="reference internal" href="#id2" id="id16">websocket基础知识</a><ul>
+<li><a class="reference internal" href="#id4" id="id17">websocket握手连接过程</a></li>
+<li><a class="reference internal" href="#id5" id="id18">客户端websocket</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#websocket-api" id="id19">客户端WebSocket API</a></li>
+<li><a class="reference internal" href="#dwebsocket" id="id20">dwebsocket</a></li>
+<li><a class="reference internal" href="#id6" id="id21">消息推送</a></li>
+<li><a class="reference internal" href="#id7" id="id22">参考</a></li>
 </ul>
 </li>
 </ul>
@@ -177,8 +185,31 @@
 <p>最近调研了下WebSocket技术，经过深究，对WebSocket技术的基本原理以及相关细节有了比较好的把握，
 并利用dwebsocket模块在Django项目中测试向多个客户端代理(浏览器)同时推送消息。</p>
 <div class="section" id="id2">
-<h2><a class="toc-backref" href="#id12">14.1. websocket基础知识</a><a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id16">14.1. websocket基础知识</a><a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
 <p>关于websocket的基本原理，互联网上有很多讲解，在此推荐 <a class="reference external" href="http://www.tuicool.com/articles/7zyMvy6">看完让你彻底搞懂Websocket原理</a> ；</p>
+<div class="section" id="id4">
+<h3><a class="toc-backref" href="#id17">14.1.1. websocket握手连接过程</a><a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h3>
+<p>建立连接的握手
+当Web应用程序调用new WebSocket(url)接口时，Browser就开始了与地址为url的WebServer建立握手连接的过程。</p>
+<ol class="arabic simple">
+<li>Browser与WebSocket服务器通过TCP三次握手建立连接，如果这个建立连接失败，那么后面的过程就不会执行，Web应用程序将收到错误消息通知。</li>
+<li>在TCP建立连接成功后，Browser/UA通过http协议传送WebSocket支持的版本号，协议的字版本号，原始地址，主机地址等等一些列字段给服务器端。</li>
+<li>WebSocket服务器收到Browser/UA发送来的握手请求后，如果数据包数据和格式正确，客户端和服务器端的协议版本号匹配等等，就接受本次握手连接，并给出相应的数据回复，同样回复的数据包也是采用http协议传输。</li>
+<li>Browser收到服务器回复的数据包后，如果数据包内容、格式都没有问题的话，就表示本次连接成功，触发onopen消息，此时Web开发者就可以在此时通过send接口想服务器发送数据。否则，握手连接失败，Web应用程序会收到onerror消息，并且能知道连接失败的原因。</li>
+</ol>
+<p>这个握手很像HTTP，但是实际上却不是，它允许服务器以HTTP的方式解释一部分handshake的请求，然后切换为websocket数据传输
+WebScoket协议中，数据以帧序列的形式传输。</p>
+<p>考虑到数据安全性，客户端向服务器传输的数据帧必须进行掩码处理。服务器若接收到未经过掩码处理的数据帧，则必须主动关闭连接。
+服务器向客户端传输的数据帧一定不能进行掩码处理。客户端若接收到经过掩码处理的数据帧，则必须主动关闭连接。
+针对上情况，发现错误的一方可向对方发送close帧(状态码是1002，表示协议错误)，以关闭连接。</p>
+<p>借用网上的一个图，来表示websocket的连接状态。</p>
+<div class="figure align-center" id="id11">
+<a class="reference internal image-reference" href="../_images/websocket_connect.png"><img alt="../_images/websocket_connect.png" src="../_images/websocket_connect.png" style="width: 507.0px; height: 530.0px;" /></a>
+<p class="caption"><span class="caption-text">websocket连接状态</span></p>
+</div>
+</div>
+<div class="section" id="id5">
+<h3><a class="toc-backref" href="#id18">14.1.2. 客户端websocket</a><a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h3>
 <p>下面，通过网址http://redflag.f3322.net:6680/来具体分析客户端websocket的相关知识要点。</p>
 <p>在浏览器中打开http://redflag.f3322.net:6680/，这是一个简单的基于websocket的页面，
 功能是服务器向所有的打开的页面推送rsyslog日志消息，保存页面源代码为wstest.html，
@@ -236,7 +267,7 @@ timer;
 </pre></div>
 </div>
 <p>浏览器中打开该HTML文件，利用firebug进行抓包分析！截图信息如下：</p>
-<div class="figure align-center" id="id8">
+<div class="figure align-center" id="id12">
 <a class="reference internal image-reference" href="../_images/web_wstest.png"><img alt="../_images/web_wstest.png" src="../_images/web_wstest.png" style="width: 916.0px; height: 786.0px;" /></a>
 <p class="caption"><span class="caption-text">websocket页面抓包</span></p>
 </div>
@@ -245,7 +276,7 @@ timer;
 发起请求会将URL的模式部分替换成http(即URL为：http://redflag.f3322.net:6680/database/)，
 但是该请求的首部，会有其他特殊的头信息字段，通知服务器这不是一个普通的HTTP请求，
 而是websocket连接请求。</p>
-<div class="figure align-center" id="id9">
+<div class="figure align-center" id="id13">
 <a class="reference internal image-reference" href="../_images/switch_proto.png"><img alt="../_images/switch_proto.png" src="../_images/switch_proto.png" style="width: 780.0px; height: 246.0px;" /></a>
 <p class="caption"><span class="caption-text">服务器响应HTTP状态码</span></p>
 </div>
@@ -257,10 +288,11 @@ websocket是一个全新的协议，和HTTP协议没太大关系。</strong></p>
 然后服务端根据这些标识信息，进行协议切换并响应，此时websocket连接建立，
 后续客户端、服务端可以同时利用该连接发送消息(而不像普通HTTP请求那样，服务端被动等待客户端发起连接并响应)。</strong></p>
 </div>
+</div>
 <div class="section" id="websocket-api">
-<h2><a class="toc-backref" href="#id13">14.2. 客户端WebSocket API</a><a class="headerlink" href="#websocket-api" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id19">14.2. 客户端WebSocket API</a><a class="headerlink" href="#websocket-api" title="Permalink to this headline">¶</a></h2>
 <p>上面的例子中，涉及到部分WebSocket API，WebSocket提供一组可用于WebSocket编程的对象、方法和属性。</p>
-<div class="figure align-center" id="id10">
+<div class="figure align-center" id="id14">
 <a class="reference internal image-reference" href="../_images/websocket_api.png"><img alt="../_images/websocket_api.png" src="../_images/websocket_api.png" style="width: 518.0px; height: 555.0px;" /></a>
 <p class="caption"><span class="caption-text">WebSocket API</span></p>
 </div>
@@ -270,7 +302,7 @@ websocket是一个全新的协议，和HTTP协议没太大关系。</strong></p>
 </div>
 </div>
 <div class="section" id="dwebsocket">
-<h2><a class="toc-backref" href="#id14">14.3. dwebsocket</a><a class="headerlink" href="#dwebsocket" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id20">14.3. dwebsocket</a><a class="headerlink" href="#dwebsocket" title="Permalink to this headline">¶</a></h2>
 <p>由于不知道页面http://redflag.f3322.net:6680/database/后端对应的技术，
 下面通过一个例子来，来探讨在Django中利用dwebsocket模块实现websocket技术！
 主要参考了 <a class="reference external" href="http://www.cnblogs.com/huguodong/p/6611602.html">利用dwebsocket在Django中使用websocket</a> ；
@@ -303,8 +335,8 @@ websocket是一个全新的协议，和HTTP协议没太大关系。</strong></p>
 <p>wstest函数的功能是，对于每一个websocket连接请求，保存websocket客户端。
 后面，可以利用该clients客户端列表，进行消息推送。</p>
 </div>
-<div class="section" id="id4">
-<h2><a class="toc-backref" href="#id15">14.4. 消息推送</a><a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id6">
+<h2><a class="toc-backref" href="#id21">14.4. 消息推送</a><a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h2>
 <p>这里实现的是服务端向每个客户端推送消息，推送消息的时机很重要，一般而言，
 客户端是依据状态变化，触发特定事件，然后进行消息推送。这里，为了方便，
 是弄了一个定时任务，每几秒钟，依次向每一个websocket客户端推送消息。</p>
@@ -329,18 +361,24 @@ websocket是一个全新的协议，和HTTP协议没太大关系。</strong></p>
 </div>
 </div>
 <hr class="docutils" />
-<div class="section" id="id5">
-<h2><a class="toc-backref" href="#id16">14.5. 参考</a><a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h2>
-<table class="docutils footnote" frame="void" id="id6" rules="none">
+<div class="section" id="id7">
+<h2><a class="toc-backref" href="#id22">14.5. 参考</a><a class="headerlink" href="#id7" title="Permalink to this headline">¶</a></h2>
+<table class="docutils footnote" frame="void" id="id8" rules="none">
 <colgroup><col class="label" /><col /></colgroup>
 <tbody valign="top">
 <tr><td class="label">[1]</td><td>关于怎么在Django中实现定时任务。网址：<a class="reference external" href="http://blog.csdn.net/hui3909/article/details/46652623">http://blog.csdn.net/hui3909/article/details/46652623</a></td></tr>
 </tbody>
 </table>
-<table class="docutils footnote" frame="void" id="id7" rules="none">
+<table class="docutils footnote" frame="void" id="id9" rules="none">
 <colgroup><col class="label" /><col /></colgroup>
 <tbody valign="top">
 <tr><td class="label">[2]</td><td>对websocket的原理及与HTTP的关系做了比较好的阐述。网址：<a class="reference external" href="http://www.tuicool.com/articles/7zyMvy6">http://www.tuicool.com/articles/7zyMvy6</a></td></tr>
+</tbody>
+</table>
+<table class="docutils footnote" frame="void" id="id10" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label">[3]</td><td><a class="reference external" href="http://rfyiamcool.blog.51cto.com/1030776/1269232/">http://rfyiamcool.blog.51cto.com/1030776/1269232/</a></td></tr>
 </tbody>
 </table>
 </div>

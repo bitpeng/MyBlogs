@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>11. HTML与前端 &mdash; Welcome to Sitian&#39;s Blog 1.0 documentation</title>
+  <title>11. 前端开发 &mdash; Welcome to Sitian&#39;s Blog 1.0 documentation</title>
   
 
   
@@ -32,6 +32,7 @@
   
     <link rel="top" title="Welcome to Sitian&#39;s Blog 1.0 documentation" href="../index.html"/>
         <link rel="up" title="未分类" href="index.html"/>
+        <link rel="next" title="12. Ceph web管理/监控平台Inkscope部署" href="inkscope_install.html"/>
         <link rel="prev" title="10. horizon集成rabbitmq监控" href="horizon_rabbitmq.html"/> 
 
   
@@ -97,12 +98,25 @@
 <li class="toctree-l2"><a class="reference internal" href="iptables_sum.html">8. iptables 学习总结</a></li>
 <li class="toctree-l2"><a class="reference internal" href="nova_start_error.html">9. Nova服务无法启动,日志,权限和异常处理</a></li>
 <li class="toctree-l2"><a class="reference internal" href="horizon_rabbitmq.html">10. horizon集成rabbitmq监控</a></li>
-<li class="toctree-l2 current"><a class="current reference internal" href="#">11. HTML与前端</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#button">11.1. button标签</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#input-type-submit-button">11.2. input type=&#8221;submit&#8221; 和&#8221;button&#8221;区别分析</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#id2">11.3. 参考</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">11. 前端开发</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id3">11.1. 页面动态数据获取</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#id4">11.1.1. 两种获取数据方式</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#ajax">11.1.2. ajax请求处理</a></li>
 </ul>
 </li>
+<li class="toctree-l3"><a class="reference internal" href="#select">11.2. select点击事件</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id5">11.3. 数据分页</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id6">11.4. 文件下载</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id7">11.5. 复选框</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#button">11.6. button标签与表单</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#input-type-submit-button">11.7. input type=&#8221;submit&#8221; 和&#8221;button&#8221;区别分析</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id8">11.8. 参考</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="inkscope_install.html">12. Ceph web管理/监控平台Inkscope部署</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mysql_note.html">13. mysql相关</a></li>
+<li class="toctree-l2"><a class="reference internal" href="websocket.html">14. Django WebSocket</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tip.html">15. tips</a></li>
 </ul>
 </li>
 </ul>
@@ -137,7 +151,7 @@
       
           <li><a href="index.html">未分类</a> &raquo;</li>
       
-    <li>11. HTML与前端</li>
+    <li>11. 前端开发</li>
       <li class="wy-breadcrumbs-aside">
         
           
@@ -151,26 +165,312 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="html">
-<span id="html-note"></span><h1><a class="toc-backref" href="#id9">11. HTML与前端</a><a class="headerlink" href="#html" title="Permalink to this headline">¶</a></h1>
+  <div class="section" id="html-note">
+<span id="id1"></span><h1><a class="toc-backref" href="#id25">11. 前端开发</a><a class="headerlink" href="#html-note" title="Permalink to this headline">¶</a></h1>
 <div class="admonition tip">
 <p class="first admonition-title">Tip</p>
-<p class="last">html 开发与前端相关基础知识笔记</p>
+<p class="last">html开发与前端相关基础知识笔记</p>
 </div>
-<div class="contents topic" id="id1">
+<div class="contents topic" id="id2">
 <p class="topic-title first">目录</p>
 <ul class="simple">
-<li><a class="reference internal" href="#html" id="id9">HTML与前端</a><ul>
-<li><a class="reference internal" href="#button" id="id10">button标签</a></li>
-<li><a class="reference internal" href="#input-type-submit-button" id="id11">input type=&#8221;submit&#8221; 和&#8221;button&#8221;区别分析</a></li>
-<li><a class="reference internal" href="#id2" id="id12">参考</a></li>
+<li><a class="reference internal" href="#html-note" id="id25">前端开发</a><ul>
+<li><a class="reference internal" href="#id3" id="id26">页面动态数据获取</a><ul>
+<li><a class="reference internal" href="#id4" id="id27">两种获取数据方式</a></li>
+<li><a class="reference internal" href="#ajax" id="id28">ajax请求处理</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#select" id="id29">select点击事件</a></li>
+<li><a class="reference internal" href="#id5" id="id30">数据分页</a></li>
+<li><a class="reference internal" href="#id6" id="id31">文件下载</a></li>
+<li><a class="reference internal" href="#id7" id="id32">复选框</a></li>
+<li><a class="reference internal" href="#button" id="id33">button标签与表单</a></li>
+<li><a class="reference internal" href="#input-type-submit-button" id="id34">input type=&#8221;submit&#8221; 和&#8221;button&#8221;区别分析</a></li>
+<li><a class="reference internal" href="#id8" id="id35">参考</a></li>
 </ul>
 </li>
 </ul>
 </div>
 <hr class="docutils" />
+<p>本篇文章，尝试对云审查项目前端开发中涉及到的知识及相关功能实现，
+做个总结，供参考。</p>
+<div class="section" id="id3">
+<h2><a class="toc-backref" href="#id26">11.1. 页面动态数据获取</a><a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h2>
+<p>云审查项目设计过程中，首先是由郑老师设计出静态页面，然后通过Python Dango框架，
+按照MTV模式，在页面中获取真实数据，并进行展现。</p>
+<div class="section" id="id4">
+<h3><a class="toc-backref" href="#id27">11.1.1. 两种获取数据方式</a><a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h3>
+<p>在页面展示真实数据时，包括两部分：HTML和js。下面以下图为例，进行说明：</p>
+<div class="figure align-center">
+<a class="reference internal image-reference" href="../_images/html_js_data.png"><img alt="../_images/html_js_data.png" src="../_images/html_js_data.png" style="width: 1433.0px; height: 667.0px;" /></a>
+</div>
+<p>在上述页面中，标记为圆圈的部分为echart图表，图表数据在js代码中进行定义。
+而标记为方形的，数据由页面HTML部分进行控制。这两种动态数据获取方式，截然不同。这一点十分重要：</p>
+<ul>
+<li><p class="first">对标记为方形的部分，我们只需要对页面模板相关地方进行标记，然后在view层返回字典对象对模板进行渲染，
+然后动态数据在渲染后的页面中就可以显示出来。了解Django框架的，应该都熟悉这一点。</p>
+<div class="figure align-center">
+<a class="reference internal image-reference" href="../_images/template_html.png"><img alt="../_images/template_html.png" src="../_images/template_html.png" style="width: 967.0px; height: 328.0px;" /></a>
+</div>
+<div class="figure align-center" id="id12">
+<a class="reference internal image-reference" href="../_images/context_views.png"><img alt="../_images/context_views.png" src="../_images/context_views.png" style="width: 831.0px; height: 298.0px;" /></a>
+<p class="caption"><span class="caption-text">模板动态数据标记与渲染</span></p>
+</div>
+</li>
+<li><p class="first">对于echarts图表，我们要在该图表对应的js函数中，发起ajax请求获取动态数据，然后将返回的数据，
+转换成相应的格式。如下图所示：</p>
+<div class="figure align-center" id="id13">
+<a class="reference internal image-reference" href="../_images/ajax_get_data.png"><img alt="../_images/ajax_get_data.png" src="../_images/ajax_get_data.png" style="width: 1019.0px; height: 426.0px;" /></a>
+<p class="caption"><span class="caption-text">echarts图表，发起ajax请求，动态获取数据!</span></p>
+</div>
+<p>针对js图表发起的ajax请求，在后端view层中，编写URL请求对应的处理函数，然后返回json格式化数据。</p>
+<div class="figure align-center">
+<a class="reference internal image-reference" href="../_images/ajax_url.png"><img alt="../_images/ajax_url.png" src="../_images/ajax_url.png" style="width: 985.0px; height: 253.0px;" /></a>
+</div>
+<div class="figure align-center" id="id14">
+<a class="reference internal image-reference" href="../_images/ajax_views.png"><img alt="../_images/ajax_views.png" src="../_images/ajax_views.png" style="width: 889.0px; height: 600.0px;" /></a>
+<p class="caption"><span class="caption-text">ajax请求对应的views处理！</span></p>
+</div>
+</li>
+</ul>
+</div>
+<div class="section" id="ajax">
+<h3><a class="toc-backref" href="#id28">11.1.2. ajax请求处理</a><a class="headerlink" href="#ajax" title="Permalink to this headline">¶</a></h3>
+<p>对于页面ajax请求的处理实现上，我们使用了一些技巧，我们结合下面的页面，简要说明。</p>
+<div class="figure align-center">
+<a class="reference internal image-reference" href="../_images/trendanalysis.png"><img alt="../_images/trendanalysis.png" src="../_images/trendanalysis.png" style="width: 1412.0px; height: 711.0px;" /></a>
+</div>
+<p>如上图所示页面中，有十多个echarts图表，如果每个图表获取动态数据的ajax请求都单独定义一个url的话，
+那么urls.py需要定义十多项，会显得很庞杂。</p>
+<p>对此，我们的处理方式是，对每个页面的所有ajax请求，只定义一个url。那么后端又怎么区分，
+是哪个图表发起的ajax请求呢？为此，我们会在每个请求的URL上，拼上查询字符串charts，
+代表发起ajax请求的具体图表。最终页面的某个图表，发起的ajax请求URL地址会形如：
+<a class="reference external" href="http://192.168.60.213:9999/cscloudwatch/cssec/webids/trendanalysis/attacktrend/get_charts_data?timerange=1&amp;charts=sec_ids_trend_attack_contr_type&amp;_=1505107971591">http://192.168.60.213:9999/cscloudwatch/cssec/webids/trendanalysis/attacktrend/get_charts_data?timerange=1&amp;charts=sec_ids_trend_attack_contr_type&amp;_=1505107971591</a></p>
+<div class="figure align-center">
+<a class="reference internal image-reference" href="../_images/ajax_params.png"><img alt="../_images/ajax_params.png" src="../_images/ajax_params.png" style="width: 1035.0px; height: 216.0px;" /></a>
+</div>
+<p>至于timerange参数，某些echarts图表，可以通过下拉列表，查看当天、7天、15天等时间范围的数据，
+通过timerange参数，表示图表想展示的数据的时间范围，然后views层根据charts和timerange参数，
+获取对应的数据并返回。</p>
+<div class="figure align-center">
+<a class="reference internal image-reference" href="../_images/charts_data_views.png"><img alt="../_images/charts_data_views.png" src="../_images/charts_data_views.png" style="width: 779.0px; height: 429.0px;" /></a>
+</div>
+</div>
+</div>
+<div class="section" id="select">
+<h2><a class="toc-backref" href="#id29">11.2. select点击事件</a><a class="headerlink" href="#select" title="Permalink to this headline">¶</a></h2>
+<p>如上图所示，一个页面有很多下拉列表，需要根据点击的下拉列表，获取选择的时间范围和对应的echarts图表，
+可以这样实现：</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span>$(&quot;select&quot;).change(function(){
+    // 获取选择的时间范围
+    var timerange=$(this).val();
+    //获取点击的是哪个下拉列表
+    var charts = $(this).attr(&#39;name&#39;);
+    var params = {&quot;url&quot;:url,&quot;timerange&quot;:timerange,&quot;charts&quot;:charts};
+    console.info(params)
+    if(charts == &quot;attect_event_undercontrol&quot;){
+      show_attect_event_undercontrol(params)
+    }
+    else if(charts == &quot;sec_ids_trend_attack_type_top&quot;){
+      show_attack_type_top10(params)
+    }
+})
+</pre></div>
+</div>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="o">&lt;</span><span class="n">select</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;attect_event_undercontrol&quot;</span> <span class="n">class</span><span class="o">=</span><span class="s2">&quot;select&quot;</span><span class="o">&gt;</span>
+    <span class="o">&lt;</span><span class="n">option</span> <span class="n">value</span><span class="o">=</span><span class="s2">&quot;1&quot;</span><span class="o">&gt;</span><span class="n">今日</span><span class="o">&lt;/</span><span class="n">option</span><span class="o">&gt;</span>
+    <span class="o">&lt;</span><span class="n">option</span> <span class="n">value</span><span class="o">=</span><span class="s2">&quot;7&quot;</span><span class="o">&gt;</span><span class="mi">7</span><span class="n">天</span><span class="o">&lt;/</span><span class="n">option</span><span class="o">&gt;</span>
+    <span class="o">&lt;</span><span class="n">option</span> <span class="n">value</span><span class="o">=</span><span class="s2">&quot;15&quot;</span><span class="o">&gt;</span><span class="mi">15</span><span class="n">天</span><span class="o">&lt;/</span><span class="n">option</span><span class="o">&gt;</span>
+    <span class="o">&lt;</span><span class="n">option</span> <span class="n">value</span><span class="o">=</span><span class="s2">&quot;30&quot;</span><span class="o">&gt;</span><span class="n">月统计</span><span class="o">&lt;/</span><span class="n">option</span><span class="o">&gt;</span>
+    <span class="o">&lt;</span><span class="n">option</span> <span class="n">value</span><span class="o">=</span><span class="s2">&quot;365&quot;</span><span class="o">&gt;</span><span class="n">年统计</span><span class="o">&lt;/</span><span class="n">option</span><span class="o">&gt;</span>
+<span class="o">&lt;/</span><span class="n">select</span><span class="o">&gt;</span>
+</pre></div>
+</div>
+<p>另外注意：$(&#8220;select&#8221;).change()表示具有class=&#8221;select&#8221;属性的&lt;select&gt;标签的点击事件。
+$(&#8220;#select&#8221;).change()表示id=&#8221;select&#8221;的标签的点击事件。</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">注意，在编辑HTML时，注意避免标签的id一样，虽然即使一样也不会报错，
+但是有时会出现难以理解、难以调试的问题。</p>
+</div>
+</div>
+<div class="section" id="id5">
+<h2><a class="toc-backref" href="#id30">11.3. 数据分页</a><a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h2>
+<p>在页面进行日志等信息展示时，有时需要展示的记录很多，这时我们就需要考虑进行数据分页。</p>
+<p>数据分页包括两种：</p>
+<ul class="simple">
+<li>数据真分页，即每次只返回固定条数的记录。然后点击页面上下一页时，再返回另外固定数量的记录。</li>
+<li>数据假分页，即一次返回所有的记录，然后在前端，通过js技巧进行控制，达到类似于分页的效果。</li>
+</ul>
+<p>这里，我们使用的数据真分页。这个问题比我想象的复杂，主要是在于点击分页的脚注(动态生成)这一块，
+边界条件很多。如下面所示几个截图：</p>
+<div class="figure align-center">
+<a class="reference internal image-reference" href="../_images/cut_page_1.png"><img alt="../_images/cut_page_1.png" src="../_images/cut_page_1.png" style="width: 401.0px; height: 96.0px;" /></a>
+</div>
+<div class="figure align-center" id="id15">
+<a class="reference internal image-reference" href="../_images/cut_page_2.png"><img alt="../_images/cut_page_2.png" src="../_images/cut_page_2.png" style="width: 401.0px; height: 123.0px;" /></a>
+<p class="caption"><span class="caption-text">分页脚注边界</span></p>
+</div>
+<p>下面来看分页的实现代码：</p>
+<div class="figure align-center" id="id16">
+<a class="reference internal image-reference" href="../_images/cut_page_3.png"><img alt="../_images/cut_page_3.png" src="../_images/cut_page_3.png" style="width: 675.0px; height: 368.0px;" /></a>
+<p class="caption"><span class="caption-text">分页模板层</span></p>
+</div>
+<div class="figure align-center" id="id17">
+<a class="reference internal image-reference" href="../_images/cut_page_4.png"><img alt="../_images/cut_page_4.png" src="../_images/cut_page_4.png" style="width: 974.0px; height: 230.0px;" /></a>
+<p class="caption"><span class="caption-text">分页views层</span></p>
+</div>
+<p>因为Django模板语言的编程能力很弱，因此，尽量在views层计算好相关信息(如上一页，下一页，分页数字列表等)，
+然后在模板层进行渲染。</p>
+<p><strong>虽然在分页控制上，我试图尽量考虑全边界条件，但还是遇到一些难以处理或者处理起来很是复杂的问题，比如&#8221;末页&#8221;、
+数据量少等。这些边界问题，待以后进一步完善。</strong></p>
+</div>
+<div class="section" id="id6">
+<h2><a class="toc-backref" href="#id31">11.4. 文件下载</a><a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h2>
+<p>为了配合后期云上贵州流量镜像数据包监控，加上了一个如下页面：</p>
+<div class="figure align-center">
+<a class="reference internal image-reference" href="../_images/filecheck.png"><img alt="../_images/filecheck.png" src="../_images/filecheck.png" style="width: 1440.0px; height: 626.0px;" /></a>
+</div>
+<p>这个页面，需求是想把保存在服务器某个目录下的流量镜像数据包显示出来，并提供下载功能。</p>
+<p>这里对于单文件下载，我们只需要在文件链接里，加上download属性，然后点击链接，
+会自动弹出对话框，提示进行保存。</p>
+<div class="figure align-center" id="id18">
+<a class="reference internal image-reference" href="../_images/download_link.png"><img alt="../_images/download_link.png" src="../_images/download_link.png" style="width: 855.0px; height: 256.0px;" /></a>
+<p class="caption"><span class="caption-text">&lt;a&gt;标签加上download属性，点击链接自动弹出对话框</span></p>
+</div>
+<p>对于多文件下载，在网络上搜索了相关解决方案，都不太可行(基本都是基于js多文件下载)。
+后来，我尝试遍历table并依次下载每一个要下载的文件，这种方式，但是会弹出很多个对话框提示保存文件，
+十分烦人。</p>
+<p>不得已，我构思了一个新方法，基本思路是：点击下载按钮时，将要下载的文件名称保存下来，
+并发起ajax请求。在服务端：接收请求并从请求信息中提取出要下载的文件名称，
+然后把要下载的文件进行打包归档，并给客户端返回打包后文件名称。
+最后客户端下载该打包文件！</p>
+<p>来看具体代码：</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span>$(&#39;#download&#39;).click(function(){
+    var download_url = [];
+    //遍历table的tbody部分每一行
+    $(&quot;#file_list&quot;).find(&quot;tr&quot;).each(function(){
+        var tdArr = $(this).children();
+        // 获取复选框选中状态
+        var checked = tdArr.eq(1).find(&#39;input&#39;).is(&#39;:checked&#39;);
+        // 获取文件链接，(后端根据文件链接获取文件名称然后生成压缩文件)
+        var href = tdArr.eq(6).find(&#39;a&#39;).attr(&#39;href&#39;);
+        if(checked)
+            //window.open(href)
+            download_url.push(href);
+    });
+
+    console.info(download_url);
+    var url = window.location.href;
+    console.info(url);
+
+    var jsondata;
+
+    $.ajax({
+      url: url + &#39;multidownload&#39;,
+      data: {urls:JSON.stringify(download_url)},
+      cache: false,
+      async : false,
+      dataType: &quot;json&quot;,
+      success: function (data ,textStatus, jqXHR)
+      {
+      //console.log(&quot;Get Data From Server!!&quot;);
+      jsondata = data;
+      },
+      error:function (XMLHttpRequest, textStatus, errorThrown)
+      {
+      console.log(&quot;Request Error！！&quot;);
+      }
+    });
+
+    // 下载压缩文件
+    window.open(&#39;/static/cloudwatch/filecheck/&#39; + jsondata)
+
+});
+</pre></div>
+</div>
+<p>下面渲染后的页面数据表格！</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="o">&lt;</span><span class="n">table</span> <span class="n">width</span><span class="o">=</span><span class="s2">&quot;100%&quot;</span> <span class="n">border</span><span class="o">=</span><span class="s2">&quot;0&quot;</span> <span class="n">cellspacing</span><span class="o">=</span><span class="s2">&quot;0&quot;</span> <span class="n">cellpadding</span><span class="o">=</span><span class="s2">&quot;0&quot;</span> <span class="nb">id</span><span class="o">=</span><span class="s2">&quot;senfe2&quot;</span><span class="o">&gt;</span>
+  <span class="o">&lt;</span><span class="n">tr</span><span class="o">&gt;</span>
+    <span class="o">&lt;</span><span class="n">td</span> <span class="n">width</span><span class="o">=</span><span class="s2">&quot;30&quot;</span> <span class="n">class</span><span class="o">=</span><span class="s2">&quot;bg_td_t2&quot;</span><span class="o">&gt;&amp;</span><span class="n">nbsp</span><span class="p">;</span><span class="o">&lt;/</span><span class="n">td</span><span class="o">&gt;</span>
+    <span class="o">&lt;</span><span class="n">td</span> <span class="n">width</span><span class="o">=</span><span class="s2">&quot;30&quot;</span><span class="o">&gt;&lt;</span><span class="nb">input</span> <span class="nb">id</span><span class="o">=</span><span class="s2">&quot;check_all&quot;</span> <span class="nb">type</span><span class="o">=</span><span class="s2">&quot;checkbox&quot;</span> <span class="n">class</span><span class="o">=</span><span class="s2">&quot;checkbox&quot;</span><span class="o">&gt;</span><span class="n">全选</span><span class="o">&lt;/</span><span class="n">td</span><span class="o">&gt;</span>
+    <span class="o">&lt;</span><span class="n">td</span> <span class="n">width</span><span class="o">=</span><span class="s2">&quot;46&quot;</span> <span class="n">class</span><span class="o">=</span><span class="s2">&quot;bg_td_t2&quot;</span><span class="o">&gt;</span><span class="n">文件名称</span><span class="o">&lt;/</span><span class="n">td</span><span class="o">&gt;</span>
+    <span class="o">&lt;</span><span class="n">td</span> <span class="n">width</span><span class="o">=</span><span class="s2">&quot;140&quot;</span> <span class="n">class</span><span class="o">=</span><span class="s2">&quot;bg_td_t2&quot;</span><span class="o">&gt;</span><span class="n">文件大小</span><span class="o">&lt;/</span><span class="n">td</span><span class="o">&gt;</span>
+    <span class="o">&lt;</span><span class="n">td</span> <span class="n">width</span><span class="o">=</span><span class="s2">&quot;140&quot;</span> <span class="n">class</span><span class="o">=</span><span class="s2">&quot;bg_td_t2&quot;</span><span class="o">&gt;</span><span class="n">文件所有者</span><span class="o">&lt;/</span><span class="n">td</span><span class="o">&gt;</span>
+    <span class="o">&lt;</span><span class="n">td</span> <span class="n">width</span><span class="o">=</span><span class="s2">&quot;140&quot;</span> <span class="n">class</span><span class="o">=</span><span class="s2">&quot;bg_td_t2&quot;</span><span class="o">&gt;</span><span class="n">最后修改时间</span><span class="o">&lt;/</span><span class="n">td</span><span class="o">&gt;</span>
+    <span class="o">&lt;</span><span class="n">td</span> <span class="n">width</span><span class="o">=</span><span class="s2">&quot;40&quot;</span> <span class="n">align</span><span class="o">=</span><span class="s2">&quot;center&quot;</span> <span class="n">class</span><span class="o">=</span><span class="s2">&quot;bg_td_t2&quot;</span><span class="o">&gt;</span><span class="n">下载</span><span class="o">&lt;/</span><span class="n">td</span><span class="o">&gt;</span>
+  <span class="o">&lt;/</span><span class="n">tr</span><span class="o">&gt;</span>
+  <span class="o">&lt;</span><span class="n">tbody</span> <span class="nb">id</span><span class="o">=</span><span class="s2">&quot;file_list&quot;</span><span class="o">&gt;</span>
+
+  <span class="o">&lt;</span><span class="n">tr</span> <span class="o">&gt;</span>
+    <span class="o">&lt;</span><span class="n">td</span> <span class="n">width</span><span class="o">=</span><span class="s2">&quot;26&quot;</span><span class="o">&gt;&lt;</span><span class="n">img</span> <span class="n">src</span><span class="o">=</span><span class="s2">&quot;/static/cloudwatch/images/ico1604.png&quot;</span><span class="o">/&gt;&lt;/</span><span class="n">td</span><span class="o">&gt;</span>
+    <span class="o">&lt;</span><span class="n">td</span><span class="o">&gt;&lt;</span><span class="nb">input</span> <span class="nb">type</span><span class="o">=</span><span class="s2">&quot;checkbox&quot;</span> <span class="n">class</span><span class="o">=</span><span class="s2">&quot;checkbox&quot;</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;check_td&#39;</span><span class="o">&gt;&lt;/</span><span class="n">td</span><span class="o">&gt;</span>
+    <span class="o">&lt;</span><span class="n">td</span><span class="o">&gt;</span><span class="n">call_stack</span><span class="o">.</span><span class="n">log</span><span class="o">&lt;/</span><span class="n">td</span><span class="o">&gt;</span>
+    <span class="o">&lt;</span><span class="n">td</span> <span class="n">width</span><span class="o">=</span><span class="s2">&quot;140&quot;</span><span class="o">&gt;</span><span class="mf">1.38</span> <span class="n">KB</span><span class="o">&lt;/</span><span class="n">td</span><span class="o">&gt;</span>
+    <span class="o">&lt;</span><span class="n">td</span> <span class="n">width</span><span class="o">=</span><span class="s2">&quot;140&quot;</span><span class="o">&gt;</span><span class="n">root</span><span class="o">&lt;/</span><span class="n">td</span><span class="o">&gt;</span>
+    <span class="o">&lt;</span><span class="n">td</span> <span class="n">width</span><span class="o">=</span><span class="s2">&quot;140&quot;</span><span class="o">&gt;</span><span class="mi">2017</span><span class="o">-</span><span class="mi">09</span><span class="o">-</span><span class="mi">06</span> <span class="mi">15</span><span class="p">:</span><span class="mi">44</span><span class="p">:</span><span class="mi">53</span><span class="o">&lt;/</span><span class="n">td</span><span class="o">&gt;</span>
+    <span class="o">&lt;</span><span class="n">td</span>  <span class="n">width</span><span class="o">=</span><span class="s2">&quot;40&quot;</span> <span class="n">align</span><span class="o">=</span><span class="s2">&quot;center&quot;</span> <span class="n">class</span><span class="o">=</span><span class="s1">&#39;row_click&#39;</span><span class="o">&gt;</span>
+        <span class="o">&lt;</span><span class="n">a</span> <span class="n">download</span> <span class="n">href</span><span class="o">=</span><span class="s2">&quot;/static/cloudwatch/filecheck/call_stack.log&quot;</span><span class="o">&gt;&lt;</span><span class="n">img</span> <span class="n">src</span><span class="o">=</span><span class="s2">&quot;/static/cloudwatch/images/ico1601.png&quot;</span> <span class="n">border</span><span class="o">=</span><span class="s2">&quot;0&quot;</span><span class="o">/&gt;&lt;/</span><span class="n">a</span><span class="o">&gt;&lt;/</span><span class="n">td</span><span class="o">&gt;</span>
+  <span class="o">&lt;/</span><span class="n">tr</span><span class="o">&gt;</span>
+
+  <span class="o">&lt;</span><span class="n">tr</span> <span class="o">&gt;</span>
+    <span class="o">&lt;</span><span class="n">td</span> <span class="n">width</span><span class="o">=</span><span class="s2">&quot;26&quot;</span><span class="o">&gt;&lt;</span><span class="n">img</span> <span class="n">src</span><span class="o">=</span><span class="s2">&quot;/static/cloudwatch/images/ico1604.png&quot;</span><span class="o">/&gt;&lt;/</span><span class="n">td</span><span class="o">&gt;</span>
+    <span class="o">&lt;</span><span class="n">td</span><span class="o">&gt;&lt;</span><span class="nb">input</span> <span class="nb">type</span><span class="o">=</span><span class="s2">&quot;checkbox&quot;</span> <span class="n">class</span><span class="o">=</span><span class="s2">&quot;checkbox&quot;</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;check_td&#39;</span><span class="o">&gt;&lt;/</span><span class="n">td</span><span class="o">&gt;</span>
+    <span class="o">&lt;</span><span class="n">td</span><span class="o">&gt;</span><span class="n">test</span><span class="o">.</span><span class="n">py</span><span class="o">&lt;/</span><span class="n">td</span><span class="o">&gt;</span>
+    <span class="o">&lt;</span><span class="n">td</span> <span class="n">width</span><span class="o">=</span><span class="s2">&quot;140&quot;</span><span class="o">&gt;</span><span class="mi">548</span> <span class="n">B</span><span class="o">&lt;/</span><span class="n">td</span><span class="o">&gt;</span>
+    <span class="o">&lt;</span><span class="n">td</span> <span class="n">width</span><span class="o">=</span><span class="s2">&quot;140&quot;</span><span class="o">&gt;</span><span class="n">root</span><span class="o">&lt;/</span><span class="n">td</span><span class="o">&gt;</span>
+    <span class="o">&lt;</span><span class="n">td</span> <span class="n">width</span><span class="o">=</span><span class="s2">&quot;140&quot;</span><span class="o">&gt;</span><span class="mi">2017</span><span class="o">-</span><span class="mi">09</span><span class="o">-</span><span class="mi">06</span> <span class="mi">15</span><span class="p">:</span><span class="mi">44</span><span class="p">:</span><span class="mi">53</span><span class="o">&lt;/</span><span class="n">td</span><span class="o">&gt;</span>
+    <span class="o">&lt;</span><span class="n">td</span>  <span class="n">width</span><span class="o">=</span><span class="s2">&quot;40&quot;</span> <span class="n">align</span><span class="o">=</span><span class="s2">&quot;center&quot;</span> <span class="n">class</span><span class="o">=</span><span class="s1">&#39;row_click&#39;</span><span class="o">&gt;</span>
+        <span class="o">&lt;</span><span class="n">a</span> <span class="n">download</span> <span class="n">href</span><span class="o">=</span><span class="s2">&quot;/static/cloudwatch/filecheck/test.py&quot;</span><span class="o">&gt;&lt;</span><span class="n">img</span> <span class="n">src</span><span class="o">=</span><span class="s2">&quot;/static/cloudwatch/images/ico1601.png&quot;</span> <span class="n">border</span><span class="o">=</span><span class="s2">&quot;0&quot;</span><span class="o">/&gt;&lt;/</span><span class="n">a</span><span class="o">&gt;&lt;/</span><span class="n">td</span><span class="o">&gt;</span>
+  <span class="o">&lt;/</span><span class="n">tr</span><span class="o">&gt;</span>
+  <span class="o">&lt;/</span><span class="n">tbody</span><span class="o">&gt;</span>
+<span class="o">&lt;/</span><span class="n">table</span><span class="o">&gt;</span>
+</pre></div>
+</div>
+<div class="figure align-center">
+<a class="reference internal image-reference" href="../_images/multidownload_url.png"><img alt="../_images/multidownload_url.png" src="../_images/multidownload_url.png" style="width: 874.0px; height: 126.0px;" /></a>
+</div>
+<div class="figure align-center">
+<a class="reference internal image-reference" href="../_images/multidownload_views.png"><img alt="../_images/multidownload_views.png" src="../_images/multidownload_views.png" style="width: 773.0px; height: 183.0px;" /></a>
+</div>
+<div class="figure align-center" id="id19">
+<a class="reference internal image-reference" href="../_images/make_tar_file.png"><img alt="../_images/make_tar_file.png" src="../_images/make_tar_file.png" style="width: 948.0px; height: 283.0px;" /></a>
+<p class="caption"><span class="caption-text">多文件下载后端实现部分</span></p>
+</div>
+<div class="figure align-center" id="id20">
+<a class="reference internal image-reference" href="../_images/multidownload_file.png"><img alt="../_images/multidownload_file.png" src="../_images/multidownload_file.png" style="width: 943.0px; height: 689.0px;" /></a>
+<p class="caption"><span class="caption-text">多文件下载</span></p>
+</div>
+<div class="figure align-center" id="id21">
+<a class="reference internal image-reference" href="../_images/make_tar_file_2.png"><img alt="../_images/make_tar_file_2.png" src="../_images/make_tar_file_2.png" style="width: 1072.0px; height: 143.0px;" /></a>
+<p class="caption"><span class="caption-text">后端会生成压缩文件</span></p>
+</div>
+</div>
+<div class="section" id="id7">
+<h2><a class="toc-backref" href="#id32">11.5. 复选框</a><a class="headerlink" href="#id7" title="Permalink to this headline">¶</a></h2>
+<p>参考上面的文件下载，有时我们需要在页面中，根据总控制复选框的&#8221;全选&#8221;和&#8221;取消全选&#8221;设置其他复选框的选中状态，
+可以这样实现：</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="o">&lt;</span><span class="n">table</span><span class="o">&gt;</span>
+<span class="o">&lt;</span><span class="n">tr</span><span class="o">&gt;</span>
+        <span class="o">&lt;</span><span class="n">td</span> <span class="n">width</span><span class="o">=</span><span class="s2">&quot;30&quot;</span><span class="o">&gt;&lt;</span><span class="nb">input</span> <span class="nb">id</span><span class="o">=</span><span class="s2">&quot;check_all&quot;</span> <span class="nb">type</span><span class="o">=</span><span class="s2">&quot;checkbox&quot;</span> <span class="n">class</span><span class="o">=</span><span class="s2">&quot;checkbox&quot;</span><span class="o">&gt;</span><span class="n">全选</span><span class="o">&lt;/</span><span class="n">td</span><span class="o">&gt;</span>
+        <span class="o">&lt;</span><span class="n">td</span><span class="o">&gt;&lt;</span><span class="nb">input</span> <span class="nb">type</span><span class="o">=</span><span class="s2">&quot;checkbox&quot;</span> <span class="n">class</span><span class="o">=</span><span class="s2">&quot;checkbox&quot;</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;check_td&#39;</span><span class="o">&gt;&lt;/</span><span class="n">td</span><span class="o">&gt;</span>
+        <span class="o">&lt;</span><span class="n">td</span><span class="o">&gt;&lt;</span><span class="nb">input</span> <span class="nb">type</span><span class="o">=</span><span class="s2">&quot;checkbox&quot;</span> <span class="n">class</span><span class="o">=</span><span class="s2">&quot;checkbox&quot;</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;check_td&#39;</span><span class="o">&gt;&lt;/</span><span class="n">td</span><span class="o">&gt;</span>
+        <span class="o">&lt;</span><span class="n">td</span><span class="o">&gt;&lt;</span><span class="nb">input</span> <span class="nb">type</span><span class="o">=</span><span class="s2">&quot;checkbox&quot;</span> <span class="n">class</span><span class="o">=</span><span class="s2">&quot;checkbox&quot;</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;check_td&#39;</span><span class="o">&gt;&lt;/</span><span class="n">td</span><span class="o">&gt;</span>
+<span class="o">&lt;/</span><span class="n">tr</span><span class="o">&gt;</span>
+<span class="o">&lt;/</span><span class="n">table</span><span class="o">&gt;</span>
+</pre></div>
+</div>
+<div class="highlight-default"><div class="highlight"><pre><span></span>$(&#39;#check_all&#39;).click(function(){
+      var value = $(&#39;#check_all&#39;).is(&#39;:checked&#39;);
+      console.info(value);
+      //$(&quot;checkbox&quot;).attr(&quot;checked&quot;,value);
+      $(&quot;input[type=&#39;checkbox&#39;][name=&#39;check_td&#39;]&quot;).prop(&quot;checked&quot;,value);
+});
+</pre></div>
+</div>
+</div>
 <div class="section" id="button">
-<h2><a class="toc-backref" href="#id10">11.1. button标签</a><a class="headerlink" href="#button" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id33">11.6. button标签与表单</a><a class="headerlink" href="#button" title="Permalink to this headline">¶</a></h2>
 <p>&lt;button&gt;标签定义一个按钮。</p>
 <p>&lt;button&gt;控件与&lt;input type=&#8221;button&#8221;&gt;相比，提供了更为强大的功能和更丰富的内容。
 &lt;button&gt;与&lt;/button&gt;标签之间的所有内容都是按钮的内容，
@@ -180,7 +480,7 @@
 <p class="first admonition-title">Note</p>
 <p>请始终为按钮规定 type 属性。Internet Explorer 的默认类型
 是 &#8220;button&#8221;，而其他浏览器中（包括 W3C 规范）的默认值是 &#8220;submit&#8221;。</p>
-<div class="last figure align-center" id="id6">
+<div class="last figure align-center" id="id22">
 <a class="reference internal image-reference" href="../_images/button_type.png"><img alt="../_images/button_type.png" src="../_images/button_type.png" style="width: 720.0px; height: 147.0px;" /></a>
 <p class="caption"><span class="caption-text">button type 属性取值</span></p>
 </div>
@@ -243,11 +543,11 @@
 <p>对于django框架来说，通过from提交时 的action，依据URL匹配来决定调用的view(表单处理程序)。</p>
 <p>比如在《django book 2.0》给出的示例中，表单的action=&#8221;/search/&#8221;，因此点击按钮，会根据url.py，决定调用
 view.py的search函数。</p>
-<div class="figure align-center" id="id7">
+<div class="figure align-center" id="id23">
 <a class="reference internal image-reference" href="../_images/form_temp.png"><img alt="../_images/form_temp.png" src="../_images/form_temp.png" style="width: 430.0px; height: 206.0px;" /></a>
 <p class="caption"><span class="caption-text">表单的action属性</span></p>
 </div>
-<div class="figure align-center" id="id8">
+<div class="figure align-center" id="id24">
 <a class="reference internal image-reference" href="../_images/button_action.png"><img alt="../_images/button_action.png" src="../_images/button_action.png" style="width: 382.0px; height: 163.0px;" /></a>
 <p class="caption"><span class="caption-text">提交表单时服务端会调用view.search 处理程序。</span></p>
 </div>
@@ -256,7 +556,7 @@ view.py的search函数。</p>
 </ul>
 </div>
 <div class="section" id="input-type-submit-button">
-<h2><a class="toc-backref" href="#id11">11.2. input type=&#8221;submit&#8221; 和&#8221;button&#8221;区别分析</a><a class="headerlink" href="#input-type-submit-button" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id34">11.7. input type=&#8221;submit&#8221; 和&#8221;button&#8221;区别分析</a><a class="headerlink" href="#input-type-submit-button" title="Permalink to this headline">¶</a></h2>
 <p>在一个页面上画一个按钮，有四种办法：</p>
 <ul class="simple">
 <li>&lt;input type=&#8221;button&#8221; /&gt; 这就是一个按钮。如果你不写javascript 的话，按下去什么也不会发生。</li>
@@ -269,21 +569,21 @@ view.py的search函数。</p>
 <p>可以参考<a class="reference external" href="http://www.cnblogs.com/purediy/archive/2012/06/10/2544184.html">[原]&lt;button&gt;和&lt;input type=&#8221;button&#8221;&gt; 的区别</a></p>
 </div>
 <hr class="docutils" />
-<div class="section" id="id2">
-<h2><a class="toc-backref" href="#id12">11.3. 参考</a><a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
-<table class="docutils footnote" frame="void" id="id3" rules="none">
+<div class="section" id="id8">
+<h2><a class="toc-backref" href="#id35">11.8. 参考</a><a class="headerlink" href="#id8" title="Permalink to this headline">¶</a></h2>
+<table class="docutils footnote" frame="void" id="id9" rules="none">
 <colgroup><col class="label" /><col /></colgroup>
 <tbody valign="top">
 <tr><td class="label">[1]</td><td><a class="reference external" href="http://www.w3school.com.cn/tags/att_button_type.asp">http://www.w3school.com.cn/tags/att_button_type.asp</a></td></tr>
 </tbody>
 </table>
-<table class="docutils footnote" frame="void" id="id4" rules="none">
+<table class="docutils footnote" frame="void" id="id10" rules="none">
 <colgroup><col class="label" /><col /></colgroup>
 <tbody valign="top">
 <tr><td class="label">[2]</td><td><a class="reference external" href="https://www.zhihu.com/question/20839977">https://www.zhihu.com/question/20839977</a></td></tr>
 </tbody>
 </table>
-<table class="docutils footnote" frame="void" id="id5" rules="none">
+<table class="docutils footnote" frame="void" id="id11" rules="none">
 <colgroup><col class="label" /><col /></colgroup>
 <tbody valign="top">
 <tr><td class="label">[3]</td><td><a class="reference external" href="http://djangobook.py3k.cn/2.0/chapter07/">http://djangobook.py3k.cn/2.0/chapter07/</a></td></tr>
@@ -298,6 +598,8 @@ view.py的search函数。</p>
           <footer>
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="inkscope_install.html" class="btn btn-neutral float-right" title="12. Ceph web管理/监控平台Inkscope部署" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
         <a href="horizon_rabbitmq.html" class="btn btn-neutral" title="10. horizon集成rabbitmq监控" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
