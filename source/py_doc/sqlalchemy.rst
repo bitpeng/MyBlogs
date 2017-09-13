@@ -172,7 +172,7 @@ Python ORM框架sqlalchemy学习笔记！
 查询
 ======
 
-::
+.. code-block:: python
 
     DBSession = sessionmaker(bind=engine)
     session = DBSession()
@@ -190,6 +190,10 @@ Python ORM框架sqlalchemy学习笔记！
 
     # 查询数据最后十条记录
     session.query(SystemLog).order_by(SystemLog.id.desc()).limit(10)
+
+    # 查询结果有多条记录，返回一条。
+    session.query(BusinessIpMap).filter(SystemLog.id==id, SystemLog.time==time).first()
+
 
 
 待以后陆续补充、更新和完善！

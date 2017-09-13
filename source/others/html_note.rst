@@ -115,6 +115,12 @@ select点击事件
         var timerange=$(this).val();
         //获取点击的是哪个下拉列表
         var charts = $(this).attr('name');
+
+        // 获取select所选择的文本值
+        var business_name = $(this).find('option:selected').text();
+        // 获取id为select_yewu的select的选择文本值
+        var business_name = $('#select_yewu').find('option:selected').text();
+
         var params = {"url":url,"timerange":timerange,"charts":charts};
         console.info(params)
         if(charts == "attect_event_undercontrol"){
@@ -142,6 +148,24 @@ $("#select").change()表示id="select"的标签的点击事件。
 
     注意，在编辑HTML时，注意避免标签的id一样，虽然即使一样也不会报错，
     但是有时会出现难以理解、难以调试的问题。
+
+设置html值
+===========
+
+有时，需要动态修改页面某些部分的显示文本。如下图：
+
+.. figure:: /_static/images/modify_html.png
+    :scale: 100
+    :align: center
+
+::
+
+    <td width="200" id="select_yewu_td" align="center" valign="middle"> 当前业务系统：{{show_select_yewu}}</td>
+
+::
+
+    var business_name = $('#select_yewu').find('option:selected').text();
+    $('#select_yewu_td').html("当前业务系统：" + business_name);
 
 数据分页
 =========

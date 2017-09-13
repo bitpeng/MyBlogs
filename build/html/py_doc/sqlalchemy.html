@@ -112,6 +112,7 @@
 <li class="toctree-l2"><a class="reference internal" href="time_date.html">17. Python时间和日期操作</a></li>
 <li class="toctree-l2"><a class="reference internal" href="pecan_note.html">18. pecan学习示例</a></li>
 <li class="toctree-l2"><a class="reference internal" href="stevedemo.html">19. stevedore库学习</a></li>
+<li class="toctree-l2"><a class="reference internal" href="django-i18n.html">20. django国际化</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../linux_tools/index.html">Hack Linux</a></li>
@@ -327,7 +328,7 @@
 </div>
 <div class="section" id="id7">
 <h2><a class="toc-backref" href="#id13">16.3. 查询</a><a class="headerlink" href="#id7" title="Permalink to this headline">¶</a></h2>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">DBSession</span> <span class="o">=</span> <span class="n">sessionmaker</span><span class="p">(</span><span class="n">bind</span><span class="o">=</span><span class="n">engine</span><span class="p">)</span>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">DBSession</span> <span class="o">=</span> <span class="n">sessionmaker</span><span class="p">(</span><span class="n">bind</span><span class="o">=</span><span class="n">engine</span><span class="p">)</span>
 <span class="n">session</span> <span class="o">=</span> <span class="n">DBSession</span><span class="p">()</span>
 
 <span class="n">session</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">SystemLog</span><span class="p">)</span><span class="o">.</span><span class="n">one</span><span class="p">()</span>
@@ -343,6 +344,9 @@
 
 <span class="c1"># 查询数据最后十条记录</span>
 <span class="n">session</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">SystemLog</span><span class="p">)</span><span class="o">.</span><span class="n">order_by</span><span class="p">(</span><span class="n">SystemLog</span><span class="o">.</span><span class="n">id</span><span class="o">.</span><span class="n">desc</span><span class="p">())</span><span class="o">.</span><span class="n">limit</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+
+<span class="c1"># 查询结果有多条记录，返回一条。</span>
+<span class="n">session</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">BusinessIpMap</span><span class="p">)</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">SystemLog</span><span class="o">.</span><span class="n">id</span><span class="o">==</span><span class="nb">id</span><span class="p">,</span> <span class="n">SystemLog</span><span class="o">.</span><span class="n">time</span><span class="o">==</span><span class="n">time</span><span class="p">)</span><span class="o">.</span><span class="n">first</span><span class="p">()</span>
 </pre></div>
 </div>
 <p>待以后陆续补充、更新和完善！</p>

@@ -105,12 +105,13 @@
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="#select">11.2. select点击事件</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#id5">11.3. 数据分页</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#id6">11.4. 文件下载</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#id7">11.5. 复选框</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#button">11.6. button标签与表单</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#input-type-submit-button">11.7. input type=&#8221;submit&#8221; 和&#8221;button&#8221;区别分析</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#id8">11.8. 参考</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#html">11.3. 设置html值</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id5">11.4. 数据分页</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id6">11.5. 文件下载</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id7">11.6. 复选框</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#button">11.7. button标签与表单</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#input-type-submit-button">11.8. input type=&#8221;submit&#8221; 和&#8221;button&#8221;区别分析</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id8">11.9. 参考</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="inkscope_install.html">12. Ceph web管理/监控平台Inkscope部署</a></li>
@@ -181,12 +182,13 @@
 </ul>
 </li>
 <li><a class="reference internal" href="#select" id="id29">select点击事件</a></li>
-<li><a class="reference internal" href="#id5" id="id30">数据分页</a></li>
-<li><a class="reference internal" href="#id6" id="id31">文件下载</a></li>
-<li><a class="reference internal" href="#id7" id="id32">复选框</a></li>
-<li><a class="reference internal" href="#button" id="id33">button标签与表单</a></li>
-<li><a class="reference internal" href="#input-type-submit-button" id="id34">input type=&#8221;submit&#8221; 和&#8221;button&#8221;区别分析</a></li>
-<li><a class="reference internal" href="#id8" id="id35">参考</a></li>
+<li><a class="reference internal" href="#html" id="id30">设置html值</a></li>
+<li><a class="reference internal" href="#id5" id="id31">数据分页</a></li>
+<li><a class="reference internal" href="#id6" id="id32">文件下载</a></li>
+<li><a class="reference internal" href="#id7" id="id33">复选框</a></li>
+<li><a class="reference internal" href="#button" id="id34">button标签与表单</a></li>
+<li><a class="reference internal" href="#input-type-submit-button" id="id35">input type=&#8221;submit&#8221; 和&#8221;button&#8221;区别分析</a></li>
+<li><a class="reference internal" href="#id8" id="id36">参考</a></li>
 </ul>
 </li>
 </ul>
@@ -266,6 +268,12 @@
     var timerange=$(this).val();
     //获取点击的是哪个下拉列表
     var charts = $(this).attr(&#39;name&#39;);
+
+    // 获取select所选择的文本值
+    var business_name = $(this).find(&#39;option:selected&#39;).text();
+    // 获取id为select_yewu的select的选择文本值
+    var business_name = $(&#39;#select_yewu&#39;).find(&#39;option:selected&#39;).text();
+
     var params = {&quot;url&quot;:url,&quot;timerange&quot;:timerange,&quot;charts&quot;:charts};
     console.info(params)
     if(charts == &quot;attect_event_undercontrol&quot;){
@@ -294,8 +302,22 @@ $(&#8220;#select&#8221;).change()表示id=&#8221;select&#8221;的标签的点击
 但是有时会出现难以理解、难以调试的问题。</p>
 </div>
 </div>
+<div class="section" id="html">
+<h2><a class="toc-backref" href="#id30">11.3. 设置html值</a><a class="headerlink" href="#html" title="Permalink to this headline">¶</a></h2>
+<p>有时，需要动态修改页面某些部分的显示文本。如下图：</p>
+<div class="figure align-center">
+<a class="reference internal image-reference" href="../_images/modify_html.png"><img alt="../_images/modify_html.png" src="../_images/modify_html.png" style="width: 462.0px; height: 190.0px;" /></a>
+</div>
+<div class="highlight-default"><div class="highlight"><pre><span></span>&lt;td width=&quot;200&quot; id=&quot;select_yewu_td&quot; align=&quot;center&quot; valign=&quot;middle&quot;&gt; 当前业务系统：{{show_select_yewu}}&lt;/td&gt;
+</pre></div>
+</div>
+<div class="highlight-default"><div class="highlight"><pre><span></span>var business_name = $(&#39;#select_yewu&#39;).find(&#39;option:selected&#39;).text();
+$(&#39;#select_yewu_td&#39;).html(&quot;当前业务系统：&quot; + business_name);
+</pre></div>
+</div>
+</div>
 <div class="section" id="id5">
-<h2><a class="toc-backref" href="#id30">11.3. 数据分页</a><a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id31">11.4. 数据分页</a><a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h2>
 <p>在页面进行日志等信息展示时，有时需要展示的记录很多，这时我们就需要考虑进行数据分页。</p>
 <p>数据分页包括两种：</p>
 <ul class="simple">
@@ -326,7 +348,7 @@ $(&#8220;#select&#8221;).change()表示id=&#8221;select&#8221;的标签的点击
 数据量少等。这些边界问题，待以后进一步完善。</strong></p>
 </div>
 <div class="section" id="id6">
-<h2><a class="toc-backref" href="#id31">11.4. 文件下载</a><a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id32">11.5. 文件下载</a><a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h2>
 <p>为了配合后期云上贵州流量镜像数据包监控，加上了一个如下页面：</p>
 <div class="figure align-center">
 <a class="reference internal image-reference" href="../_images/filecheck.png"><img alt="../_images/filecheck.png" src="../_images/filecheck.png" style="width: 1440.0px; height: 626.0px;" /></a>
@@ -447,7 +469,7 @@ $(&#8220;#select&#8221;).change()表示id=&#8221;select&#8221;的标签的点击
 </div>
 </div>
 <div class="section" id="id7">
-<h2><a class="toc-backref" href="#id32">11.5. 复选框</a><a class="headerlink" href="#id7" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id33">11.6. 复选框</a><a class="headerlink" href="#id7" title="Permalink to this headline">¶</a></h2>
 <p>参考上面的文件下载，有时我们需要在页面中，根据总控制复选框的&#8221;全选&#8221;和&#8221;取消全选&#8221;设置其他复选框的选中状态，
 可以这样实现：</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="o">&lt;</span><span class="n">table</span><span class="o">&gt;</span>
@@ -470,7 +492,7 @@ $(&#8220;#select&#8221;).change()表示id=&#8221;select&#8221;的标签的点击
 </div>
 </div>
 <div class="section" id="button">
-<h2><a class="toc-backref" href="#id33">11.6. button标签与表单</a><a class="headerlink" href="#button" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id34">11.7. button标签与表单</a><a class="headerlink" href="#button" title="Permalink to this headline">¶</a></h2>
 <p>&lt;button&gt;标签定义一个按钮。</p>
 <p>&lt;button&gt;控件与&lt;input type=&#8221;button&#8221;&gt;相比，提供了更为强大的功能和更丰富的内容。
 &lt;button&gt;与&lt;/button&gt;标签之间的所有内容都是按钮的内容，
@@ -556,7 +578,7 @@ view.py的search函数。</p>
 </ul>
 </div>
 <div class="section" id="input-type-submit-button">
-<h2><a class="toc-backref" href="#id34">11.7. input type=&#8221;submit&#8221; 和&#8221;button&#8221;区别分析</a><a class="headerlink" href="#input-type-submit-button" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id35">11.8. input type=&#8221;submit&#8221; 和&#8221;button&#8221;区别分析</a><a class="headerlink" href="#input-type-submit-button" title="Permalink to this headline">¶</a></h2>
 <p>在一个页面上画一个按钮，有四种办法：</p>
 <ul class="simple">
 <li>&lt;input type=&#8221;button&#8221; /&gt; 这就是一个按钮。如果你不写javascript 的话，按下去什么也不会发生。</li>
@@ -570,7 +592,7 @@ view.py的search函数。</p>
 </div>
 <hr class="docutils" />
 <div class="section" id="id8">
-<h2><a class="toc-backref" href="#id35">11.8. 参考</a><a class="headerlink" href="#id8" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id36">11.9. 参考</a><a class="headerlink" href="#id8" title="Permalink to this headline">¶</a></h2>
 <table class="docutils footnote" frame="void" id="id9" rules="none">
 <colgroup><col class="label" /><col /></colgroup>
 <tbody valign="top">
