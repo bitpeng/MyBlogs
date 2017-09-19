@@ -84,7 +84,7 @@ ajax请求处理
 如上图所示页面中，有十多个echarts图表，如果每个图表获取动态数据的ajax请求都单独定义一个url的话，
 那么urls.py需要定义十多项，会显得很庞杂。
 
-对此，我们的处理方式是，对每个页面的所有ajax请求，只定义一个url。那么后端又怎么区分，
+我们的处理方式是，对每个页面的所有ajax请求，只定义一个url。那么后端又怎么区分，
 是哪个图表发起的ajax请求呢？为此，我们会在每个请求的URL上，拼上查询字符串charts，
 代表发起ajax请求的具体图表。最终页面的某个图表，发起的ajax请求URL地址会形如：
 http://192.168.60.213:9999/cscloudwatch/cssec/webids/trendanalysis/attacktrend/get_charts_data?timerange=1&charts=sec_ids_trend_attack_contr_type&_=1505107971591

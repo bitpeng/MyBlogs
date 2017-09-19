@@ -41,9 +41,10 @@ websocket握手连接过程
 这个握手很像HTTP，但是实际上却不是，它允许服务器以HTTP的方式解释一部分handshake的请求，然后切换为websocket数据传输
 WebScoket协议中，数据以帧序列的形式传输。
 
-考虑到数据安全性，客户端向服务器传输的数据帧必须进行掩码处理。服务器若接收到未经过掩码处理的数据帧，则必须主动关闭连接。
-服务器向客户端传输的数据帧一定不能进行掩码处理。客户端若接收到经过掩码处理的数据帧，则必须主动关闭连接。
-针对上情况，发现错误的一方可向对方发送close帧(状态码是1002，表示协议错误)，以关闭连接。
+..
+    考虑到数据安全性，客户端向服务器传输的数据帧必须进行掩码处理。服务器若接收到未经过掩码处理的数据帧，则必须主动关闭连接。
+    服务器向客户端传输的数据帧一定不能进行掩码处理。客户端若接收到经过掩码处理的数据帧，则必须主动关闭连接。
+    针对上情况，发现错误的一方可向对方发送close帧(状态码是1002，表示协议错误)，以关闭连接。
 
 借用网上的一个图，来表示websocket的连接状态。
 
@@ -57,13 +58,13 @@ WebScoket协议中，数据以帧序列的形式传输。
 ++++++++++++++++
 
 
-下面，通过网址http://redflag.f3322.net:6680/来具体分析客户端websocket的相关知识要点。
+下面，通过网址 ``http://redflag.f3322.net:6680/`` 来具体分析客户端websocket的相关知识要点。
 
-在浏览器中打开http://redflag.f3322.net:6680/，这是一个简单的基于websocket的页面，
+在浏览器中打开 ``http://redflag.f3322.net:6680/`` ，这是一个简单的基于websocket的页面，
 功能是服务器向所有的打开的页面推送rsyslog日志消息，保存页面源代码为wstest.html，
 并简单改写然后进行测试，改写后的文件wstest.html如下：
 
-::
+.. code-block:: html
 
     <!DOCTYPE html>
     <html>
@@ -125,9 +126,9 @@ WebScoket协议中，数据以帧序列的形式传输。
    websocket页面抓包
 
 结合wstest.html来看，页面加载时，js代码尝试会发起websocket连接(URL为：
-'ws://redflag.f3322.net:6680/database/')，但是通过firebug抓包结果来看，
-发起请求会将URL的模式部分替换成http(即URL为：http://redflag.f3322.net:6680/database/)，
-但是该请求的首部，会有其他特殊的头信息字段，通知服务器这不是一个普通的HTTP请求，
+``ws://redflag.f3322.net:6680/database/`` )，但是通过firebug抓包结果来看，
+发起请求会将URL的模式部分替换成http(即URL为： ``http://redflag.f3322.net:6680/database/`` )，
+同时该请求的首部，会有其他特殊的头信息字段，通知服务器这不是一个普通的HTTP请求，
 而是websocket连接请求。
 
 .. figure:: /_static/images/switch_proto.png
@@ -168,8 +169,8 @@ websocket是一个全新的协议，和HTTP协议没太大关系。**
 
 dwebsocket
 ============
-   
-由于不知道页面http://redflag.f3322.net:6680/database/后端对应的技术，
+
+由于不知道页面 ``http://redflag.f3322.net:6680/database/`` 后端对应的技术，
 下面通过一个例子来，来探讨在Django中利用dwebsocket模块实现websocket技术！
 主要参考了 `利用dwebsocket在Django中使用websocket <http://www.cnblogs.com/huguodong/p/6611602.html>`_ ；
 但是该例子并没有实现，服务端向多个客户端推送消息的功能。下面介绍怎样实现这一功能：
@@ -203,8 +204,72 @@ dwebsocket
             for message in request.websocket:
                 request.websocket.send(message)
 
+.. code-block:: html
+
+    <!DOCTYPE html>
+    <html>
+    <head>
+    <script src="/static/js/jquery.min.js"></script>
+    <script language="JavaScript">
+    <!--
+    locate = 0;
+    function scroller() {
+    if (locate !=500 ) {
+    locate++;
+    scroll(0,locate);
+    clearTimeout(timer);
+    var timer = setTimeout("scroller()",3);
+    timer;
+    }
+    }
+    // -->
+    </script>
+      <title>django-websocket-demo</title>
+      <meta charset="utf8" />
+    </head>
+
+    <body OnLoad="scroller()">
+        <div class="container">
+        <br/> 
+        <h1> Django WebSocket Demo </h1>
+      <div id="board"><div>
+
+        </div>
+      
+      <script>
+        //var socket = new WebSocket("ws://" + window.location.host + "/wstest");
+        var socket = new WebSocket("ws://" + window.location.host + "/websocket");
+        //var socket = new WebSocket("ws://" + window.location.host + "/echo");
+        //var socket = new WebSocket('ws://' + window.location.host + '/echo/');
+
+        socket.onopen = function open() {
+          console.log('WebSockets connection created.');
+        };
+
+        socket.onmessage = function (message) {
+          console.log('received websocket msg');
+          $('#board').prepend('<p>' + message.data + '</p>');
+        }
+
+        if (socket.readyState == WebSocket.OPEN) {
+          socket.onopen();
+        }
+      </script>
+    </body>
+    </html>
+
+
 wstest函数的功能是，对于每一个websocket连接请求，保存websocket客户端。
 后面，可以利用该clients客户端列表，进行消息推送。
+
+.. note::
+
+    使用dwebsocket时，需要特别注意的一点，就是发起websocket连接的URL不要和其他普通的http连接
+    URL一样。否则可能会导致消息推送失败。
+
+    当初自己在Django项目中测试时，就犯了这个错误(即在views.py只有wstest函数，没有ws_html函数。
+    想利用wstest函数即返回页面，又同时处理websocket请求。)，
+    结果怎么实验都无法推送消息。大家要特别这一这一点！
 
 
 消息推送
@@ -216,19 +281,19 @@ wstest函数的功能是，对于每一个websocket连接请求，保存websocke
 
 ::
 
-	from apscheduler.scheduler import Scheduler
-	sched = Scheduler()
+    from apscheduler.scheduler import Scheduler
+    sched = Scheduler()
 
-	@sched.interval_schedule(seconds=1.5)
-	def mytask():
-		import uuid
-		msg = "websocket test: recevied msg [{msg}] from server at <{time}>".format(
-					time=datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
-					msg=str(uuid.uuid4()))
-		for i in clients:
-			i.send(msg)
+    @sched.interval_schedule(seconds=1.5)
+    def mytask():
+        import uuid
+        msg = "websocket test: recevied msg [{msg}] from server at <{time}>".format(
+                    time=datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+                    msg=str(uuid.uuid4()))
+        for i in clients:
+            i.send(msg)
 
-	sched.start()
+    sched.start()
 
 刷新页面，就可以看到效果了。
 
@@ -236,7 +301,44 @@ wstest函数的功能是，对于每一个websocket连接请求，保存websocke
    :scale: 100
    :align: center
 
-   
+根据firebug抓包信息，建立websocket连接后，客户端没有发起任何http请求，
+但是依然可以源源不断的接收服务器主动推送的消息。
+
+Apache部署
+===========
+
+上面的测试方式，使用的是Django自带的开发服务器( ``python manage.py runserver 0.0.0.0:port`` )。
+在生产环境中，一般都是会基于apache/gunicorn等服务器部署(云审查项目基于apache部署)。
+因此，需要在服务器上进行相应的配置以支持websocket。
+
+激活模块 ``mod_proxy_wstunnel``, 以支持websocket连接。该模块于 ``mod_proxy`` 模块提供的服务。
+
+::
+
+    a2enmod mod_proxy_wstunnel
+
+假如上述命令提示错误：ERROR: Module mod_proxy_wstunnel does not exist!那么试试用下面命令：
+
+::
+
+    a2enmod proxy_wstunnel
+
+激活proxy_wstunnel模块后，参考了大量的资料，都没有配置成功。目前云审查项目基于apache2部署时，
+还暂时没有实现websocket消息推送效果。错误信息截图如下：
+
+.. figure:: /_static/images/websocket_ssl.png
+   :scale: 100
+   :align: center
+
+.. figure:: /_static/images/socket_notfound.png
+   :scale: 100
+   :align: center
+
+.. figure:: /_static/images/socket_notfound2.png
+   :scale: 100
+   :align: center
+
+
 ---------------------
 
 参考

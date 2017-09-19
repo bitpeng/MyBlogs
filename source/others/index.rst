@@ -27,6 +27,7 @@
     mysql_note
     websocket
     tip
+    ysc_note
 
 
 ..    sphinx_doc
