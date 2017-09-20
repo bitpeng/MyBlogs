@@ -335,6 +335,8 @@ smbpasswd -a smbuser1
 </div>
 <p>其中share是windows共享文件夹，注意该文件夹要进行共享设置，最好不用密码进行操作！
 挂载后，将要共享的文件夹拷贝到该目录，则宿主机和虚拟机都可以进行查看！</p>
+</li>
+</ul>
 <p>需要注意如下几点：</p>
 <ul>
 <li><p class="first">如果挂载过程出现 <code class="docutils literal"><span class="pre">mount:</span> <span class="pre">block</span> <span class="pre">device</span> <span class="pre">//xxx</span> <span class="pre">is</span> <span class="pre">write-protected,</span> <span class="pre">mounting</span> <span class="pre">read-only</span></code> 错误，
@@ -348,8 +350,24 @@ smbpasswd -a smbuser1
 这里cifs是一种网络文件系统！可以google获取相关知识。</p>
 </li>
 </ul>
-</li>
-</ul>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p>更新：2017-09-19</p>
+<p>最近因为在某个场景，有挂载需求，结果怎么都挂载不上。google查找了很多资料，
+说可能是smb协议版本的问题，按照google结果，怎么操作都不可行。</p>
+<p>后来，和同事说起这个问题，他试了下，然后发现是windows防火墙的原因。因此，
+遇到类似网络问题，我们需要先检测端口是不是正常，由于cifs协议使用的是139和445端口，
+我们可以使用命令探测windows主机是不是开放了这些端口。</p>
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">root@ubuntu:/smbshare/clog#</span> nc -v -w <span class="m">1</span> 10.11.111.47 -z 445
+<span class="go">nc: connect to 10.11.111.47 port 445 (tcp) failed: Connection refused</span>
+<span class="gp">root@ubuntu:/smbshare/clog#</span>
+<span class="gp">root@ubuntu:/smbshare/clog#</span> nc -v -w <span class="m">1</span> 10.11.111.47 -z 139
+<span class="go">Connection to 10.11.111.47 139 port [tcp/netbios-ssn] succeeded!</span>
+<span class="gp">root@ubuntu:/smbshare/clog#</span> nc -v -w <span class="m">1</span> 10.11.111.47 -z 1-1000
+</pre></div>
+</div>
+<p class="last">假如发现端口没有开放，考虑关闭windows防火墙，再试一试上述命令</p>
+</div>
 </div>
 </div>
 

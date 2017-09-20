@@ -123,15 +123,38 @@ mount共享
   其中share是windows共享文件夹，注意该文件夹要进行共享设置，最好不用密码进行操作！
   挂载后，将要共享的文件夹拷贝到该目录，则宿主机和虚拟机都可以进行查看！
 
-  需要注意如下几点：
+需要注意如下几点：
 
-  * 如果挂载过程出现 ``mount: block device //xxx is write-protected, mounting read-only`` 错误，
-    则需要安装cits组件。使用安装即可！
+* 如果挂载过程出现 ``mount: block device //xxx is write-protected, mounting read-only`` 错误，
+  则需要安装cits组件。使用安装即可！
 
-    ::
+  ::
 
-      apt-cache search cifs | grep -i cifs
-      apt-get install cifs-utils
+    apt-cache search cifs | grep -i cifs
+    apt-get install cifs-utils
 
-  * **特别注意：挂载在Linux下的挂载目录，挂载成功后，目录下所有东西都将被清空！**
-    这里cifs是一种网络文件系统！可以google获取相关知识。
+* **特别注意：挂载在Linux下的挂载目录，挂载成功后，目录下所有东西都将被清空！**
+  这里cifs是一种网络文件系统！可以google获取相关知识。
+
+.. note::
+
+    更新：2017-09-19
+
+    最近因为在某个场景，有挂载需求，结果怎么都挂载不上。google查找了很多资料，
+    说可能是smb协议版本的问题，按照google结果，怎么操作都不可行。
+
+    后来，和同事说起这个问题，他试了下，然后发现是windows防火墙的原因。因此，
+    遇到类似网络问题，我们需要先检测端口是不是正常，由于cifs协议使用的是139和445端口，
+    我们可以使用命令探测windows主机是不是开放了这些端口。
+
+    .. code-block:: console
+
+        root@ubuntu:/smbshare/clog# nc -v -w 1 10.11.111.47 -z 445
+        nc: connect to 10.11.111.47 port 445 (tcp) failed: Connection refused
+        root@ubuntu:/smbshare/clog#
+        root@ubuntu:/smbshare/clog# nc -v -w 1 10.11.111.47 -z 139
+        Connection to 10.11.111.47 139 port [tcp/netbios-ssn] succeeded!
+        root@ubuntu:/smbshare/clog# nc -v -w 1 10.11.111.47 -z 1-1000
+
+    假如发现端口没有开放，考虑关闭windows防火墙，再试一试上述命令
+
