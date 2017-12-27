@@ -19,4 +19,5 @@ Hack Linux
     curl_param_cut
     hack_vim
     centos_net_sum
+    linux-time-zone
 ..    Linux_lvm

@@ -1,0 +1,386 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>11. Linux时间与时区问题 &mdash; Welcome to Sitian&#39;s Blog 1.0 documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+    <link rel="top" title="Welcome to Sitian&#39;s Blog 1.0 documentation" href="../index.html"/>
+        <link rel="up" title="Hack Linux" href="index.html"/>
+        <link rel="next" title="OpenStack Note" href="../openstack/index.html"/>
+        <link rel="prev" title="10. Linux 联网问题汇总" href="centos_net_sum.html"/> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> Welcome to Sitian's Blog
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../py_doc/index.html">Python Note</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Hack Linux</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="git_cmd.html">1. git 版本控制</a></li>
+<li class="toctree-l2"><a class="reference internal" href="samba_config.html">2. Samba共享访问配置</a></li>
+<li class="toctree-l2"><a class="reference internal" href="use_man_page.html">3. 善用Linux man page</a></li>
+<li class="toctree-l2"><a class="reference internal" href="linux_cmd.html">4. Linux命令和shell</a></li>
+<li class="toctree-l2"><a class="reference internal" href="disk_note.html">5. Linux 磁盘和分区</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ubuntu_lvm_extend.html">6. Ubuntu根分区使用Lvm扩容</a></li>
+<li class="toctree-l2"><a class="reference internal" href="dell_server_manual.html">7. DELL 服务器操作手册</a></li>
+<li class="toctree-l2"><a class="reference internal" href="curl_param_cut.html">8. shell 元字符问题</a></li>
+<li class="toctree-l2"><a class="reference internal" href="hack_vim.html">9. vim使用手册</a></li>
+<li class="toctree-l2"><a class="reference internal" href="centos_net_sum.html">10. Linux 联网问题汇总</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">11. Linux时间与时区问题</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id2">11.1. 问题</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id3">11.2. 解决方案</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id4">11.3. 相关概念</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id5">11.4. 相关命令</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id6">11.5. 参考</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../openstack/index.html">OpenStack Note</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../network/index.html">网络技术/neutron</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../others/index.html">未分类</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../index.html">Welcome to Sitian's Blog</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+ 
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../index.html">Docs</a> &raquo;</li>
+      
+          <li><a href="index.html">Hack Linux</a> &raquo;</li>
+      
+    <li>11. Linux时间与时区问题</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="../_sources/linux_tools/linux-time-zone.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="linux">
+<span id="linux-time-zone"></span><h1><a class="toc-backref" href="#id14">11. Linux时间与时区问题</a><a class="headerlink" href="#linux" title="Permalink to this headline">¶</a></h1>
+<div class="contents topic" id="id1">
+<p class="topic-title first">目录</p>
+<ul class="simple">
+<li><a class="reference internal" href="#linux" id="id14">Linux时间与时区问题</a><ul>
+<li><a class="reference internal" href="#id2" id="id15">问题</a></li>
+<li><a class="reference internal" href="#id3" id="id16">解决方案</a></li>
+<li><a class="reference internal" href="#id4" id="id17">相关概念</a></li>
+<li><a class="reference internal" href="#id5" id="id18">相关命令</a></li>
+<li><a class="reference internal" href="#id6" id="id19">参考</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<hr class="docutils" />
+<p>本文探讨内容基于ubuntu-14.04-LTS系统。</p>
+<div class="section" id="id2">
+<h2><a class="toc-backref" href="#id15">11.1. 问题</a><a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
+<p>在ubuntu系统上搭建了mantis bug tracker，结果提交问题时，时间一直显示有问题，
+经过排查，发现是ubuntu系统时区设置问题。</p>
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">root@14-04-server:/home/wangxing#</span> date
+<span class="go">Tue Dec 26 17:00:48 EST 2017</span>
+<span class="gp">root@14-04-server:/home/wangxing#</span>
+<span class="gp">root@14-04-server:/home/wangxing#</span>
+<span class="gp">root@14-04-server:/home/wangxing#</span> date -R
+<span class="go">Tue, 26 Dec 2017 17:03:58 -0500</span>
+</pre></div>
+</div>
+<div class="figure align-center" id="id12">
+<a class="reference internal image-reference" href="../_images/mantis_zone_set.png"><img alt="../_images/mantis_zone_set.png" src="../_images/mantis_zone_set.png" style="width: 1026.0px; height: 177.0px;" /></a>
+<p class="caption"><span class="caption-text">mantisbt时区设置显示时上海时区</span></p>
+</div>
+<p><code class="docutils literal"><span class="pre">date</span></code> 命令显示系统设置的时区为EST(美国东部时区)，而mantisbt设置的为上海时区，
+因此mantis时间问题显示上，会将系统(EST)时间转换成上海时间，因此导致mantis时间显示错误。</p>
+</div>
+<div class="section" id="id3">
+<h2><a class="toc-backref" href="#id16">11.2. 解决方案</a><a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h2>
+<p>解决这个问题，只需要将系统时区正确设置正确即可。</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">dpkg</span><span class="o">-</span><span class="n">reconfigure</span> <span class="n">tzdata</span>
+</pre></div>
+</div>
+<div class="figure align-center" id="id13">
+<a class="reference internal image-reference" href="../_images/config_tzdata.png"><img alt="../_images/config_tzdata.png" src="../_images/config_tzdata.png" style="width: 1376.0px; height: 493.0px;" /></a>
+<p class="caption"><span class="caption-text">安装提示将时区设置为上海时区</span></p>
+</div>
+<p>然后使用时间同步服务更新系统时间。</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">ntpdate</span> <span class="n">cn</span><span class="o">.</span><span class="n">pool</span><span class="o">.</span><span class="n">ntp</span><span class="o">.</span><span class="n">org</span>
+</pre></div>
+</div>
+<p>需要注意几点：</p>
+<ul>
+<li><p class="first">参考网络上的相关教程，说时间同步后，还需要执行以下命令：</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="n">cp</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">share</span><span class="o">/</span><span class="n">zoneinfo</span><span class="o">/</span><span class="n">Asia</span><span class="o">/</span><span class="n">Chongqing</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">localtime</span>
+<span class="n">hwclock</span> <span class="o">-</span><span class="n">w</span>
+</pre></div>
+</div>
+<p>但是我在我的ubuntu-14.04-LTS系统上，无需执行上面两条命令，系统重启后，
+时间配置一样正确。</p>
+</li>
+<li><p class="first">ntpdate命令会跳跃性的更新系统时间，这可能会导致严重的问题。
+因此推荐使用ntpd/adjtimex，平滑更新系统时间。具体请自行参考相关内容。</p>
+</li>
+</ul>
+</div>
+<div class="section" id="id4">
+<h2><a class="toc-backref" href="#id17">11.3. 相关概念</a><a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h2>
+<dl class="attribute">
+<dt>
+<code class="descname">硬件时钟</code></dt>
+<dd><p>又称为CMOS时钟、BIOS时钟、RTC、硬时钟等。由电池供电，用于跟踪系统关闭后的运行时间，
+系统运行时他不使用。</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt>
+<code class="descname">系统时钟</code></dt>
+<dd><p>也称为软时钟，系统关闭时不存在，系统启动后从RTC初始化。</p>
+</dd></dl>
+
+<p><strong>硬件时间存放在 RTC(Real Time Clock) 硬件中。
+Linux 系统启动时，会读取 RTC 时间，并该时间来初始化系统时间；
+正常运行时，系统时间在每次 tick 中断中加以更新和维护；当系统关闭时，
+Linux 用系统时间来更新硬件时间。</strong></p>
+<dl class="attribute">
+<dt id="UTC">
+<code class="descname">UTC</code><a class="headerlink" href="#UTC" title="Permalink to this definition">¶</a></dt>
+<dd><p>UTC 就是 Coordinated Universal Time，是全世界通用的时间标准。
+它是格林威治时间 (GMT) 的后继者，在计算机领域，GMT 术语不再广泛使用，
+因为它的精度不够高。UTC 是 1963 年标准化的，采用了高精度的原子钟。
+因此在科学领域，包括计算机科学，都采用 UTC 而不再使用 GMT 这个术语。
+我们可以认为 UTC 就是时区 0 的标准时间。</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="LCT">
+<code class="descname">LCT</code><a class="headerlink" href="#LCT" title="Permalink to this definition">¶</a></dt>
+<dd><p>LCT(Local Civil Time) 即当地时间，比如北京时间。</p>
+</dd></dl>
+
+</div>
+<div class="section" id="id5">
+<h2><a class="toc-backref" href="#id18">11.4. 相关命令</a><a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-default"><div class="highlight"><pre><span></span># 查看系统时区信息
+timedatectl
+
+# 显示硬件时钟与日期
+hwclock –r
+# 将系统时钟调整为与目前的硬件时钟一致
+hwclock –s
+# 将硬件时钟调整为与目前的系统时钟一致
+hwclock –w
+
+# 该配置文件有一个关键配置项，UTC，指示系统硬件时间是UTC时间还是本地时间
+vim /etc/default/rcS
+
+# 显示日期、时间、时区等。
+date
+date -R
+
+# 配置系统时区
+dpkg-reconfigure tzdata
+</pre></div>
+</div>
+</div>
+<hr class="docutils" />
+<div class="section" id="id6">
+<h2><a class="toc-backref" href="#id19">11.5. 参考</a><a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h2>
+<table class="docutils footnote" frame="void" id="id7" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label">[1]</td><td>对硬件时钟，系统时钟，UTC，LCT以及他们的转化关系有比较详细的介绍。 网址：<a class="reference external" href="https://www.ibm.com/developerworks/cn/linux/1308_liuming_linuxtime4/index.html">https://www.ibm.com/developerworks/cn/linux/1308_liuming_linuxtime4/index.html</a></td></tr>
+</tbody>
+</table>
+<table class="docutils footnote" frame="void" id="id8" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label">[2]</td><td>介绍了ubuntu系统时钟、硬件时钟相关概念和命令。 网址： <a class="reference external" href="http://manpages.ubuntu.com/manpages/trusty/en/man8/clock.8.html">http://manpages.ubuntu.com/manpages/trusty/en/man8/clock.8.html</a></td></tr>
+</tbody>
+</table>
+<table class="docutils footnote" frame="void" id="id9" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label">[3]</td><td>对Linux系统时间同步问题有比较详细的介绍。网址：<a class="reference external" href="http://www.tldp.org/HOWTO/Clock-2.html">http://www.tldp.org/HOWTO/Clock-2.html</a></td></tr>
+</tbody>
+</table>
+<table class="docutils footnote" frame="void" id="id10" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label">[4]</td><td><a class="reference external" href="https://www.cnblogs.com/sky-heaven/p/5220873.html">https://www.cnblogs.com/sky-heaven/p/5220873.html</a></td></tr>
+</tbody>
+</table>
+<table class="docutils footnote" frame="void" id="id11" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label">[5]</td><td><a class="reference external" href="http://blog.csdn.net/w786572258/article/details/51248053">http://blog.csdn.net/w786572258/article/details/51248053</a></td></tr>
+</tbody>
+</table>
+</div>
+</div>
+
+
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../openstack/index.html" class="btn btn-neutral float-right" title="OpenStack Note" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="centos_net_sum.html" class="btn btn-neutral" title="10. Linux 联网问题汇总" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2016, chenshiqiang.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'1.0',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>
