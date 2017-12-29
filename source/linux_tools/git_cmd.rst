@@ -26,3 +26,26 @@ git 版本控制
     git log file
     # 查看文件提交每次修改信息
     git log -p file
+
+
+分布管理
+========
+
+
+.. code:: shell
+
+    # 查看分支
+    git branch
+    git branch -r
+    git branch -a
+    # 基于远程分支创建本地分支
+    git checkout origin/day-05 -b myday-05
+    git checkout origin/day-05 -b day-05
+    # 合并分支
+    git merge myday-05
+    # 推送本地分支到远程分支
+    git push origin day-05
+    # 删除本地分支
+    git branch -d myday-05
+    # 删除远程分支
+    git push origin --delete myday-05
