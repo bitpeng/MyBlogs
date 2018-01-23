@@ -87,6 +87,7 @@
 <li class="toctree-l1 current"><a class="reference internal" href="index.html">Hack Linux</a><ul class="current">
 <li class="toctree-l2 current"><a class="current reference internal" href="#">1. git 版本控制</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#id1">1.1. 提交代码流程</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id2">1.2. 分布管理</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="samba_config.html">2. Samba共享访问配置</a></li>
@@ -98,6 +99,7 @@
 <li class="toctree-l2"><a class="reference internal" href="curl_param_cut.html">8. shell 元字符问题</a></li>
 <li class="toctree-l2"><a class="reference internal" href="hack_vim.html">9. vim使用手册</a></li>
 <li class="toctree-l2"><a class="reference internal" href="centos_net_sum.html">10. Linux 联网问题汇总</a></li>
+<li class="toctree-l2"><a class="reference internal" href="linux-time-zone.html">11. Linux时间与时区问题</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../openstack/index.html">OpenStack Note</a></li>
@@ -167,13 +169,39 @@
 
 <span class="c1"># 查看某次提交修改内容</span>
 <span class="n">git</span> <span class="n">show</span> <span class="o">&lt;</span><span class="nb">id</span><span class="o">&gt;</span>
-<span class="n">git</span> <span class="n">show</span> <span class="o">&lt;</span><span class="nb">id</span><span class="o">&gt;</span> <span class="n">file</span>
+<span class="n">git</span> <span class="n">show</span> <span class="o">&lt;</span><span class="nb">id</span><span class="o">&gt;</span> <span class="o">&lt;</span><span class="n">file</span><span class="o">&gt;</span>
 
 <span class="c1"># 查看文件提交记录</span>
-<span class="n">git</span> <span class="n">log</span> <span class="n">file</span>
+<span class="n">git</span> <span class="n">log</span> <span class="o">&lt;</span><span class="n">file</span><span class="o">&gt;</span>
 <span class="c1"># 查看文件提交每次修改信息</span>
-<span class="n">git</span> <span class="n">log</span> <span class="o">-</span><span class="n">p</span> <span class="n">file</span>
+<span class="n">git</span> <span class="n">log</span> <span class="o">-</span><span class="n">p</span> <span class="o">&lt;</span><span class="n">file</span><span class="o">&gt;</span>
 </pre></div>
+</div>
+</div>
+<div class="section" id="id2">
+<h2>1.2. 分布管理<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
+<div class="code shell highlight-default"><div class="highlight"><pre><span></span><span class="c1"># 查看分支</span>
+<span class="n">git</span> <span class="n">branch</span>
+<span class="n">git</span> <span class="n">branch</span> <span class="o">-</span><span class="n">r</span>
+<span class="n">git</span> <span class="n">branch</span> <span class="o">-</span><span class="n">a</span>
+<span class="c1"># 基于远程分支创建本地分支</span>
+<span class="n">git</span> <span class="n">checkout</span> <span class="n">origin</span><span class="o">/</span><span class="n">day</span><span class="o">-</span><span class="mi">05</span> <span class="o">-</span><span class="n">b</span> <span class="n">myday</span><span class="o">-</span><span class="mi">05</span>
+<span class="n">git</span> <span class="n">checkout</span> <span class="n">origin</span><span class="o">/</span><span class="n">day</span><span class="o">-</span><span class="mi">05</span> <span class="o">-</span><span class="n">b</span> <span class="n">day</span><span class="o">-</span><span class="mi">05</span>
+<span class="c1"># 合并分支</span>
+<span class="n">git</span> <span class="n">merge</span> <span class="n">myday</span><span class="o">-</span><span class="mi">05</span>
+<span class="c1"># 推送本地分支到远程分支</span>
+<span class="n">git</span> <span class="n">push</span> <span class="n">origin</span> <span class="n">day</span><span class="o">-</span><span class="mi">05</span>
+<span class="n">git</span> <span class="n">push</span> <span class="n">origin</span> <span class="n">myday</span><span class="o">-</span><span class="mi">05</span>
+<span class="c1"># 删除本地分支</span>
+<span class="n">git</span> <span class="n">branch</span> <span class="o">-</span><span class="n">d</span> <span class="n">myday</span><span class="o">-</span><span class="mi">05</span>
+<span class="c1"># 删除远程分支</span>
+<span class="n">git</span> <span class="n">push</span> <span class="n">origin</span> <span class="o">--</span><span class="n">delete</span> <span class="n">myday</span><span class="o">-</span><span class="mi">05</span>
+</pre></div>
+</div>
+<p>Git命令图表</p>
+<div class="figure align-center" id="id3">
+<a class="reference internal image-reference" href="../_images/git-cmd.jpg"><img alt="../_images/git-cmd.jpg" src="../_images/git-cmd.jpg" style="width: 1759.0px; height: 3162.0px;" /></a>
+<p class="caption"><span class="caption-text">git命令图表</span></p>
 </div>
 </div>
 </div>

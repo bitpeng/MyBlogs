@@ -35,3 +35,4 @@ Python Note
     pecan_note
     stevedemo
     django-i18n
+    unittest
