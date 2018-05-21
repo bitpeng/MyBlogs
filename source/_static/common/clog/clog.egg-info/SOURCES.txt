@@ -1,0 +1,11 @@
+setup.py
+clog/__init__.py
+clog/log.py
+clog/logv1.py
+clog/logv2.py
+clog/memoized.py
+clog/test.py
+clog.egg-info/PKG-INFO
+clog.egg-info/SOURCES.txt
+clog.egg-info/dependency_links.txt
+clog.egg-info/top_level.txt
